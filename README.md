@@ -4,7 +4,7 @@ Job tool for design students at the Estonian Academy of Arts (EKA). This is the 
 
 Scope: design work of every kind, sorted into nine categories by the work each posting describes (not by job title). Remote roles anywhere, plus on-site and hybrid roles in Europe (Estonia included).
 
-Categories (a posting can have more than one): Product designer who ships · Design engineer / builder · AI and behaviour designer · Brand and visual craft · Research and service design · Customer-facing / forward deployed designer · Game design · Industrial design · Other design paths.
+Each posting gets exactly one primary category (the core of the job) and, only when a role genuinely spans two, one secondary category shown as a small tag. All counts, filters and overviews use the primary category. Categories: Product designer who ships · Design engineer / builder · AI and behaviour designer · Brand and visual craft · Research and service design · Customer-facing / forward deployed designer · Game design · Industrial design · Other design paths.
 
 ## Stack
 
@@ -15,7 +15,7 @@ Next.js 15 (App Router) + TypeScript, deployable on Vercel. Data scripts run wit
 ```bash
 npm install
 npm run fetch      # pull all sources -> candidate postings in data/jobs.json, data/sources.json
-npm run extract    # Claude Haiku classifies + extracts requirements -> data/extractions.json (reads ANTHROPIC_API_KEY from .env.local)
+npm run extract    # Claude Haiku: classify -> data/classifications.json, then requirements for design roles -> data/extractions.json (reads ANTHROPIC_API_KEY from .env.local)
 npm run dev        # http://localhost:3000
 ```
 
@@ -33,11 +33,12 @@ Put your Anthropic key in `.env.local` (git-ignored) as `ANTHROPIC_API_KEY=sk-an
 | Source adapters (company ATS) | `lib/sources/ats.ts` (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio; company list in `COMPANIES`, incl. ~90 Estonian, Baltic and Nordic companies and ~45 industrial design, hardware and design studio companies) |
 | Broad title pre-filter (could this be design work at all?), seniority, regions, remote status | `lib/classify.ts` |
 | Normalise to one `Job` shape, scope filter, dedupe | `lib/normalize.ts`, types in `lib/types.ts` |
-| Model classification (design or not, categories) + requirement extraction, one Haiku call per posting | `lib/extraction.ts`, `scripts/extract.ts` |
+| Classification (design or not, primary + optional secondary category), Haiku | `lib/classification.ts` (bump `CLASSIFY_VERSION` after changing the prompt to re-run it) |
+| Requirement extraction for design roles, Haiku | `lib/extraction.ts`, both steps run by `scripts/extract.ts` |
 | Join candidates with model results | `lib/data.ts` |
 | Page | `app/page.tsx` |
 
-Extraction is incremental: `data/extractions.json` caches every result by posting id (including "not design" verdicts) and logs the token usage and cost of each run, so re-running only pays for new postings. The system prompt is prompt-cached across calls.
+Both steps are incremental: `data/classifications.json` and `data/extractions.json` cache every result by posting id (including "not design" verdicts) and logs the token usage and cost of each run, so re-running only pays for new postings. The system prompt is prompt-cached across calls.
 
 Dedupe rule: same company + same normalised title is one posting. The ATS version wins over a board re-listing; other sources are kept in `alsoListedOn`.
 

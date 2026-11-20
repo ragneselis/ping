@@ -101,19 +101,37 @@ export interface Requirements {
   other: string[];
 }
 
-/** One model call per posting: is it design work, which categories, and what it asks for. */
+export interface Usage { input: number; output: number; cacheRead: number; cacheWrite: number }
+
+/** Requirements the model extracted from one design posting. */
 export interface Extraction extends Requirements {
   id: string;
-  isDesignRole: boolean;
-  categories: Category[];
-  categoryReason: string;
+  /** Legacy fields from the first combined run (multi-category); ignored, see Classification. */
+  isDesignRole?: boolean;
+  categories?: Category[];
+  categoryReason?: string;
   model: string;
   extractedAt: string;
-  usage: { input: number; output: number; cacheRead: number; cacheWrite: number };
+  usage: Usage;
 }
 
-/** A candidate posting joined with its extraction (if it has one yet). */
+/** The model's verdict on one posting: design or not, one primary category, optional secondary. */
+export interface Classification {
+  id: string;
+  isDesignRole: boolean;
+  primary: Category | null;
+  secondary: Category | null;
+  reason: string;
+  version: number;
+  model: string;
+  classifiedAt: string;
+  usage: Usage;
+}
+
+/** A candidate posting joined with its classification and requirements (if it has them yet). */
 export interface ClassifiedJob extends Job {
-  categories: Category[];
+  primary: Category | null;
+  secondary: Category | null;
+  classification: Classification | null;
   extraction: Extraction | null;
 }

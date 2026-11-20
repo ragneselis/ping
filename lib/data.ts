@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import type { ClassifiedJob, Extraction, Job, SourceReport } from "./types";
+import type { Classification, ClassifiedJob, Extraction, Job, SourceReport } from "./types";
 
 const dir = path.join(process.cwd(), "data");
 
@@ -19,26 +19,36 @@ export function loadSources() {
 
 export interface ExtractionStore {
   results: Record<string, Extraction>;
-  runs: { at: string; model: string; postings: number; failed: number; usage: Extraction["usage"]; costUsd: number }[];
+  runs: { at: string; model: string; postings: number; failed: number; usage: Extraction["usage"]; costUsd: number; note?: string }[];
 }
 
 export function loadExtractions(): ExtractionStore {
   return read<ExtractionStore>("extractions.json", { results: {}, runs: [] });
 }
 
+export interface ClassificationStore {
+  results: Record<string, Classification>;
+  runs: ExtractionStore["runs"];
+}
+
+export function loadClassifications(): ClassificationStore {
+  return read<ClassificationStore>("classifications.json", { results: {}, runs: [] });
+}
+
 /**
- * Candidates joined with the model's verdict. Postings the model said are not design work are dropped;
- * postings not extracted yet are kept with no categories so they stay visible until the next extract run.
+ * Candidates joined with the model's classification and requirements. Postings classified as not design
+ * work are dropped; postings not classified yet are kept without a category until the next extract run.
  * The model's experience level replaces the title-based seniority when the title says nothing.
  */
-export function loadClassifiedJobs(store = loadExtractions()): ClassifiedJob[] {
+export function loadClassifiedJobs(store = loadExtractions(), cls = loadClassifications()): ClassifiedJob[] {
   return loadJobs()
     .map((j) => {
-      const e = store.results[j.id] ?? null;
+      const c = cls.results[j.id] ?? null;
+      const e = c?.isDesignRole ? store.results[j.id] ?? null : null;
       const seniority = j.seniority === "unspecified" && e && e.experienceLevel !== "unspecified" ? (e.experienceLevel as Job["seniority"]) : j.seniority;
-      return { ...j, seniority, categories: e?.categories ?? [], extraction: e };
+      return { ...j, seniority, primary: c?.primary ?? null, secondary: c?.secondary ?? null, classification: c, extraction: e };
     })
-    .filter((j) => !j.extraction || j.extraction.isDesignRole);
+    .filter((j) => !j.classification || j.classification.isDesignRole);
 }
 
 /** Count items across postings, case-insensitively, keeping the most common spelling. */

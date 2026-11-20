@@ -1845,23 +1845,49 @@
   },
   "arbeitnow:senior-design-engineer-berlin-438076": {
    "id": "arbeitnow:senior-design-engineer-berlin-438076",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Frontend engineering that implements existing Figma designs, not design work",
-   "skills": [],
-   "tools": [],
+   "skills": [
+    "Frontend architecture",
+    "Component library design",
+    "Design systems",
+    "Accessibility",
+    "Pixel-perfect implementation",
+    "Front-end coding",
+    "Code review",
+    "Testing",
+    "Performance optimisation",
+    "Ownership"
+   ],
+   "tools": [
+    "TypeScript",
+    "React",
+    "Tailwind CSS",
+    "Firebase/Firestore",
+    "Figma",
+    "HTML/CSS",
+    "Git"
+   ],
    "experienceLevel": "senior",
    "yearsMin": 5,
    "yearsMax": null,
    "education": null,
-   "languages": [],
-   "other": [],
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Startup experience preferred",
+    "Strong portfolio or GitHub required",
+    "Semantic HTML knowledge",
+    "Strong communication skills",
+    "Computer Science background a bonus",
+    "AI product experience a bonus",
+    "Real-time application experience a bonus"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:37:49.607Z",
+   "extractedAt": "2026-11-20T16:30:40.159Z",
    "usage": {
     "input": 1187,
-    "output": 459,
-    "cacheRead": 2187,
+    "output": 245,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -4497,23 +4523,46 @@
   },
   "himalayas:https://himalayas.app/companies/ux-woman/jobs/sales-to-ux-design-career-changer-apprenticeship": {
    "id": "himalayas:https://himalayas.app/companies/ux-woman/jobs/sales-to-ux-design-career-changer-apprenticeship",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Free apprenticeship training program, not a design role",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
+   "skills": [
+    "Ux research",
+    "User research",
+    "Prototyping",
+    "Wireframing",
+    "Design systems",
+    "Usability testing",
+    "Service blueprinting",
+    "Stakeholder management",
+    "Product thinking",
+    "Storytelling",
+    "Ai product design",
+    "Business model development",
+    "Competitive analysis",
+    "Journey mapping",
+    "Persona development"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "intern",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Career changers welcome",
+    "Willingness to commit 5-10 hours weekly",
+    "Weekend lecture attendance",
+    "Openness to mentor feedback",
+    "Interest in creative UX careers",
+    "No portfolio required",
+    "LinkedIn and resume required"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:04.725Z",
+   "extractedAt": "2026-11-20T16:30:41.711Z",
    "usage": {
     "input": 1347,
-    "output": 367,
-    "cacheRead": 2187,
+    "output": 232,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -4964,24 +5013,48 @@
   },
   "himalayas:https://himalayas.app/companies/ux-woman/jobs/academic-research-to-ux-research-career-changer-apprenticeship": {
    "id": "himalayas:https://himalayas.app/companies/ux-woman/jobs/academic-research-to-ux-research-career-changer-apprenticeship",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Free training apprenticeship for career changers, not a design job",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
+   "skills": [
+    "User research",
+    "Prototyping",
+    "Usability testing",
+    "Service blueprinting",
+    "Design systems",
+    "Product thinking",
+    "Storytelling",
+    "Stakeholder management",
+    "AI product design",
+    "Interaction design",
+    "Data-informed design",
+    "Brand identity"
+   ],
+   "tools": [
+    "Figma",
+    "Miro"
+   ],
+   "experienceLevel": "intern",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "New grads welcome",
+    "Career changers welcome",
+    "5-10 hours per week",
+    "Weekend lectures attendance",
+    "Open to mentor feedback",
+    "Willing to revise work",
+    "No portfolio required",
+    "Remote apprenticeship",
+    "7-month commitment",
+    "Interest in UX careers"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:08.921Z",
+   "extractedAt": "2026-11-20T16:26:14.441Z",
    "usage": {
     "input": 1349,
-    "output": 459,
-    "cacheRead": 2187,
-    "cacheWrite": 0
+    "output": 227,
+    "cacheRead": 0,
+    "cacheWrite": 1179
    }
   },
   "himalayas:https://himalayas.app/companies/ehvert-engineering-inc/jobs/controls-design-modeler-electrical-elv-philippines": {
@@ -5051,23 +5124,42 @@
   },
   "himalayas:https://himalayas.app/companies/ux-woman/jobs/customer-service-to-ux-research-career-changer-apprenticeship": {
    "id": "himalayas:https://himalayas.app/companies/ux-woman/jobs/customer-service-to-ux-research-career-changer-apprenticeship",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Unpaid training program for career changers, not a design job",
-   "skills": [],
+   "skills": [
+    "User research",
+    "Prototyping",
+    "Usability testing",
+    "Service blueprinting",
+    "Design systems",
+    "Product thinking",
+    "Interaction design",
+    "Storytelling",
+    "Stakeholder management",
+    "AI product design",
+    "Information architecture",
+    "Brand identity"
+   ],
    "tools": [],
    "experienceLevel": "unspecified",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Career changers welcome",
+    "Open to new grads",
+    "5-10 hours weekly commitment",
+    "Weekend lectures or video modules",
+    "Open to feedback",
+    "No portfolio required",
+    "Interview process required",
+    "Apply via application form"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:10.132Z",
+   "extractedAt": "2026-11-20T16:26:16.011Z",
    "usage": {
     "input": 1349,
-    "output": 443,
-    "cacheRead": 2187,
+    "output": 201,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -5355,23 +5447,45 @@
   },
   "himalayas:https://himalayas.app/companies/vrchat-com/jobs/unity-technical-artist-event-pipeline": {
    "id": "himalayas:https://himalayas.app/companies/vrchat-com/jobs/unity-technical-artist-event-pipeline",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Technical artist pipeline and scripting role, not design-focused work",
-   "skills": [],
-   "tools": [],
+   "skills": [
+    "Content pipeline",
+    "Tools development",
+    "Asset validation",
+    "Performance optimization",
+    "Debugging",
+    "Documentation",
+    "Cross-discipline collaboration",
+    "3D asset implementation",
+    "Automation",
+    "Quality assurance"
+   ],
+   "tools": [
+    "Unity",
+    "C#",
+    "Udon",
+    "UdonSharp",
+    "VRChat SDK",
+    "Creator Companion"
+   ],
    "experienceLevel": "unspecified",
-   "yearsMin": null,
+   "yearsMin": 3,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Remote work across US time zones",
+    "US time zone overlap",
+    "Live ops experience preferred",
+    "Multi-platform optimization preferred",
+    "PhysBones and Contacts familiarity preferred",
+    "Editor tooling experience preferred"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:11.435Z",
+   "extractedAt": "2026-11-20T16:26:16.202Z",
    "usage": {
     "input": 1646,
-    "output": 108,
-    "cacheRead": 2187,
+    "output": 233,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -9610,23 +9724,62 @@
   },
   "himalayas:https://himalayas.app/companies/gameloft/jobs/disney-dreamlight-valley-pc-console-artiste-technique-technical-artist": {
    "id": "himalayas:https://himalayas.app/companies/gameloft/jobs/disney-dreamlight-valley-pc-console-artiste-technique-technical-artist",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
-   "tools": [],
+   "skills": [
+    "Pipeline management",
+    "Tools development",
+    "Performance optimization",
+    "Profiling",
+    "Shader development",
+    "Material authoring",
+    "Technical documentation",
+    "Mentoring",
+    "Asset validation",
+    "Import pipeline setup"
+   ],
+   "tools": [
+    "Unity",
+    "Shader Graph",
+    "HLSL",
+    "C#",
+    "Git",
+    "SVN",
+    "3ds Max",
+    "Blender",
+    "Maya",
+    "Substance 3D Painter",
+    "Substance 3D Designer",
+    "Unity Frame Debugger",
+    "Nsight",
+    "Jira",
+    "Confluence",
+    "Houdini"
+   ],
    "experienceLevel": "unspecified",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
-   "languages": [],
-   "other": [],
+   "languages": [
+    "French",
+    "English"
+   ],
+   "other": [
+    "Shipped project pipeline experience",
+    "Console shipping experience",
+    "Console memory and shader constraints",
+    "Merge-request workflows",
+    "Cross-platform shader debugging",
+    "Per-asset budget enforcement",
+    "Art Bible documentation",
+    "Nice to have: VFX support",
+    "Nice to have: Procedural content tools",
+    "Nice to have: Prior artist background"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:33.338Z",
+   "extractedAt": "2026-11-20T16:26:16.535Z",
    "usage": {
     "input": 4410,
-    "output": 87,
-    "cacheRead": 2187,
+    "output": 331,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -9676,23 +9829,44 @@
   },
   "himalayas:https://himalayas.app/companies/insomniac-games/jobs/vfx-artist": {
    "id": "himalayas:https://himalayas.app/companies/insomniac-games/jobs/vfx-artist",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
-   "tools": [],
+   "skills": [
+    "Real-time particle effects",
+    "Fx texturing",
+    "Shader networks",
+    "Uv mapping",
+    "Hard surface modeling",
+    "Rigid body simulation",
+    "Animation timing",
+    "Game engine implementation",
+    "Performance optimization",
+    "Visual effects layering",
+    "Art style consistency",
+    "Computer graphics fundamentals",
+    "Traditional art"
+   ],
+   "tools": [
+    "Maya",
+    "Houdini",
+    "Photoshop"
+   ],
    "experienceLevel": "unspecified",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Remote United States",
+    "12-month contract",
+    "Staffing agency role",
+    "Feedback receptiveness",
+    "Independent work ability"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:33.672Z",
+   "extractedAt": "2026-11-20T16:26:16.030Z",
    "usage": {
     "input": 1124,
-    "output": 87,
-    "cacheRead": 2187,
+    "output": 216,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -14976,23 +15150,55 @@
   },
   "himalayas:https://himalayas.app/companies/general-assembly/jobs/lead-learning-experience-designer-europe-apac-middle-east-30-hours-week": {
    "id": "himalayas:https://himalayas.app/companies/general-assembly/jobs/lead-learning-experience-designer-europe-apac-middle-east-30-hours-week",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
-   "yearsMin": null,
+   "skills": [
+    "Learning experience design",
+    "Instructional design",
+    "Curriculum design",
+    "Project management",
+    "Stakeholder management",
+    "Assessment design",
+    "Facilitator guides",
+    "Prompt engineering",
+    "Enterprise AI adoption",
+    "Responsible AI",
+    "Case study development",
+    "Adult learning principles"
+   ],
+   "tools": [
+    "ChatGPT",
+    "Claude",
+    "Gemini",
+    "Microsoft Copilot",
+    "Perplexity",
+    "Midjourney",
+    "NotebookLM",
+    "LMS platforms",
+    "Python",
+    "GitHub"
+   ],
+   "experienceLevel": "lead/manager",
+   "yearsMin": 5,
    "yearsMax": null,
    "education": null,
-   "languages": [],
-   "other": [],
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Remote contractor 2-3 months",
+    "30 hours per week",
+    "Time zone flexibility",
+    "Instructor-led training experience",
+    "Bloom's Taxonomy knowledge",
+    "ADDIE methodology knowledge",
+    "Reusable learning component library"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:38:59.352Z",
+   "extractedAt": "2026-11-20T16:26:16.205Z",
    "usage": {
     "input": 3731,
-    "output": 87,
-    "cacheRead": 2187,
+    "output": 295,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -23780,23 +23986,37 @@
   },
   "himalayas:https://himalayas.app/companies/outpost-vfx-com/jobs/freelance-senior-lighting-artist": {
    "id": "himalayas:https://himalayas.app/companies/outpost-vfx-com/jobs/freelance-senior-lighting-artist",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "VFX lighting artist for film; not a design role",
-   "skills": [],
-   "tools": [],
+   "skills": [
+    "Lighting",
+    "Lookdev",
+    "Shading networks",
+    "Composition",
+    "Colour",
+    "VFX lighting principles",
+    "Plate matching"
+   ],
+   "tools": [
+    "Maya",
+    "Houdini",
+    "Arnold",
+    "Nuke"
+   ],
    "experienceLevel": "senior",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Freelance role",
+    "Remote India",
+    "Strong eye for detail"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:39:46.281Z",
+   "extractedAt": "2026-11-20T16:26:15.692Z",
    "usage": {
     "input": 832,
-    "output": 100,
-    "cacheRead": 2187,
+    "output": 140,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -27019,23 +27239,39 @@
   },
   "himalayas:https://himalayas.app/companies/wrs-health/jobs/ux-researcher": {
    "id": "himalayas:https://himalayas.app/companies/wrs-health/jobs/ux-researcher",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
+   "skills": [
+    "User research",
+    "Product discovery",
+    "Design thinking",
+    "Requirements gathering",
+    "Project management",
+    "Stakeholder management",
+    "Wireframing",
+    "User flows",
+    "Prototyping",
+    "Competitor research",
+    "Process improvement",
+    "Documentation"
+   ],
    "tools": [],
    "experienceLevel": "unspecified",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
-   "languages": [],
-   "other": [],
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Available US business hours",
+    "Independent contractor role",
+    "Healthcare EHR domain"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:40:01.298Z",
+   "extractedAt": "2026-11-20T16:26:15.828Z",
    "usage": {
     "input": 1537,
-    "output": 416,
-    "cacheRead": 2187,
+    "output": 159,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -38357,23 +38593,53 @@
   },
   "ashby:epidemic-sound:ed988e07-e5e8-455a-9c43-a7d9c12be18f": {
    "id": "ashby:epidemic-sound:ed988e07-e5e8-455a-9c43-a7d9c12be18f",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
-   "tools": [],
+   "skills": [
+    "Rigging",
+    "Animation",
+    "Procedural systems",
+    "Pipeline tooling",
+    "3D modelling",
+    "Shading",
+    "Lighting",
+    "Asset management",
+    "Motion quality",
+    "Generative AI for video",
+    "Deformation",
+    "Timing"
+   ],
+   "tools": [
+    "Blender",
+    "Python",
+    "Swift",
+    "Godot",
+    "Unreal Engine",
+    "Unity",
+    "ComfyUI",
+    "JavaScript/TypeScript",
+    "Rust",
+    "C++"
+   ],
    "experienceLevel": "unspecified",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
-   "languages": [],
-   "other": [],
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Freelance 3-month assignment",
+    "Hybrid Stockholm role",
+    "macOS programming experience",
+    "Strong technical director mindset",
+    "Blender add-on development",
+    "Sharp eye for motion"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:41:02.751Z",
+   "extractedAt": "2026-11-20T16:26:17.115Z",
    "usage": {
     "input": 1431,
-    "output": 87,
-    "cacheRead": 2187,
+    "output": 246,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -40737,23 +41003,41 @@
   },
   "himalayas:https://himalayas.app/companies/northeading-technologies/jobs/ai-product-researcher-intern-co-op": {
    "id": "himalayas:https://himalayas.app/companies/northeading-technologies/jobs/ai-product-researcher-intern-co-op",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
+   "skills": [
+    "Prototyping",
+    "User research",
+    "Prompt engineering",
+    "UX design",
+    "Product thinking",
+    "Copywriting",
+    "Product experimentation",
+    "Communication"
+   ],
+   "tools": [
+    "Figma",
+    "Notion",
+    "Zapier",
+    "ChatGPT",
+    "LLMs"
+   ],
+   "experienceLevel": "intern",
    "yearsMin": null,
    "yearsMax": null,
-   "education": null,
+   "education": "Pursuing degree or diploma in CS, Data, or related",
    "languages": [],
-   "other": [],
+   "other": [
+    "Unpaid co-op or internship eligible",
+    "AI side project",
+    "Startup experience",
+    "Lean experimental testing",
+    "Independent execution"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:41:15.557Z",
+   "extractedAt": "2026-11-20T16:35:06.290Z",
    "usage": {
     "input": 765,
-    "output": 379,
-    "cacheRead": 2187,
+    "output": 190,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -42635,23 +42919,45 @@
   },
   "himalayas:https://himalayas.app/companies/hrm-info-llc/jobs/data-visualization-specialist": {
    "id": "himalayas:https://himalayas.app/companies/hrm-info-llc/jobs/data-visualization-specialist",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Primarily data engineering and dashboard building; UI design is secondary",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
-   "yearsMin": null,
+   "skills": [
+    "Data engineering",
+    "Data management",
+    "SQL",
+    "UI design",
+    "End user engagement",
+    "Data cleaning",
+    "Performance optimization",
+    "Database design",
+    "Machine learning",
+    "Statistical modeling",
+    "Time-series forecasting",
+    "Geospatial analytics",
+    "Data visualization"
+   ],
+   "tools": [
+    "Qlik",
+    "Power BI",
+    "AWS"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "TS or CBP clearance required",
+    "T5 investigation within 2 years",
+    "Remote US within driving distance of Fort Meade",
+    "AWS certifications preferred",
+    "Large data volume handling",
+    "Software-hardware optimization knowledge"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:41:24.572Z",
+   "extractedAt": "2026-11-20T16:30:41.671Z",
    "usage": {
     "input": 857,
-    "output": 541,
-    "cacheRead": 2187,
+    "output": 227,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -49835,23 +50141,47 @@
   },
   "teamtailor:embarkstudios.teamtailor.com:09c9112b-18fe-4005-980d-aa42d3c246a1": {
    "id": "teamtailor:embarkstudios.teamtailor.com:09c9112b-18fe-4005-980d-aa42d3c246a1",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Real-time VFX artist work for games; not a design role",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
-   "yearsMin": null,
+   "skills": [
+    "Visual effects",
+    "Shader authoring",
+    "Simulation",
+    "Performance optimization",
+    "Look development",
+    "Physics-based effects",
+    "Tooling and pipeline",
+    "Gameplay readability",
+    "Texturing",
+    "Artistic composition"
+   ],
+   "tools": [
+    "Unreal Engine",
+    "Niagara",
+    "Unity",
+    "VFX Graph",
+    "Houdini",
+    "EmberGen",
+    "Substance"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
    "yearsMax": null,
    "education": null,
-   "languages": [],
-   "other": [],
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Shipped title preferred",
+    "Film or VFX background nice to have",
+    "Fluid and destruction systems nice to have",
+    "Python or Blueprint scripting nice to have",
+    "Strong communication skills"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T15:42:06.404Z",
+   "extractedAt": "2026-11-20T16:26:17.251Z",
    "usage": {
     "input": 993,
-    "output": 104,
-    "cacheRead": 2187,
+    "output": 229,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -53147,23 +53477,26 @@
   },
   "himalayas:https://himalayas.app/companies/photon/jobs/creative-director-dallas": {
    "id": "himalayas:https://himalayas.app/companies/photon/jobs/creative-director-dallas",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Posting lacks described design work; responsibilities section is empty",
-   "skills": [],
+   "skills": [
+    "Creative direction",
+    "Design leadership",
+    "Stakeholder management"
+   ],
    "tools": [],
-   "experienceLevel": "unspecified",
+   "experienceLevel": "lead/manager",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Remote work United States"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T16:11:53.604Z",
+   "extractedAt": "2026-11-20T16:26:15.700Z",
    "usage": {
     "input": 344,
-    "output": 106,
-    "cacheRead": 2187,
+    "output": 91,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -53654,23 +53987,45 @@
   },
   "himalayas:https://himalayas.app/companies/algaecal/jobs/motion-graphics-video-editor": {
    "id": "himalayas:https://himalayas.app/companies/algaecal/jobs/motion-graphics-video-editor",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "Video editing and motion graphics for ads; not primarily design of products or visuals",
-   "skills": [],
-   "tools": [],
-   "experienceLevel": "unspecified",
-   "yearsMin": null,
+   "skills": [
+    "Video editing",
+    "Motion graphics",
+    "Storyboarding",
+    "Sound design",
+    "Digital advertising",
+    "Social media content",
+    "Marketing analytics",
+    "Storytelling",
+    "Collaboration",
+    "Voice-over editing"
+   ],
+   "tools": [
+    "Premiere Pro",
+    "After Effects",
+    "DaVinci Resolve",
+    "AI tools"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 3,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Portfolio required",
+    "Digital marketing experience",
+    "YouTube and Facebook best practices",
+    "Health and wellness experience preferred",
+    "Cover letter required",
+    "Minimum three video examples",
+    "Humble and team-oriented",
+    "Hungry to learn"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T16:11:56.535Z",
+   "extractedAt": "2026-11-20T16:30:41.670Z",
    "usage": {
     "input": 1648,
-    "output": 112,
-    "cacheRead": 2187,
+    "output": 228,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -55274,23 +55629,28 @@
   },
   "himalayas:https://himalayas.app/companies/photon-interactive-uk-limited/jobs/creative-director-dallas": {
    "id": "himalayas:https://himalayas.app/companies/photon-interactive-uk-limited/jobs/creative-director-dallas",
-   "isDesignRole": false,
-   "categories": [],
-   "categoryReason": "",
-   "skills": [],
+   "skills": [
+    "Creative direction",
+    "Visual design",
+    "Stakeholder management",
+    "Mentoring"
+   ],
    "tools": [],
    "experienceLevel": "unspecified",
    "yearsMin": null,
    "yearsMax": null,
    "education": null,
    "languages": [],
-   "other": [],
+   "other": [
+    "Remote US work",
+    "Independent contractors welcome"
+   ],
    "model": "claude-haiku-5-5",
-   "extractedAt": "2026-11-20T16:12:06.975Z",
+   "extractedAt": "2026-11-20T16:35:04.866Z",
    "usage": {
     "input": 353,
-    "output": 320,
-    "cacheRead": 2187,
+    "output": 104,
+    "cacheRead": 1179,
     "cacheWrite": 0
    }
   },
@@ -67825,6 +68185,45 @@
     "cacheWrite": 2187
    },
    "costUsd": 0.1341
+  },
+  {
+   "at": "2026-11-20T16:26:17.251Z",
+   "model": "claude-haiku-5-5",
+   "postings": 11,
+   "failed": 0,
+   "usage": {
+    "input": 18746,
+    "output": 2368,
+    "cacheRead": 11790,
+    "cacheWrite": 1179
+   },
+   "costUsd": 0.0033
+  },
+  {
+   "at": "2026-11-20T16:30:41.711Z",
+   "model": "claude-haiku-5-5",
+   "postings": 4,
+   "failed": 0,
+   "usage": {
+    "input": 5039,
+    "output": 932,
+    "cacheRead": 4716,
+    "cacheWrite": 0
+   },
+   "costUsd": 0.001
+  },
+  {
+   "at": "2026-11-20T16:35:06.290Z",
+   "model": "claude-haiku-5-5",
+   "postings": 2,
+   "failed": 0,
+   "usage": {
+    "input": 1118,
+    "output": 294,
+    "cacheRead": 2358,
+    "cacheWrite": 0
+   },
+   "costUsd": 0.0003
   }
  ]
 }

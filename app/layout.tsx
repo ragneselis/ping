@@ -28,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; }
           .tag { display: inline-block; background: #eef; border-radius: 3px; padding: 0 5px; margin: 1px; font-size: 12px; }
           .wrap { overflow-x: auto; }
+          .tag-secondary { background: transparent; border: 1px solid #ccd; color: #555; font-size: 11px; }
         `}</style>
         {children}
       </body>

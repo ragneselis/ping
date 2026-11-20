@@ -1,4 +1,4 @@
-import { loadClassifiedJobs, loadExtractions, loadJobs, loadSources, tally } from "@/lib/data";
+import { loadClassifications, loadClassifiedJobs, loadExtractions, loadJobs, loadSources, tally } from "@/lib/data";
 import { CATEGORIES, CATEGORY_LABEL, type Category, type ClassifiedJob, type Extraction } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -62,14 +62,17 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
   const get = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string) : "");
   const store = loadExtractions();
   const candidates = loadJobs();
-  const jobs = loadClassifiedJobs(store);
+  const cls = loadClassifications();
+  const jobs = loadClassifiedJobs(store, cls);
   const sources = loadSources();
 
-  const extractedCandidates = candidates.filter((j) => store.results[j.id]);
-  const notDesign = extractedCandidates.filter((j) => !store.results[j.id].isDesignRole).length;
-  const pending = candidates.length - extractedCandidates.length;
-  const totalCost = store.runs.reduce((n, r) => n + r.costUsd, 0);
-  const totalCalls = store.runs.reduce((n, r) => n + r.postings, 0);
+  const classified = candidates.filter((j) => cls.results[j.id]);
+  const notDesign = classified.filter((j) => !cls.results[j.id].isDesignRole).length;
+  const pending = candidates.length - classified.length;
+  const runs = [...cls.runs, ...store.runs];
+  const totalCost = runs.reduce((n, r) => n + r.costUsd, 0);
+  const totalCalls = runs.reduce((n, r) => n + r.postings, 0);
+  const lastCls = cls.runs.at(-1);
 
   // Filters (plain GET form), shared by the overview and the job list.
   const q = get("q").toLowerCase();
@@ -79,7 +82,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
       (!q || `${j.title} ${j.company} ${j.location}`.toLowerCase().includes(q)) &&
       (!f.remote || j.remote === f.remote) &&
       (!f.estonia || String(j.openToEstonia) === f.estonia) &&
-      (!f.category || (f.category === "pending" ? !j.extraction : j.categories.includes(f.category as Category))) &&
+      (!f.category || (f.category === "pending" ? !j.classification : j.primary === f.category)) &&
       (!f.source || j.source === f.source || j.alsoListedOn.includes(f.source)) &&
       (!f.seniority || (f.seniority === "reach" ? REACH.has(j.seniority) : j.seniority === f.seniority)),
   );
@@ -95,8 +98,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
 
   // Per category comparison (all jobs, not filtered).
   const perCat = CATEGORIES.map((c) => {
-    const list = jobs.filter((j) => j.categories.includes(c));
-    const e = list.map((j) => j.extraction!);
+    const list = jobs.filter((j) => j.primary === c);
+    const e = list.map((j) => j.extraction).filter((x): x is Extraction => !!x);
     return {
       c,
       total: list.length,
@@ -115,16 +118,18 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
     <main>
       <h1>Ping: data test</h1>
       <p className="muted">
-        Design jobs of every kind, sorted by Claude into nine categories from the work each posting describes. Scope: remote anywhere, plus on-site
+        Design jobs of every kind. Claude gives each posting one primary category from the work it describes (and a secondary one only
+        when the role genuinely spans two); all counts, filters and overviews use the primary category. Scope: remote anywhere, plus on-site
         and hybrid roles in Europe.
         {sources && <> Fetched {sources.fetchedAt.replace("T", " ").slice(0, 16)} UTC.</>}
       </p>
       <p>
         <b>{jobs.length - pending} design roles</b>, {estonia.length} open to someone based in Estonia.{" "}
         <span className="muted">
-          {candidates.length} candidate postings passed the broad title pre-filter; the model read {extractedCandidates.length} and set aside {notDesign} as not
-          design work{pending > 0 && <>, {pending} still waiting for <code>npm run extract</code></>}. Extraction: {totalCalls} model calls in {store.runs.length} run
-          {store.runs.length === 1 ? "" : "s"}, ${totalCost.toFixed(2)} in total{store.runs.length > 0 && <> ({store.runs[0].model})</>}.
+          {candidates.length} candidate postings passed the broad title pre-filter; the model classified {classified.length} and set aside {notDesign} as not
+          design work{pending > 0 && <>, {pending} still waiting for <code>npm run extract</code></>}.
+          {lastCls && <> Last classification run ({lastCls.note ?? lastCls.model}): {lastCls.postings} postings, ${lastCls.costUsd.toFixed(2)}.</>}{" "}
+          All model calls so far (classification and requirements, {runs[0]?.model ?? "-"}): {totalCalls} calls, ${totalCost.toFixed(2)}.
         </span>
       </p>
 
@@ -159,7 +164,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
 
       {/* ---------------- Categories ---------------- */}
       <h2>Jobs per category</h2>
-      <p className="muted">A posting can be in more than one category, so the rows add up to more than the total.</p>
+      <p className="muted">Primary category only, so the rows add up to the total ({jobs.length - pending}).</p>
       <div className="wrap">
         <table>
           <thead>
@@ -292,7 +297,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
                         <div key={j.id}>
                           <a href={j.url} target="_blank" rel="noreferrer">{j.title}</a>{" "}
                           <span className="muted" title={j.location}>
-                            · {shortLoc(j.location)} · {j.remote} · {j.categories.map((c) => CATEGORY_LABEL[c]).join(", ") || "not classified yet"}
+                            · {shortLoc(j.location)} · {j.remote} · {j.primary ? CATEGORY_LABEL[j.primary] : "not classified yet"}
                           </span>
                         </div>
                       ))}
@@ -331,13 +336,14 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
                 <td>
                   <a href={j.url} target="_blank" rel="noreferrer">{j.title}</a>
                   <div>
-                    {j.categories.length ? j.categories.map((c) => <span className="tag" key={c}>{CATEGORY_LABEL[c]}</span>) : <span className="muted">not classified yet</span>}
+                    {j.primary ? <span className="tag">{CATEGORY_LABEL[j.primary]}</span> : <span className="muted">not classified yet</span>}
+                    {j.secondary && <span className="tag tag-secondary" title="Secondary category">+ {CATEGORY_LABEL[j.secondary]}</span>}
                   </div>
                   <details>
                     <summary className="muted">Requirements and description</summary>
                     {j.extraction && (
                       <div style={{ margin: "6px 0" }}>
-                        <div className="muted">{j.extraction.categoryReason}</div>
+                        <div className="muted">{j.classification?.reason}</div>
                         {[...j.extraction.skills, ...j.extraction.tools, ...j.extraction.other, ...j.extraction.languages].map((s, i) => <span className="tag" key={i}>{s}</span>)}
                       </div>
                     )}
