@@ -1,7 +1,8 @@
 import { ArrowUpRight, CalendarDays, MapPin, Wifi } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { CATEGORY_META, REMOTE_LABEL } from "@/lib/categories";
+import { CategoryTag } from "@/components/category";
+import { REMOTE_LABEL } from "@/lib/categories";
 import type { JobCard as Job } from "@/lib/view";
 
 /** "today", "3 days ago", "2 weeks ago" relative to now. */
@@ -27,12 +28,8 @@ export function JobCard({ job }: { job: Job }) {
       <Card className="row-span-3 grid grid-rows-subgrid gap-3 transition-shadow group-hover:shadow-lg group-hover:ring-primary/40">
         <CardHeader className="content-start gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
-            <Badge className="font-mono">{CATEGORY_META[job.primary].short}</Badge>
-            {job.secondary && (
-              <Badge variant="outline" className="h-4 px-1.5 font-mono text-[0.65rem]">
-                + {CATEGORY_META[job.secondary].short}
-              </Badge>
-            )}
+            <CategoryTag category={job.primary} />
+            {job.secondary && <CategoryTag category={job.secondary} secondary />}
             {job.openToEstonia && (
               <Badge variant="secondary" className="font-mono">
                 Open to Estonia

@@ -23,11 +23,11 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
         </DialogHeader>
         <div className="grid gap-2 text-sm">
           <div className="flex items-center gap-3 rounded-lg border p-3">
-            <Mail className="size-4 text-primary" />
+            <Mail className="size-4 text-muted-foreground" />
             <span>A weekly email with new roles in your categories</span>
           </div>
           <div className="flex items-center gap-3 rounded-lg border p-3">
-            <MessageSquare className="size-4 text-primary" />
+            <MessageSquare className="size-4 text-muted-foreground" />
             <span>A Slack channel for the EKA design crowd</span>
           </div>
         </div>

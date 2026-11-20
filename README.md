@@ -19,6 +19,8 @@ Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Rechart
 | Header, theme toggle, "Get new jobs" placeholder dialog | `components/site-header.tsx`, `components/theme-toggle.tsx`, `components/subscribe-dialog.tsx` |
 | Server-side view layer (filters, cards, insight numbers) | `lib/view.ts`, `lib/categories.ts` |
 
+Each direction has its own colour: the `--cat-*` tokens in `app/globals.css` (light and dark), mapped to categories in one place, `CATEGORY_TOKEN` in `lib/categories.ts`. Tags, chips, dots, charts and cards all read it through `components/category.tsx`. Light-theme values are tuned for WCAG AA (at least 4.6:1) as text on their own 15% tint over `--background` and `--card`. Pink (`--primary`) is kept for the brand and actions: logo dot, buttons, links, focus rings and the active "All directions" chip.
+
 Directions with fewer than `EARLY_SIGNAL_THRESHOLD` postings (15, in `lib/view.ts`) get an "Early signal" badge and show lists with counts instead of charts.
 
 Copy rules: British English, no em dashes, no middot separators, no mention of Claude or AI tools in the copy.

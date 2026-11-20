@@ -45,7 +45,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
     <div className="grid gap-10 pt-10 sm:pt-14">
       <section className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
         <div className="grid gap-4">
-          <p className="font-mono text-sm font-medium text-primary">For design students at EKA</p>
+          <p className="font-mono text-sm font-medium text-muted-foreground">For design students at EKA</p>
           <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">
             Design jobs, minus the doomscrolling.
           </h1>
@@ -57,7 +57,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         <Card className="bg-secondary">
           <CardContent className="grid gap-3">
             <div className="flex items-center gap-2 font-semibold">
-              <BellRing className="size-4 text-primary" />
+              <BellRing className="size-4" />
               Never miss a new one
             </div>
             <p className="text-sm text-muted-foreground">Get new jobs in your direction as they land, by email or Slack.</p>

@@ -1,11 +1,13 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis, YAxis } from "recharts";
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 type Count = { label: string; count: number };
-type ChartColor = 1 | 2 | 3 | 4 | 5;
+/** A chart token number (--chart-n) or any CSS colour, e.g. a category colour from lib/categories. */
+type ChartColor = 1 | 2 | 3 | 4 | 5 | string;
+const colorValue = (c: ChartColor) => (typeof c === "number" ? `var(--chart-${c})` : c);
 
 /** Below this width labels go above the bars, so they never have to wrap or clip. */
 const SIDE_LABELS_MIN_WIDTH = 480;
@@ -58,7 +60,8 @@ export function HBarChart({
   legend = false,
   tooltipValue,
 }: {
-  rows: { label: string; values: number[]; end: string; note?: string }[];
+  /** `colors` overrides the series colours for one row (one entry per series). */
+  rows: { label: string; values: number[]; end: string; note?: string; colors?: string[] }[];
   series: HBarSeries[];
   legend?: boolean;
   tooltipValue?: (value: number, seriesKey: string, row: { label: string; note?: string }) => string;
@@ -72,7 +75,7 @@ export function HBarChart({
 
   const data = rows.map((r) => ({ label: r.label, end: r.end, note: r.note, ...Object.fromEntries(series.map((s, i) => [s.key, r.values[i] ?? 0])) }));
   const max = Math.max(1, ...rows.map((r) => r.values.reduce((a, b) => a + b, 0)));
-  const config = Object.fromEntries(series.map((s) => [s.key, { label: s.label, color: `var(--chart-${s.color})` }])) satisfies ChartConfig;
+  const config = Object.fromEntries(series.map((s) => [s.key, { label: s.label, color: colorValue(s.color) }])) satisfies ChartConfig;
   const height = rows.length * (side ? ROW_SIDE : ROW_STACKED) + (legend ? 36 : 0) + 4;
   const last = series.at(-1)!.key;
 
@@ -106,7 +109,7 @@ export function HBarChart({
               cursor={false}
               content={
                 <ChartTooltipContent
-                  hideIndicator={series.length === 1}
+                  hideIndicator={series.length === 1 || rows.some((r) => r.colors)}
                   formatter={
                     tooltipValue
                       ? (value, name, item) => (
@@ -129,6 +132,7 @@ export function HBarChart({
                 fill={`var(--color-${s.key})`}
                 radius={series.length === 1 ? 4 : i === 0 ? [4, 0, 0, 4] : i === series.length - 1 ? [0, 4, 4, 0] : 0}
               >
+                {rows.some((r) => r.colors) && rows.map((r) => <Cell key={r.label} fill={r.colors?.[i] ?? `var(--color-${s.key})`} />)}
                 {s.key === last && (
                   <LabelList dataKey="end" position="right" offset={8} className="fill-foreground font-mono" fontSize={LABEL_FONT_PX} />
                 )}
@@ -152,7 +156,7 @@ export function HBarChart({
 }
 
 /** Ranking of skills or tools: share of postings that ask for each one. */
-export function RankingChart({ data, color }: { data: { label: string; count: number; share: number }[]; color: 1 | 2 }) {
+export function RankingChart({ data, color }: { data: { label: string; count: number; share: number }[]; color: ChartColor }) {
   return (
     <HBarChart
       rows={data.map((d) => ({ label: d.label, values: [d.share], end: `${d.share}%`, note: `${d.count}` }))}
@@ -162,24 +166,38 @@ export function RankingChart({ data, color }: { data: { label: string; count: nu
   );
 }
 
-/** Jobs per direction, split into "within reach" and the rest. */
-export function CategoryHiringChart({ data }: { data: { label: string; reach: number; rest: number }[] }) {
+/** Jobs per direction in each direction's own colour: solid = within reach, tint = senior and above. */
+export function CategoryHiringChart({ data }: { data: { label: string; reach: number; rest: number; color: string }[] }) {
   return (
-    <HBarChart
-      rows={data.map((d) => ({ label: d.label, values: [d.reach, d.rest], end: String(d.reach + d.rest) }))}
-      series={[
-        { key: "reach", label: "Within reach for graduates", color: 4 },
-        { key: "rest", label: "Senior and above", color: 2 },
-      ]}
-      legend
-      tooltipValue={(v) => String(v)}
-    />
+    <div className="grid gap-3">
+      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5">
+          <span className="size-2.5 rounded-sm bg-foreground" /> Within reach for graduates
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="size-2.5 rounded-sm bg-foreground/30" /> Senior and above
+        </span>
+      </div>
+      <HBarChart
+        rows={data.map((d) => ({
+          label: d.label,
+          values: [d.reach, d.rest],
+          end: String(d.reach + d.rest),
+          colors: [d.color, `color-mix(in oklab, ${d.color} 30%, transparent)`],
+        }))}
+        series={[
+          { key: "reach", label: "Within reach for graduates", color: 4 },
+          { key: "rest", label: "Senior and above", color: 2 },
+        ]}
+        tooltipValue={(v) => String(v)}
+      />
+    </div>
   );
 }
 
 /** Vertical distribution, e.g. seniority or years of experience. */
-export function DistributionChart({ data, color, label }: { data: Count[]; color: 3 | 4 | 5; label: string }) {
-  const config = { count: { label, color: `var(--chart-${color})` } } satisfies ChartConfig;
+export function DistributionChart({ data, color, label }: { data: Count[]; color: ChartColor; label: string }) {
+  const config = { count: { label, color: colorValue(color) } } satisfies ChartConfig;
   return (
     <ChartContainer config={config} className="aspect-auto h-56 w-full">
       <BarChart data={data} margin={{ top: 20, left: 0, right: 0, bottom: 0 }} accessibilityLayer>

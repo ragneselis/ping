@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { ChipContent, chipClassName } from "@/components/category";
+import { ChipScroller } from "@/components/chip-scroller";
+import { categoryVars } from "@/lib/categories";
+import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const REMOTE_ITEMS = [
@@ -17,7 +21,7 @@ const REMOTE_ITEMS = [
 ];
 
 /** Filters that live in the URL, so a filtered view can be shared. Changing one resets "load more". */
-export function JobFilters({ categories, total }: { categories: { value: string; label: string; count: number }[]; total: number }) {
+export function JobFilters({ categories, total }: { categories: { value: Category; label: string; count: number }[]; total: number }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -46,14 +50,21 @@ export function JobFilters({ categories, total }: { categories: { value: string;
 
   return (
     <div className={cn("grid gap-4 transition-opacity", pending && "opacity-60")} aria-busy={pending}>
-      <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0">
+      <ChipScroller activeKey={category}>
         <div className="flex w-max gap-2 md:w-auto md:flex-wrap" role="group" aria-label="Category">
           <CategoryChip label="All directions" count={total} active={!category} onClick={() => set("category", null)} />
           {categories.map((c) => (
-            <CategoryChip key={c.value} label={c.label} count={c.count} active={category === c.value} onClick={() => set("category", c.value)} />
+            <CategoryChip
+              key={c.value}
+              category={c.value}
+              label={c.label}
+              count={c.count}
+              active={category === c.value}
+              onClick={() => set("category", c.value)}
+            />
           ))}
         </div>
-      </div>
+      </ChipScroller>
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border bg-card p-3 shadow-xs">
         <div className="flex items-center gap-2">
           <Switch id="estonia" checked={params.get("estonia") === "1"} onCheckedChange={(v) => set("estonia", v ? "1" : null)} />
@@ -86,19 +97,10 @@ export function JobFilters({ categories, total }: { categories: { value: string;
   );
 }
 
-function CategoryChip({ label, count, active, onClick }: { label: string; count: number; active: boolean; onClick: () => void }) {
+function CategoryChip({ label, count, active, onClick, category }: { label: string; count: number; active: boolean; onClick: () => void; category?: Category }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        "flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-        active ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:border-primary/60",
-      )}
-    >
-      {label}
-      <span className={cn("font-mono text-xs", active ? "text-primary-foreground/80" : "text-muted-foreground")}>{count}</span>
+    <button type="button" onClick={onClick} aria-pressed={active} style={category ? categoryVars(category) : undefined} className={chipClassName(active, category)}>
+      <ChipContent label={label} count={count} active={active} category={category} />
     </button>
   );
 }

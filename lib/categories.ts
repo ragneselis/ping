@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Category } from "./types";
 
 /** Short names for tags and chart axes, and one-line descriptions for the interface. */
@@ -19,3 +20,25 @@ export const REMOTE_LABEL: Record<string, string> = {
   onsite: "On-site",
   unknown: "Not stated",
 };
+
+/**
+ * The one place that maps a category to its colour token (--cat-* in app/globals.css).
+ * Components set `--cat` from here and style with the shared classes in components/category.tsx.
+ */
+export const CATEGORY_TOKEN: Record<Category, string> = {
+  product: "--cat-product",
+  "design-engineer": "--cat-engineering",
+  "ai-behaviour": "--cat-ai",
+  "brand-visual": "--cat-brand",
+  "research-service": "--cat-research",
+  "customer-facing": "--cat-customer",
+  game: "--cat-game",
+  industrial: "--cat-industrial",
+  other: "--cat-other",
+};
+
+/** CSS colour value for a category, e.g. for chart fills. */
+export const categoryColor = (c: Category) => `var(${CATEGORY_TOKEN[c]})`;
+
+/** Inline style that sets `--cat` for a subtree, read by the shared category classes. */
+export const categoryVars = (c: Category) => ({ "--cat": categoryColor(c) }) as React.CSSProperties;

@@ -2,13 +2,14 @@ import { ArrowRight, Briefcase, CalendarClock, Clock, Globe2, GraduationCap } fr
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CategoryHiringChart, DistributionChart, RankingChart } from "@/components/insight-charts";
+import { CategoryDot, ChipContent, chipClassName } from "@/components/category";
+import { ChipScroller } from "@/components/chip-scroller";
 import { CountList, EARLY_SIGNAL_LINE, EarlySignalBadge } from "@/components/early-signal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CATEGORY_META } from "@/lib/categories";
-import { CATEGORY_LABEL } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { CATEGORY_META, categoryColor, categoryVars } from "@/lib/categories";
+import { CATEGORY_LABEL, type Category } from "@/lib/types";
 import { categoryComparison, getDataset, insightFor, isEarlySignal, parseFilters, REACH } from "@/lib/view";
 
 export const dynamic = "force-dynamic";
@@ -30,6 +31,10 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   const comparison = categoryComparison(jobs);
   const reachShare = scope.length ? Math.round((i.withinReach / scope.length) * 100) : 0;
   const early = !!category && isEarlySignal(scope.length);
+  // A single direction's charts use its own colour; "All directions" keeps the chart tokens.
+  const colors = category
+    ? { skills: categoryColor(category), tools: categoryColor(category), seniority: categoryColor(category), years: categoryColor(category) }
+    : { skills: 1, tools: 2, seniority: 3, years: 4 } as const;
 
   const keyStats = [
     { icon: Briefcase, value: i.postings.toLocaleString("en-GB"), label: "current postings" },
@@ -41,7 +46,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   return (
     <div className="grid gap-12 pt-10 sm:pt-14">
       <section className="grid gap-4">
-        <p className="font-mono text-sm font-medium text-primary">Market insights</p>
+        <p className="font-mono text-sm font-medium text-muted-foreground">Market insights</p>
         <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">What the market is asking for</h1>
         <p className="max-w-2xl text-lg text-pretty text-muted-foreground">
           We read the requirements in every posting and counted them up. No guesswork, no hype: this is what employers
@@ -60,28 +65,35 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
       <section className="grid gap-6" aria-labelledby="asks-heading">
         <div className="grid gap-3">
           <div className="flex flex-wrap items-center gap-3">
-            <h2 id="asks-heading" className="text-2xl font-bold tracking-tight">
+            <h2 id="asks-heading" className="flex items-center gap-3 text-2xl font-bold tracking-tight">
+              {category && <CategoryDot category={category} className="size-3" />}
               {category ? CATEGORY_LABEL[category] : "All directions"}
             </h2>
             {early && <EarlySignalBadge />}
           </div>
           <p className="text-muted-foreground">{category ? CATEGORY_META[category].blurb : "Every design role we track, all nine directions together."}</p>
           {early && <p className="font-medium">{EARLY_SIGNAL_LINE}</p>}
-          <nav aria-label="Direction" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0">
+          <ChipScroller as="nav" aria-label="Direction" activeKey={category}>
             <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
               <DirectionLink href="/insights" active={!category} label="All directions" />
               {comparison.map((c) => (
-                <DirectionLink key={c.category} href={`/insights?category=${c.category}`} active={category === c.category} label={CATEGORY_META[c.category].short} />
+                <DirectionLink
+                key={c.category}
+                href={`/insights?category=${c.category}`}
+                active={category === c.category}
+                label={CATEGORY_META[c.category].short}
+                category={c.category}
+              />
               ))}
             </div>
-          </nav>
+          </ChipScroller>
         </div>
 
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {keyStats.map((s) => (
             <Card key={s.label} size="sm">
               <CardContent className="grid gap-1">
-                <s.icon className="size-4 text-primary" />
+                <s.icon className="size-4 text-muted-foreground" />
                 <div className="font-mono text-2xl font-semibold tabular-nums sm:text-3xl">{s.value}</div>
                 <div className="text-sm text-muted-foreground">{s.label}</div>
               </CardContent>
@@ -110,7 +122,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>Share of postings that mention each skill</CardDescription>
               </CardHeader>
               <CardContent>
-                <RankingChart data={i.skills} color={1} />
+                <RankingChart data={i.skills} color={colors.skills} />
               </CardContent>
             </Card>
             <Card>
@@ -119,7 +131,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>Share of postings that name each tool</CardDescription>
               </CardHeader>
               <CardContent>
-                <RankingChart data={i.tools} color={2} />
+                <RankingChart data={i.tools} color={colors.tools} />
               </CardContent>
             </Card>
             <Card>
@@ -128,7 +140,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>How many roles sit at each level. &ldquo;Not stated&rdquo; often means open to a range.</CardDescription>
               </CardHeader>
               <CardContent>
-                <DistributionChart data={i.seniority} color={3} label="Postings" />
+                <DistributionChart data={i.seniority} color={colors.seniority} label="Postings" />
               </CardContent>
             </Card>
             <Card>
@@ -140,7 +152,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <DistributionChart data={i.years} color={4} label="Postings" />
+                <DistributionChart data={i.years} color={colors.years} label="Postings" />
               </CardContent>
             </Card>
           </div>
@@ -171,7 +183,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
             <CategoryHiringChart
               data={comparison.map((c) => {
                 const reach = jobs.filter((j) => j.primary === c.category && REACH.has(j.seniority)).length;
-                return { label: CATEGORY_META[c.category].short, reach, rest: c.postings - reach };
+                return { label: CATEGORY_META[c.category].short, reach, rest: c.postings - reach, color: categoryColor(c.category) };
               })}
             />
           </CardContent>
@@ -184,10 +196,15 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
               className="group row-span-3 grid grid-rows-subgrid gap-0 focus-visible:outline-none"
             >
               {/* Subgrid rows (description, stats, chips) keep cards in the same row aligned. */}
-              <Card className="row-span-3 grid grid-rows-subgrid transition-shadow group-hover:shadow-lg group-focus-visible:ring-3 group-focus-visible:ring-ring/50">
+              <Card
+                style={categoryVars(c.category)}
+                className="row-span-3 grid grid-rows-subgrid border-t-4 border-t-(--cat) transition-shadow group-hover:shadow-lg group-focus-visible:ring-3 group-focus-visible:ring-ring/50">
                 <CardHeader className="content-start">
                   <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
-                    {CATEGORY_META[c.category].short}
+                    <span className="flex items-center gap-2">
+                      <CategoryDot category={c.category} className="size-2.5" />
+                      {CATEGORY_META[c.category].short}
+                    </span>
                     <span className="font-mono text-sm text-muted-foreground">{c.postings}</span>
                   </CardTitle>
                   <CardDescription>{CATEGORY_META[c.category].blurb}</CardDescription>
@@ -225,18 +242,16 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   );
 }
 
-function DirectionLink({ href, active, label }: { href: string; active: boolean; label: string }) {
+function DirectionLink({ href, active, label, category }: { href: string; active: boolean; label: string; category?: Category }) {
   return (
     <Link
       href={href}
       scroll={false}
       aria-current={active ? "page" : undefined}
-      className={cn(
-        "rounded-full border px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-        active ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:border-primary/60",
-      )}
+      style={category ? categoryVars(category) : undefined}
+      className={chipClassName(active, category)}
     >
-      {label}
+      <ChipContent label={label} active={active} category={category} />
     </Link>
   );
 }

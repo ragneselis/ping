@@ -43,6 +43,17 @@
   --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-border: oklch(0.9205 0.0086 225.0878);
   --sidebar-ring: oklch(0.6726 0.2904 341.4084);
+  /* Category colours: one per direction. Lightness tuned so each passes WCAG AA (>= 4.6:1)
+     as text on its own 15% tint over --background and --card. */
+  --cat-product: oklch(0.47 0.14 225);
+  --cat-engineering: oklch(0.50 0.17 265);
+  --cat-ai: oklch(0.50 0.20 300);
+  --cat-brand: oklch(0.51 0.17 50);
+  --cat-research: oklch(0.47 0.11 175);
+  --cat-customer: oklch(0.51 0.19 15);
+  --cat-game: oklch(0.48 0.15 135);
+  --cat-industrial: oklch(0.49 0.12 95);
+  --cat-other: oklch(0.50 0.04 280);
   --font-sans: Chakra Petch, ui-sans-serif, sans-serif, system-ui;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: Fira Code, monospace;
@@ -98,6 +109,16 @@
   --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-border: oklch(0.3279 0.0832 280.7890);
   --sidebar-ring: oklch(0.6726 0.2904 341.4084);
+  /* Category colours (dark theme). */
+  --cat-product: oklch(0.80 0.14 225);
+  --cat-engineering: oklch(0.78 0.15 265);
+  --cat-ai: oklch(0.78 0.17 300);
+  --cat-brand: oklch(0.80 0.16 50);
+  --cat-research: oklch(0.82 0.14 175);
+  --cat-customer: oklch(0.78 0.16 15);
+  --cat-game: oklch(0.85 0.19 135);
+  --cat-industrial: oklch(0.88 0.17 95);
+  --cat-other: oklch(0.78 0.04 280);
   --font-sans: Chakra Petch, ui-sans-serif, sans-serif, system-ui;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: Fira Code, monospace;
@@ -151,6 +172,16 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-cat-product: var(--cat-product);
+  --color-cat-engineering: var(--cat-engineering);
+  --color-cat-ai: var(--cat-ai);
+  --color-cat-brand: var(--cat-brand);
+  --color-cat-research: var(--cat-research);
+  --color-cat-customer: var(--cat-customer);
+  --color-cat-game: var(--cat-game);
+  --color-cat-industrial: var(--cat-industrial);
+  --color-cat-other: var(--cat-other);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
