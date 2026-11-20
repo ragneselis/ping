@@ -8,7 +8,7 @@
     "start": "next start",
     "fetch": "tsx scripts/fetch.ts",
     "sample": "tsx scripts/sample.ts",
-    "extract": "tsx scripts/extract.ts"
+    "extract": "tsx --env-file-if-exists=.env.local scripts/extract.ts"
   },
   "dependencies": {
     "next": "^15.5.29",

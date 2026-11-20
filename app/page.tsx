@@ -28,6 +28,19 @@ function Bars({ title, items, total, limit = 15 }: { title: string; items: { lab
   );
 }
 
+/** Some boards list 100+ countries in the location; collapse long lists so the page stays readable. */
+function shortLoc(loc: string): string {
+  return loc
+    .split(" · ")
+    .map((part) => {
+      const m = part.match(/^(.*?)\((.*)\)\s*$/);
+      if (!m || m[2].length < 80) return part;
+      const n = m[2].split(/,\s*(?=[A-ZÅÉ])/).length;
+      return `${m[1].trim()} (${n} countries${/Estonia/.test(m[2]) ? ", incl. Estonia" : ""})`;
+    })
+    .join(" · ");
+}
+
 function fmtDate(iso: string | null) {
   return iso ? iso.slice(0, 10) : "-";
 }
@@ -53,6 +66,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
       (!f.seniority || j.seniority === f.seniority),
   );
   const uniq = (xs: string[]) => [...new Set(xs)].sort();
+  const estonia = jobs.filter((j) => j.openToEstonia);
+  const estoniaByCompany = [...Map.groupBy(estonia, (j) => j.company).entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
 
   const results = req?.results ?? [];
   const n = results.length;
@@ -72,7 +87,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
         <>
           <p>
             {sources.totalInScope} postings in scope, {sources.duplicatesRemoved} duplicates removed, <b>{sources.unique} unique</b>.{" "}
-            {jobs.filter((j) => j.openToEstonia).length} are open to someone based in Estonia.
+            {estonia.length} are open to someone based in Estonia.
           </p>
           <div className="wrap">
             <table>
@@ -84,6 +99,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
                   <th>Design matches</th>
                   <th>In scope</th>
                   <th>Unique after dedupe</th>
+                  <th>Open to Estonia</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -96,7 +112,36 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
                     <td>{s.designMatches}</td>
                     <td>{s.inScope}</td>
                     <td>{jobs.filter((j) => j.source === s.source).length}</td>
+                    <td>{jobs.filter((j) => j.source === s.source && j.openToEstonia).length}</td>
                     <td className="muted">{s.error ?? s.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Roles open to someone based in Estonia, by company ({estonia.length})</h3>
+          <div className="wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Roles</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                {estoniaByCompany.map(([company, list]) => (
+                  <tr key={company}>
+                    <td>{company}</td>
+                    <td>
+                      {list.map((j) => (
+                        <div key={j.id}>
+                          <a href={j.url} target="_blank" rel="noreferrer">{j.title}</a> <span className="muted" title={j.location}>· {shortLoc(j.location)} · {j.remote}</span>
+                        </div>
+                      ))}
+                    </td>
+                    <td className="muted">{[...new Set(list.map((j) => j.source))].join(", ")}</td>
                   </tr>
                 ))}
               </tbody>
@@ -220,7 +265,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
                   </details>
                 </td>
                 <td>{j.company}</td>
-                <td>{j.location}</td>
+                <td title={j.location}>{shortLoc(j.location)}</td>
                 <td>{j.remote}</td>
                 <td>
                   {j.regions.join(", ") || "-"}

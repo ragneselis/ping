@@ -14,18 +14,22 @@ Next.js 15 (App Router) + TypeScript, deployable on Vercel. Data scripts run wit
 npm install
 npm run fetch      # pull all sources -> data/jobs.json, data/sources.json
 npm run sample     # pick ~20 varied postings -> data/sample.json
-ANTHROPIC_API_KEY=... npm run extract   # Haiku requirement extraction -> data/requirements.json
+npm run extract    # Haiku requirement extraction -> data/requirements.json (reads ANTHROPIC_API_KEY from .env.local)
 npm run dev        # http://localhost:3000
 ```
 
 Behind an HTTPS proxy, Node's built-in fetch needs `NODE_USE_ENV_PROXY=1` (Node 22.21+).
+
+## API key
+
+Put your Anthropic key in `.env.local` (git-ignored) as `ANTHROPIC_API_KEY=sk-ant-...`. Never commit it.
 
 ## Pipeline
 
 | Step | Code |
 |---|---|
 | Source adapters (job boards) | `lib/sources/boards.ts` (Remote OK, We Work Remotely, Himalayas, Remotive, Arbeitnow) |
-| Source adapters (company ATS) | `lib/sources/ats.ts` (Greenhouse, Lever, Ashby; company list in `COMPANIES`) |
+| Source adapters (company ATS) | `lib/sources/ats.ts` (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio; company list in `COMPANIES`, incl. ~90 Estonian, Baltic and Nordic companies) |
 | Design-role filter, seniority, regions, remote status | `lib/classify.ts` |
 | Normalise to one `Job` shape, scope filter, dedupe | `lib/normalize.ts`, types in `lib/types.ts` |
 | Requirement extraction prompt + schema | `lib/extraction.ts` |

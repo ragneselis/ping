@@ -3,7 +3,7 @@ import type { Category, RemoteStatus, Seniority } from "./types";
 /* ---------- Is this a product / UX / UI design role? ---------- */
 
 const EXCLUDE =
-  /\b(instructional|interior|fashion|graphic|packaging|landscape|hardware|chip|circuit|asic|fpga|analog|mechanical|electrical|game|level|sound|lighting|kitchen|floral|curriculum|architectural|architecture|thumbnail|physical|industrial|jewelry|furniture|textile|teaching|tutor|recruiter|recruiting|recruitment|compensation|sales|advocate|production|soft goods|ad|ads|thumbnail|learning experience|solutions? design(er)?|network design|database design|engineer(ing)? manager)\b/i;
+  /\b(instructional|interior|fashion|graphic|packaging|landscape|hardware|chip|circuit|asic|fpga|analog|mechanical|electrical|game|level|live ops|economy|sound|lighting|kitchen|floral|curriculum|architectural|architecture|thumbnail|physical|industrial|jewelry|furniture|textile|teaching|tutor|recruiter|recruiting|recruitment|compensation|sales|advocate|production|soft goods|ad|ads|thumbnail|learning experience|solutions? design(er)?|network design|database design|engineer(ing)? manager)\b/i;
 
 const PRODUCT = /\b(product design(er)?|head of design|design (lead|manager|director)|director,? (of )?(product )?design|vp,? (of )?design|principal designer|staff designer|founding designer|lead designer|senior designer|designer)\b/i;
 const UX = /\b(ux|user experience|experience design(er)?|interaction design(er)?|service design(er)?|ux research(er)?|design research(er)?|content design(er)?|ux writer|conversation(al)? design(er)?)\b/i;
