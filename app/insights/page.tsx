@@ -2,18 +2,22 @@ import { ArrowRight, Briefcase, CalendarClock, Clock, Globe2, GraduationCap } fr
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CategoryHiringChart, DistributionChart, RankingChart } from "@/components/insight-charts";
+import { CountList, EARLY_SIGNAL_LINE, EarlySignalBadge } from "@/components/early-signal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CATEGORY_META } from "@/lib/categories";
 import { CATEGORY_LABEL } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { categoryComparison, getDataset, insightFor, parseFilters, REACH } from "@/lib/view";
+import { categoryComparison, getDataset, insightFor, isEarlySignal, parseFilters, REACH } from "@/lib/view";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: { absolute: "Market insights | Ping" } };
 
 type Search = Record<string, string | string[] | undefined>;
+
+/** "Product" -> "product" mid-sentence, but "AI and behaviour" keeps its acronym. */
+const lowerFirst = (s: string) => (/^[A-Z]{2}/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
 
 const fmtDate = (iso: string | null) =>
   iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "recently";
@@ -25,6 +29,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   const i = insightFor(scope, 10);
   const comparison = categoryComparison(jobs);
   const reachShare = scope.length ? Math.round((i.withinReach / scope.length) * 100) : 0;
+  const early = !!category && isEarlySignal(scope.length);
 
   const keyStats = [
     { icon: Briefcase, value: i.postings.toLocaleString("en-GB"), label: "current postings" },
@@ -54,10 +59,14 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
       {/* ---------- Direction picker ---------- */}
       <section className="grid gap-6" aria-labelledby="asks-heading">
         <div className="grid gap-3">
-          <h2 id="asks-heading" className="text-2xl font-bold tracking-tight">
-            {category ? CATEGORY_LABEL[category] : "All directions"}
-          </h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 id="asks-heading" className="text-2xl font-bold tracking-tight">
+              {category ? CATEGORY_LABEL[category] : "All directions"}
+            </h2>
+            {early && <EarlySignalBadge />}
+          </div>
           <p className="text-muted-foreground">{category ? CATEGORY_META[category].blurb : "Every design role we track, all nine directions together."}</p>
+          {early && <p className="font-medium">{EARLY_SIGNAL_LINE}</p>}
           <nav aria-label="Direction" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0">
             <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
               <DirectionLink href="/insights" active={!category} label="All directions" />
@@ -80,10 +89,17 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
           ))}
         </div>
 
-        {i.withRequirements < 5 ? (
+        {early ? (
           <Card>
-            <CardContent className="py-4 text-muted-foreground">
-              Too few postings in this direction right now to say anything solid. Check back as more arrive.
+            <CardContent className="grid gap-8 md:grid-cols-3">
+              <CountList title="Skills mentioned" items={i.skills} total={i.withRequirements} empty="No skills listed yet." />
+              <CountList title="Tools mentioned" items={i.tools} total={i.withRequirements} empty="No tools named yet." />
+              <CountList
+                title="Levels"
+                items={i.seniority.filter((s) => s.count > 0)}
+                total={i.postings}
+                empty="No levels stated yet."
+              />
             </CardContent>
           </Card>
         ) : (
@@ -94,7 +110,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>Share of postings that mention each skill</CardDescription>
               </CardHeader>
               <CardContent>
-                <RankingChart data={i.skills} color={1} unit="postings" />
+                <RankingChart data={i.skills} color={1} />
               </CardContent>
             </Card>
             <Card>
@@ -103,7 +119,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>Share of postings that name each tool</CardDescription>
               </CardHeader>
               <CardContent>
-                <RankingChart data={i.tools} color={2} unit="postings" />
+                <RankingChart data={i.tools} color={2} />
               </CardContent>
             </Card>
             <Card>
@@ -131,7 +147,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
         )}
         {category && (
           <Link href={`/?category=${category}`} className="flex w-fit items-center gap-1.5 font-medium text-primary hover:underline">
-            See the {i.postings} {CATEGORY_META[category].short.toLowerCase()} jobs <ArrowRight className="size-4" />
+            See the {i.postings} {lowerFirst(CATEGORY_META[category].short)} jobs <ArrowRight className="size-4" />
           </Link>
         )}
       </section>
@@ -147,7 +163,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
           <p className="max-w-2xl text-muted-foreground">
             How many roles each direction has right now, and how many of them a graduate can realistically go for.{" "}
             {CATEGORY_META[comparison[0].category].short} leads on volume right now, followed by{" "}
-            {CATEGORY_META[comparison[1].category].short.toLowerCase()}. The smaller directions often ask for more specialist skills.
+            {lowerFirst(CATEGORY_META[comparison[1].category].short)}. The smaller directions often ask for more specialist skills.
           </p>
         </div>
         <Card>
@@ -162,21 +178,34 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
         </Card>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {comparison.map((c) => (
-            <Link key={c.category} href={`/insights?category=${c.category}`} className="group focus-visible:outline-none">
-              <Card className="h-full transition-shadow group-hover:shadow-lg group-focus-visible:ring-3 group-focus-visible:ring-ring/50">
-                <CardHeader>
+            <Link
+              key={c.category}
+              href={`/insights?category=${c.category}`}
+              className="group row-span-3 grid grid-rows-subgrid gap-0 focus-visible:outline-none"
+            >
+              {/* Subgrid rows (description, stats, chips) keep cards in the same row aligned. */}
+              <Card className="row-span-3 grid grid-rows-subgrid transition-shadow group-hover:shadow-lg group-focus-visible:ring-3 group-focus-visible:ring-ring/50">
+                <CardHeader className="content-start">
                   <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
                     {CATEGORY_META[c.category].short}
                     <span className="font-mono text-sm text-muted-foreground">{c.postings}</span>
                   </CardTitle>
                   <CardDescription>{CATEGORY_META[c.category].blurb}</CardDescription>
+                  {c.earlySignal && (
+                    <div className="grid justify-items-start gap-1.5 pt-1">
+                      <EarlySignalBadge />
+                      <p className="text-sm font-medium">{EARLY_SIGNAL_LINE}</p>
+                    </div>
+                  )}
                 </CardHeader>
-                <CardContent className="grid gap-3">
+                <CardContent>
                   <dl className="grid grid-cols-3 gap-2 text-center">
                     <Stat label="within reach" value={`${c.withinReachShare}%`} />
                     <Stat label="years asked" value={c.medianYears === null ? "n/a" : String(c.medianYears)} />
                     <Stat label="open to EE" value={String(c.openToEstonia)} />
                   </dl>
+                </CardContent>
+                <CardContent>
                   {c.topSkills.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
                       {[...c.topSkills, ...c.topTools].map((s) => (

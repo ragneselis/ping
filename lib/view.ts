@@ -8,6 +8,10 @@ import { loadClassifiedJobs, loadSources, tally } from "./data";
 import { COMPANIES } from "./sources/ats";
 import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "./types";
 
+/** Directions with fewer postings than this are an "early signal": shown as lists, not charts. */
+export const EARLY_SIGNAL_THRESHOLD = 15;
+export const isEarlySignal = (postings: number) => postings < EARLY_SIGNAL_THRESHOLD;
+
 /** Seniority levels a graduate can realistically go for. Postings that state no level count too. */
 export const REACH = new Set(["intern", "junior", "mid", "unspecified"]);
 
@@ -200,6 +204,7 @@ export function categoryComparison(jobs: ClassifiedJob[]) {
     return {
       category: c,
       postings: list.length,
+      earlySignal: isEarlySignal(list.length),
       openToEstonia: i.openToEstonia,
       withinReachShare: list.length ? Math.round((i.withinReach / list.length) * 100) : 0,
       medianYears: i.medianYears,

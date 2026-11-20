@@ -21,10 +21,11 @@ export function JobCard({ job }: { job: Job }) {
       href={job.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block rounded-xl focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      className="group row-span-3 grid grid-rows-subgrid gap-0 rounded-xl focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      <Card className="h-full gap-3 transition-shadow group-hover:shadow-lg group-hover:ring-primary/40">
-        <CardHeader className="gap-2">
+      {/* Three subgrid rows (header, meta, chips) so cards in the same row line up. */}
+      <Card className="row-span-3 grid grid-rows-subgrid gap-3 transition-shadow group-hover:shadow-lg group-hover:ring-primary/40">
+        <CardHeader className="content-start gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
             <Badge className="font-mono">{CATEGORY_META[job.primary].short}</Badge>
             {job.secondary && (
@@ -40,13 +41,13 @@ export function JobCard({ job }: { job: Job }) {
           </div>
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="text-lg leading-snug font-semibold text-balance group-hover:text-primary">{job.title}</h3>
+              <h3 className="line-clamp-2 text-lg leading-snug font-semibold text-balance group-hover:text-primary" title={job.title}>{job.title}</h3>
               <p className="text-sm font-medium text-muted-foreground">{job.company}</p>
             </div>
             <ArrowUpRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
           </div>
         </CardHeader>
-        <CardContent className="mt-auto grid gap-3">
+        <CardContent className="self-end">
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
             <span className="flex min-w-0 items-center gap-1.5">
               <MapPin className="size-3.5 shrink-0" />
@@ -61,7 +62,9 @@ export function JobCard({ job }: { job: Job }) {
               {postedAgo(job.postedAt)}
             </span>
           </div>
-          {job.chips.length > 0 && (
+        </CardContent>
+        <CardContent className="self-end">
+          {job.chips.length > 0 ? (
             <ul className="flex flex-wrap gap-1.5" aria-label="Top requirements">
               {job.chips.map((c) => (
                 <li key={c} className="rounded-md bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground">
@@ -69,6 +72,8 @@ export function JobCard({ job }: { job: Job }) {
                 </li>
               ))}
             </ul>
+          ) : (
+            <p className="font-mono text-xs text-muted-foreground">No requirements listed</p>
           )}
         </CardContent>
       </Card>

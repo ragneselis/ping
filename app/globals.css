@@ -21,7 +21,8 @@
   --secondary: oklch(0.9595 0.0200 286.0164);
   --secondary-foreground: oklch(0.1649 0.0352 281.8285);
   --muted: oklch(0.9595 0.0200 286.0164);
-  --muted-foreground: oklch(0.1649 0.0352 281.8285);
+  /* Softer than --foreground so secondary text has hierarchy. WCAG AA: 5.26:1 on --background, 5.55:1 on --card, 4.91:1 on --muted. */
+  --muted-foreground: oklch(0.5200 0.0350 281.0000);
   --accent: oklch(0.8903 0.1739 171.2690);
   --accent-foreground: oklch(0.1649 0.0352 281.8285);
   --destructive: oklch(0.6535 0.2348 34.0370);
