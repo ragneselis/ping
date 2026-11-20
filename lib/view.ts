@@ -55,15 +55,48 @@ export interface JobCard {
   chips: string[];
   openToEstonia: boolean;
   withinReach: boolean;
+  levelBucket: Level;
   seniority: string;
   level: string;
 }
+
+/** Level buckets for the level filter. Every job is in exactly one. */
+export const LEVELS = ["reach", "mid", "senior"] as const;
+export type Level = (typeof LEVELS)[number];
+export type Sort = "reach" | "newest";
 
 export interface Filters {
   category: Category | "";
   estonia: boolean;
   remote: "" | "remote" | "hybrid" | "onsite";
-  reach: boolean;
+  /** Selected level buckets; empty means all levels. */
+  levels: Level[];
+  /** Sort order: explicit from the URL, or the default for the chosen levels. */
+  sort: Sort;
+}
+
+/**
+ * Level bucket of a job:
+ * - "reach": within reach (see isWithinReach),
+ * - "mid": mid-level, or no level stated and 3 to 4 years asked,
+ * - "senior": senior, staff, lead or manager, or no level stated and 5+ years asked.
+ */
+export function levelBucket(j: ClassifiedJob): Level {
+  if (isWithinReach(j)) return "reach";
+  if (j.seniority === "mid") return "mid";
+  if (j.seniority === "unspecified") return (j.extraction?.yearsMin ?? 0) >= 5 ? "senior" : "mid";
+  return "senior";
+}
+
+/**
+ * Level text on a card. When the level is only the model's guess and the posting asks for
+ * 0 to 2 years (so it is within reach), the years are the honest label, not "Mid".
+ */
+function cardLevel(j: ClassifiedJob): string {
+  const e = j.extraction;
+  const guessed = j.titleSeniority === "unspecified" && !["intern", "junior", "unspecified"].includes(j.seniority);
+  if (guessed && isWithinReach(j) && typeof e?.yearsMin === "number" && e.yearsMin <= 2) return "0 to 2 yrs";
+  return LEVEL_LABEL[j.seniority] ?? j.seniority;
 }
 
 /** Some boards list 100+ countries in the location; collapse long lists so cards stay readable. */
@@ -103,8 +136,9 @@ function toCard(j: ClassifiedJob): JobCard {
     chips,
     openToEstonia: j.openToEstonia === true,
     withinReach: isWithinReach(j),
+    levelBucket: levelBucket(j),
     seniority: j.seniority,
-    level: LEVEL_LABEL[j.seniority] ?? j.seniority,
+    level: cardLevel(j),
   };
 }
 
@@ -152,17 +186,29 @@ export function parseFilters(sp: Record<string, string | string[] | undefined>):
   const one = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string) : "");
   const category = (CATEGORIES as readonly string[]).includes(one("category")) ? (one("category") as Category) : "";
   const remote = ["remote", "hybrid", "onsite"].includes(one("remote")) ? (one("remote") as Filters["remote"]) : "";
-  return { category, estonia: one("estonia") === "1", remote, reach: one("reach") === "1" };
+  // ?level=reach,mid; the old ?reach=1 still means "within reach".
+  const levels = new Set(one("level").split(",").filter((l): l is Level => (LEVELS as readonly string[]).includes(l)));
+  if (one("reach") === "1") levels.add("reach");
+  const list = LEVELS.filter((l) => levels.has(l));
+  return { category, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort"), list) };
 }
 
-export function applyFilters(cards: JobCard[], f: Filters): JobCard[] {
-  return cards.filter(
+/** Default sort: within reach first, unless the level filter leaves within-reach jobs out. */
+export function resolveSort(raw: string, levels: Level[]): Sort {
+  if (raw === "reach" || raw === "newest") return raw;
+  return levels.length && !levels.includes("reach") ? "newest" : "reach";
+}
+
+export function applyFilters(cards: JobCard[], f: Omit<Filters, "sort"> & { sort?: Sort }): JobCard[] {
+  const out = cards.filter(
     (c) =>
       (!f.category || c.primary === f.category) &&
       (!f.estonia || c.openToEstonia) &&
       (!f.remote || c.remote === f.remote) &&
-      (!f.reach || c.withinReach),
+      (!f.levels.length || f.levels.includes(c.levelBucket)),
   );
+  // Cards arrive within-reach first; "newest" re-sorts by date only.
+  return f.sort === "newest" ? [...out].sort((a, b) => (b.postedAt ?? "").localeCompare(a.postedAt ?? "")) : out;
 }
 
 /* ---------- Market insights ---------- */

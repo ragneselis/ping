@@ -61,7 +61,7 @@ export function Readout({ items, note, className }: { items: ReadoutItem[]; note
           );
         })}
       </dl>
-      {note && <p className="text-xs text-muted-foreground">{note}</p>}
+      {note && <p className="max-w-prose text-xs text-muted-foreground">{note}</p>}
     </div>
   );
 }

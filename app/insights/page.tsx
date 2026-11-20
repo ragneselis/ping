@@ -42,8 +42,8 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   const readout: ReadoutItem[] = [
     { value: i.postings.toLocaleString("en-GB"), label: "current postings", href: filterHref("") || "/" },
     early
-      ? { value: `${i.withinReach} of ${i.postings}`, label: "within reach", href: filterHref("reach=1"), signal: true }
-      : { value: pct(i.withinReach), label: `within reach (${i.withinReach.toLocaleString("en-GB")})`, href: filterHref("reach=1"), signal: true },
+      ? { value: `${i.withinReach} of ${i.postings}`, label: "within reach", href: filterHref("level=reach"), signal: true }
+      : { value: pct(i.withinReach), label: `within reach (${i.withinReach.toLocaleString("en-GB")})`, href: filterHref("level=reach"), signal: true },
     early
       ? { value: `${i.openToEstonia} of ${i.postings}`, label: "open to Estonia", href: filterHref("estonia=1"), signal: true }
       : { value: i.openToEstonia.toLocaleString("en-GB"), label: "open to Estonia", href: filterHref("estonia=1"), signal: true },
@@ -58,7 +58,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
     <>
       <Band aria-label="Introduction" inner="grid gap-4 py-8 sm:py-12">
         <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">What the market is asking for</h1>
-        <p className="max-w-xl text-lg text-pretty text-muted-foreground">
+        <p className="max-w-prose text-lg text-pretty text-muted-foreground">
           We read the requirements in every posting and counted them up. No guesswork, no hype: this is what employers actually write down, so you
           can spend your portfolio time where it counts.
         </p>
@@ -89,7 +89,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
               </Button>
             )}
           </div>
-          <p className="text-muted-foreground">{category ? CATEGORY_META[category].blurb : "Every design role we track, all nine directions together."}</p>
+          <p className="max-w-prose text-muted-foreground">{category ? CATEGORY_META[category].blurb : "Every design role we track, all nine directions together."}</p>
           {early && <p className="font-medium">{EARLY_SIGNAL_LINE}</p>}
           <ChipScroller as="nav" aria-label="Direction" activeKey={category}>
             <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
@@ -118,9 +118,9 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
             {stacked && (
-              <div className="grid gap-1.5 lg:col-span-2">
+              <div className="grid gap-1.5 lg:col-span-2 xl:col-span-3">
                 <p className="text-xs text-muted-foreground">Bars are split by each posting&rsquo;s main direction. Hover or tap a bar for the breakdown.</p>
                 <CategoryLegend />
               </div>
@@ -152,7 +152,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <DistributionChart data={i.seniority} color={color} stacked={stacked} label="Postings" caption="Postings per seniority level" />
               </CardContent>
             </Card>
-            <Card>
+            <Card className="xl:col-span-3">
               <CardHeader>
                 <CardTitle>Years of experience asked</CardTitle>
                 <CardDescription>
@@ -174,7 +174,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
           <h2 id="compare-heading" className="text-2xl font-bold tracking-tight">
             Which directions are hiring
           </h2>
-          <p className="max-w-xl text-muted-foreground">
+          <p className="max-w-prose text-muted-foreground">
             How many roles each direction has right now, and how many a graduate can realistically go for.{" "}
             {CATEGORY_META[comparison[0].category].short} leads on volume, followed by {lowerFirst(CATEGORY_META[comparison[1].category].short)}.
           </p>

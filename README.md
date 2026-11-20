@@ -23,6 +23,10 @@ Each direction has two colour tokens in `app/globals.css` (light and dark): `--c
 
 Shared pieces of the look: hairline borders with a chamfered corner (`cut-corner` utility and `--cut` in `app/globals.css`, used by `components/ui/card.tsx`), a blueprint frame (`components/blueprint.tsx`: every page is a stack of `Band`s with `--frame-line` rules between sections and either side of the content column, and 45-degree hatching in the gutters), the mono readout strip (`components/readout.tsx`) instead of stat cards, and signal tags on `--accent` for the facts a graduate decides on: open to Estonia, within reach, level (`components/signal.tsx`). "All directions" charts stack each bar by the postings' main direction in the vivid category colours (fixed order, one shared legend, breakdown in the tooltip and in each chart's hidden data table); a single direction's charts use its own colour; pink never appears in charts. Signals (open to Estonia, within reach) are solid `--accent` with navy text.
 
+Layout: one frame width, the `--container-frame` token (96rem, used as `max-w-frame` by `FRAME_COLUMN` in `components/blueprint.tsx`), with at least 32px (md) or 48px (lg) of hatched gutter; text blocks keep a 65ch measure (`max-w-prose`). Job grid: 1 column on phones, 2 from md, 3 from xl, 4 from the `3xl` breakpoint (1800px).
+
+Jobs filters in the URL: `category`, `estonia=1`, `remote`, `level` (comma list of `reach`, `mid`, `senior`; empty = any level; the old `reach=1` still works) and `sort` (`reach` or `newest`; defaults to within reach first, or newest when the level filter leaves within reach out). Level buckets are `levelBucket` in `lib/view.ts`.
+
 "Within reach" (`isWithinReach` in `lib/view.ts`): a level in the title wins (only intern or junior count); otherwise the posting's level (intern or junior) or the years asked (0 to 2) decide; a posting that states no level and no years counts. Mid-level and above never count. Within-reach jobs are listed first.
 
 Directions with fewer than `EARLY_SIGNAL_THRESHOLD` postings (15, in `lib/view.ts`) get an "Early signal" badge and show lists with counts instead of charts.

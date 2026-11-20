@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
 import { JobCard } from "@/components/job-card";
-import { JobFilters } from "@/components/job-filters";
+import { JobFilters, SortSelect } from "@/components/job-filters";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,7 +39,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   const readout: ReadoutItem[] = [
     { value: cards.length.toLocaleString("en-GB"), label: "design jobs live", href: "/" },
     { value: estonia.toLocaleString("en-GB"), label: "open to Estonia", href: "/?estonia=1", signal: true },
-    { value: reach.toLocaleString("en-GB"), label: "within reach", href: "/?reach=1", signal: true },
+    { value: reach.toLocaleString("en-GB"), label: "within reach", href: "/?level=reach", signal: true },
   ];
 
   const nextParams = new URLSearchParams();
@@ -49,10 +49,10 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   return (
     <>
       <Band aria-label="Introduction" inner="grid gap-8 py-8 sm:py-12">
-      <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,65ch)_minmax(0,28rem)] lg:items-end lg:justify-between">
         <div className="grid gap-4">
           <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">Design jobs, minus the doomscrolling.</h1>
-          <p className="max-w-xl text-lg text-pretty text-muted-foreground">
+          <p className="max-w-prose text-lg text-pretty text-muted-foreground">
             Every current design role we can find, sorted into nine directions.
             <span className="hidden sm:inline"> The market is tough, not closed: here is where the doors are actually open.</span>
           </p>
@@ -65,7 +65,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
               <span className="font-mono font-semibold text-foreground">{both}</span> jobs are open to someone in Estonia and within reach for a
               graduate.
             </p>
-            <Button className="w-fit" nativeButton={false} render={<Link href="/?estonia=1&reach=1" />}>
+            <Button className="w-fit" nativeButton={false} render={<Link href="/?estonia=1&level=reach" />}>
               Show me those
               <ArrowRight data-icon="inline-end" />
             </Button>
@@ -81,9 +81,14 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
           <h2 id="jobs-heading" className="text-2xl font-bold tracking-tight">
             Find your direction
           </h2>
-          <p className="text-sm text-muted-foreground">
-            <span className="font-mono font-semibold text-foreground">{results.length.toLocaleString("en-GB")}</span> jobs match, within reach first
-          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="text-sm text-muted-foreground">
+              <span className="font-mono font-semibold text-foreground">{results.length.toLocaleString("en-GB")}</span> jobs match
+            </p>
+            <Suspense>
+              <SortSelect value={filters.sort} />
+            </Suspense>
+          </div>
         </div>
 
         <Suspense>
@@ -91,14 +96,14 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         </Suspense>
 
         {filters.category && (
-          <p className="-mt-2 text-sm text-muted-foreground">{CATEGORY_META[filters.category].blurb}</p>
+          <p className="-mt-2 max-w-prose text-sm text-muted-foreground">{CATEGORY_META[filters.category].blurb}</p>
         )}
 
       </Band>
 
       <Band aria-label="Jobs" last inner="grid gap-6 py-8 pb-16">
         {shown.length ? (
-          <div className="grid gap-x-4 gap-y-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4">
             {shown.map((job) => (
               <JobCard key={job.id} job={job} />
             ))}

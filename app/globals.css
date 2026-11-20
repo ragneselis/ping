@@ -244,6 +244,12 @@
   --shadow-2xl: var(--shadow-2xl);
 }
 
+/* Layout tokens: the blueprint frame's maximum width and the widest grid breakpoint. */
+@theme {
+  --container-frame: 96rem;
+  --breakpoint-3xl: 112.5rem;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

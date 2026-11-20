@@ -73,3 +73,17 @@ export function CategoryLegend({ className }: { className?: string }) {
     </ul>
   );
 }
+
+/**
+ * Toggle chip for non-category filters (e.g. level). 44px tall on phones, compact from sm up.
+ * Tones when selected: "signal" = mint (within reach), "all" = pink (the "any" option), "plain" = inverted.
+ */
+export function toggleClassName(active: boolean, tone: "signal" | "all" | "plain" = "plain") {
+  return cn(
+    "flex min-h-11 items-center gap-2 rounded-full border px-3 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:min-h-9",
+    !active && "bg-card hover:border-foreground/30",
+    active && tone === "signal" && "border-accent bg-accent text-accent-foreground",
+    active && tone === "all" && "border-primary bg-primary text-primary-foreground",
+    active && tone === "plain" && "border-foreground bg-foreground text-background",
+  );
+}
