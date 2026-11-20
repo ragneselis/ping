@@ -1,6 +1,6 @@
 # Ping
 
-Job tool for design students at the Estonian Academy of Arts (EKA). This is the first data test: no UI design yet.
+Job site for design students at the Estonian Academy of Arts (EKA): current design jobs sorted into nine directions, plus what the market is asking for.
 
 Scope: design work of every kind, sorted into nine categories by the work each posting describes (not by job title). Remote roles anywhere, plus on-site and hybrid roles in Europe (Estonia included).
 
@@ -9,6 +9,17 @@ Each posting gets exactly one primary category (the core of the job) and, only w
 ## Stack
 
 Next.js 15 (App Router) + TypeScript, deployable on Vercel. Data scripts run with `tsx` and write JSON to `data/`.
+
+Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Recharts via the shadcn chart component. The theme in `app/globals.css` is the single source of truth for colours, radius and shadows; don't add one-off colours. Fonts: Chakra Petch (sans) and Fira Code (mono, for numbers, counts, tags and stats) via `next/font`. Light and dark mode via `next-themes`, defaulting to the system setting.
+
+| Page | Code |
+|---|---|
+| Jobs (home): stats, URL filters, job cards, load more | `app/page.tsx`, `components/job-filters.tsx`, `components/job-card.tsx` |
+| Market insights: asks overall and per direction, direction comparison | `app/insights/page.tsx`, `components/insight-charts.tsx` |
+| Header, theme toggle, "Get new jobs" placeholder dialog | `components/site-header.tsx`, `components/theme-toggle.tsx`, `components/subscribe-dialog.tsx` |
+| Server-side view layer (filters, cards, insight numbers) | `lib/view.ts`, `lib/categories.ts` |
+
+Copy rules: British English, no em dashes, no middot separators, no mention of Claude or AI tools in the copy.
 
 ## Run
 

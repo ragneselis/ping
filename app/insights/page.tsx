@@ -1,0 +1,222 @@
+import { ArrowRight, Briefcase, CalendarClock, Clock, Globe2, GraduationCap } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { CategoryHiringChart, DistributionChart, RankingChart } from "@/components/insight-charts";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { CATEGORY_META } from "@/lib/categories";
+import { CATEGORY_LABEL } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { categoryComparison, getDataset, insightFor, parseFilters, REACH } from "@/lib/view";
+
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: { absolute: "Market insights | Ping" } };
+
+type Search = Record<string, string | string[] | undefined>;
+
+const fmtDate = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "recently";
+
+export default async function InsightsPage({ searchParams }: { searchParams: Promise<Search> }) {
+  const { category } = parseFilters(await searchParams);
+  const { jobs, updatedAt, boards, companyFeeds } = getDataset();
+  const scope = category ? jobs.filter((j) => j.primary === category) : jobs;
+  const i = insightFor(scope, 10);
+  const comparison = categoryComparison(jobs);
+  const reachShare = scope.length ? Math.round((i.withinReach / scope.length) * 100) : 0;
+
+  const keyStats = [
+    { icon: Briefcase, value: i.postings.toLocaleString("en-GB"), label: "current postings" },
+    { icon: Clock, value: i.medianYears === null ? "n/a" : `${i.medianYears} yrs`, label: "typical experience asked" },
+    { icon: GraduationCap, value: `${reachShare}%`, label: "within reach for graduates" },
+    { icon: Globe2, value: i.openToEstonia.toLocaleString("en-GB"), label: "open to someone in Estonia" },
+  ];
+
+  return (
+    <div className="grid gap-12 pt-10 sm:pt-14">
+      <section className="grid gap-4">
+        <p className="font-mono text-sm font-medium text-primary">Market insights</p>
+        <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">What the market is asking for</h1>
+        <p className="max-w-2xl text-lg text-pretty text-muted-foreground">
+          We read the requirements in every posting and counted them up. No guesswork, no hype: this is what employers
+          actually write down, so you can spend your portfolio time where it counts.
+        </p>
+        <p className="flex items-start gap-2 font-mono text-xs text-muted-foreground">
+          <CalendarClock className="mt-px size-3.5 shrink-0" />
+          <span>
+            Based on {jobs.length.toLocaleString("en-GB")} current postings from {boards} job boards and {companyFeeds} company career pages.
+            Last updated {fmtDate(updatedAt)}.
+          </span>
+        </p>
+      </section>
+
+      {/* ---------- Direction picker ---------- */}
+      <section className="grid gap-6" aria-labelledby="asks-heading">
+        <div className="grid gap-3">
+          <h2 id="asks-heading" className="text-2xl font-bold tracking-tight">
+            {category ? CATEGORY_LABEL[category] : "All directions"}
+          </h2>
+          <p className="text-muted-foreground">{category ? CATEGORY_META[category].blurb : "Every design role we track, all nine directions together."}</p>
+          <nav aria-label="Direction" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0">
+            <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
+              <DirectionLink href="/insights" active={!category} label="All directions" />
+              {comparison.map((c) => (
+                <DirectionLink key={c.category} href={`/insights?category=${c.category}`} active={category === c.category} label={CATEGORY_META[c.category].short} />
+              ))}
+            </div>
+          </nav>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {keyStats.map((s) => (
+            <Card key={s.label} size="sm">
+              <CardContent className="grid gap-1">
+                <s.icon className="size-4 text-primary" />
+                <div className="font-mono text-2xl font-semibold tabular-nums sm:text-3xl">{s.value}</div>
+                <div className="text-sm text-muted-foreground">{s.label}</div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {i.withRequirements < 5 ? (
+          <Card>
+            <CardContent className="py-4 text-muted-foreground">
+              Too few postings in this direction right now to say anything solid. Check back as more arrive.
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Most requested skills</CardTitle>
+                <CardDescription>Share of postings that mention each skill</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RankingChart data={i.skills} color={1} unit="postings" />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Most requested tools</CardTitle>
+                <CardDescription>Share of postings that name each tool</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RankingChart data={i.tools} color={2} unit="postings" />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Seniority</CardTitle>
+                <CardDescription>How many roles sit at each level. &ldquo;Not stated&rdquo; often means open to a range.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DistributionChart data={i.seniority} color={3} label="Postings" />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Years of experience asked</CardTitle>
+                <CardDescription>
+                  Minimum years, where stated ({i.statedYears.toLocaleString("en-GB")} of {i.withRequirements.toLocaleString("en-GB")} postings). Treat it
+                  as a wish list, not a wall.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DistributionChart data={i.years} color={4} label="Postings" />
+              </CardContent>
+            </Card>
+          </div>
+        )}
+        {category && (
+          <Link href={`/?category=${category}`} className="flex w-fit items-center gap-1.5 font-medium text-primary hover:underline">
+            See the {i.postings} {CATEGORY_META[category].short.toLowerCase()} jobs <ArrowRight className="size-4" />
+          </Link>
+        )}
+      </section>
+
+      <Separator />
+
+      {/* ---------- Category comparison ---------- */}
+      <section className="grid gap-6" aria-labelledby="compare-heading">
+        <div className="grid gap-2">
+          <h2 id="compare-heading" className="text-2xl font-bold tracking-tight">
+            Which directions are hiring
+          </h2>
+          <p className="max-w-2xl text-muted-foreground">
+            How many roles each direction has right now, and how many of them a graduate can realistically go for.{" "}
+            {CATEGORY_META[comparison[0].category].short} leads on volume right now, followed by{" "}
+            {CATEGORY_META[comparison[1].category].short.toLowerCase()}. The smaller directions often ask for more specialist skills.
+          </p>
+        </div>
+        <Card>
+          <CardContent>
+            <CategoryHiringChart
+              data={comparison.map((c) => {
+                const reach = jobs.filter((j) => j.primary === c.category && REACH.has(j.seniority)).length;
+                return { label: CATEGORY_META[c.category].short, reach, rest: c.postings - reach };
+              })}
+            />
+          </CardContent>
+        </Card>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {comparison.map((c) => (
+            <Link key={c.category} href={`/insights?category=${c.category}`} className="group focus-visible:outline-none">
+              <Card className="h-full transition-shadow group-hover:shadow-lg group-focus-visible:ring-3 group-focus-visible:ring-ring/50">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
+                    {CATEGORY_META[c.category].short}
+                    <span className="font-mono text-sm text-muted-foreground">{c.postings}</span>
+                  </CardTitle>
+                  <CardDescription>{CATEGORY_META[c.category].blurb}</CardDescription>
+                </CardHeader>
+                <CardContent className="grid gap-3">
+                  <dl className="grid grid-cols-3 gap-2 text-center">
+                    <Stat label="within reach" value={`${c.withinReachShare}%`} />
+                    <Stat label="years asked" value={c.medianYears === null ? "n/a" : String(c.medianYears)} />
+                    <Stat label="open to EE" value={String(c.openToEstonia)} />
+                  </dl>
+                  {c.topSkills.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {[...c.topSkills, ...c.topTools].map((s) => (
+                        <Badge key={s} variant="secondary" className="font-mono">
+                          {s}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function DirectionLink({ href, active, label }: { href: string; active: boolean; label: string }) {
+  return (
+    <Link
+      href={href}
+      scroll={false}
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "rounded-full border px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+        active ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:border-primary/60",
+      )}
+    >
+      {label}
+    </Link>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex flex-col-reverse rounded-lg bg-muted px-2 py-2">
+      <dt className="text-xs text-muted-foreground">{label}</dt>
+      <dd className="font-mono text-lg font-semibold">{value}</dd>
+    </div>
+  );
+}
