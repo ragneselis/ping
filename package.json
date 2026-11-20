@@ -7,13 +7,14 @@
     "build": "next build",
     "start": "next start",
     "fetch": "tsx scripts/fetch.ts",
-    "sample": "tsx scripts/sample.ts",
     "extract": "tsx --env-file-if-exists=.env.local scripts/extract.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.11.0",
     "next": "^15.5.29",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

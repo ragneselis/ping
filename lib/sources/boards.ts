@@ -2,7 +2,7 @@
  * Public remote job boards. All of these publish an official public feed/API.
  * Remote OK and Himalayas ask for attribution with a link back, which the UI will need later.
  */
-import { getJson, getText, sleep } from "../http";
+import { getJson, getText, pool, sleep } from "../http";
 import { decodeEntities, toIso } from "../text";
 import type { RawPosting } from "../types";
 import { remoteFromText } from "../classify";
@@ -19,7 +19,7 @@ export interface SourceResult {
 export async function remoteOk(): Promise<SourceResult> {
   const seen = new Map<string, any>();
   // The plain feed is the latest ~100 jobs across all categories; tag feeds add design-specific ones.
-  for (const url of ["https://remoteok.com/api", "https://remoteok.com/api?tag=design", "https://remoteok.com/api?tag=ux", "https://remoteok.com/api?tag=ui"]) {
+  for (const url of ["https://remoteok.com/api", "https://remoteok.com/api?tag=design", "https://remoteok.com/api?tag=ux", "https://remoteok.com/api?tag=ui", "https://remoteok.com/api?tag=designer"]) {
     try {
       const data = await getJson<any[]>(url);
       for (const j of data) if (j && j.id && j.position) seen.set(String(j.id), j);
@@ -98,7 +98,11 @@ export async function weWorkRemotely(): Promise<SourceResult> {
 
 /* Himalayas: public search API, 20 results per page. */
 export async function himalayas(): Promise<SourceResult> {
-  const queries = ["product designer", "ux designer", "ui designer", "ux researcher", "design lead", "game designer", "level designer"];
+  const queries = [
+    "designer", "product designer", "ux designer", "ui designer", "design lead", "design engineer", "ux researcher",
+    "service designer", "brand designer", "graphic designer", "visual designer", "motion designer", "art director",
+    "creative director", "illustrator", "industrial designer", "game designer", "level designer", "technical artist",
+  ];
   const seen = new Map<string, any>();
   for (const q of queries) {
     for (let page = 1; page <= 5; page++) {
@@ -196,4 +200,43 @@ export async function arbeitnow(): Promise<SourceResult> {
       descriptionHtml: j.description ?? "",
     })),
   };
+}
+
+/*
+ * Lemanoosh: curated industrial design job board. Its RSS feed has titles and links only,
+ * so each job page is read for company, location and description (schema.org microdata).
+ */
+export async function lemanoosh(pages = 10): Promise<SourceResult> {
+  const items: Record<string, string>[] = [];
+  for (let page = 1; page <= pages; page++) {
+    try {
+      const got = rssItems(await getText(`https://lemanoosh.com/feed/?post_type=job&paged=${page}`));
+      items.push(...got);
+      if (got.length < 10) break;
+    } catch { break; }
+    await sleep(700);
+  }
+  const first = (html: string, re: RegExp) => html.match(re)?.[1]?.trim() ?? "";
+  const postings = await pool(items, 3, async (it): Promise<RawPosting | null> => {
+    try {
+      const html = await getText(it.link);
+      await sleep(300);
+      const location = decodeEntities(first(html, /itemprop="address"[^>]*content="([^"]*)"/));
+      return {
+        sourceId: `lemanoosh:${it.link}`,
+        title: decodeEntities(first(html, /itemprop="title"[^>]*>([^<]*)</) || it.title),
+        company: decodeEntities(first(html, /itemprop="hiringOrganization"[^>]*>([^<]*)</)),
+        location,
+        remote: remoteFromText([location, it.title]) === "remote" ? "remote" : undefined,
+        regionHints: [location],
+        postedAt: toIso(it.pubDate),
+        url: it.link,
+        descriptionHtml: first(html, /itemprop="description"[^>]*>([\s\S]*?)<\/div>/),
+      };
+    } catch {
+      return null;
+    }
+  });
+  const ok = postings.filter((p): p is RawPosting => !!p);
+  return { source: "Lemanoosh", sourceType: "board", fetched: ok.length, postings: ok, notes: `industrial design board, ${pages} RSS pages + job pages` };
 }

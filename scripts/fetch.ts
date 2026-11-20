@@ -5,10 +5,13 @@
  *   npm run fetch
  */
 import { mkdirSync, writeFileSync } from "node:fs";
-import { arbeitnow, himalayas, remoteOk, remotive, weWorkRemotely, type SourceResult } from "../lib/sources/boards";
+import { arbeitnow, himalayas, lemanoosh, remoteOk, remotive, weWorkRemotely, type SourceResult } from "../lib/sources/boards";
 import { allAts } from "../lib/sources/ats";
 import { dedupe, inScope, normalize } from "../lib/normalize";
 import type { Job, SourceReport } from "../lib/types";
+
+/** Boards that list nothing but design jobs: skip the title pre-filter, the model still checks each posting. */
+const DESIGN_ONLY_SOURCES = new Set(["Lemanoosh"]);
 
 async function safe(name: string, fn: () => Promise<SourceResult>): Promise<SourceResult & { error?: string }> {
   try {
@@ -27,6 +30,7 @@ async function main() {
       safe("Himalayas", himalayas),
       safe("Remotive", remotive),
       safe("Arbeitnow", arbeitnow),
+      safe("Lemanoosh", () => lemanoosh()),
     ])),
     ...(await allAts()),
   ];
@@ -34,7 +38,7 @@ async function main() {
   const reports: SourceReport[] = [];
   const all: Job[] = [];
   for (const r of results) {
-    const matched = r.postings.map((p) => normalize(p, r.source, r.sourceType)).filter((j): j is Job => !!j);
+    const matched = r.postings.map((p) => normalize(p, r.source, r.sourceType, DESIGN_ONLY_SOURCES.has(r.source))).filter((j): j is Job => !!j);
     const scoped = matched.filter(inScope);
     all.push(...scoped);
     reports.push({
@@ -43,11 +47,11 @@ async function main() {
       ok: !r.error,
       error: r.error,
       fetched: r.fetched,
-      designMatches: matched.length,
+      candidates: matched.length,
       inScope: scoped.length,
       notes: r.notes,
     });
-    console.log(`${r.source.padEnd(18)} fetched ${String(r.fetched).padStart(5)}  design ${String(matched.length).padStart(4)}  in scope ${String(scoped.length).padStart(4)}${r.error ? "  ERROR " + r.error : ""}`);
+    console.log(`${r.source.padEnd(18)} fetched ${String(r.fetched).padStart(5)}  candidates ${String(matched.length).padStart(4)}  in scope ${String(scoped.length).padStart(4)}${r.error ? "  ERROR " + r.error : ""}`);
   }
 
   const { jobs, removed } = dedupe(all);

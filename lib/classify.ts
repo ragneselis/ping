@@ -1,39 +1,20 @@
-import type { Category, RemoteStatus, Seniority } from "./types";
+import type { RemoteStatus, Seniority } from "./types";
 
-/* ---------- Is this a product / UX / UI design role? ---------- */
-
-const EXCLUDE =
-  /\b(instructional|interior|structural|civil|fashion|graphic|packaging|landscape|hardware|chip|circuit|asic|fpga|analog|mechanical|electrical|sound|lighting|kitchen|floral|curriculum|architectural|architecture|thumbnail|physical|industrial|jewelry|furniture|textile|teaching|tutor|recruiter|recruiting|recruitment|compensation|sales|advocate|production|soft goods|ad|ads|thumbnail|learning experience|solutions? design(er)?|network design|database design|engineer(ing)? manager)\b/i;
-
-const PRODUCT = /\b(product design(er)?|head of design|design (lead|manager|director)|director,? (of )?(product )?design|vp,? (of )?design|principal designer|staff designer|founding designer|lead designer|senior designer|designer)\b/i;
-const UX = /\b(ux|user experience|experience design(er)?|interaction design(er)?|service design(er)?|ux research(er)?|design research(er)?|content design(er)?|ux writer|conversation(al)? design(er)?)\b/i;
-const UI = /\b(ui|user interface|visual design(er)?|interface design(er)?|web design(er)?|design engineer|design systems?|digital design(er)?)\b/i;
+/* ---------- Is this posting worth sending to the model? ---------- */
 
 /**
- * Game design: game, level, gameplay, live ops, economy, combat, narrative... designers,
- * plus game UI/UX roles that studios title "UI Artist" / "UX Artist".
- * Audio, VFX, art-only and engineering roles are left out.
+ * Broad, cheap pre-filter so the model does not have to read every engineering or sales posting.
+ * It only asks "could this be design work of any kind?"; the model decides the real answer and the category.
  */
-const GAME =
-  /\b(game|games|gaming|(?<!(entry|mid|senior|junior|top|high|low)[\s-]?)level|gameplay|live ?ops|economy|combat|narrative|quest|mission|encounter|monetization|progression)\b[\w\s&]{0,30}\bdesign(er|ers)?\b|\b(ui|ux|ui ux|ux ui) artist\b/i;
-const GAME_EXCLUDE = /\b(sound|audio|music|composer|lighting|vfx|engineer|developer|programmer|recruit\w*|marketing|graphic)\b/i;
+const CANDIDATE =
+  /(design|\bux\b|\bui\b|user research|ux research|\bresearcher\b|art direct|creative (direct|lead)|\bcreative\b|\bartist\b|illustrat|animator|\bmotion\b|typograph|\bcmf\b|prototyp|\bbrand\b|visual|creative technolog|design technolog|\bbuilder\b|craft)/i;
 
-/** Returns the category if the title is a product/UX/UI/game design role, else null. */
-export function designCategory(title: string): Category | null {
-  const t = title.replace(/[\/|,–-]/g, " ");
-  if (GAME.test(t) && !GAME_EXCLUDE.test(t)) return "game";
-  if (EXCLUDE.test(t)) return null;
-  // "Designer" alone is too broad (brand, motion, graphic), so plain "designer"
-  // only counts together with a product/digital qualifier, handled by PRODUCT patterns
-  // except the bare word. We require a design-ish noun.
-  if (!/design/i.test(t)) return null;
-  if (/\b(brand|marketing|motion|illustrat|3d|video|social media|print|presentation|creative)\b/i.test(t) && !UX.test(t) && !/product design/i.test(t)) return null;
-  if (UX.test(t)) return "ux";
-  if (/\bproduct design/i.test(t)) return "product";
-  if (UI.test(t)) return "ui";
-  // Bare "Designer"/"Senior Designer"/"Design Lead" at a tech company is almost always product design.
-  if (PRODUCT.test(t) && !/\b(engineer|developer|architect|analyst|scientist)\b/i.test(t)) return "product";
-  return null;
+/** Clearly not design work in the sense of this tool (chip/circuit/data design), skipped to save model calls. */
+const NOT_DESIGN =
+  /\b(asic|fpga|rtl|soc|silicon|chip|circuit|analog|pcb|physical design|design verification|verification|database|network design|test design|layout engineer|mask design|power design|solutions? architect)\b/i;
+
+export function designCandidate(title: string): boolean {
+  return CANDIDATE.test(title) && !NOT_DESIGN.test(title);
 }
 
 /* ---------- Seniority ---------- */

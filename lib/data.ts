@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import type { Job, Requirements, SourceReport } from "./types";
+import type { ClassifiedJob, Extraction, Job, SourceReport } from "./types";
 
 const dir = path.join(process.cwd(), "data");
 
@@ -17,8 +17,28 @@ export function loadSources() {
   return read<{ fetchedAt: string; totalInScope: number; duplicatesRemoved: number; unique: number; sources: SourceReport[] } | null>("sources.json", null);
 }
 
-export function loadRequirements() {
-  return read<{ model: string; method: string; extractedAt: string; results: Requirements[] } | null>("requirements.json", null);
+export interface ExtractionStore {
+  results: Record<string, Extraction>;
+  runs: { at: string; model: string; postings: number; failed: number; usage: Extraction["usage"]; costUsd: number }[];
+}
+
+export function loadExtractions(): ExtractionStore {
+  return read<ExtractionStore>("extractions.json", { results: {}, runs: [] });
+}
+
+/**
+ * Candidates joined with the model's verdict. Postings the model said are not design work are dropped;
+ * postings not extracted yet are kept with no categories so they stay visible until the next extract run.
+ * The model's experience level replaces the title-based seniority when the title says nothing.
+ */
+export function loadClassifiedJobs(store = loadExtractions()): ClassifiedJob[] {
+  return loadJobs()
+    .map((j) => {
+      const e = store.results[j.id] ?? null;
+      const seniority = j.seniority === "unspecified" && e && e.experienceLevel !== "unspecified" ? (e.experienceLevel as Job["seniority"]) : j.seniority;
+      return { ...j, seniority, categories: e?.categories ?? [], extraction: e };
+    })
+    .filter((j) => !j.extraction || j.extraction.isDesignRole);
 }
 
 /** Count items across postings, case-insensitively, keeping the most common spelling. */

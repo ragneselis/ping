@@ -1,57 +1,88 @@
 /**
- * Requirement extraction with a cheap model (Claude Haiku) over data/sample.json.
- * Writes data/requirements.json.
+ * Classify every candidate posting in data/jobs.json with Claude Haiku and extract its requirements.
+ * Results are cached in data/extractions.json by posting id, so re-runs only pay for new postings.
  *
- *   ANTHROPIC_API_KEY=... npm run extract
+ *   npm run extract            # all postings not extracted yet (reads ANTHROPIC_API_KEY from .env.local)
+ *   npm run extract -- 20      # at most 20 new postings (for a quick test)
  */
-import { readFileSync, writeFileSync } from "node:fs";
-import { EXTRACTION_MODEL, EXTRACTION_SCHEMA, EXTRACTION_SYSTEM, postingPrompt } from "../lib/extraction";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import Anthropic from "@anthropic-ai/sdk";
+import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
+import { EXTRACTION_MODEL, EXTRACTION_SYSTEM, ExtractionSchema, costUsd, postingPrompt } from "../lib/extraction";
 import { pool } from "../lib/http";
-import type { Requirements } from "../lib/types";
+import type { Extraction, Job } from "../lib/types";
 
-const KEY = process.env.ANTHROPIC_API_KEY;
-if (!KEY) {
-  console.error("ANTHROPIC_API_KEY is not set.");
-  process.exit(1);
-}
+const FILE = "data/extractions.json";
 
-async function extractOne(p: { id: string; title: string; company: string; location: string; description: string }): Promise<Requirements> {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "x-api-key": KEY!, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-    body: JSON.stringify({
-      model: EXTRACTION_MODEL,
-      max_tokens: 1500,
-      system: EXTRACTION_SYSTEM,
-      tools: [{ name: "save_requirements", description: "Save the extracted requirements.", input_schema: EXTRACTION_SCHEMA }],
-      tool_choice: { type: "tool", name: "save_requirements" },
-      messages: [{ role: "user", content: postingPrompt(p) }],
-    }),
+interface Run { at: string; model: string; postings: number; failed: number; usage: Extraction["usage"]; costUsd: number }
+interface Store { results: Record<string, Extraction>; runs: Run[] }
+
+const client = new Anthropic({ maxRetries: 6 });
+
+async function extractOne(job: Job): Promise<Extraction> {
+  const res = await client.messages.parse({
+    model: EXTRACTION_MODEL,
+    max_tokens: 4000,
+    output_config: { effort: "low", format: zodOutputFormat(ExtractionSchema) },
+    // Same system prompt on every call, cached so each posting only pays for its own text.
+    system: [{ type: "text", text: EXTRACTION_SYSTEM, cache_control: { type: "ephemeral" } }],
+    messages: [{ role: "user", content: postingPrompt(job) }],
   });
-  if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
-  const data: any = await res.json();
-  const block = data.content.find((c: any) => c.type === "tool_use");
-  return { id: p.id, ...block.input };
+  if (res.stop_reason === "refusal") throw new Error(`refused (${res.stop_details?.category ?? "no category"})`);
+  if (res.stop_reason === "max_tokens") throw new Error("hit max_tokens");
+  const out = res.parsed_output;
+  if (!out) throw new Error("no parsed output");
+  const u = res.usage;
+  return {
+    id: job.id,
+    ...out,
+    categories: out.isDesignRole ? [...new Set(out.categories)] : [],
+    model: EXTRACTION_MODEL,
+    extractedAt: new Date().toISOString(),
+    usage: { input: u.input_tokens, output: u.output_tokens, cacheRead: u.cache_read_input_tokens ?? 0, cacheWrite: u.cache_creation_input_tokens ?? 0 },
+  };
 }
 
 async function main() {
-  const sample = JSON.parse(readFileSync("data/sample.json", "utf8"));
-  const out = await pool(sample, 4, async (p: any) => {
+  const jobs: Job[] = JSON.parse(readFileSync("data/jobs.json", "utf8"));
+  const store: Store = existsSync(FILE) ? JSON.parse(readFileSync(FILE, "utf8")) : { results: {}, runs: [] };
+  const limit = Number(process.argv[2] ?? Infinity);
+  const todo = jobs.filter((j) => !store.results[j.id]).slice(0, limit);
+  console.log(`${jobs.length} postings, ${jobs.length - jobs.filter((j) => !store.results[j.id]).length} already extracted, ${todo.length} to do with ${EXTRACTION_MODEL}.`);
+  if (!todo.length) return;
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error("ANTHROPIC_API_KEY is not set. Put it in .env.local.");
+    process.exit(1);
+  }
+
+  const save = () => writeFileSync(FILE, JSON.stringify(store, null, 1));
+  const usage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
+  let done = 0, failed = 0;
+  const work = async (job: Job) => {
     try {
-      const r = await extractOne(p);
-      console.log(`ok   ${p.title}`);
-      return r;
-    } catch (e: any) {
-      console.log(`fail ${p.title}: ${e.message}`);
-      return null;
+      const e = await extractOne(job);
+      store.results[job.id] = e;
+      for (const k of Object.keys(usage) as (keyof typeof usage)[]) usage[k] += e.usage[k];
+    } catch (err: any) {
+      failed++;
+      console.log(`fail ${job.title} @ ${job.company}: ${err?.message ?? err}`);
     }
-  });
-  const results = out.filter(Boolean);
-  writeFileSync(
-    "data/requirements.json",
-    JSON.stringify({ model: EXTRACTION_MODEL, method: "Anthropic API, forced tool call", extractedAt: new Date().toISOString(), results }, null, 2),
-  );
-  console.log(`Saved ${results.length}/${sample.length}`);
+    if (++done % 25 === 0) {
+      save();
+      console.log(`${done}/${todo.length}  cost so far $${costUsd(usage).toFixed(4)}`);
+    }
+  };
+  // One call first writes the system prompt to the cache; the parallel calls after it then read it.
+  await work(todo[0]);
+  await pool(todo.slice(1), 8, work);
+
+  const run: Run = { at: new Date().toISOString(), model: EXTRACTION_MODEL, postings: todo.length - failed, failed, usage, costUsd: Number(costUsd(usage).toFixed(4)) };
+  store.runs.push(run);
+  save();
+  const design = Object.values(store.results).filter((r) => r.isDesignRole).length;
+  console.log(`\nDone: ${run.postings} extracted, ${failed} failed (re-run to retry).`);
+  console.log(`Tokens: ${usage.input} in, ${usage.cacheRead} cache read, ${usage.cacheWrite} cache write, ${usage.output} out. Cost $${run.costUsd}.`);
+  console.log(`All runs: $${store.runs.reduce((n, r) => n + r.costUsd, 0).toFixed(4)}. Design roles in cache: ${design}/${Object.keys(store.results).length}.`);
 }
 
 main();

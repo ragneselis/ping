@@ -2,7 +2,9 @@
 
 Job tool for design students at the Estonian Academy of Arts (EKA). This is the first data test: no UI design yet.
 
-Scope: product, UX, UI and game design roles (game, level, game UI/UX designers, tagged "Game design"). Remote roles anywhere, plus on-site and hybrid roles in Europe (Estonia included).
+Scope: design work of every kind, sorted into nine categories by the work each posting describes (not by job title). Remote roles anywhere, plus on-site and hybrid roles in Europe (Estonia included).
+
+Categories (a posting can have more than one): Product designer who ships · Design engineer / builder · AI and behaviour designer · Brand and visual craft · Research and service design · Customer-facing / forward deployed designer · Game design · Industrial design · Other design paths.
 
 ## Stack
 
@@ -12,9 +14,8 @@ Next.js 15 (App Router) + TypeScript, deployable on Vercel. Data scripts run wit
 
 ```bash
 npm install
-npm run fetch      # pull all sources -> data/jobs.json, data/sources.json
-npm run sample     # pick ~20 varied postings -> data/sample.json
-npm run extract    # Haiku requirement extraction -> data/requirements.json (reads ANTHROPIC_API_KEY from .env.local)
+npm run fetch      # pull all sources -> candidate postings in data/jobs.json, data/sources.json
+npm run extract    # Claude Haiku classifies + extracts requirements -> data/extractions.json (reads ANTHROPIC_API_KEY from .env.local)
 npm run dev        # http://localhost:3000
 ```
 
@@ -28,15 +29,18 @@ Put your Anthropic key in `.env.local` (git-ignored) as `ANTHROPIC_API_KEY=sk-an
 
 | Step | Code |
 |---|---|
-| Source adapters (job boards) | `lib/sources/boards.ts` (Remote OK, We Work Remotely, Himalayas, Remotive, Arbeitnow) |
-| Source adapters (company ATS) | `lib/sources/ats.ts` (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio; company list in `COMPANIES`, incl. ~90 Estonian, Baltic and Nordic companies) |
-| Design-role filter, seniority, regions, remote status | `lib/classify.ts` |
+| Source adapters (job boards) | `lib/sources/boards.ts` (Remote OK, We Work Remotely, Himalayas, Remotive, Arbeitnow, Lemanoosh for industrial design) |
+| Source adapters (company ATS) | `lib/sources/ats.ts` (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio; company list in `COMPANIES`, incl. ~90 Estonian, Baltic and Nordic companies and ~45 industrial design, hardware and design studio companies) |
+| Broad title pre-filter (could this be design work at all?), seniority, regions, remote status | `lib/classify.ts` |
 | Normalise to one `Job` shape, scope filter, dedupe | `lib/normalize.ts`, types in `lib/types.ts` |
-| Requirement extraction prompt + schema | `lib/extraction.ts` |
+| Model classification (design or not, categories) + requirement extraction, one Haiku call per posting | `lib/extraction.ts`, `scripts/extract.ts` |
+| Join candidates with model results | `lib/data.ts` |
 | Page | `app/page.tsx` |
+
+Extraction is incremental: `data/extractions.json` caches every result by posting id (including "not design" verdicts) and logs the token usage and cost of each run, so re-running only pays for new postings. The system prompt is prompt-cached across calls.
 
 Dedupe rule: same company + same normalised title is one posting. The ATS version wins over a board re-listing; other sources are kept in `alsoListedOn`.
 
 ## Source terms
 
-Remote OK and Himalayas ask for a visible link back to them when jobs are shown. Remotive's API notes ask that jobs are not resubmitted to third-party sites and are delayed by 24h. Check each source's terms before the public launch.
+Remote OK and Himalayas ask for a visible link back to them when jobs are shown. Remotive's API notes ask that jobs are not resubmitted to third-party sites and are delayed by 24h. Lemanoosh has no API: Ping reads its RSS feed and each job page, and every job links back to Lemanoosh. Ask Lemanoosh before showing its jobs publicly. Workable rate-limits bursts (HTTP 429); the fetcher reads Workable boards one at a time and backs off. Check each source's terms before the public launch.

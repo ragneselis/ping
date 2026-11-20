@@ -1,11 +1,10 @@
-import { designCategory, detectRegions, isBroadEurope, isInEurope, isUnrestricted, remoteFromText, seniorityFromTitle } from "./classify";
+import { designCandidate, detectRegions, isBroadEurope, isInEurope, isUnrestricted, remoteFromText, seniorityFromTitle } from "./classify";
 import { htmlToText, normKey } from "./text";
 import type { Job, RawPosting } from "./types";
 
-/** Turn a raw posting into a Job, or null if it is not a product/UX/UI design role. */
-export function normalize(raw: RawPosting, source: string, sourceType: "board" | "ats"): Job | null {
-  const category = designCategory(raw.title);
-  if (!category) return null;
+/** Turn a raw posting into a Job, or null if its title cannot be design work of any kind (the model classifies the rest). */
+export function normalize(raw: RawPosting, source: string, sourceType: "board" | "ats", designOnlySource = false): Job | null {
+  if (!designOnlySource && !designCandidate(raw.title)) return null;
 
   const description = raw.descriptionText?.trim() || htmlToText(raw.descriptionHtml ?? "");
   const locTexts = [raw.location, ...(raw.regionHints ?? [])];
@@ -31,7 +30,6 @@ export function normalize(raw: RawPosting, source: string, sourceType: "board" |
     regions,
     openToEstonia,
     seniority: seniorityFromTitle(raw.title, raw.seniorityHint),
-    category,
     postedAt: raw.postedAt,
     source,
     sourceType,

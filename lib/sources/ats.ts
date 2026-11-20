@@ -2,9 +2,9 @@
  * Public job board APIs of applicant tracking systems. These are the official,
  * unauthenticated endpoints companies use to power their own careers pages.
  */
-import { getJson, getText, pool } from "../http";
+import { getJson, getText, pool, sleep } from "../http";
 import { decodeEntities, toIso } from "../text";
-import { designCategory } from "../classify";
+import { designCandidate } from "../classify";
 import type { RawPosting, RemoteStatus } from "../types";
 import type { SourceResult } from "./boards";
 
@@ -135,6 +135,54 @@ export const COMPANIES: { name: string; ats: Ats; slug: string; eu?: boolean }[]
   { name: "Vivino", ats: "teamtailor", slug: "careers.vivino.com" },
   { name: "Yousician", ats: "greenhouse", slug: "yousician" },
   { name: "Qminder", ats: "workable", slug: "qminder" },
+  // Industrial design, hardware and design studios (feeds verified 2026-11-20).
+  { name: "Above", ats: "teamtailor", slug: "above" },
+  { name: "Nofence", ats: "teamtailor", slug: "nofence" },
+  { name: "Justera Group", ats: "teamtailor", slug: "justergroupab" },
+  { name: "Kurppa Hosk", ats: "teamtailor", slug: "kurppahosk" },
+  { name: "Bold Scandinavia", ats: "teamtailor", slug: "bold" },
+  { name: "Teenage Engineering", ats: "teamtailor", slug: "careers.teenage.engineering" },
+  { name: "Eleiko", ats: "teamtailor", slug: "career.eleiko.com" },
+  { name: "Marshall Group", ats: "teamtailor", slug: "marshallgroup" },
+  { name: "Huawei Sweden", ats: "teamtailor", slug: "huaweisweden" },
+  { name: "Flokk", ats: "teamtailor", slug: "flokk" },
+  { name: "Voi", ats: "teamtailor", slug: "careers.voi.com" },
+  { name: "X Shore", ats: "teamtailor", slug: "xshore" },
+  { name: "Knightec Group", ats: "teamtailor", slug: "knightecgroup" },
+  { name: "Narbutas", ats: "teamtailor", slug: "narbutas" },
+  { name: "Teltonika", ats: "workable", slug: "teltonika" },
+  { name: "Aerones", ats: "workable", slug: "aerones" },
+  { name: "Milrem Robotics", ats: "teamtailor", slug: "milrem" },
+  { name: "Frankenburg Technologies", ats: "teamtailor", slug: "careers.frankenburg.tech" },
+  { name: "Aivan", ats: "personio", slug: "aivan-oy" },
+  { name: "Genelec", ats: "teamtailor", slug: "genelec" },
+  { name: "Rokoko", ats: "teamtailor", slug: "careers.rokoko.com" },
+  { name: "Kempower", ats: "teamtailor", slug: "careers.kempower.com" },
+  { name: "Inventas", ats: "teamtailor", slug: "karriere.inventas.no" },
+  { name: "Vesoma", ats: "ashby", slug: "vesoma" },
+  { name: "Sereact", ats: "ashby", slug: "sereact" },
+  { name: "TwentyFour Industries", ats: "personio", slug: "twentyfour-industries" },
+  { name: "Highcat", ats: "recruitee", slug: "highcat" },
+  { name: "Phoenix Design", ats: "personio", slug: "phoenix" },
+  { name: "Nacar Design", ats: "recruitee", slug: "nacardesign" },
+  { name: "Cambridge Consultants", ats: "greenhouse", slug: "cambridgeconsultantslimited" },
+  { name: "Huawei R&D UK", ats: "teamtailor", slug: "huaweiuk" },
+  { name: "Huawei Italia", ats: "teamtailor", slug: "huaweitechnologiesitalia" },
+  { name: "On", ats: "greenhouse", slug: "onrunning" },
+  { name: "Salomon", ats: "smartrecruiters", slug: "Salomon" },
+  { name: "Map Project Office", ats: "greenhouse", slug: "mapprojectoffice" },
+  { name: "Ensera Design", ats: "recruitee", slug: "enseradesign" },
+  { name: "Landor", ats: "greenhouse", slug: "landor" },
+  { name: "Interbrand", ats: "greenhouse", slug: "interbrand" },
+  { name: "Koto", ats: "teamtailor", slug: "koto" },
+  { name: "IDEO", ats: "greenhouse", slug: "ideo" },
+  { name: "AKQA", ats: "greenhouse", slug: "akqa" },
+  { name: "DEPT", ats: "greenhouse", slug: "dept" },
+  { name: "Withings", ats: "workable", slug: "withings" },
+  { name: "Fairphone", ats: "personio", slug: "fairphone" },
+  { name: "Helsing", ats: "greenhouse", slug: "helsing" },
+  { name: "Tonies", ats: "ashby", slug: "tonies" },
+  { name: "Cell Labs", ats: "personio", slug: "cell-labs" },
 ];
 
 function wp(v: string | undefined | null): RemoteStatus | undefined {
@@ -238,7 +286,13 @@ async function teamtailor(name: string, slug: string): Promise<RawPosting[]> {
 }
 
 /* Workable: the public careers widget API. */
+/* Workable rate-limits bursts, so its boards are fetched one at a time with a short pause. */
+let workableQueue: Promise<unknown> = Promise.resolve();
+
 async function workable(name: string, slug: string): Promise<RawPosting[]> {
+  const turn = workableQueue.then(() => sleep(1500));
+  workableQueue = turn;
+  await turn;
   const d = await getJson<any>(`https://apply.workable.com/api/v1/widget/accounts/${slug}?details=true`, 60000);
   return (d.jobs ?? []).map((j: any) => {
     const locs = (j.locations?.length ? j.locations : [j]).map((l: any) => [l.city, l.country].filter(Boolean).join(", "));
@@ -286,7 +340,7 @@ async function smartrecruiters(name: string, slug: string): Promise<RawPosting[]
     if (list.length >= (d.totalFound ?? 0) || !(d.content ?? []).length) break;
   }
   const details = await pool(list, 4, async (j) => {
-    if (!designCategory(j.name)) return null;
+    if (!designCandidate(j.name)) return null;
     try { return await getJson<any>(`https://api.smartrecruiters.com/v1/companies/${slug}/postings/${j.id}`, 30000); } catch { return null; }
   });
   return list.map((j, i) => {
