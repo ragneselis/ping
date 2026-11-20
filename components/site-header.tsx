@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FRAME_COLUMN } from "@/components/blueprint";
 import { SubscribeDialog } from "@/components/subscribe-dialog";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeMenu, ThemeSwitch } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -80,7 +80,10 @@ export function SiteHeader() {
           <div className="sm:hidden">
             <SubscribeButton compact />
           </div>
-          <ThemeToggle />
+          <ThemeSwitch className="ml-1 hidden sm:flex" />
+          <div className="sm:hidden">
+            <ThemeMenu />
+          </div>
         </div>
       </div>
     </header>
