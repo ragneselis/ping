@@ -5,14 +5,14 @@ import { cn } from "@/lib/utils";
 /*
  * Signals: the facts a graduate decides on (open to Estonia, within reach).
  * Quiet by design: a small mint icon followed by plain text, so a card has one loud thing
- * (its category tag) and the signal still reads at a glance. Mint is kept for these icons
- * and the readout dots only.
+ * (its category tag) and the signal still reads at a glance. Both signals share this one style;
+ * the icon uses --signal (mint in dark, a deeper green in light), the label stays --foreground.
  */
 export function SignalTag({ kind, className }: { kind: "estonia" | "reach"; className?: string }) {
   const Icon = kind === "estonia" ? Globe2 : GraduationCap;
   return (
-    <span className={cn("flex items-center gap-1.5 font-medium text-foreground", className)}>
-      <Icon aria-hidden className="size-3.5 text-accent" />
+    <span className={cn("flex items-center gap-1.5 font-normal text-foreground", className)}>
+      <Icon aria-hidden className="size-3.5 shrink-0 text-signal" />
       {kind === "estonia" ? "Open to Estonia" : "Within reach"}
     </span>
   );

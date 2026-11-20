@@ -6,7 +6,7 @@ export interface ReadoutItem {
   label: string;
   /** Turns the item into a link, e.g. to the matching filter. */
   href?: string;
-  /** Marks a decision signal (Estonia, within reach) with the accent colour. */
+  /** Marks a decision signal (Estonia, within reach) with the signal colour. */
   signal?: boolean;
   /** Dims the value when it rests on too little data to trust. */
   muted?: boolean;
@@ -33,7 +33,7 @@ export function Readout({ items, note, className }: { items: ReadoutItem[]; note
                 className={cn(
                   "order-1 font-mono text-xl leading-none font-semibold tabular-nums sm:text-3xl",
                   it.muted && "text-muted-foreground",
-                  it.signal && "flex items-center gap-2 before:size-1.5 before:shrink-0 before:rounded-full before:bg-accent sm:before:size-2",
+                  it.signal && "flex items-center gap-2 before:size-1.5 before:shrink-0 before:rounded-full before:bg-signal sm:before:size-2",
                 )}
               >
                 {it.value}
