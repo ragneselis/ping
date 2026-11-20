@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Chakra_Petch, Fira_Code } from "next/font/google";
+import { Chakra_Petch, Fira_Code, Geist } from "next/font/google";
 import type { ReactNode } from "react";
 import { Band } from "@/components/blueprint";
 import { SiteHeader } from "@/components/site-header";
@@ -9,6 +9,7 @@ import "./globals.css";
 
 const chakra = Chakra_Petch({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-chakra-petch" });
 const fira = Fira_Code({ subsets: ["latin"], variable: "--font-fira-code" });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
   title: { default: "Jobs | Ping", template: "%s | Ping" },
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB" className={`${chakra.variable} ${fira.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${chakra.variable} ${fira.variable} ${geist.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <TooltipProvider>

@@ -16,7 +16,8 @@
   --card-foreground: oklch(0.1649 0.0352 281.8285);
   --popover: oklch(1.0000 0 0);
   --popover-foreground: oklch(0.1649 0.0352 281.8285);
-  --primary: oklch(0.6726 0.2904 341.4084);
+  /* Softer on white than the dark-theme pink: less chroma, a touch darker. Navy text on it: 5.06:1. */
+  --primary: oklch(0.6400 0.2400 341.4084);
   /* Navy on pink: 5.6:1 (white was 3.45:1). */
   --primary-foreground: oklch(0.1649 0.0352 281.8285);
   --secondary: oklch(0.9595 0.0200 286.0164);
@@ -226,6 +227,7 @@
   --color-frame-line: var(--frame-line);
 
   --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
 
@@ -260,20 +262,25 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Font wiring (not a style change). next/font serves Chakra Petch and Fira Code
-   under generated family names, exposed as --font-chakra-petch / --font-fira-code
-   on <html>. These lines put them in front of the theme's own font stacks so the
-   theme's font tokens resolve to the loaded files.
+   Font roles. next/font serves the files under generated names, exposed on <html>.
+   --font-sans    Geist: body, UI, filters, cards and card titles
+   --font-heading Chakra Petch: the Ping wordmark and page headings (h1, h2) only
+   --font-mono    Fira Code: numbers, counts, levels and data labels
    --------------------------------------------------------------------------- */
 :root,
 .dark {
-  --font-sans: var(--font-chakra-petch), Chakra Petch, ui-sans-serif, sans-serif, system-ui;
+  --font-sans: var(--font-geist), Geist, ui-sans-serif, sans-serif, system-ui;
+  --font-heading: var(--font-chakra-petch), Chakra Petch, ui-sans-serif, sans-serif, system-ui;
   --font-mono: var(--font-fira-code), Fira Code, monospace;
 }
 
 @layer base {
   html {
     @apply font-sans;
+  }
+  h1,
+  h2 {
+    font-family: var(--font-heading);
   }
 }
 

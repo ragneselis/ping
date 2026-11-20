@@ -21,9 +21,9 @@ const REMOTE_ITEMS = [
 
 /** Level options, in order. Several can be selected; none selected means all levels. */
 const LEVEL_ITEMS = [
-  { value: "reach", label: "Within reach (0 to 2 yrs)", tone: "signal" as const },
-  { value: "mid", label: "Mid-level", tone: "plain" as const },
-  { value: "senior", label: "Senior and above", tone: "plain" as const },
+  { value: "reach", label: "Within reach (0 to 2 yrs)" },
+  { value: "mid", label: "Mid-level" },
+  { value: "senior", label: "Senior and above" },
 ];
 
 const readLevels = (params: URLSearchParams) => {
@@ -75,7 +75,7 @@ export function JobFilters({ categories, total }: { categories: { value: Categor
               key={l.value}
               type="button"
               aria-pressed={levels.has(l.value)}
-              className={toggleClassName(levels.has(l.value), l.tone)}
+              className={toggleClassName(levels.has(l.value))}
               onClick={() => toggleLevel(l.value)}
             >
               {l.label}
@@ -84,7 +84,7 @@ export function JobFilters({ categories, total }: { categories: { value: Categor
           <button
             type="button"
             aria-pressed={levels.size === 0}
-            className={toggleClassName(levels.size === 0, "all")}
+            className={toggleClassName(levels.size === 0)}
             onClick={() => update({ level: null, reach: null, sort: null })}
           >
             Any level

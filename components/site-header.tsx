@@ -16,7 +16,7 @@ const NAV = [
 
 export function Wordmark() {
   return (
-    <Link href="/" className="group flex items-center gap-2 text-xl font-bold tracking-tight" aria-label="Ping home">
+    <Link href="/" className="group flex items-center gap-2 font-heading text-xl font-bold tracking-tight" aria-label="Ping home">
       <span className="relative flex size-3">
         <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60 motion-reduce:animate-none" />
         <span className="relative inline-flex size-3 rounded-full bg-primary" />

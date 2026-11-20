@@ -2,7 +2,7 @@ import { ArrowUpRight, CalendarDays, MapPin, Wifi } from "lucide-react";
 import { CategoryTag } from "@/components/category";
 import { LevelTag, RequirementChip, SignalTag } from "@/components/signal";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { REMOTE_LABEL } from "@/lib/categories";
+import { CATEGORY_META, REMOTE_LABEL } from "@/lib/categories";
 import type { JobCard as Job } from "@/lib/view";
 
 /** "today", "3 days ago", "2 weeks ago" relative to now. */
@@ -28,9 +28,7 @@ export function JobCard({ job }: { job: Job }) {
         <CardHeader className="content-start gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
             <CategoryTag category={job.primary} />
-            {job.secondary && <CategoryTag category={job.secondary} secondary />}
-            {job.withinReach && <SignalTag kind="reach" />}
-            {job.openToEstonia && <SignalTag kind="estonia" />}
+            {job.secondary && <span className="text-xs text-muted-foreground">also {CATEGORY_META[job.secondary].short}</span>}
           </div>
           <div className="flex items-start justify-between gap-3">
             <div className="grid min-w-0 gap-0.5">
@@ -56,6 +54,8 @@ export function JobCard({ job }: { job: Job }) {
         </CardHeader>
         <CardContent className="self-end">
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+            {job.withinReach && <SignalTag kind="reach" />}
+            {job.openToEstonia && <SignalTag kind="estonia" />}
             <span className="flex min-w-0 items-center gap-1.5">
               <MapPin aria-hidden className="size-3.5 shrink-0" />
               <span className="truncate">{job.location || "Location not stated"}</span>

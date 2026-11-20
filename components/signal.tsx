@@ -3,17 +3,16 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /*
- * Signals: the facts a graduate decides on (open to Estonia, within reach, level).
- * They use --accent (mint), the "good news" colour, so they never compete with
- * category colours or with pink, which stays for the brand and actions.
+ * Signals: the facts a graduate decides on (open to Estonia, within reach).
+ * Quiet by design: a small mint icon followed by plain text, so a card has one loud thing
+ * (its category tag) and the signal still reads at a glance. Mint is kept for these icons
+ * and the readout dots only.
  */
-/** Solid mint at full strength with navy text: a shape no category tag uses (those are tints or outlines). */
-const SIGNAL = "inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-sm bg-accent px-1.5 font-mono text-xs font-semibold whitespace-nowrap text-accent-foreground [&>svg]:size-3";
-
 export function SignalTag({ kind, className }: { kind: "estonia" | "reach"; className?: string }) {
+  const Icon = kind === "estonia" ? Globe2 : GraduationCap;
   return (
-    <span className={cn(SIGNAL, className)}>
-      {kind === "estonia" ? <Globe2 aria-hidden /> : <GraduationCap aria-hidden />}
+    <span className={cn("flex items-center gap-1.5 font-medium text-foreground", className)}>
+      <Icon aria-hidden className="size-3.5 text-accent" />
       {kind === "estonia" ? "Open to Estonia" : "Within reach"}
     </span>
   );
