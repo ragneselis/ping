@@ -1,7 +1,21 @@
+# dependencies and build output
 node_modules
 .next
 out
 *.tsbuildinfo
 next-env.d.ts
-.env*
 .vercel
+
+# environment files and secrets (API keys go in env vars, never in git)
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+secrets*
+credentials*.json
+.npmrc
+
+# OS / editor
+.DS_Store
