@@ -59,7 +59,9 @@ export function ThemeSwitch({ className }: { className?: string }) {
 export function ThemeMenu() {
   const { choice, setTheme } = useChoice();
   const { resolvedTheme } = useTheme();
-  const Current = choice === "system" ? Monitor : resolvedTheme === "dark" ? Moon : Sun;
+  // Until mounted the server cannot know the stored choice: show the default (Sun) so the
+  // server and client render the same icon, then switch to the real one.
+  const Current = choice === null ? Sun : choice === "system" ? Monitor : resolvedTheme === "dark" ? Moon : Sun;
   return (
     <Popover>
       <PopoverTrigger
