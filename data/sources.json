@@ -1,0 +1,77 @@
+{
+  "fetchedAt": "2026-11-20T14:16:43.707Z",
+  "totalInScope": 327,
+  "duplicatesRemoved": 47,
+  "unique": 280,
+  "sources": [
+    {
+      "source": "Remote OK",
+      "sourceType": "board",
+      "ok": true,
+      "fetched": 244,
+      "designMatches": 5,
+      "inScope": 5
+    },
+    {
+      "source": "We Work Remotely",
+      "sourceType": "board",
+      "ok": true,
+      "fetched": 47,
+      "designMatches": 3,
+      "inScope": 3
+    },
+    {
+      "source": "Himalayas",
+      "sourceType": "board",
+      "ok": true,
+      "fetched": 329,
+      "designMatches": 266,
+      "inScope": 266,
+      "notes": "search queries: product designer, ux designer, ui designer, ux researcher, design lead"
+    },
+    {
+      "source": "Remotive",
+      "sourceType": "board",
+      "ok": true,
+      "fetched": 15,
+      "designMatches": 0,
+      "inScope": 0
+    },
+    {
+      "source": "Arbeitnow",
+      "sourceType": "board",
+      "ok": true,
+      "fetched": 2328,
+      "designMatches": 33,
+      "inScope": 28,
+      "notes": "first 8 pages of the general feed (no server-side search)"
+    },
+    {
+      "source": "Greenhouse",
+      "sourceType": "ats",
+      "ok": true,
+      "fetched": 2121,
+      "designMatches": 50,
+      "inScope": 18,
+      "notes": "all open roles per company: Figma 146, Airbnb 201, Stripe 771, Discord 29, Dropbox 47, Pinterest 175, GitLab 246, Duolingo 55, Asana 113, Miro 14, Wise 18, Veriff 10, Intercom 121, Monzo 59, N26 24, Typeform 6, Vercel 86"
+    },
+    {
+      "source": "Lever",
+      "sourceType": "ats",
+      "ok": true,
+      "fetched": 90,
+      "designMatches": 1,
+      "inScope": 1,
+      "notes": "all open roles per company: Spotify 90, Pipedrive 0"
+    },
+    {
+      "source": "Ashby",
+      "sourceType": "ats",
+      "ok": true,
+      "fetched": 649,
+      "designMatches": 9,
+      "inScope": 6,
+      "notes": "all open roles per company: Notion 169, Linear 32, Ramp 185, ElevenLabs 125, Supabase 80, Glia 28, Webflow 30"
+    }
+  ]
+}
