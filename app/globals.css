@@ -16,8 +16,8 @@
   --card-foreground: oklch(0.1649 0.0352 281.8285);
   --popover: oklch(1.0000 0 0);
   --popover-foreground: oklch(0.1649 0.0352 281.8285);
-  /* Softer on white than the dark-theme pink: less chroma, a touch darker. Navy text on it: 5.06:1. */
-  --primary: oklch(0.6400 0.2400 341.4084);
+  /* Tailwind pink, same family as the category colours. Navy text on it: 5.40:1 (white would be 3.58:1). */
+  --primary: var(--color-pink-500);
   /* Navy on pink: 5.6:1 (white was 3.45:1). */
   --primary-foreground: oklch(0.1649 0.0352 281.8285);
   --secondary: oklch(0.9595 0.0200 286.0164);
@@ -27,15 +27,15 @@
   --muted-foreground: oklch(0.5200 0.0350 281.0000);
   --accent: oklch(0.8903 0.1739 171.2690);
   --accent-foreground: oklch(0.1649 0.0352 281.8285);
-  /* Decision signals (open to Estonia, within reach): icons and readout dots use --signal (>= 3:1 on
-     --card and --background), signal text uses --signal-text (>= 4.5:1). Light: deeper green, same family as the mint. */
-  --signal: oklch(0.5800 0.1500 165);
-  --signal-text: oklch(0.5000 0.1100 165);
+  /* Decision signals (open to Estonia, within reach): Tailwind emerald. --signal for icons and readout
+     dots (600 light / 400 dark), --signal-text for text (700 light / 300 dark). */
+  --signal: var(--color-emerald-600);
+  --signal-text: var(--color-emerald-700);
   --destructive: oklch(0.6535 0.2348 34.0370);
   --destructive-foreground: oklch(1.0000 0 0);
   --border: oklch(0.9205 0.0086 225.0878);
   --input: oklch(0.9205 0.0086 225.0878);
-  --ring: oklch(0.6726 0.2904 341.4084);
+  --ring: var(--primary);
   --chart-1: oklch(0.6726 0.2904 341.4084);
   --chart-2: oklch(0.5488 0.2944 299.0954);
   --chart-3: oklch(0.8442 0.1457 209.2851);
@@ -43,34 +43,34 @@
   --chart-5: oklch(0.9168 0.1915 101.4070);
   --sidebar: oklch(0.9595 0.0200 286.0164);
   --sidebar-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-primary: oklch(0.6726 0.2904 341.4084);
+  --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-accent: oklch(0.8903 0.1739 171.2690);
   --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-border: oklch(0.9205 0.0086 225.0878);
-  --sidebar-ring: oklch(0.6726 0.2904 341.4084);
-  /* Category colours, two tokens each:
-     --cat-<name>       vivid, for dots, bars, fills, borders and tints (>= 3:1 non-text contrast on --card and --background)
-     --cat-<name>-text  for category tag text only (>= 4.6:1 on its own 15% vivid tint and on --card)
-     Hues sit 34-58 degrees apart, clear of pink (341) and the accent mint (171). */
-  --cat-product: oklch(0.62 0.120 228);
-  --cat-product-text: oklch(0.47 0.14 228);
-  --cat-engineering: oklch(0.53 0.245 262);
-  --cat-engineering-text: oklch(0.50 0.15 262);
-  --cat-ai: oklch(0.46 0.245 298);
-  --cat-ai-text: oklch(0.50 0.20 298);
-  --cat-brand: oklch(0.63 0.145 62);
-  --cat-brand-text: oklch(0.50 0.15 62);
-  --cat-research: oklch(0.62 0.105 195);
-  --cat-research-text: oklch(0.48 0.10 195);
-  --cat-customer: oklch(0.60 0.245 28);
-  --cat-customer-text: oklch(0.50 0.17 28);
-  --cat-game: oklch(0.61 0.195 140);
-  --cat-game-text: oklch(0.48 0.15 140);
-  --cat-industrial: oklch(0.63 0.130 98);
-  --cat-industrial-text: oklch(0.49 0.12 98);
-  --cat-other: oklch(0.58 0.060 280);
-  --cat-other-text: oklch(0.50 0.04 280);
+  --sidebar-ring: var(--primary);
+  /* Category colours from Tailwind's palette, so they share one lightness and chroma family.
+     --cat-<name>      shade 600 (light) / 400 (dark): dots, chart bars, fills, tag tint
+     --cat-<name>-text shade 700 (light) / 300 (dark): category tag text. Where 700 failed AA on its
+                       15% tint (orange, teal, lime, amber) the text token is one shade darker, 800. */
+  --cat-product: var(--color-sky-600);
+  --cat-product-text: var(--color-sky-700);
+  --cat-engineering: var(--color-indigo-600);
+  --cat-engineering-text: var(--color-indigo-700);
+  --cat-ai: var(--color-violet-600);
+  --cat-ai-text: var(--color-violet-700);
+  --cat-brand: var(--color-orange-600);
+  --cat-brand-text: var(--color-orange-800);
+  --cat-research: var(--color-teal-600);
+  --cat-research-text: var(--color-teal-800);
+  --cat-customer: var(--color-red-600);
+  --cat-customer-text: var(--color-red-700);
+  --cat-game: var(--color-lime-600);
+  --cat-game-text: var(--color-lime-800);
+  --cat-industrial: var(--color-amber-600);
+  --cat-industrial-text: var(--color-amber-800);
+  --cat-other: var(--color-slate-600);
+  --cat-other-text: var(--color-slate-700);
   /* Blueprint frame: hairlines around the content column and between sections; hatching in the gutters. */
   --frame-line: oklch(0.9450 0.0100 270);
   --frame-hatch: color-mix(in oklab, var(--frame-line) 70%, transparent);
@@ -105,7 +105,8 @@
   --card-foreground: oklch(0.9513 0.0074 260.7315);
   --popover: oklch(0.2542 0.0611 281.1423);
   --popover-foreground: oklch(0.9513 0.0074 260.7315);
-  --primary: oklch(0.6726 0.2904 341.4084);
+  /* Tailwind pink 400 on dark. Navy text on it: 7.01:1. */
+  --primary: var(--color-pink-400);
   /* Navy on pink: 5.6:1 (white was 3.45:1). */
   --primary-foreground: oklch(0.1649 0.0352 281.8285);
   --secondary: oklch(0.2542 0.0611 281.1423);
@@ -116,13 +117,13 @@
   --accent: oklch(0.8903 0.1739 171.2690);
   --accent-foreground: oklch(0.1649 0.0352 281.8285);
   /* Dark theme: the mint itself (12:1 on --card). */
-  --signal: oklch(0.8903 0.1739 171.2690);
-  --signal-text: oklch(0.8903 0.1739 171.2690);
+  --signal: var(--color-emerald-400);
+  --signal-text: var(--color-emerald-300);
   --destructive: oklch(0.6535 0.2348 34.0370);
   --destructive-foreground: oklch(1.0000 0 0);
   --border: oklch(0.3279 0.0832 280.7890);
   --input: oklch(0.3279 0.0832 280.7890);
-  --ring: oklch(0.6726 0.2904 341.4084);
+  --ring: var(--primary);
   --chart-1: oklch(0.6726 0.2904 341.4084);
   --chart-2: oklch(0.5488 0.2944 299.0954);
   --chart-3: oklch(0.8442 0.1457 209.2851);
@@ -130,31 +131,31 @@
   --chart-5: oklch(0.9168 0.1915 101.4070);
   --sidebar: oklch(0.1649 0.0352 281.8285);
   --sidebar-foreground: oklch(0.9513 0.0074 260.7315);
-  --sidebar-primary: oklch(0.6726 0.2904 341.4084);
+  --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-accent: oklch(0.8903 0.1739 171.2690);
   --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-border: oklch(0.3279 0.0832 280.7890);
-  --sidebar-ring: oklch(0.6726 0.2904 341.4084);
-  /* Category colours (dark theme): vivid and text tokens, see :root. */
-  --cat-product: oklch(0.66 0.125 228);
-  --cat-product-text: oklch(0.74 0.14 228);
-  --cat-engineering: oklch(0.70 0.155 262);
-  --cat-engineering-text: oklch(0.80 0.12 262);
-  --cat-ai: oklch(0.70 0.180 298);
-  --cat-ai-text: oklch(0.72 0.18 298);
-  --cat-brand: oklch(0.74 0.170 62);
-  --cat-brand-text: oklch(0.82 0.15 62);
-  --cat-research: oklch(0.78 0.130 195);
-  --cat-research-text: oklch(0.78 0.12 195);
-  --cat-customer: oklch(0.70 0.190 28);
-  --cat-customer-text: oklch(0.76 0.16 28);
-  --cat-game: oklch(0.77 0.245 140);
-  --cat-game-text: oklch(0.84 0.19 140);
-  --cat-industrial: oklch(0.88 0.180 98);
-  --cat-industrial-text: oklch(0.90 0.16 98);
-  --cat-other: oklch(0.72 0.060 280);
-  --cat-other-text: oklch(0.78 0.03 280);
+  --sidebar-ring: var(--primary);
+  /* Category colours (dark theme): Tailwind 400 for graphics, 300 for tag text. */
+  --cat-product: var(--color-sky-400);
+  --cat-product-text: var(--color-sky-300);
+  --cat-engineering: var(--color-indigo-400);
+  --cat-engineering-text: var(--color-indigo-300);
+  --cat-ai: var(--color-violet-400);
+  --cat-ai-text: var(--color-violet-300);
+  --cat-brand: var(--color-orange-400);
+  --cat-brand-text: var(--color-orange-300);
+  --cat-research: var(--color-teal-400);
+  --cat-research-text: var(--color-teal-300);
+  --cat-customer: var(--color-red-400);
+  --cat-customer-text: var(--color-red-300);
+  --cat-game: var(--color-lime-400);
+  --cat-game-text: var(--color-lime-300);
+  --cat-industrial: var(--color-amber-400);
+  --cat-industrial-text: var(--color-amber-300);
+  --cat-other: var(--color-slate-400);
+  --cat-other-text: var(--color-slate-300);
   --frame-line: oklch(0.2700 0.0500 281);
   --frame-hatch: color-mix(in oklab, var(--frame-line) 75%, transparent);
   --font-sans: Chakra Petch, ui-sans-serif, sans-serif, system-ui;
