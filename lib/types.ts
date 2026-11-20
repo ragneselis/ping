@@ -9,7 +9,9 @@ export type Seniority =
   | "lead/manager"
   | "unspecified";
 
-export type Category = "product" | "ux" | "ui";
+export type Category = "product" | "ux" | "ui" | "game";
+
+export const CATEGORY_LABEL: Record<Category, string> = { product: "Product design", ux: "UX", ui: "UI", game: "Game design" };
 
 /** One normalised job posting, the same shape for every source. */
 export interface Job {

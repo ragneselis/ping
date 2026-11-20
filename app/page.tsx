@@ -1,5 +1,5 @@
 import { loadJobs, loadRequirements, loadSources, tally } from "@/lib/data";
-import type { Job } from "@/lib/types";
+import { CATEGORY_LABEL, type Job } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -77,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
     <main>
       <h1>Ping: data test</h1>
       <p className="muted">
-        Product, UX and UI design postings. Scope: remote anywhere, plus on-site and hybrid roles in Europe.
+        Product, UX, UI and game design postings. Scope: remote anywhere, plus on-site and hybrid roles in Europe.
         {sources && <> Fetched {sources.fetchedAt.replace("T", " ").slice(0, 16)} UTC.</>}
       </p>
 
@@ -227,7 +227,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
         </select>
         <select name="category" defaultValue={f.category}>
           <option value="">Category: any</option>
-          {uniq(jobs.map((j) => j.category)).map((v) => <option key={v} value={v}>{v}</option>)}
+          {uniq(jobs.map((j) => j.category)).map((v) => <option key={v} value={v}>{CATEGORY_LABEL[v as Job["category"]] ?? v}</option>)}
         </select>
         <select name="seniority" defaultValue={f.seniority}>
           <option value="">Seniority: any</option>
@@ -258,7 +258,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
               <tr key={j.id}>
                 <td>
                   <a href={j.url} target="_blank" rel="noreferrer">{j.title}</a>
-                  <span className="muted"> ({j.category})</span>
+                  <span className="muted"> ({CATEGORY_LABEL[j.category] ?? j.category})</span>
                   <details>
                     <summary className="muted">Description</summary>
                     <pre>{j.description}</pre>

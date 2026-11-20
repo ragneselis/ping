@@ -3,15 +3,25 @@ import type { Category, RemoteStatus, Seniority } from "./types";
 /* ---------- Is this a product / UX / UI design role? ---------- */
 
 const EXCLUDE =
-  /\b(instructional|interior|fashion|graphic|packaging|landscape|hardware|chip|circuit|asic|fpga|analog|mechanical|electrical|game|level|live ops|economy|sound|lighting|kitchen|floral|curriculum|architectural|architecture|thumbnail|physical|industrial|jewelry|furniture|textile|teaching|tutor|recruiter|recruiting|recruitment|compensation|sales|advocate|production|soft goods|ad|ads|thumbnail|learning experience|solutions? design(er)?|network design|database design|engineer(ing)? manager)\b/i;
+  /\b(instructional|interior|structural|civil|fashion|graphic|packaging|landscape|hardware|chip|circuit|asic|fpga|analog|mechanical|electrical|sound|lighting|kitchen|floral|curriculum|architectural|architecture|thumbnail|physical|industrial|jewelry|furniture|textile|teaching|tutor|recruiter|recruiting|recruitment|compensation|sales|advocate|production|soft goods|ad|ads|thumbnail|learning experience|solutions? design(er)?|network design|database design|engineer(ing)? manager)\b/i;
 
 const PRODUCT = /\b(product design(er)?|head of design|design (lead|manager|director)|director,? (of )?(product )?design|vp,? (of )?design|principal designer|staff designer|founding designer|lead designer|senior designer|designer)\b/i;
 const UX = /\b(ux|user experience|experience design(er)?|interaction design(er)?|service design(er)?|ux research(er)?|design research(er)?|content design(er)?|ux writer|conversation(al)? design(er)?)\b/i;
 const UI = /\b(ui|user interface|visual design(er)?|interface design(er)?|web design(er)?|design engineer|design systems?|digital design(er)?)\b/i;
 
-/** Returns the category if the title is a product/UX/UI design role, else null. */
+/**
+ * Game design: game, level, gameplay, live ops, economy, combat, narrative... designers,
+ * plus game UI/UX roles that studios title "UI Artist" / "UX Artist".
+ * Audio, VFX, art-only and engineering roles are left out.
+ */
+const GAME =
+  /\b(game|games|gaming|(?<!(entry|mid|senior|junior|top|high|low)[\s-]?)level|gameplay|live ?ops|economy|combat|narrative|quest|mission|encounter|monetization|progression)\b[\w\s&]{0,30}\bdesign(er|ers)?\b|\b(ui|ux|ui ux|ux ui) artist\b/i;
+const GAME_EXCLUDE = /\b(sound|audio|music|composer|lighting|vfx|engineer|developer|programmer|recruit\w*|marketing|graphic)\b/i;
+
+/** Returns the category if the title is a product/UX/UI/game design role, else null. */
 export function designCategory(title: string): Category | null {
   const t = title.replace(/[\/|,–-]/g, " ");
+  if (GAME.test(t) && !GAME_EXCLUDE.test(t)) return "game";
   if (EXCLUDE.test(t)) return null;
   // "Designer" alone is too broad (brand, motion, graphic), so plain "designer"
   // only counts together with a product/digital qualifier, handled by PRODUCT patterns

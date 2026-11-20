@@ -98,7 +98,7 @@ export async function weWorkRemotely(): Promise<SourceResult> {
 
 /* Himalayas: public search API, 20 results per page. */
 export async function himalayas(): Promise<SourceResult> {
-  const queries = ["product designer", "ux designer", "ui designer", "ux researcher", "design lead"];
+  const queries = ["product designer", "ux designer", "ui designer", "ux researcher", "design lead", "game designer", "level designer"];
   const seen = new Map<string, any>();
   for (const q of queries) {
     for (let page = 1; page <= 5; page++) {

@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-11-20T15:18:04.187Z",
-  "totalInScope": 381,
-  "duplicatesRemoved": 56,
-  "unique": 325,
+  "fetchedAt": "2026-11-20T15:21:30.465Z",
+  "totalInScope": 473,
+  "duplicatesRemoved": 62,
+  "unique": 411,
   "sources": [
     {
       "source": "Remote OK",
@@ -17,17 +17,17 @@
       "sourceType": "board",
       "ok": true,
       "fetched": 47,
-      "designMatches": 3,
-      "inScope": 3
+      "designMatches": 4,
+      "inScope": 4
     },
     {
       "source": "Himalayas",
       "sourceType": "board",
       "ok": true,
-      "fetched": 429,
-      "designMatches": 293,
-      "inScope": 293,
-      "notes": "search queries: product designer, ux designer, ui designer, ux researcher, design lead"
+      "fetched": 590,
+      "designMatches": 377,
+      "inScope": 377,
+      "notes": "search queries: product designer, ux designer, ui designer, ux researcher, design lead, game designer, level designer"
     },
     {
       "source": "Remotive",
@@ -42,18 +42,18 @@
       "sourceType": "board",
       "ok": true,
       "fetched": 2333,
-      "designMatches": 32,
-      "inScope": 27,
+      "designMatches": 33,
+      "inScope": 28,
       "notes": "first 8 pages of the general feed (no server-side search)"
     },
     {
       "source": "Greenhouse",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 2978,
+      "fetched": 2981,
       "designMatches": 62,
       "inScope": 23,
-      "notes": "all open roles per company: Figma 146, Airbnb 201, Stripe 773, Discord 29, Dropbox 47, Pinterest 175, GitLab 245, Duolingo 54, Asana 113, Miro 13, Wise 18, Veriff 10, Intercom 122, Monzo 59, N26 24, Typeform 6, Vercel 86, Oura 97, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 183, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 9, Remedy 14, Solita 63, Truecaller 34, Trustpilot 30, Boku 11, Betsson 79, Whalar 10, Yousician 0"
+      "notes": "all open roles per company: Figma 146, Airbnb 201, Stripe 773, Discord 29, Dropbox 47, Pinterest 175, GitLab 245, Duolingo 54, Asana 113, Miro 13, Wise 18, Veriff 10, Intercom 122, Monzo 59, N26 24, Typeform 6, Vercel 86, Oura 97, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 184, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 9, Remedy 14, Solita 63, Truecaller 34, Trustpilot 32, Boku 11, Betsson 79, Whalar 10, Yousician 0"
     },
     {
       "source": "Lever",
@@ -68,18 +68,18 @@
       "source": "Ashby",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 1434,
-      "designMatches": 23,
-      "inScope": 19,
-      "notes": "all open roles per company: Notion 169, Linear 32, Ramp 185, ElevenLabs 124, Supabase 80, Glia 28, Webflow 30, Restream 9, Supercell 28, Lovable 80, Legora 339, Hostinger 43, Surfshark 32, Zego 29, Katana 1, Gelato 3, Creem 3, Reaktor 12, Hoxhunt 11, Epidemic Sound 28, Trustly 39, Pleo 32, Too Good To Go 60, Corti 4, Eneba 33"
+      "fetched": 1432,
+      "designMatches": 27,
+      "inScope": 23,
+      "notes": "all open roles per company: Notion 169, Linear 32, Ramp 185, ElevenLabs 124, Supabase 80, Glia 28, Webflow 30, Restream 9, Supercell 28, Lovable 80, Legora 339, Hostinger 42, Surfshark 32, Zego 29, Katana 1, Gelato 3, Creem 3, Reaktor 12, Hoxhunt 11, Epidemic Sound 28, Trustly 39, Pleo 31, Too Good To Go 60, Corti 4, Eneba 33"
     },
     {
       "source": "Teamtailor",
       "sourceType": "ats",
       "ok": true,
       "fetched": 449,
-      "designMatches": 4,
-      "inScope": 4,
+      "designMatches": 6,
+      "inScope": 6,
       "notes": "all open roles per company: Adcash 2, Swedbank 63, Printful 29, Embark Studios 16, Oda 3, Schibsted 38, Lunar 26, Starship 3, Lightyear 2, Monese 3, Comodule 2, Montonio 1, Scoro 5, Fractory 7, Mintos 9, Luminor 71, Bob W 7, Futurice 11, Vincit 4, Siili 6, Qvik 2, Holvi 1, Kry 51, Tibber 13, Storytel 4, Hemnet 5, Anyfin 14, Detectify 3, Quinyx 10, Bannerflow 8, Vipps 7, reMarkable 20, Templafy 3, Pactum 0, Outfunnel 0, Swappie 0, Vivino 0"
     },
     {

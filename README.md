@@ -2,7 +2,7 @@
 
 Job tool for design students at the Estonian Academy of Arts (EKA). This is the first data test: no UI design yet.
 
-Scope: product, UX and UI design roles. Remote roles anywhere, plus on-site and hybrid roles in Europe (Estonia included).
+Scope: product, UX, UI and game design roles (game, level, game UI/UX designers, tagged "Game design"). Remote roles anywhere, plus on-site and hybrid roles in Europe (Estonia included).
 
 ## Stack
 
