@@ -10,7 +10,7 @@ Each posting gets exactly one primary category (the core of the job) and, only w
 
 Next.js 15 (App Router) + TypeScript, deployable on Vercel. Data scripts run with `tsx` and write JSON to `data/`.
 
-Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Recharts via the shadcn chart component. The theme in `app/globals.css` is the single source of truth for colours, radius and shadows; don't add one-off colours. Fonts: Chakra Petch (sans) and Fira Code (mono, for numbers, counts, tags and stats) via `next/font`. Dark first: `next-themes` defaults to dark (no "system" option, stored under `ping-theme`), with a light-mode toggle.
+Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Recharts via the shadcn chart component. The theme in `app/globals.css` is the single source of truth for colours, radius and shadows; don't add one-off colours. Fonts: Chakra Petch (sans) and Fira Code (mono, for numbers, counts, tags and stats) via `next/font`. Theme: a Light / Dark / System switch in the header (`components/theme-toggle.tsx`, a menu on phones). Light on a first visit; System follows prefers-color-scheme live. The choice is stored under `ping-theme` and applied before first paint by next-themes.
 
 | Page | Code |
 |---|---|
