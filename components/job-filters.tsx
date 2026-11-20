@@ -65,14 +65,19 @@ export function JobFilters({ categories, total }: { categories: { value: Categor
           ))}
         </div>
       </ChipScroller>
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border bg-card p-3 shadow-xs">
+      <div className="cut-corner flex flex-wrap items-center gap-x-6 gap-y-1 rounded-lg border border-border bg-card px-3 py-1.5 [--cut-line:var(--border)]">
+        {/* Labels are padded to a 44px hit area; tapping the text toggles the switch. */}
         <div className="flex items-center gap-2">
           <Switch id="estonia" checked={params.get("estonia") === "1"} onCheckedChange={(v) => set("estonia", v ? "1" : null)} />
-          <Label htmlFor="estonia">Open to Estonia</Label>
+          <Label htmlFor="estonia" className="min-h-11 pr-1">
+            Open to Estonia
+          </Label>
         </div>
         <div className="flex items-center gap-2">
           <Switch id="reach" checked={params.get("reach") === "1"} onCheckedChange={(v) => set("reach", v ? "1" : null)} />
-          <Label htmlFor="reach">Within reach</Label>
+          <Label htmlFor="reach" className="min-h-11 pr-1">
+            Within reach
+          </Label>
         </div>
         <Select items={REMOTE_ITEMS} value={remote} onValueChange={(v) => set("remote", v && v !== "any" ? String(v) : null)}>
           <SelectTrigger className="min-w-40" aria-label="Work setup">

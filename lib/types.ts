@@ -130,6 +130,8 @@ export interface Classification {
 
 /** A candidate posting joined with its classification and requirements (if it has them yet). */
 export interface ClassifiedJob extends Job {
+  /** Level stated in the job title only ("unspecified" when the title says nothing). */
+  titleSeniority: Seniority;
   primary: Category | null;
   secondary: Category | null;
   classification: Classification | null;

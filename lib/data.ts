@@ -46,7 +46,7 @@ export function loadClassifiedJobs(store = loadExtractions(), cls = loadClassifi
       const c = cls.results[j.id] ?? null;
       const e = c?.isDesignRole ? store.results[j.id] ?? null : null;
       const seniority = j.seniority === "unspecified" && e && e.experienceLevel !== "unspecified" ? (e.experienceLevel as Job["seniority"]) : j.seniority;
-      return { ...j, seniority, primary: c?.primary ?? null, secondary: c?.secondary ?? null, classification: c, extraction: e };
+      return { ...j, seniority, titleSeniority: j.seniority, primary: c?.primary ?? null, secondary: c?.secondary ?? null, classification: c, extraction: e };
     })
     .filter((j) => !j.classification || j.classification.isDesignRole);
 }

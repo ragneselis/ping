@@ -1,7 +1,7 @@
 import { ArrowUpRight, CalendarDays, MapPin, Wifi } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CategoryTag } from "@/components/category";
+import { LevelTag, RequirementChip, SignalTag } from "@/components/signal";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { REMOTE_LABEL } from "@/lib/categories";
 import type { JobCard as Job } from "@/lib/view";
 
@@ -16,46 +16,56 @@ export function postedAgo(iso: string | null, now = Date.now()): string {
   return `${Math.floor(days / 30)} months ago`;
 }
 
+/**
+ * A job. The title is the only link (stretched over the card), so assistive tech reads
+ * "title, company" instead of the whole card. Three subgrid rows (header, meta, chips)
+ * keep cards in the same row aligned.
+ */
 export function JobCard({ job }: { job: Job }) {
   return (
-    <a
-      href={job.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group row-span-3 grid grid-rows-subgrid gap-0 rounded-xl focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-    >
-      {/* Three subgrid rows (header, meta, chips) so cards in the same row line up. */}
-      <Card className="row-span-3 grid grid-rows-subgrid gap-3 transition-shadow group-hover:shadow-lg group-hover:ring-primary/40">
+    <article className="group relative row-span-3 grid grid-rows-subgrid">
+      <Card className="row-span-3 grid grid-rows-subgrid gap-3 transition-colors group-hover:[--cut-line:var(--color-primary)] group-has-[a:focus-visible]:[--cut-line:var(--color-ring)]">
         <CardHeader className="content-start gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
             <CategoryTag category={job.primary} />
             {job.secondary && <CategoryTag category={job.secondary} secondary />}
-            {job.openToEstonia && (
-              <Badge variant="secondary" className="font-mono">
-                Open to Estonia
-              </Badge>
-            )}
+            {job.withinReach && <SignalTag kind="reach" />}
+            {job.openToEstonia && <SignalTag kind="estonia" />}
           </div>
           <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <h3 className="line-clamp-2 text-lg leading-snug font-semibold text-balance group-hover:text-primary" title={job.title}>{job.title}</h3>
+            <div className="grid min-w-0 gap-0.5">
+              <h3 className="line-clamp-2 text-lg leading-snug font-semibold text-balance group-hover:text-primary" title={job.title}>
+                <a
+                  href={job.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+                >
+                  {job.title}
+                  <span className="sr-only">, {job.company} (opens the original posting)</span>
+                </a>
+              </h3>
               <p className="text-sm font-medium text-muted-foreground">{job.company}</p>
+              <LevelTag level={job.level} />
             </div>
-            <ArrowUpRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+            <ArrowUpRight
+              aria-hidden
+              className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary"
+            />
           </div>
         </CardHeader>
         <CardContent className="self-end">
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
             <span className="flex min-w-0 items-center gap-1.5">
-              <MapPin className="size-3.5 shrink-0" />
+              <MapPin aria-hidden className="size-3.5 shrink-0" />
               <span className="truncate">{job.location || "Location not stated"}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <Wifi className="size-3.5" />
+              <Wifi aria-hidden className="size-3.5" />
               {REMOTE_LABEL[job.remote] ?? job.remote}
             </span>
             <span className="flex items-center gap-1.5 font-mono text-xs">
-              <CalendarDays className="size-3.5" />
+              <CalendarDays aria-hidden className="size-3.5" />
               {postedAgo(job.postedAt)}
             </span>
           </div>
@@ -64,9 +74,7 @@ export function JobCard({ job }: { job: Job }) {
           {job.chips.length > 0 ? (
             <ul className="flex flex-wrap gap-1.5" aria-label="Top requirements">
               {job.chips.map((c) => (
-                <li key={c} className="rounded-md bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground">
-                  {c}
-                </li>
+                <RequirementChip key={c}>{c}</RequirementChip>
               ))}
             </ul>
           ) : (
@@ -74,6 +82,6 @@ export function JobCard({ job }: { job: Job }) {
           )}
         </CardContent>
       </Card>
-    </a>
+    </article>
   );
 }

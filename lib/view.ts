@@ -12,8 +12,35 @@ import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "
 export const EARLY_SIGNAL_THRESHOLD = 15;
 export const isEarlySignal = (postings: number) => postings < EARLY_SIGNAL_THRESHOLD;
 
-/** Seniority levels a graduate can realistically go for. Postings that state no level count too. */
-export const REACH = new Set(["intern", "junior", "mid", "unspecified"]);
+
+/**
+ * Can a graduate realistically apply?
+ * - The title states a level: only intern or junior count.
+ * - Otherwise the posting's level: intern or junior count.
+ * - Otherwise the years asked decide: 0 to 2 years yes, more no.
+ * - Nothing stated anywhere (no level, no years): yes.
+ */
+export function isWithinReach(j: ClassifiedJob): boolean {
+  const e = j.extraction;
+  const modelLevel = e?.experienceLevel ?? "unspecified";
+  // A level in the title wins; the posting's own level only counts when the title says nothing.
+  if (j.titleSeniority !== "unspecified") return ["intern", "junior"].includes(j.titleSeniority);
+  if (["intern", "junior"].includes(modelLevel)) return true;
+  const years = e?.yearsMin ?? null;
+  if (years !== null) return years <= 2;
+  return modelLevel === "unspecified";
+}
+
+/** Short level label for cards, in the order a reader scans them. */
+export const LEVEL_LABEL: Record<string, string> = {
+  intern: "Intern",
+  junior: "Junior",
+  mid: "Mid",
+  senior: "Senior",
+  "staff/principal": "Staff",
+  "lead/manager": "Lead",
+  unspecified: "Level not stated",
+};
 
 export interface JobCard {
   id: string;
@@ -29,6 +56,7 @@ export interface JobCard {
   openToEstonia: boolean;
   withinReach: boolean;
   seniority: string;
+  level: string;
 }
 
 export interface Filters {
@@ -74,8 +102,9 @@ function toCard(j: ClassifiedJob): JobCard {
     url: j.url,
     chips,
     openToEstonia: j.openToEstonia === true,
-    withinReach: REACH.has(j.seniority),
+    withinReach: isWithinReach(j),
     seniority: j.seniority,
+    level: LEVEL_LABEL[j.seniority] ?? j.seniority,
   };
 }
 
@@ -103,9 +132,10 @@ export function getDataset(): Dataset {
     .join("|");
   if (cache?.key === key) return cache.data;
 
+  // Within-reach jobs first (graduates see what they can apply for), then newest first.
   const jobs = loadClassifiedJobs()
     .filter((j) => j.primary)
-    .sort((a, b) => (b.postedAt ?? "").localeCompare(a.postedAt ?? ""));
+    .sort((a, b) => Number(isWithinReach(b)) - Number(isWithinReach(a)) || (b.postedAt ?? "").localeCompare(a.postedAt ?? ""));
   const sources = loadSources();
   const data: Dataset = {
     jobs,
@@ -193,7 +223,7 @@ export function insightFor(jobs: ClassifiedJob[], top = 10): Insight {
     medianYears: median(years),
     statedYears: years.length,
     openToEstonia: jobs.filter((j) => j.openToEstonia).length,
-    withinReach: jobs.filter((j) => REACH.has(j.seniority)).length,
+    withinReach: jobs.filter(isWithinReach).length,
   };
 }
 
@@ -205,6 +235,7 @@ export function categoryComparison(jobs: ClassifiedJob[]) {
       category: c,
       postings: list.length,
       earlySignal: isEarlySignal(list.length),
+      withinReach: i.withinReach,
       openToEstonia: i.openToEstonia,
       withinReachShare: list.length ? Math.round((i.withinReach / list.length) * 100) : 0,
       medianYears: i.medianYears,

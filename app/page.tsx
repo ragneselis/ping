@@ -1,13 +1,13 @@
-import { ArrowDown, BellRing, Compass, GraduationCap, Globe2 } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { JobCard } from "@/components/job-card";
 import { JobFilters } from "@/components/job-filters";
-import { SubscribeDialog } from "@/components/subscribe-dialog";
+import { Readout, type ReadoutItem } from "@/components/readout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CATEGORY_META } from "@/lib/categories";
+import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
 import { CATEGORIES } from "@/lib/types";
 import { applyFilters, getDataset, parseFilters } from "@/lib/view";
 
@@ -19,7 +19,8 @@ type Search = Record<string, string | string[] | undefined>;
 
 export default async function JobsPage({ searchParams }: { searchParams: Promise<Search> }) {
   const sp = await searchParams;
-  const { cards } = getDataset();
+  const { cards, updatedAt } = getDataset();
+  const updated = updatedAt ? new Date(updatedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long" }) : "recently";
   const filters = parseFilters(sp);
   const page = Math.max(1, Number(typeof sp.page === "string" ? sp.page : 1) || 1);
 
@@ -31,10 +32,13 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
     .filter((c) => c.count > 0 || c.value === filters.category)
     .sort((a, b) => b.count - a.count);
 
-  const stats = [
-    { icon: Compass, value: cards.length, label: "design jobs right now" },
-    { icon: Globe2, value: cards.filter((c) => c.openToEstonia).length, label: "open to someone in Estonia" },
-    { icon: GraduationCap, value: cards.filter((c) => c.withinReach).length, label: "within reach for graduates" },
+  const estonia = cards.filter((c) => c.openToEstonia).length;
+  const reach = cards.filter((c) => c.withinReach).length;
+  const both = cards.filter((c) => c.openToEstonia && c.withinReach).length;
+  const readout: ReadoutItem[] = [
+    { value: cards.length.toLocaleString("en-GB"), label: "design jobs live", href: "/" },
+    { value: estonia.toLocaleString("en-GB"), label: "open to Estonia", href: "/?estonia=1", signal: true },
+    { value: reach.toLocaleString("en-GB"), label: "within reach", href: "/?reach=1", signal: true },
   ];
 
   const nextParams = new URLSearchParams();
@@ -42,44 +46,33 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   nextParams.set("page", String(page + 1));
 
   return (
-    <div className="grid gap-10 pt-10 sm:pt-14">
+    <div className="grid gap-8 pt-8 sm:gap-10 sm:pt-14">
       <section className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
         <div className="grid gap-4">
-          <p className="font-mono text-sm font-medium text-muted-foreground">For design students at EKA</p>
-          <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">
-            Design jobs, minus the doomscrolling.
-          </h1>
+          <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">Design jobs, minus the doomscrolling.</h1>
           <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-            Every current design role we can find, sorted into nine directions. The market is tough, not closed: here is
-            where the doors are actually open.
+            Every current design role we can find, sorted into nine directions.
+            <span className="hidden sm:inline"> The market is tough, not closed: here is where the doors are actually open.</span>
           </p>
         </div>
-        <Card className="bg-secondary">
+        {/* The real shortcut for an EKA graduate. Hidden on phones, where the readout links do the same job. */}
+        <Card className="hidden lg:flex">
           <CardContent className="grid gap-3">
-            <div className="flex items-center gap-2 font-semibold">
-              <BellRing className="size-4" />
-              Never miss a new one
-            </div>
-            <p className="text-sm text-muted-foreground">Get new jobs in your direction as they land, by email or Slack.</p>
-            <SubscribeDialog trigger={<Button className="w-fit">Get new jobs</Button>} />
+            <p className="font-semibold">Start here</p>
+            <p className="text-sm text-muted-foreground">
+              <span className="font-mono font-semibold text-foreground">{both}</span> jobs are open to someone in Estonia and within reach for a
+              graduate.
+            </p>
+            <Button className="w-fit" nativeButton={false} render={<Link href="/?estonia=1&reach=1" />}>
+              Show me those
+              <ArrowRight data-icon="inline-end" />
+            </Button>
           </CardContent>
         </Card>
       </section>
 
-      <section aria-label="Live stats" className="grid grid-cols-3 gap-2 sm:gap-3">
-        {stats.map((s) => (
-          <Card key={s.label} size="sm">
-            <CardContent className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground sm:size-10">
-                <s.icon className="size-4 sm:size-5" />
-              </div>
-              <div>
-                <div className="font-mono text-2xl leading-none font-semibold tabular-nums sm:text-3xl">{s.value.toLocaleString("en-GB")}</div>
-                <div className="mt-1 text-xs leading-snug text-muted-foreground sm:text-sm">{s.label}</div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+      <section aria-label="Live numbers">
+        <Readout items={readout} note={`${REACH_DEFINITION} Updated ${updated}.`} />
       </section>
 
       <section aria-labelledby="jobs-heading" className="grid gap-6">
@@ -88,7 +81,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
             Find your direction
           </h2>
           <p className="text-sm text-muted-foreground">
-            <span className="font-mono font-semibold text-foreground">{results.length.toLocaleString("en-GB")}</span> jobs match, newest first
+            <span className="font-mono font-semibold text-foreground">{results.length.toLocaleString("en-GB")}</span> jobs match, within reach first
           </p>
         </div>
 

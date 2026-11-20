@@ -1,18 +1,16 @@
 "use client";
 
-import { BellRing, Menu } from "lucide-react";
+import { BellRing } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { SubscribeDialog } from "@/components/subscribe-dialog";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/", label: "Jobs" },
-  { href: "/insights", label: "Market insights" },
+  { href: "/", label: "Jobs", short: "Jobs" },
+  { href: "/insights", label: "Market insights", short: "Insights" },
 ];
 
 export function Wordmark() {
@@ -27,64 +25,60 @@ export function Wordmark() {
   );
 }
 
+/** "Get new jobs" is not live yet, so it is an outline button with a "soon" tag rather than a pink action. */
+export function SubscribeButton({ compact = false }: { compact?: boolean }) {
+  return (
+    <SubscribeDialog
+      trigger={
+        <Button variant="outline" size="sm" aria-label={compact ? "Get new jobs (coming soon)" : undefined} className={cn(compact && "size-9 px-0")}>
+          <BellRing data-icon={compact ? undefined : "inline-start"} />
+          {!compact && (
+            <>
+              Get new jobs
+              <span className="rounded-sm bg-muted px-1 font-mono text-[0.7rem] text-muted-foreground uppercase">soon</span>
+            </>
+          )}
+        </Button>
+      }
+    />
+  );
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70">
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:gap-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:gap-6">
         <Wordmark />
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+        {/* Two destinations only, so they stay visible as tabs at every width. */}
+        <nav className="flex items-center" aria-label="Main">
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
-              className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
-                active(n.href) ? "text-foreground" : "text-muted-foreground",
-              )}
               aria-current={active(n.href) ? "page" : undefined}
+              className={cn(
+                "relative flex h-11 items-center px-2.5 text-sm font-medium transition-colors hover:text-foreground sm:px-3",
+                active(n.href)
+                  ? "text-foreground after:absolute after:inset-x-2.5 after:bottom-2 after:h-0.5 after:rounded-full after:bg-primary sm:after:inset-x-3"
+                  : "text-muted-foreground",
+              )}
             >
-              {n.label}
-              {active(n.href) && <span className="mt-0.5 block h-0.5 rounded-full bg-primary" />}
+              <span className="sm:hidden">{n.short}</span>
+              <span className="hidden sm:inline">{n.label}</span>
             </Link>
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-1">
-          <SubscribeDialog
-            trigger={
-              <Button size="sm" className="mr-1">
-                <BellRing data-icon="inline-start" />
-                Get new jobs
-              </Button>
-            }
-          />
+          <div className="hidden sm:block">
+            <SubscribeButton />
+          </div>
+          <div className="sm:hidden">
+            <SubscribeButton compact />
+          </div>
           <ThemeToggle />
-          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-            <SheetTrigger render={<Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu" />}>
-              <Menu />
-            </SheetTrigger>
-            <SheetContent side="right" className="w-64">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <nav className="grid gap-1 px-4" aria-label="Mobile">
-                {NAV.map((n) => (
-                  <Link
-                    key={n.href}
-                    href={n.href}
-                    onClick={() => setMenuOpen(false)}
-                    aria-current={active(n.href) ? "page" : undefined}
-                    className={cn("rounded-md px-3 py-2 text-base font-medium hover:bg-muted", active(n.href) ? "bg-muted" : "")}
-                  >
-                    {n.label}
-                  </Link>
-                ))}
-              </nav>
-            </SheetContent>
-          </Sheet>
         </div>
       </div>
     </header>

@@ -42,3 +42,6 @@ export const categoryColor = (c: Category) => `var(${CATEGORY_TOKEN[c]})`;
 
 /** Inline style that sets `--cat` for a subtree, read by the shared category classes. */
 export const categoryVars = (c: Category) => ({ "--cat": categoryColor(c) }) as React.CSSProperties;
+
+/** One-line definition shown wherever "within reach" appears (the rule lives in lib/view.ts isWithinReach). */
+export const REACH_DEFINITION = "Within reach: internships, junior roles and roles asking for 0 to 2 years. Mid-level and above don't count.";

@@ -10,7 +10,7 @@ Each posting gets exactly one primary category (the core of the job) and, only w
 
 Next.js 15 (App Router) + TypeScript, deployable on Vercel. Data scripts run with `tsx` and write JSON to `data/`.
 
-Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Recharts via the shadcn chart component. The theme in `app/globals.css` is the single source of truth for colours, radius and shadows; don't add one-off colours. Fonts: Chakra Petch (sans) and Fira Code (mono, for numbers, counts, tags and stats) via `next/font`. Light and dark mode via `next-themes`, defaulting to the system setting.
+Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Recharts via the shadcn chart component. The theme in `app/globals.css` is the single source of truth for colours, radius and shadows; don't add one-off colours. Fonts: Chakra Petch (sans) and Fira Code (mono, for numbers, counts, tags and stats) via `next/font`. Dark first: `next-themes` defaults to dark, with a light-mode toggle.
 
 | Page | Code |
 |---|---|
@@ -20,6 +20,10 @@ Interface: Tailwind CSS 4 + shadcn/ui (Base UI flavour) + Lucide icons + Rechart
 | Server-side view layer (filters, cards, insight numbers) | `lib/view.ts`, `lib/categories.ts` |
 
 Each direction has its own colour: the `--cat-*` tokens in `app/globals.css` (light and dark), mapped to categories in one place, `CATEGORY_TOKEN` in `lib/categories.ts`. Tags, chips, dots, charts and cards all read it through `components/category.tsx`. Light-theme values are tuned for WCAG AA (at least 4.6:1) as text on their own 15% tint over `--background` and `--card`. Pink (`--primary`) is kept for the brand and actions: logo dot, buttons, links, focus rings and the active "All directions" chip.
+
+Shared pieces of the look: hairline borders with a chamfered corner (`cut-corner` utility and `--cut` in `app/globals.css`, used by `components/ui/card.tsx`), a faint grid behind dark mode only (`--grid-line`), the mono readout strip (`components/readout.tsx`) instead of stat cards, and signal tags on `--accent` for the facts a graduate decides on: open to Estonia, within reach, level (`components/signal.tsx`). Charts that are not about one direction use the neutral `--data` token; category charts use the category colour; pink never appears in charts.
+
+"Within reach" (`isWithinReach` in `lib/view.ts`): a level in the title wins (only intern or junior count); otherwise the posting's level (intern or junior) or the years asked (0 to 2) decide; a posting that states no level and no years counts. Mid-level and above never count. Within-reach jobs are listed first.
 
 Directions with fewer than `EARLY_SIGNAL_THRESHOLD` postings (15, in `lib/view.ts`) get an "Early signal" badge and show lists with counts instead of charts.
 

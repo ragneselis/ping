@@ -1,6 +1,7 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useLayoutEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis, YAxis } from "recharts";
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -59,13 +60,17 @@ export function HBarChart({
   series,
   legend = false,
   tooltipValue,
+  caption,
 }: {
-  /** `colors` overrides the series colours for one row (one entry per series). */
-  rows: { label: string; values: number[]; end: string; note?: string; colors?: string[] }[];
+  /** `colors` overrides the series colours for one row (one entry per series); `href` makes the row clickable. */
+  rows: { label: string; values: number[]; end: string; note?: string; colors?: string[]; href?: string }[];
   series: HBarSeries[];
   legend?: boolean;
   tooltipValue?: (value: number, seriesKey: string, row: { label: string; note?: string }) => string;
+  /** Caption for the screen-reader data table. */
+  caption: string;
 }) {
+  const router = useRouter();
   const [ref, width, el] = useWidth();
   const labelWidths = useTextWidths(el, rows.map((r) => r.label));
   const endWidths = useTextWidths(el, rows.map((r) => r.end), true);
@@ -129,6 +134,11 @@ export function HBarChart({
                 key={s.key}
                 dataKey={s.key}
                 stackId="stack"
+                className={rows.some((r) => r.href) ? "cursor-pointer" : undefined}
+                onClick={(_d, idx) => {
+                  const href = rows[idx]?.href;
+                  if (href) router.push(href, { scroll: false });
+                }}
                 fill={`var(--color-${s.key})`}
                 radius={series.length === 1 ? 4 : i === 0 ? [4, 0, 0, 4] : i === series.length - 1 ? [0, 4, 4, 0] : 0}
               >
@@ -151,14 +161,44 @@ export function HBarChart({
           </BarChart>
         </ChartContainer>
       )}
+      <DataTable caption={caption} head={["", ...series.map((s) => s.label)]} rows={rows.map((r) => [r.label, ...r.values.map(String)])} />
     </div>
   );
 }
 
+/** Text alternative for a chart: a visually hidden table screen readers can browse. */
+function DataTable({ caption, head, rows }: { caption: string; head: string[]; rows: string[][] }) {
+  return (
+    <table className="sr-only">
+      <caption>{caption}</caption>
+      <thead>
+        <tr>
+          {head.map((h, i) => (
+            <th key={i} scope="col">
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr key={r[0]}>
+            <th scope="row">{r[0]}</th>
+            {r.slice(1).map((c, i) => (
+              <td key={i}>{c}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 /** Ranking of skills or tools: share of postings that ask for each one. */
-export function RankingChart({ data, color }: { data: { label: string; count: number; share: number }[]; color: ChartColor }) {
+export function RankingChart({ data, color, caption }: { data: { label: string; count: number; share: number }[]; color: ChartColor; caption: string }) {
   return (
     <HBarChart
+      caption={caption}
       rows={data.map((d) => ({ label: d.label, values: [d.share], end: `${d.share}%`, note: `${d.count}` }))}
       series={[{ key: "share", label: "Share of postings", color }]}
       tooltipValue={(v, _k, row) => `${v}% (${row.note} postings)`}
@@ -166,28 +206,33 @@ export function RankingChart({ data, color }: { data: { label: string; count: nu
   );
 }
 
-/** Jobs per direction in each direction's own colour: solid = within reach, tint = senior and above. */
-export function CategoryHiringChart({ data }: { data: { label: string; reach: number; rest: number; color: string }[] }) {
+/** Jobs per direction in each direction's own colour: solid = within reach, faded = the rest. Rows link to the direction. */
+export function CategoryHiringChart({ data }: { data: { label: string; reach: number; rest: number; color: string; href: string }[] }) {
   return (
     <div className="grid gap-3">
-      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1.5">
-          <span className="size-2.5 rounded-sm bg-foreground" /> Within reach for graduates
+      {/* Two-tone sample swatch: the legend shows the same solid-plus-faded split as the bars. */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+        <span aria-hidden className="flex h-2.5 w-10 overflow-hidden rounded-sm">
+          <span className="w-1/2 bg-foreground" />
+          <span className="w-1/2 bg-foreground/30" />
         </span>
-        <span className="flex items-center gap-1.5">
-          <span className="size-2.5 rounded-sm bg-foreground/30" /> Senior and above
+        <span>
+          <span className="font-medium text-foreground">Solid</span> = within reach, <span className="font-medium text-foreground">faded</span> = mid-level
+          and above. Click a row to open that direction.
         </span>
       </div>
       <HBarChart
+        caption="Jobs per direction: within reach and the rest"
         rows={data.map((d) => ({
           label: d.label,
           values: [d.reach, d.rest],
           end: String(d.reach + d.rest),
           colors: [d.color, `color-mix(in oklab, ${d.color} 30%, transparent)`],
+          href: d.href,
         }))}
         series={[
-          { key: "reach", label: "Within reach for graduates", color: 4 },
-          { key: "rest", label: "Senior and above", color: 2 },
+          { key: "reach", label: "Within reach", color: "var(--data)" },
+          { key: "rest", label: "Mid-level and above", color: "var(--data)" },
         ]}
         tooltipValue={(v) => String(v)}
       />
@@ -195,19 +240,36 @@ export function CategoryHiringChart({ data }: { data: { label: string; reach: nu
   );
 }
 
+/** Axis tick that breaks multi-word labels ("Not stated") onto two lines instead of clipping them. */
+function WrapTick({ x, y, payload }: { x?: number | string; y?: number | string; payload?: { value: string } }) {
+  const words = String(payload?.value ?? "").split(" ");
+  return (
+    <text x={Number(x)} y={Number(y) + 4} textAnchor="middle" fontSize={11} className="fill-muted-foreground font-mono">
+      {words.map((w, i) => (
+        <tspan key={i} x={Number(x)} dy={i === 0 ? "0.71em" : "1.1em"}>
+          {w}
+        </tspan>
+      ))}
+    </text>
+  );
+}
+
 /** Vertical distribution, e.g. seniority or years of experience. */
-export function DistributionChart({ data, color, label }: { data: Count[]; color: ChartColor; label: string }) {
+export function DistributionChart({ data, color, label, caption }: { data: Count[]; color: ChartColor; label: string; caption: string }) {
   const config = { count: { label, color: colorValue(color) } } satisfies ChartConfig;
   return (
-    <ChartContainer config={config} className="aspect-auto h-56 w-full">
-      <BarChart data={data} margin={{ top: 20, left: 0, right: 0, bottom: 0 }} accessibilityLayer>
-        <CartesianGrid vertical={false} />
-        <XAxis dataKey="label" tickLine={false} axisLine={false} interval={0} className="font-mono" fontSize={11} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideIndicator />} />
-        <Bar dataKey="count" fill="var(--color-count)" radius={4}>
-          <LabelList dataKey="count" position="top" className="fill-foreground font-mono" fontSize={11} />
-        </Bar>
-      </BarChart>
-    </ChartContainer>
+    <div>
+      <ChartContainer config={config} className="aspect-auto h-60 w-full">
+        <BarChart data={data} margin={{ top: 20, left: 0, right: 0, bottom: 8 }} accessibilityLayer>
+          <CartesianGrid vertical={false} />
+          <XAxis dataKey="label" tickLine={false} axisLine={false} interval={0} height={36} tick={<WrapTick />} />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent hideIndicator />} />
+          <Bar dataKey="count" fill="var(--color-count)" radius={4}>
+            <LabelList dataKey="count" position="top" className="fill-foreground font-mono" fontSize={11} />
+          </Bar>
+        </BarChart>
+      </ChartContainer>
+      <DataTable caption={caption} head={["", label]} rows={data.map((d) => [d.label, String(d.count)])} />
+    </div>
   );
 }

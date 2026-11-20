@@ -18,13 +18,13 @@ export const categoryClass = {
   chipActive: "border-(--cat) bg-(--cat)/15 text-(--cat)",
 } as const;
 
-const TAG_BASE = "inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-md px-2 font-mono text-xs font-medium whitespace-nowrap";
+const TAG_BASE = "inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-sm px-2 font-mono text-xs font-medium whitespace-nowrap";
 
 export function CategoryTag({ category, secondary = false, className }: { category: Category; secondary?: boolean; className?: string }) {
   return (
     <span
       style={categoryVars(category)}
-      className={cn(TAG_BASE, secondary ? cn(categoryClass.outline, "h-4 px-1.5 text-[0.65rem]") : categoryClass.tag, className)}
+      className={cn(TAG_BASE, secondary ? cn(categoryClass.outline, "px-1.5") : categoryClass.tag, className)}
     >
       {secondary && "+ "}
       {CATEGORY_META[category].short}
