@@ -12,7 +12,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
       <DialogTrigger render={trigger} />
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+          <div className="mb-2 flex size-10 items-center justify-center rounded-lg border border-border text-foreground">
             <BellRing className="size-5" />
           </div>
           <DialogTitle className="text-xl">Coming soon: email and Slack updates</DialogTitle>

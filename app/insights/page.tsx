@@ -2,14 +2,14 @@ import { ArrowRight, CalendarClock } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CategoryHiringChart, DistributionChart, RankingChart } from "@/components/insight-charts";
-import { CategoryDot, ChipContent, chipClassName } from "@/components/category";
+import { Band } from "@/components/blueprint";
+import { CategoryDot, CategoryLegend, ChipContent, chipClassName } from "@/components/category";
 import { ChipScroller } from "@/components/chip-scroller";
 import { CountList, EARLY_SIGNAL_LINE, EarlySignalBadge } from "@/components/early-signal";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { RequirementChip } from "@/components/signal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { CATEGORY_META, categoryColor, categoryVars, REACH_DEFINITION } from "@/lib/categories";
 import { CATEGORY_LABEL, type Category } from "@/lib/types";
 import { categoryComparison, getDataset, insightFor, isEarlySignal, parseFilters } from "@/lib/view";
@@ -32,8 +32,9 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   const i = insightFor(scope, 10);
   const comparison = categoryComparison(jobs);
   const early = !!category && isEarlySignal(scope.length);
-  // A single direction's charts use its own colour; "All directions" uses the neutral data colour.
-  const color = category ? categoryColor(category) : "var(--data)";
+  // "All directions": bars stacked by direction (vivid category colours). One direction: its own colour.
+  const color = category ? categoryColor(category) : undefined;
+  const stacked = !category;
   const filterHref = (extra: string) => `/?${category ? `category=${category}&` : ""}${extra}`.replace(/[?&]$/, "");
   const pct = (n: number) => (scope.length ? `${Math.round((n / scope.length) * 100)}%` : "0%");
 
@@ -54,8 +55,8 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
   ];
 
   return (
-    <div className="grid gap-12 pt-8 sm:pt-14">
-      <section className="grid gap-4">
+    <>
+      <Band aria-label="Introduction" inner="grid gap-4 py-8 sm:py-12">
         <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">What the market is asking for</h1>
         <p className="max-w-xl text-lg text-pretty text-muted-foreground">
           We read the requirements in every posting and counted them up. No guesswork, no hype: this is what employers actually write down, so you
@@ -68,10 +69,10 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
             updated {fmtDate(updatedAt)}.
           </span>
         </p>
-      </section>
+      </Band>
 
       {/* ---------- One direction (or all) ---------- */}
-      <section className="grid gap-6" aria-labelledby="asks-heading">
+      <Band aria-labelledby="asks-heading" inner="grid gap-6 py-8 sm:py-10">
         <div className="grid gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-3">
@@ -118,13 +119,19 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
           </Card>
         ) : (
           <div className="grid gap-4 lg:grid-cols-2">
+            {stacked && (
+              <div className="grid gap-1.5 lg:col-span-2">
+                <p className="text-xs text-muted-foreground">Bars are split by each posting&rsquo;s main direction. Hover or tap a bar for the breakdown.</p>
+                <CategoryLegend />
+              </div>
+            )}
             <Card>
               <CardHeader>
                 <CardTitle>Most requested skills</CardTitle>
                 <CardDescription>Share of postings that mention each skill</CardDescription>
               </CardHeader>
               <CardContent>
-                <RankingChart data={i.skills} color={color} caption="Most requested skills, share of postings" />
+                <RankingChart data={i.skills} color={color} stacked={stacked} caption="Most requested skills, share of postings" />
               </CardContent>
             </Card>
             <Card>
@@ -133,7 +140,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>Share of postings that name each tool</CardDescription>
               </CardHeader>
               <CardContent>
-                <RankingChart data={i.tools} color={color} caption="Most requested tools, share of postings" />
+                <RankingChart data={i.tools} color={color} stacked={stacked} caption="Most requested tools, share of postings" />
               </CardContent>
             </Card>
             <Card>
@@ -142,7 +149,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <CardDescription>How many roles sit at each level. &ldquo;Not stated&rdquo; often means open to a range.</CardDescription>
               </CardHeader>
               <CardContent>
-                <DistributionChart data={i.seniority} color={color} label="Postings" caption="Postings per seniority level" />
+                <DistributionChart data={i.seniority} color={color} stacked={stacked} label="Postings" caption="Postings per seniority level" />
               </CardContent>
             </Card>
             <Card>
@@ -154,17 +161,15 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <DistributionChart data={i.years} color={color} label="Postings" caption="Postings by minimum years of experience asked" />
+                <DistributionChart data={i.years} color={color} stacked={stacked} label="Postings" caption="Postings by minimum years of experience asked" />
               </CardContent>
             </Card>
           </div>
         )}
-      </section>
-
-      <Separator />
+      </Band>
 
       {/* ---------- Direction comparison ---------- */}
-      <section className="grid gap-6" aria-labelledby="compare-heading">
+      <Band aria-labelledby="compare-heading" last inner="grid gap-6 py-8 pb-16 sm:py-10">
         <div className="grid gap-2">
           <h2 id="compare-heading" className="text-2xl font-bold tracking-tight">
             Which directions are hiring
@@ -228,8 +233,8 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
             </Link>
           ))}
         </div>
-      </section>
-    </div>
+      </Band>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Chakra_Petch, Fira_Code } from "next/font/google";
 import type { ReactNode } from "react";
+import { Band } from "@/components/blueprint";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -21,13 +22,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider>
           <TooltipProvider>
             <SiteHeader />
-            <main className="mx-auto max-w-6xl px-4 pb-20">{children}</main>
-            <footer className="border-t">
-              <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:justify-between">
-                <span>Ping is made for design students at the Estonian Academy of Arts.</span>
-                <span>Every job links to the original posting. Apply there.</span>
-              </div>
-            </footer>
+            <main>{children}</main>
+            <Band as="footer" last inner="flex flex-col gap-1 py-6 text-sm text-muted-foreground sm:flex-row sm:justify-between">
+              <span>Ping is made for design students at the Estonian Academy of Arts.</span>
+              <span>Every job links to the original posting. Apply there.</span>
+            </Band>
           </TooltipProvider>
         </ThemeProvider>
       </body>

@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils";
  * They use --accent (mint), the "good news" colour, so they never compete with
  * category colours or with pink, which stays for the brand and actions.
  */
-const SIGNAL = "inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-sm border border-accent bg-accent/15 px-1.5 font-mono text-xs font-medium whitespace-nowrap text-foreground [&>svg]:size-3";
+/** Solid mint at full strength with navy text: a shape no category tag uses (those are tints or outlines). */
+const SIGNAL = "inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-sm bg-accent px-1.5 font-mono text-xs font-semibold whitespace-nowrap text-accent-foreground [&>svg]:size-3";
 
 export function SignalTag({ kind, className }: { kind: "estonia" | "reach"; className?: string }) {
   return (

@@ -1,6 +1,6 @@
 
 import { CATEGORY_META, categoryVars } from "@/lib/categories";
-import type { Category } from "@/lib/types";
+import { CATEGORIES, type Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /*
@@ -8,14 +8,14 @@ import { cn } from "@/lib/utils";
  * the element gets `--cat` from categoryVars() and these classes read it.
  */
 export const categoryClass = {
-  /** Primary tag: category-coloured text on a 15% tint of the same colour. */
-  tag: "bg-(--cat)/15 text-(--cat)",
-  /** Secondary tag: category-coloured outline, no background. */
-  outline: "border border-(--cat) text-(--cat)",
-  /** Small dot in the category colour. */
+  /** Primary tag: contrast-safe text (--cat-text) on a 15% tint of the vivid colour. */
+  tag: "bg-(--cat)/15 text-(--cat-text)",
+  /** Secondary tag: vivid outline, contrast-safe text, no background. */
+  outline: "border border-(--cat) text-(--cat-text)",
+  /** Small dot in the vivid colour. */
   dot: "bg-(--cat)",
-  /** Selected filter chip: tinted like a primary tag, with a matching border. */
-  chipActive: "border-(--cat) bg-(--cat)/15 text-(--cat)",
+  /** Selected filter chip: tinted like a primary tag, with a vivid border. */
+  chipActive: "border-(--cat) bg-(--cat)/15 text-(--cat-text)",
 } as const;
 
 const TAG_BASE = "inline-flex h-5 w-fit shrink-0 items-center gap-1 rounded-sm px-2 font-mono text-xs font-medium whitespace-nowrap";
@@ -53,9 +53,23 @@ export function ChipContent({ label, count, active, category }: { label: string;
       {category && <CategoryDot category={category} />}
       {label}
       {count !== undefined && (
-        <span className={cn("font-mono text-xs", active ? (category ? "text-(--cat)" : "text-primary-foreground/80") : "text-muted-foreground")}>{count}</span>
+        <span className={cn("font-mono text-xs", active ? (category ? "text-(--cat-text)" : "text-primary-foreground/80") : "text-muted-foreground")}>{count}</span>
       )}
     </>
   );
 }
 
+
+/** One shared key for charts stacked by direction: dot plus short name, in the fixed category order. */
+export function CategoryLegend({ className }: { className?: string }) {
+  return (
+    <ul className={cn("flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground", className)} aria-label="Colour key for the charts">
+      {CATEGORIES.map((c) => (
+        <li key={c} className="flex items-center gap-1.5">
+          <CategoryDot category={c} />
+          {CATEGORY_META[c].short}
+        </li>
+      ))}
+    </ul>
+  );
+}

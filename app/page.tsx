@@ -2,6 +2,7 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { Band } from "@/components/blueprint";
 import { JobCard } from "@/components/job-card";
 import { JobFilters } from "@/components/job-filters";
 import { Readout, type ReadoutItem } from "@/components/readout";
@@ -46,8 +47,9 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   nextParams.set("page", String(page + 1));
 
   return (
-    <div className="grid gap-8 pt-8 sm:gap-10 sm:pt-14">
-      <section className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+    <>
+      <Band aria-label="Introduction" inner="grid gap-8 py-8 sm:py-12">
+      <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
         <div className="grid gap-4">
           <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">Design jobs, minus the doomscrolling.</h1>
           <p className="max-w-xl text-lg text-pretty text-muted-foreground">
@@ -69,13 +71,12 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
             </Button>
           </CardContent>
         </Card>
-      </section>
+      </div>
 
-      <section aria-label="Live numbers">
-        <Readout items={readout} note={`${REACH_DEFINITION} Updated ${updated}.`} />
-      </section>
+      <Readout items={readout} note={`${REACH_DEFINITION} Updated ${updated}.`} />
+      </Band>
 
-      <section aria-labelledby="jobs-heading" className="grid gap-6">
+      <Band aria-labelledby="jobs-heading" inner="grid gap-6 py-8">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <h2 id="jobs-heading" className="text-2xl font-bold tracking-tight">
             Find your direction
@@ -93,6 +94,9 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
           <p className="-mt-2 text-sm text-muted-foreground">{CATEGORY_META[filters.category].blurb}</p>
         )}
 
+      </Band>
+
+      <Band aria-label="Jobs" last inner="grid gap-6 py-8 pb-16">
         {shown.length ? (
           <div className="grid gap-x-4 gap-y-4 md:grid-cols-2">
             {shown.map((job) => (
@@ -124,7 +128,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
             </p>
           </div>
         )}
-      </section>
-    </div>
+      </Band>
+    </>
   );
 }

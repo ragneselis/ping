@@ -4,7 +4,7 @@
  */
 import { statSync } from "node:fs";
 import path from "node:path";
-import { loadClassifiedJobs, loadSources, tally } from "./data";
+import { loadClassifiedJobs, loadSources, tally, tallyKey } from "./data";
 import { COMPANIES } from "./sources/ats";
 import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "./types";
 
@@ -167,13 +167,17 @@ export function applyFilters(cards: JobCard[], f: Filters): JobCard[] {
 
 /* ---------- Market insights ---------- */
 
+/** Postings per primary category, in the fixed CATEGORIES order. */
+export type Breakdown = Record<Category, number>;
+const emptyBreakdown = (): Breakdown => Object.fromEntries(CATEGORIES.map((c) => [c, 0])) as Breakdown;
+
 export interface Insight {
   postings: number;
   withRequirements: number;
-  skills: { label: string; count: number; share: number }[];
-  tools: { label: string; count: number; share: number }[];
-  seniority: { label: string; count: number }[];
-  years: { label: string; count: number }[];
+  skills: { label: string; count: number; share: number; byCategory: Breakdown }[];
+  tools: { label: string; count: number; share: number; byCategory: Breakdown }[];
+  seniority: { label: string; count: number; byCategory: Breakdown }[];
+  years: { label: string; count: number; byCategory: Breakdown }[];
   medianYears: number | null;
   statedYears: number;
   openToEstonia: number;
@@ -207,19 +211,39 @@ function median(xs: number[]): number | null {
 }
 
 export function insightFor(jobs: ClassifiedJob[], top = 10): Insight {
-  const ex = jobs.map((j) => j.extraction).filter((e): e is Extraction => !!e);
+  const withEx = jobs.filter((j): j is ClassifiedJob & { extraction: Extraction } => !!j.extraction);
+  const ex = withEx.map((j) => j.extraction);
   const n = ex.length || 1;
-  const withShare = (items: { label: string; count: number }[]) => items.slice(0, top).map((i) => ({ ...i, share: Math.round((i.count / n) * 100) }));
+  // Top items, each with its count split by the posting's primary category (same matching as tally()).
+  const ranked = (pick: (e: Extraction) => string[]) =>
+    tally(ex.map(pick))
+      .slice(0, top)
+      .map((i) => {
+        const key = tallyKey(i.label);
+        const byCategory = emptyBreakdown();
+        for (const j of withEx) if (j.primary && pick(j.extraction).some((x) => tallyKey(x) === key)) byCategory[j.primary]++;
+        return { ...i, share: Math.round((i.count / n) * 100), byCategory };
+      });
   const years = ex.map((e) => e.yearsMin).filter((y): y is number => typeof y === "number");
-  const levels = new Map<string, number>();
-  for (const j of jobs) levels.set(j.seniority, (levels.get(j.seniority) ?? 0) + 1);
+  const bucket = (test: (j: ClassifiedJob) => boolean, from: ClassifiedJob[]) => {
+    const byCategory = emptyBreakdown();
+    let count = 0;
+    for (const j of from) if (test(j)) {
+      count++;
+      if (j.primary) byCategory[j.primary]++;
+    }
+    return { count, byCategory };
+  };
   return {
     postings: jobs.length,
     withRequirements: ex.length,
-    skills: withShare(tally(ex.map((e) => e.skills))),
-    tools: withShare(tally(ex.map((e) => tools(e.tools)))),
-    seniority: SENIORITY_ORDER.map((s) => ({ label: SENIORITY_LABEL[s], count: levels.get(s) ?? 0 })),
-    years: YEAR_BUCKETS.map((b) => ({ label: b.label, count: years.filter(b.test).length })),
+    skills: ranked((e) => e.skills),
+    tools: ranked((e) => tools(e.tools)),
+    seniority: SENIORITY_ORDER.map((s) => ({ label: SENIORITY_LABEL[s], ...bucket((j) => j.seniority === s, jobs) })),
+    years: YEAR_BUCKETS.map((b) => ({
+      label: b.label,
+      ...bucket((j) => typeof j.extraction?.yearsMin === "number" && b.test(j.extraction.yearsMin), withEx),
+    })),
     medianYears: median(years),
     statedYears: years.length,
     openToEstonia: jobs.filter((j) => j.openToEstonia).length,

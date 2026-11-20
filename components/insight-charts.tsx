@@ -3,18 +3,26 @@
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis, YAxis } from "recharts";
-import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { type ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import { CATEGORY_META, categoryColor } from "@/lib/categories";
+import { CATEGORIES, type Category } from "@/lib/types";
 
-type Count = { label: string; count: number };
 /** A chart token number (--chart-n) or any CSS colour, e.g. a category colour from lib/categories. */
 type ChartColor = 1 | 2 | 3 | 4 | 5 | string;
 const colorValue = (c: ChartColor) => (typeof c === "number" ? `var(--chart-${c})` : c);
+type Breakdown = Record<Category, number>;
 
 /** Below this width labels go above the bars, so they never have to wrap or clip. */
 const SIDE_LABELS_MIN_WIDTH = 480;
 const LABEL_FONT_PX = 12;
 const ROW_SIDE = 32;
 const ROW_STACKED = 46;
+const BAR_STACKED = 14;
+/** Key and size of the invisible segment at the end of each stack that carries the total label. */
+const END_CAP = "__end";
+const END_CAP_VALUE = 1e-6;
+/** Hairline between stacked segments so neighbouring colours stay distinct. */
+const SEGMENT_GAP = { stroke: "var(--card)", strokeWidth: 1 } as const;
 
 /** Width of each string in the element's own font, measured with a canvas. */
 function useTextWidths(el: HTMLElement | null, texts: string[], mono = false): number[] {
@@ -50,25 +58,69 @@ export interface HBarSeries {
   color: ChartColor;
 }
 
+interface HBarRow {
+  label: string;
+  values: number[];
+  /** Text at the end of the bar (the total). */
+  end: string;
+  /** Per-series text for the tooltip and the data table; defaults to the raw values. */
+  detail?: string[];
+  /** Per-series colours for this row only. */
+  colors?: string[];
+  /** Makes the row clickable. */
+  href?: string;
+}
+
+/** Tooltip listing every non-empty segment of the hovered bar, with its colour. */
+function BreakdownTooltip({
+  active,
+  payload,
+  rows,
+  series,
+  title,
+}: {
+  active?: boolean;
+  payload?: { payload?: { idx?: number } }[];
+  rows: HBarRow[];
+  series: HBarSeries[];
+  title?: (row: HBarRow) => string;
+}) {
+  const idx = payload?.[0]?.payload?.idx;
+  if (!active || idx === undefined) return null;
+  const row = rows[idx];
+  const items = series.map((s, i) => ({ s, i })).filter(({ i }) => row.values[i] > 0);
+  return (
+    <div className="grid min-w-44 gap-1.5 rounded-md border border-foreground/20 bg-popover px-2.5 py-2 text-xs text-popover-foreground shadow-xl">
+      <div className="font-medium">{title ? title(row) : `${row.label}: ${row.end}`}</div>
+      {items.map(({ s, i }) => (
+        <div key={s.key} className="flex items-center justify-between gap-4">
+          <span className="flex items-center gap-1.5 text-muted-foreground">
+            <span className="size-2 shrink-0 rounded-full" style={{ background: row.colors?.[i] ?? colorValue(s.color) }} />
+            {s.label}
+          </span>
+          <span className="font-mono text-foreground">{row.detail?.[i] ?? row.values[i]}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /**
  * Horizontal bar chart that uses the full card width. The longest bar reaches the right edge
  * (minus room for its value), labels are left-aligned beside the bars on wide cards and above
- * them on narrow ones, and the value sits at the end of each bar in the mono font.
+ * them on narrow ones, and the total sits at the end of each bar in the mono font.
+ * With several series the bars stack, separated by a hairline.
  */
 export function HBarChart({
   rows,
   series,
-  legend = false,
-  tooltipValue,
   caption,
+  tooltipTitle,
 }: {
-  /** `colors` overrides the series colours for one row (one entry per series); `href` makes the row clickable. */
-  rows: { label: string; values: number[]; end: string; note?: string; colors?: string[]; href?: string }[];
+  rows: HBarRow[];
   series: HBarSeries[];
-  legend?: boolean;
-  tooltipValue?: (value: number, seriesKey: string, row: { label: string; note?: string }) => string;
-  /** Caption for the screen-reader data table. */
   caption: string;
+  tooltipTitle?: (row: HBarRow) => string;
 }) {
   const router = useRouter();
   const [ref, width, el] = useWidth();
@@ -77,91 +129,80 @@ export function HBarChart({
   const side = width >= SIDE_LABELS_MIN_WIDTH;
   const labelCol = Math.min(Math.max(...labelWidths, 40) + 16, Math.round(width * 0.42));
   const endCol = Math.max(...endWidths, 16) + 10;
+  const stacked = series.length > 1;
 
-  const data = rows.map((r) => ({ label: r.label, end: r.end, note: r.note, ...Object.fromEntries(series.map((s, i) => [s.key, r.values[i] ?? 0])) }));
+  const data = rows.map((r, idx) => ({ idx, label: r.label, end: r.end, [END_CAP]: END_CAP_VALUE, ...Object.fromEntries(series.map((s, i) => [s.key, r.values[i] ?? 0])) }));
   const max = Math.max(1, ...rows.map((r) => r.values.reduce((a, b) => a + b, 0)));
   const config = Object.fromEntries(series.map((s) => [s.key, { label: s.label, color: colorValue(s.color) }])) satisfies ChartConfig;
-  const height = rows.length * (side ? ROW_SIDE : ROW_STACKED) + (legend ? 36 : 0) + 4;
-  const last = series.at(-1)!.key;
+  const height = rows.length * (side ? ROW_SIDE : ROW_STACKED) + 4;
+  const clickable = rows.some((r) => r.href);
 
   return (
-    <div ref={ref} className="w-full">
+    // Reserve the height before the first measurement so the page does not jump when the chart appears.
+    <div ref={ref} className="w-full" style={{ minHeight: width > 0 ? undefined : rows.length * ROW_SIDE + 4 }}>
       {width > 0 && (
         <ChartContainer config={config} className="aspect-auto w-full" style={{ height }}>
           <BarChart
             data={data}
             layout="vertical"
             margin={{ left: 0, right: endCol, top: side ? 0 : 16, bottom: 0 }}
-            barCategoryGap={side ? 6 : 14}
+            barCategoryGap={side ? 6 : undefined}
+            barSize={side ? undefined : BAR_STACKED}
             accessibilityLayer
           >
             <XAxis type="number" hide domain={[0, max]} />
+            {/* Labels come from the row position, not from a bar, so a row whose first segment is empty keeps its name. */}
             <YAxis
               type="category"
               dataKey="label"
-              hide={!side}
-              width={side ? labelCol : 0}
+              width={side ? labelCol : 1}
               tickLine={false}
               axisLine={false}
               interval={0}
               tick={({ y, payload }) => (
-                <text x={0} y={y} dy="0.35em" textAnchor="start" fontSize={LABEL_FONT_PX} className="fill-foreground font-medium">
+                <text
+                  x={0}
+                  y={side ? y : Number(y) - BAR_STACKED / 2 - 6}
+                  dy={side ? "0.35em" : 0}
+                  textAnchor="start"
+                  fontSize={LABEL_FONT_PX}
+                  className="fill-foreground font-medium"
+                >
                   {payload.value}
                 </text>
               )}
             />
-            <ChartTooltip
-              cursor={false}
-              content={
-                <ChartTooltipContent
-                  hideIndicator={series.length === 1 || rows.some((r) => r.colors)}
-                  formatter={
-                    tooltipValue
-                      ? (value, name, item) => (
-                          <span className="flex w-full justify-between gap-4">
-                            {series.length > 1 && <span className="text-muted-foreground">{config[String(name)]?.label}</span>}
-                            <span className="font-mono">{tooltipValue(Number(value), String(name), item.payload)}</span>
-                          </span>
-                        )
-                      : undefined
-                  }
-                />
-              }
-            />
-            {legend && <ChartLegend verticalAlign="top" content={<ChartLegendContent />} />}
+            <ChartTooltip cursor={false} content={<BreakdownTooltip rows={rows} series={series} title={tooltipTitle} />} />
             {series.map((s, i) => (
               <Bar
                 key={s.key}
                 dataKey={s.key}
                 stackId="stack"
-                className={rows.some((r) => r.href) ? "cursor-pointer" : undefined}
+                fill={`var(--color-${s.key})`}
+                radius={stacked ? 0 : 4}
+                isAnimationActive={!stacked}
+                {...(stacked ? SEGMENT_GAP : {})}
+                className={clickable ? "cursor-pointer" : undefined}
                 onClick={(_d, idx) => {
                   const href = rows[idx]?.href;
                   if (href) router.push(href, { scroll: false });
                 }}
-                fill={`var(--color-${s.key})`}
-                radius={series.length === 1 ? 4 : i === 0 ? [4, 0, 0, 4] : i === series.length - 1 ? [0, 4, 4, 0] : 0}
               >
                 {rows.some((r) => r.colors) && rows.map((r) => <Cell key={r.label} fill={r.colors?.[i] ?? `var(--color-${s.key})`} />)}
-                {s.key === last && (
-                  <LabelList dataKey="end" position="right" offset={8} className="fill-foreground font-mono" fontSize={LABEL_FONT_PX} />
-                )}
-                {!side && i === 0 && (
-                  <LabelList
-                    dataKey="label"
-                    content={({ x, y, value }) => (
-                      <text x={Number(x)} y={Number(y) - 6} textAnchor="start" fontSize={LABEL_FONT_PX} className="fill-foreground font-medium">
-                        {String(value)}
-                      </text>
-                    )}
-                  />
-                )}
               </Bar>
             ))}
+            {/* Invisible end cap that always exists, so the total shows even when the last segment is empty. */}
+            <Bar dataKey={END_CAP} stackId="stack" fill="transparent" isAnimationActive={false}>
+              <LabelList dataKey="end" position="right" offset={8} className="fill-foreground font-mono" fontSize={LABEL_FONT_PX} />
+            </Bar>
           </BarChart>
         </ChartContainer>
       )}
-      <DataTable caption={caption} head={["", ...series.map((s) => s.label)]} rows={rows.map((r) => [r.label, ...r.values.map(String)])} />
+      <DataTable
+        caption={caption}
+        head={["", "Total", ...(stacked ? series.map((s) => s.label) : [])]}
+        rows={rows.map((r) => [r.label, r.end, ...(stacked ? series.map((_, i) => r.detail?.[i] ?? String(r.values[i])) : [])])}
+      />
     </div>
   );
 }
@@ -194,14 +235,37 @@ function DataTable({ caption, head, rows }: { caption: string; head: string[]; r
   );
 }
 
-/** Ranking of skills or tools: share of postings that ask for each one. */
-export function RankingChart({ data, color, caption }: { data: { label: string; count: number; share: number }[]; color: ChartColor; caption: string }) {
+/** The nine directions as chart series, always in the same fixed order. */
+const CATEGORY_SERIES: HBarSeries[] = CATEGORIES.map((c) => ({ key: c, label: CATEGORY_META[c].short, color: categoryColor(c) }));
+
+type RankItem = { label: string; count: number; share: number; byCategory?: Breakdown };
+
+/**
+ * Ranking of skills or tools: share of postings that ask for each one. With `stacked`, each bar is
+ * split by the postings' primary direction; otherwise one colour (a single direction's).
+ */
+export function RankingChart({ data, color, caption, stacked = false }: { data: RankItem[]; color?: ChartColor; caption: string; stacked?: boolean }) {
+  if (stacked) {
+    return (
+      <HBarChart
+        caption={caption}
+        series={CATEGORY_SERIES}
+        rows={data.map((d) => ({
+          label: d.label,
+          // Each segment is that direction's slice of the bar's share, so the segments add up to the total.
+          values: CATEGORIES.map((c) => (d.count ? ((d.byCategory?.[c] ?? 0) / d.count) * d.share : 0)),
+          end: `${d.share}%`,
+          detail: CATEGORIES.map((c) => `${d.byCategory?.[c] ?? 0}`),
+        }))}
+        tooltipTitle={(r) => `${r.label}: ${r.end} of postings, by direction`}
+      />
+    );
+  }
   return (
     <HBarChart
       caption={caption}
-      rows={data.map((d) => ({ label: d.label, values: [d.share], end: `${d.share}%`, note: `${d.count}` }))}
-      series={[{ key: "share", label: "Share of postings", color }]}
-      tooltipValue={(v, _k, row) => `${v}% (${row.note} postings)`}
+      series={[{ key: "share", label: "Share of postings", color: color ?? "var(--foreground)" }]}
+      rows={data.map((d) => ({ label: d.label, values: [d.share], end: `${d.share}%`, detail: [`${d.share}% (${d.count} postings)`] }))}
     />
   );
 }
@@ -227,14 +291,13 @@ export function CategoryHiringChart({ data }: { data: { label: string; reach: nu
           label: d.label,
           values: [d.reach, d.rest],
           end: String(d.reach + d.rest),
-          colors: [d.color, `color-mix(in oklab, ${d.color} 30%, transparent)`],
+          colors: [d.color, `color-mix(in oklab, ${d.color} 35%, transparent)`],
           href: d.href,
         }))}
         series={[
-          { key: "reach", label: "Within reach", color: "var(--data)" },
-          { key: "rest", label: "Mid-level and above", color: "var(--data)" },
+          { key: "reach", label: "Within reach", color: "var(--foreground)" },
+          { key: "rest", label: "Mid-level and above", color: "var(--foreground)" },
         ]}
-        tooltipValue={(v) => String(v)}
       />
     </div>
   );
@@ -254,22 +317,59 @@ function WrapTick({ x, y, payload }: { x?: number | string; y?: number | string;
   );
 }
 
-/** Vertical distribution, e.g. seniority or years of experience. */
-export function DistributionChart({ data, color, label, caption }: { data: Count[]; color: ChartColor; label: string; caption: string }) {
-  const config = { count: { label, color: colorValue(color) } } satisfies ChartConfig;
+/**
+ * Vertical distribution, e.g. seniority or years of experience. With `stacked`, the columns split
+ * by direction; otherwise one colour. The total sits on top in the mono font.
+ */
+export function DistributionChart({
+  data,
+  color,
+  label,
+  caption,
+  stacked = false,
+}: {
+  data: { label: string; count: number; byCategory?: Breakdown }[];
+  color?: ChartColor;
+  label: string;
+  caption: string;
+  stacked?: boolean;
+}) {
+  const series: HBarSeries[] = stacked ? CATEGORY_SERIES : [{ key: "count", label, color: color ?? "var(--foreground)" }];
+  const rows: HBarRow[] = data.map((d) => ({
+    label: d.label,
+    values: stacked ? CATEGORIES.map((c) => d.byCategory?.[c] ?? 0) : [d.count],
+    end: String(d.count),
+  }));
+  const chartData = rows.map((r, idx) => ({ idx, label: r.label, end: r.end, [END_CAP]: END_CAP_VALUE, ...Object.fromEntries(series.map((s, i) => [s.key, r.values[i]])) }));
+  const config = Object.fromEntries(series.map((s) => [s.key, { label: s.label, color: colorValue(s.color) }])) satisfies ChartConfig;
   return (
     <div>
       <ChartContainer config={config} className="aspect-auto h-60 w-full">
-        <BarChart data={data} margin={{ top: 20, left: 0, right: 0, bottom: 8 }} accessibilityLayer>
+        <BarChart data={chartData} margin={{ top: 20, left: 0, right: 0, bottom: 8 }} accessibilityLayer>
           <CartesianGrid vertical={false} />
           <XAxis dataKey="label" tickLine={false} axisLine={false} interval={0} height={36} tick={<WrapTick />} />
-          <ChartTooltip cursor={false} content={<ChartTooltipContent hideIndicator />} />
-          <Bar dataKey="count" fill="var(--color-count)" radius={4}>
-            <LabelList dataKey="count" position="top" className="fill-foreground font-mono" fontSize={11} />
+          <ChartTooltip cursor={false} content={<BreakdownTooltip rows={rows} series={series} title={(r) => `${r.label}: ${r.end} postings`} />} />
+          {series.map((s) => (
+            <Bar
+              key={s.key}
+              dataKey={s.key}
+              stackId="stack"
+              fill={`var(--color-${s.key})`}
+              radius={stacked ? 0 : 4}
+              isAnimationActive={!stacked}
+              {...(stacked ? SEGMENT_GAP : {})}
+            />
+          ))}
+          <Bar dataKey={END_CAP} stackId="stack" fill="transparent" isAnimationActive={false}>
+            <LabelList dataKey="end" position="top" className="fill-foreground font-mono" fontSize={11} />
           </Bar>
         </BarChart>
       </ChartContainer>
-      <DataTable caption={caption} head={["", label]} rows={data.map((d) => [d.label, String(d.count)])} />
+      <DataTable
+        caption={caption}
+        head={["", "Total", ...(stacked ? series.map((s) => s.label) : [])]}
+        rows={rows.map((r) => [r.label, r.end, ...(stacked ? r.values.map(String) : [])])}
+      />
     </div>
   );
 }

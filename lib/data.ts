@@ -51,6 +51,9 @@ export function loadClassifiedJobs(store = loadExtractions(), cls = loadClassifi
     .filter((j) => !j.classification || j.classification.isDesignRole);
 }
 
+/** Normalised key used to count items as the same skill or tool ("Design systems" = "design-systems"). */
+export const tallyKey = (label: string) => label.trim().toLowerCase().replace(/[^a-z0-9+/#]/g, "");
+
 /** Count items across postings, case-insensitively, keeping the most common spelling. */
 export function tally(lists: string[][]): { label: string; count: number }[] {
   const counts = new Map<string, { count: number; spellings: Map<string, number> }>();
@@ -58,7 +61,7 @@ export function tally(lists: string[][]): { label: string; count: number }[] {
     const seen = new Set<string>();
     for (const raw of list) {
       const label = raw.trim();
-      const key = label.toLowerCase().replace(/[^a-z0-9+/#]/g, "");
+      const key = tallyKey(label);
       if (!key || seen.has(key)) continue;
       seen.add(key);
       const e = counts.get(key) ?? { count: 0, spellings: new Map() };

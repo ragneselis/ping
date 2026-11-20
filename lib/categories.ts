@@ -22,7 +22,7 @@ export const REMOTE_LABEL: Record<string, string> = {
 };
 
 /**
- * The one place that maps a category to its colour token (--cat-* in app/globals.css).
+ * The one place that maps a category to its colour tokens (--cat-* and --cat-*-text in app/globals.css).
  * Components set `--cat` from here and style with the shared classes in components/category.tsx.
  */
 export const CATEGORY_TOKEN: Record<Category, string> = {
@@ -37,11 +37,14 @@ export const CATEGORY_TOKEN: Record<Category, string> = {
   other: "--cat-other",
 };
 
-/** CSS colour value for a category, e.g. for chart fills. */
+/** Vivid category colour, for dots, chart bars, fills, borders and tints. Never for text. */
 export const categoryColor = (c: Category) => `var(${CATEGORY_TOKEN[c]})`;
 
-/** Inline style that sets `--cat` for a subtree, read by the shared category classes. */
-export const categoryVars = (c: Category) => ({ "--cat": categoryColor(c) }) as React.CSSProperties;
+/** Contrast-safe category colour, for category tag text only. */
+export const categoryTextColor = (c: Category) => `var(${CATEGORY_TOKEN[c]}-text)`;
+
+/** Inline style that sets `--cat` (vivid) and `--cat-text` for a subtree, read by the shared category classes. */
+export const categoryVars = (c: Category) => ({ "--cat": categoryColor(c), "--cat-text": categoryTextColor(c) }) as React.CSSProperties;
 
 /** One-line definition shown wherever "within reach" appears (the rule lives in lib/view.ts isWithinReach). */
 export const REACH_DEFINITION = "Within reach: internships, junior roles and roles asking for 0 to 2 years. Mid-level and above don't count.";

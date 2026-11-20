@@ -7,7 +7,7 @@ export const EARLY_SIGNAL_LINE = "Few postings yet. A new direction worth watchi
 /** Marks a direction with too few postings for charts to mean much. */
 export function EarlySignalBadge({ className }: { className?: string }) {
   return (
-    <Badge variant="outline" className={cn("border-accent bg-accent/15 font-mono text-foreground", className)}>
+    <Badge variant="outline" className={cn("border-border font-mono text-foreground", className)}>
       <Sprout data-icon="inline-start" />
       Early signal
     </Badge>

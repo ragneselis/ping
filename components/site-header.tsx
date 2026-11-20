@@ -3,6 +3,7 @@
 import { BellRing } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FRAME_COLUMN } from "@/components/blueprint";
 import { SubscribeDialog } from "@/components/subscribe-dialog";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -49,8 +50,9 @@ export function SiteHeader() {
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70">
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:gap-6">
+    <header className="sticky top-0 z-40 border-b border-frame-line">
+      {/* Only the column is frosted; the gutters keep their hatching. */}
+      <div className={cn(FRAME_COLUMN, "flex h-16 items-center gap-3 bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70 sm:gap-6")}>
         <Wordmark />
         {/* Two destinations only, so they stay visible as tabs at every width. */}
         <nav className="flex items-center" aria-label="Main">
