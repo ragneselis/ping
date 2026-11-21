@@ -1,22 +1,30 @@
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, CalendarClock } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
-import { JobFilters, JobListHeader } from "@/components/job-filters";
+import {
+  JobFilters,
+  JobListHeader,
+  SortControl,
+} from "@/components/job-filters";
 import { JobRow } from "@/components/job-row";
 import { Panel } from "@/components/panel";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
-import { CATEGORIES } from "@/lib/types";
 import {
   applyFilters,
+  directionOrder,
+  type Filters,
+  formatUpdated,
   getDataset,
+  groupSimilar,
   isNewPosting,
   parseFilters,
 } from "@/lib/view";
+import { REMOTE_LABEL } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: { absolute: "Jobs | Ping" } };
@@ -31,12 +39,7 @@ export default async function JobsPage({
 }) {
   const sp = await searchParams;
   const { cards, updatedAt } = getDataset();
-  const updated = updatedAt
-    ? new Date(updatedAt).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-      })
-    : "recently";
+  const updated = formatUpdated(updatedAt);
   const filters = parseFilters(sp);
   const page = Math.max(
     1,
@@ -44,16 +47,23 @@ export default async function JobsPage({
   );
 
   const results = applyFilters(cards, filters);
-  const shown = results.slice(0, page * PAGE_SIZE);
-  // Category counts follow the other filters, so the chips tell you where the jobs are.
+  // Near-identical postings from one company fold into a single row; paging counts rows.
+  const groups = groupSimilar(results);
+  const shownGroups = groups.slice(0, page * PAGE_SIZE);
+  const shownJobs = shownGroups.reduce((n, g) => n + 1 + g.similar.length, 0);
+  // Tab counts follow the other filters, but the order is fixed (the same as Market insights)
+  // and empty directions stay, dimmed with 0, so nothing moves under the cursor.
   const withoutCategory = applyFilters(cards, { ...filters, category: "" });
-  const categoryCounts = CATEGORIES.map((c) => ({
-    value: c,
-    label: CATEGORY_META[c].short,
-    count: withoutCategory.filter((j) => j.primary === c).length,
-  }))
-    .filter((c) => c.count > 0 || c.value === filters.category)
-    .sort((a, b) => b.count - a.count);
+  const categoryCounts = directionOrder(cards.map((c) => c.primary)).map(
+    (c) => ({
+      value: c,
+      label: CATEGORY_META[c].short,
+      count: withoutCategory.filter((j) => j.primary === c).length,
+    }),
+  );
+
+  // Empty state: find the one filter whose removal brings the most jobs back.
+  const culprit = results.length ? null : findCulprit(cards, filters, sp);
 
   const estonia = cards.filter((c) => c.openToEstonia).length;
   const reach = cards.filter((c) => c.withinReach).length;
@@ -69,18 +79,21 @@ export default async function JobsPage({
     {
       value: fresh.toLocaleString("en-GB"),
       label: "New today",
+      good: fresh > 0,
       href: "/?sort=newest",
       mark: "new",
     },
     {
       value: estonia.toLocaleString("en-GB"),
       label: "Open to Estonia",
+      good: estonia > 0,
       href: "/?estonia=1",
       mark: "estonia",
     },
     {
       value: reach.toLocaleString("en-GB"),
       label: "Within reach",
+      good: reach > 0,
       href: "/?level=reach",
       mark: "reach",
     },
@@ -98,7 +111,7 @@ export default async function JobsPage({
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
           <div className="grid gap-5">
             <h1 className="max-w-[14ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.98] text-balance sm:text-6xl xl:text-7xl">
-              Design jobs, minus the doomscrolling.
+              Design jobs, minus the doomscrolling
             </h1>
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
               Every current design role we can find, sorted into nine
@@ -127,11 +140,15 @@ export default async function JobsPage({
           </Panel>
         </div>
 
-        <Readout
-          items={readout}
-          rules
-          note={`${REACH_DEFINITION} Updated ${updated}.`}
-        />
+        <Readout items={readout} rules note={REACH_DEFINITION} />
+        <p className="-mt-4 flex items-start gap-2 text-sm text-muted-foreground sm:-mt-6">
+          <CalendarClock
+            aria-hidden
+            className="mt-0.5 size-3.5 shrink-0"
+            strokeWidth={1.75}
+          />
+          <span>Last updated {updated}.</span>
+        </p>
       </Band>
 
       <Band aria-labelledby="jobs-heading" inner="grid gap-6 py-8 sm:py-10">
@@ -139,12 +156,17 @@ export default async function JobsPage({
           <h2 id="jobs-heading" className="text-3xl sm:text-4xl">
             Find your direction
           </h2>
-          <p className="text-sm text-muted-foreground">
-            <span className="font-mono text-foreground">
-              {results.length.toLocaleString("en-GB")}
-            </span>{" "}
-            jobs match
-          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <p className="text-sm text-muted-foreground">
+              <span className="font-mono text-foreground">
+                {results.length.toLocaleString("en-GB")}
+              </span>{" "}
+              jobs match
+            </p>
+            <Suspense>
+              <SortControl sort={filters.sort} />
+            </Suspense>
+          </div>
         </div>
 
         <Suspense>
@@ -162,17 +184,18 @@ export default async function JobsPage({
       </Band>
 
       <Band aria-label="Jobs" last inner="grid gap-8 pb-16">
-        {shown.length ? (
+        {shownGroups.length ? (
           <div>
             <Suspense>
               <JobListHeader sort={filters.sort} />
             </Suspense>
             <ul aria-label="Jobs">
-              {shown.map((job) => (
+              {shownGroups.map(({ lead, similar }) => (
                 <JobRow
-                  key={job.id}
-                  job={job}
-                  isNew={isNewPosting(job.postedAt, now)}
+                  key={lead.id}
+                  job={lead}
+                  similar={similar}
+                  isNew={isNewPosting(lead.postedAt, now)}
                 />
               ))}
             </ul>
@@ -180,26 +203,56 @@ export default async function JobsPage({
         ) : (
           <Panel
             titleAs="p"
-            title="Nothing here right now."
+            title="Nothing here right now"
             className="max-w-prose"
             footer={
-              <Button
-                variant="outline"
-                nativeButton={false}
-                render={<Link href="/" />}
-              >
-                Show all jobs
-              </Button>
+              <div className="flex flex-wrap gap-3">
+                {culprit && (
+                  <Button
+                    nativeButton={false}
+                    render={<Link href={culprit.href} scroll={false} />}
+                  >
+                    Remove {culprit.label}
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  nativeButton={false}
+                  render={
+                    <Link
+                      href={filters.sort ? `/?sort=${filters.sort}` : "/"}
+                    />
+                  }
+                >
+                  Show all jobs
+                </Button>
+              </div>
             }
           >
             <p className="text-base text-muted-foreground">
-              That combination is quiet today. Try switching off a filter, or
-              check back soon: new jobs arrive all the time.
+              {culprit ? (
+                <>
+                  No jobs match all of these filters together. Removing{" "}
+                  <span className="font-medium text-foreground">
+                    {culprit.label}
+                  </span>{" "}
+                  brings back{" "}
+                  <span className="font-mono text-foreground">
+                    {culprit.count.toLocaleString("en-GB")}
+                  </span>
+                  .
+                </>
+              ) : (
+                <>
+                  That combination is quiet today. Check back soon: new jobs
+                  arrive all the time.
+                </>
+              )}
             </p>
           </Panel>
         )}
 
-        {shown.length < results.length && (
+        {shownGroups.length < groups.length && (
           <div className="flex flex-wrap items-center gap-4">
             <Button
               variant="outline"
@@ -214,10 +267,12 @@ export default async function JobsPage({
             </Button>
             <p className="text-sm text-muted-foreground">
               Showing{" "}
-              <span className="font-mono text-foreground">{shown.length}</span>{" "}
+              <span className="font-mono text-foreground">
+                {shownJobs.toLocaleString("en-GB")}
+              </span>{" "}
               of{" "}
               <span className="font-mono text-foreground">
-                {results.length}
+                {results.length.toLocaleString("en-GB")}
               </span>
             </p>
           </div>
@@ -225,4 +280,62 @@ export default async function JobsPage({
       </Band>
     </>
   );
+}
+
+/**
+ * For an empty result: the single active filter whose removal brings back the most jobs,
+ * with a link that removes just that one (sort and the rest stay).
+ */
+function findCulprit(
+  cards: Parameters<typeof applyFilters>[0],
+  f: Filters,
+  sp: Search,
+) {
+  const LEVEL_NAME = {
+    reach: "Within reach",
+    mid: "Mid",
+    senior: "Senior",
+  } as const;
+  const options: { label: string; drop: string[]; next: Filters }[] = [];
+  if (f.q)
+    options.push({
+      label: `the search \u201c${f.q}\u201d`,
+      drop: ["q"],
+      next: { ...f, q: "" },
+    });
+  if (f.category)
+    options.push({
+      label: CATEGORY_META[f.category].short,
+      drop: ["category"],
+      next: { ...f, category: "" },
+    });
+  if (f.estonia)
+    options.push({
+      label: "Open to Estonia",
+      drop: ["estonia"],
+      next: { ...f, estonia: false },
+    });
+  if (f.remote)
+    options.push({
+      label: REMOTE_LABEL[f.remote] ?? f.remote,
+      drop: ["remote"],
+      next: { ...f, remote: "" },
+    });
+  if (f.levels.length)
+    options.push({
+      label: f.levels.map((l) => LEVEL_NAME[l]).join(" and "),
+      drop: ["level", "reach"],
+      next: { ...f, levels: [] },
+    });
+  const best = options
+    .map((o) => ({ ...o, count: applyFilters(cards, o.next).length }))
+    .filter((o) => o.count > 0)
+    .sort((a, b) => b.count - a.count)[0];
+  if (!best) return null;
+  const params = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp))
+    if (typeof v === "string" && k !== "page" && !best.drop.includes(k))
+      params.set(k, v);
+  const qs = params.toString();
+  return { label: best.label, count: best.count, href: qs ? `/?${qs}` : "/" };
 }

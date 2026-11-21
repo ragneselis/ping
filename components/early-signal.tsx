@@ -2,7 +2,7 @@ import { Sprout } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-export const EARLY_SIGNAL_LINE = "Few postings yet. A new direction worth watching.";
+export const EARLY_SIGNAL_LINE = "Few postings right now. Worth watching.";
 
 /** Marks a direction with too few postings for charts to mean much. */
 export function EarlySignalBadge({ className }: { className?: string }) {

@@ -30,8 +30,8 @@ export function SubscribeButton({ compact = false }: { compact?: boolean }) {
   return (
     <SubscribeDialog
       trigger={
-        <Button variant="outline" size="sm" aria-label={compact ? "Get new jobs (coming soon)" : undefined} className={cn(compact && "size-9 px-0")}>
-          <BellRing data-icon={compact ? undefined : "inline-start"} />
+        <Button variant="outline" size="sm" aria-label={compact ? "Get new jobs (coming soon)" : undefined} className={cn(compact && "size-11 px-0")}>
+          <BellRing data-icon={compact ? undefined : "inline-start"} className={compact ? "size-5" : undefined} strokeWidth={1.75} />
           {!compact && (
             <>
               Get new jobs

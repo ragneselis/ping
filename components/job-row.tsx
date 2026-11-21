@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { CategoryLabel } from "@/components/category";
 import { LevelTag, RequirementList, SignalTag } from "@/components/signal";
 import { FreshTile } from "@/components/tiles";
@@ -15,50 +15,88 @@ export const ROW_BLEED = "-mx-4 px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8";
 /** Compact age for a table cell: "Today", "3 days", "2 wks", "4 mos". */
 export function postedShort(iso: string | null, now = Date.now()): string {
   if (!iso) return "n/a";
-  const days = Math.max(0, Math.floor((now - new Date(iso).getTime()) / 86_400_000));
+  const days = Math.max(
+    0,
+    Math.floor((now - new Date(iso).getTime()) / 86_400_000),
+  );
   if (days === 0) return "Today";
   if (days < 14) return `${days} day${days === 1 ? "" : "s"}`;
   if (days < 60) return `${Math.floor(days / 7)} wks`;
   return `${Math.floor(days / 30)} mos`;
 }
 
-const fullDate = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "Date not stated");
+const fullDate = (iso: string | null) =>
+  iso
+    ? new Date(iso).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "Date not stated";
 
 /**
  * One job as a table row. The title is the only link, stretched over the row, so assistive tech reads
  * "title, company" instead of every cell. From lg up the cells sit in the shared JOB_GRID columns;
  * on phones the row stacks into title, company and one line of meta.
  */
-export function JobRow({ job, isNew }: { job: Job; isNew: boolean }) {
+export function JobRow({
+  job,
+  isNew,
+  similar = [],
+}: {
+  job: Job;
+  isNew: boolean;
+  similar?: Job[];
+}) {
   const setup = REMOTE_LABEL[job.remote] ?? job.remote;
   const location = job.location || "Location not stated";
-  const posted = <time dateTime={job.postedAt ?? undefined} title={fullDate(job.postedAt)}>{postedShort(job.postedAt)}</time>;
+  const posted = (
+    <time dateTime={job.postedAt ?? undefined} title={fullDate(job.postedAt)}>
+      {postedShort(job.postedAt)}
+    </time>
+  );
   return (
     // Hover is a faint neutral fill; the direction label keeps AA on it (amber-700 at 4.7:1 is the lowest).
     <li
       className={cn(
-        "group relative border-b border-border py-4 transition-colors hover:bg-muted/60 has-[a:focus-visible]:bg-muted/60 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:-outline-offset-2 has-[a:focus-visible]:outline-ring",
+        "group relative border-b border-border py-4 transition-colors hover:bg-muted/60 has-[a[data-main]:focus-visible]:bg-muted/60 has-[a[data-main]:focus-visible]:outline-2 has-[a[data-main]:focus-visible]:-outline-offset-2 has-[a[data-main]:focus-visible]:outline-ring",
         ROW_BLEED,
       )}
     >
       <div className={cn("grid gap-1 lg:items-baseline", JOB_GRID)}>
         <div className="hidden min-w-0 gap-1 lg:grid">
           <CategoryLabel category={job.primary} />
-          {job.secondary && <span className="pl-4 text-xs text-muted-foreground">also {CATEGORY_META[job.secondary].short}</span>}
+          {job.secondary && (
+            <span className="pl-4 text-xs text-muted-foreground">
+              also {CATEGORY_META[job.secondary].short}
+            </span>
+          )}
         </div>
 
         <div className="grid min-w-0 gap-0.5 pr-8 lg:pr-0">
           <h3 className="relative leading-snug font-semibold text-pretty">
             {/* Hangs in the gap before the title, so titles stay aligned down the column. */}
             {isNew && <FreshTile className="absolute top-[0.5em] -left-3.5" />}
-            <a href={job.url} target="_blank" rel="noopener noreferrer" className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none">
+            <a
+              data-main
+              href={job.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+            >
               {isNew && <span className="sr-only">New today: </span>}
               {job.title}
-              <span className="sr-only">, {job.company} (opens the original posting)</span>
+              <span className="sr-only">
+                , {job.company} (opens the original posting)
+              </span>
             </a>
           </h3>
           <p className="text-sm text-foreground/80">{job.company}</p>
-          <RequirementList items={job.chips.slice(0, 3)} className="mt-1 hidden lg:block" />
+          <RequirementList
+            items={job.chips.slice(0, 3)}
+            className="mt-1 hidden lg:block"
+          />
+          {similar.length > 0 && <SimilarJobs job={job} similar={similar} />}
           {/* Phones: one line of meta under the company. */}
           <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground lg:hidden">
             <CategoryLabel category={job.primary} className="text-xs" />
@@ -82,12 +120,51 @@ export function JobRow({ job, isNew }: { job: Job; isNew: boolean }) {
           {job.withinReach && <SignalTag kind="reach" />}
           {job.openToEstonia && <SignalTag kind="estonia" />}
         </div>
-        <span className="hidden font-mono text-xs text-muted-foreground tabular-nums lg:block">{posted}</span>
+        <span className="hidden font-mono text-xs text-muted-foreground tabular-nums lg:block">
+          {posted}
+        </span>
         <ArrowUpRight
           aria-hidden
           className="absolute top-4 right-4 size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground md:right-6 lg:static lg:mt-0.5 lg:self-start"
         />
       </div>
     </li>
+  );
+}
+
+/**
+ * Near-identical postings from the same company, folded under the first one. Native <details>,
+ * lifted above the row's stretched link so it stays clickable.
+ */
+function SimilarJobs({ job, similar }: { job: Job; similar: Job[] }) {
+  return (
+    <details className="group/similar relative z-10 mt-2 w-fit max-lg:order-last">
+      <summary className="flex min-h-11 w-fit cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden">
+        <ChevronDown
+          aria-hidden
+          className="size-4 transition-transform group-open/similar:rotate-180"
+        />
+        +{similar.length} similar from {job.company}
+      </summary>
+      <ul className="mt-2 grid gap-2 border-l border-border pl-3">
+        {similar.map((s) => (
+          <li key={s.id} className="text-sm">
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              {s.title}
+              <span className="sr-only"> (opens the original posting)</span>
+            </a>
+            <span className="block text-xs text-muted-foreground">
+              {s.location || "Location not stated"}{" "}
+              <span className="font-mono">{postedShort(s.postedAt)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }

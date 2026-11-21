@@ -327,3 +327,52 @@ export function categoryComparison(jobs: ClassifiedJob[]) {
     };
   }).sort((a, b) => b.postings - a.postings);
 }
+
+/* ---------- Shared presentation helpers ---------- */
+
+/** The one date format on both pages: "20 November 2026". */
+export const formatUpdated = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "recently";
+
+/**
+ * The one fixed order of directions, used by the tab rows on Jobs and Market insights:
+ * by total postings across everything, largest first (ties keep the taxonomy order).
+ * Filtering never reorders it.
+ */
+export function directionOrder(primaries: Category[]): Category[] {
+  const count = new Map<Category, number>();
+  for (const p of primaries) count.set(p, (count.get(p) ?? 0) + 1);
+  return [...CATEGORIES].sort((a, b) => (count.get(b) ?? 0) - (count.get(a) ?? 0));
+}
+
+const TITLE_NOISE = new Set(["a", "an", "and", "the", "to", "of", "for", "in", "at", "with", "m", "w", "d", "f", "x"]);
+const titleWords = (t: string) => new Set(t.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter((w) => w && !TITLE_NOISE.has(w)));
+const overlap = (a: Set<string>, b: Set<string>) => {
+  let shared = 0;
+  for (const w of a) if (b.has(w)) shared++;
+  return shared / (a.size + b.size - shared || 1);
+};
+
+/** A row in the jobs list: one posting, plus near-identical postings folded under it. */
+export interface JobGroup {
+  lead: JobCard;
+  similar: JobCard[];
+}
+
+/**
+ * Fold near-duplicate postings into one row: same company, same level bucket, and titles that
+ * share at least 70% of their words (e.g. a company's eight "… to UX Design Career Changer
+ * Apprenticeship" listings). The row sits where the first of them appears in the current order.
+ */
+export function groupSimilar(cards: JobCard[]): JobGroup[] {
+  const groups: (JobGroup & { words: Set<string> })[] = [];
+  for (const card of cards) {
+    const words = titleWords(card.title);
+    const home = groups.find(
+      (g) => g.lead.company === card.company && g.lead.levelBucket === card.levelBucket && overlap(g.words, words) >= 0.7,
+    );
+    if (home) home.similar.push(card);
+    else groups.push({ lead: card, similar: [], words });
+  }
+  return groups.map(({ lead, similar }) => ({ lead, similar }));
+}

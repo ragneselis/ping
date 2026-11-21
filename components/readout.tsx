@@ -13,6 +13,10 @@ export interface ReadoutItem {
   mark?: "estonia" | "reach" | "new";
   /** Dims the value when it rests on too little data to trust. */
   muted?: boolean;
+  /** Good news (a within-reach or open-to-Estonia count, new today): set in emerald. Everything else is text colour. */
+  good?: boolean;
+  /** A short framing line under the label, e.g. "A wish list, not a wall." */
+  hint?: string;
 }
 
 /**
@@ -66,11 +70,20 @@ export function Readout({
                 <span
                   className={cn(
                     "order-1 font-heading text-4xl leading-none font-semibold tracking-tight tabular-nums sm:text-5xl",
-                    it.muted ? "text-muted-foreground" : "text-brand-lg",
+                    it.muted
+                      ? "text-muted-foreground"
+                      : it.good
+                        ? "text-brand-lg"
+                        : "text-foreground",
                   )}
                 >
                   {it.value}
                 </span>
+                {it.hint && (
+                  <span className="order-3 -mt-1 text-sm text-pretty text-muted-foreground">
+                    {it.hint}
+                  </span>
+                )}
               </>
             );
             // Dashed dividers are cell borders, so the band's rules never break. Four items fold to 2 x 2 below lg.
@@ -108,7 +121,7 @@ export function Readout({
         {rules && <DispersingRules />}
       </div>
       {note && (
-        <p className="max-w-prose text-sm text-muted-foreground">{note}</p>
+        <p className="max-w-prose text-sm text-pretty text-muted-foreground">{note}</p>
       )}
     </div>
   );

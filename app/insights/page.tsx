@@ -20,6 +20,7 @@ import { HeroTiles } from "@/components/tiles";
 import { RequirementList } from "@/components/signal";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/panel";
+import { cn } from "@/lib/utils";
 import {
   CATEGORY_META,
   categoryColor,
@@ -28,6 +29,7 @@ import {
 import { CATEGORY_LABEL, type Category } from "@/lib/types";
 import {
   categoryComparison,
+  formatUpdated,
   getDataset,
   insightFor,
   isEarlySignal,
@@ -44,15 +46,6 @@ type Search = Record<string, string | string[] | undefined>;
 /** "Product" -> "product" mid-sentence, but "AI and behaviour" keeps its acronym. */
 const lowerFirst = (s: string) =>
   /^[A-Z]{2}/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1);
-
-const fmtDate = (iso: string | null) =>
-  iso
-    ? new Date(iso).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-    : "recently";
 
 export default async function InsightsPage({
   searchParams,
@@ -77,7 +70,7 @@ export default async function InsightsPage({
   const readout: ReadoutItem[] = [
     {
       value: i.postings.toLocaleString("en-GB"),
-      label: "Current postings",
+      label: "Design jobs live",
       href: filterHref("") || "/",
     },
     early
@@ -86,6 +79,7 @@ export default async function InsightsPage({
           label: "Within reach",
           href: filterHref("level=reach"),
           mark: "reach",
+          good: i.withinReach > 0,
         }
       : {
           value: pct(i.withinReach),
@@ -99,12 +93,14 @@ export default async function InsightsPage({
           label: "Open to Estonia",
           href: filterHref("estonia=1"),
           mark: "estonia",
+          good: i.openToEstonia > 0,
         }
       : {
           value: i.openToEstonia.toLocaleString("en-GB"),
           label: "Open to Estonia",
           href: filterHref("estonia=1"),
           mark: "estonia",
+          good: i.openToEstonia > 0,
         },
     {
       value: i.medianYears === null ? "n/a" : `${i.medianYears} yrs`,
@@ -112,6 +108,7 @@ export default async function InsightsPage({
         ? `Years asked, from ${i.statedYears} posting${i.statedYears === 1 ? "" : "s"}`
         : "Typical experience asked",
       muted: early,
+      hint: "A wish list, not a wall.",
     },
   ];
 
@@ -122,7 +119,7 @@ export default async function InsightsPage({
         <h1 className="max-w-[16ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.98] text-balance sm:text-6xl xl:text-7xl">
           What the market is asking for
         </h1>
-        <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
+        <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
           We read the requirements in every posting and counted them up. No
           guesswork, no hype: this is what employers actually write down, so you
           can spend your portfolio time where it counts.
@@ -136,7 +133,7 @@ export default async function InsightsPage({
           <span>
             Based on {jobs.length.toLocaleString("en-GB")} current postings from{" "}
             {boards} job boards and {companyFeeds} company career pages. Last
-            updated {fmtDate(updatedAt)}.
+            updated {formatUpdated(updatedAt)}.
           </span>
         </p>
       </Band>
@@ -148,7 +145,7 @@ export default async function InsightsPage({
             <div className="flex flex-wrap items-center gap-3">
               <h2
                 id="asks-heading"
-                className="flex items-center gap-3 text-3xl sm:text-4xl"
+                className="scroll-mt-24 flex items-center gap-3 text-3xl sm:text-4xl"
               >
                 {category && (
                   <CategoryDot category={category} className="size-3" />
@@ -174,12 +171,15 @@ export default async function InsightsPage({
               ? CATEGORY_META[category].blurb
               : "Every design role we track, all nine directions together."}
           </p>
-          {early && <p className="font-medium">{EARLY_SIGNAL_LINE}</p>}
+          {early && (
+            <p className="text-sm text-muted-foreground">{EARLY_SIGNAL_LINE}</p>
+          )}
           <TabRow as="nav" label="Direction" activeKey={category}>
             <DirectionLink
               href="/insights"
               active={!category}
               label="All directions"
+              count={jobs.length}
             />
             {comparison.map((c) => (
               <DirectionLink
@@ -188,6 +188,7 @@ export default async function InsightsPage({
                 active={category === c.category}
                 label={CATEGORY_META[c.category].short}
                 category={c.category}
+                count={c.postings}
               />
             ))}
           </TabRow>
@@ -247,6 +248,7 @@ export default async function InsightsPage({
               />
             </Panel>
             <Panel
+              bodyClassName="flex flex-1 flex-col"
               title="Seniority"
               description={
                 <>
@@ -256,6 +258,7 @@ export default async function InsightsPage({
               }
             >
               <DistributionChart
+                fill
                 data={i.seniority}
                 color={color}
                 byDirection={byDirection}
@@ -265,6 +268,7 @@ export default async function InsightsPage({
             </Panel>
             <Panel
               className="xl:col-span-3 4xl:col-span-1"
+              bodyClassName="flex flex-1 flex-col"
               title="Years of experience asked"
               description={
                 <>
@@ -276,6 +280,7 @@ export default async function InsightsPage({
               }
             >
               <DistributionChart
+                fill
                 data={i.years}
                 color={color}
                 byDirection={byDirection}
@@ -294,7 +299,10 @@ export default async function InsightsPage({
         inner="grid gap-6 py-8 pb-16 sm:py-10"
       >
         <div className="grid gap-2">
-          <h2 id="compare-heading" className="text-3xl sm:text-4xl">
+          <h2
+            id="compare-heading"
+            className="text-3xl text-balance sm:text-4xl"
+          >
             Which directions are hiring
           </h2>
           <p className="max-w-prose text-muted-foreground">
@@ -323,7 +331,7 @@ export default async function InsightsPage({
             <li key={c.category} className="row-span-4 grid grid-rows-subgrid">
               <Panel
                 subgrid
-                href={`/insights?category=${c.category}`}
+                href={`/insights?category=${c.category}#asks-heading`}
                 accent={categoryColor(c.category)}
                 lead={
                   <CategoryDot category={c.category} className="size-2.5" />
@@ -362,7 +370,13 @@ export default async function InsightsPage({
                     <dt className="label-mono order-2 text-muted-foreground">
                       Within reach
                     </dt>
-                    <dd className="order-1 font-heading text-4xl leading-none font-semibold tracking-tight text-brand-lg tabular-nums">
+                    {/* Emerald only when there is good news; a zero stays in text colour. */}
+                    <dd
+                      className={cn(
+                        "order-1 font-heading text-4xl leading-none font-semibold tracking-tight tabular-nums",
+                        c.withinReach > 0 ? "text-brand-lg" : "text-foreground",
+                      )}
+                    >
                       {c.withinReach}
                     </dd>
                   </div>
@@ -376,7 +390,15 @@ export default async function InsightsPage({
                       <dt className="order-2 text-xs text-muted-foreground">
                         {label}
                       </dt>
-                      <dd className="order-1 font-mono text-base leading-none tabular-nums">
+                      {/* An early signal's median rests on a handful of postings: muted, as in the readout. */}
+                      <dd
+                        className={cn(
+                          "order-1 font-mono text-base leading-none tabular-nums",
+                          label === "Median years" &&
+                            c.earlySignal &&
+                            "text-muted-foreground",
+                        )}
+                      >
                         {value}
                       </dd>
                     </div>
@@ -396,11 +418,13 @@ function DirectionLink({
   active,
   label,
   category,
+  count,
 }: {
   href: string;
   active: boolean;
   label: string;
   category?: Category;
+  count: number;
 }) {
   return (
     <Link
@@ -409,7 +433,7 @@ function DirectionLink({
       aria-current={active ? "page" : undefined}
       className={tabClassName(active)}
     >
-      <TabContent label={label} category={category} />
+      <TabContent label={label} category={category} count={count} />
     </Link>
   );
 }

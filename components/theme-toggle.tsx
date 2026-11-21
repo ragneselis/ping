@@ -69,11 +69,11 @@ export function ThemeMenu() {
           <button
             type="button"
             aria-label="Colour theme"
-            className="flex size-11 items-center justify-center rounded-md text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            className="flex size-11 items-center justify-center border border-hairline-strong text-foreground transition-colors hover:border-brand-lg hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           />
         }
       >
-        <Current aria-hidden className="size-5" />
+        <Current aria-hidden className="size-5" strokeWidth={1.75} />
       </PopoverTrigger>
       <PopoverContent align="end" className="w-44 p-1">
         <div role="radiogroup" aria-label="Colour theme" className="grid">
