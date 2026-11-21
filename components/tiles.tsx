@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 /** 8 x 8 pixel art; digits pick --px-1 (darkest) to --px-5 (lightest). Flat, no texture. */
 const PIXELS = {
-  /** One flat green. Used for the logo mark and the freshness tile. */
+  /** One flat green. Used for the freshness tile. */
   solid: Array(8).fill("22222222"),
   /** Pale flat tile. */
   pale: Array(8).fill("55555555"),

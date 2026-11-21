@@ -11,7 +11,8 @@
     "stamp": "tsx scripts/stamp.ts",
     "refresh": "npm run fetch && npm run extract && npm run stamp",
     "db:setup": "tsx --env-file-if-exists=.env.local scripts/db-setup.ts",
-    "digest": "tsx --env-file-if-exists=.env.local scripts/digest.ts"
+    "digest": "tsx --env-file-if-exists=.env.local scripts/digest.ts",
+    "icons": "tsx scripts/icons.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",

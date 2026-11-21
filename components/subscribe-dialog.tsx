@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, MailCheck } from "lucide-react";
+import { Check, Mail, MailCheck } from "lucide-react";
+import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
 import Link from "next/link";
-import { useEffect, useId, useRef, useState, type FormEvent, type ReactElement } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactElement, type Ref } from "react";
 import { CategoryDot } from "@/components/category";
 import { DataLabel, Segmented } from "@/components/filter-controls";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,20 @@ const FREQUENCY_ITEMS = [
 ];
 
 type Mode = { kind: "signup" } | { kind: "manage"; token: string; email: string };
+
+/** Sections the modal can open at. */
+export type SubscribeSection = "channels";
+const OPEN_EVENT = "ping:open-subscribe";
+
+/**
+ * Open the "Get new jobs" modal from anywhere (the Slack and Discord buttons, the phone menu),
+ * optionally scrolled to a section. The one dialog instance in the header listens for it.
+ */
+export function openSubscribe(section?: SubscribeSection) {
+  window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: { section } }));
+}
+
+const CHANNELS_ID = "subscribe-channels";
 type Status = "idle" | "sending" | "sent" | "saved" | "error";
 
 /** Square checkbox in Ping's style: hairline box, solid emerald when ticked, 44px row on phones. */
@@ -74,8 +89,67 @@ function DirectionCheckbox({ category, checked, onChange }: { category: Category
   );
 }
 
+const CHANNELS = [
+  { value: "email", label: "Email", icon: Mail, soon: false },
+  { value: "slack", label: "Slack", icon: SlackIcon, soon: true },
+  { value: "discord", label: "Discord", icon: DiscordIcon, soon: true },
+] as const;
+
+/**
+ * "Where to get them": Email is the working channel and stays selected; Slack and Discord are shown
+ * with a "Coming soon" badge and cannot be picked yet. A radio group, so it reads as one choice.
+ */
+function ChannelPicker({ emailRef }: { emailRef?: Ref<HTMLInputElement> }) {
+  const id = useId();
+  return (
+    <fieldset id={CHANNELS_ID} className="grid scroll-mt-6 gap-1.5">
+      <legend className="mb-1.5">
+        <DataLabel id={id}>Where to get them</DataLabel>
+      </legend>
+      <div className="grid gap-x-2 gap-y-3 pt-1 sm:grid-cols-3">
+        {CHANNELS.map((c) => (
+          <label
+            key={c.value}
+            className={cn(
+              "relative flex min-h-11 items-center gap-2.5 border px-3 text-sm transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring sm:min-h-12",
+              c.soon ? "cursor-not-allowed border-hairline text-muted-foreground" : "border-brand-lg bg-brand-tint font-medium text-foreground",
+            )}
+          >
+            <input
+              ref={c.soon ? undefined : emailRef}
+              type="radio"
+              name={`${id}-channel`}
+              value={c.value}
+              defaultChecked={!c.soon}
+              disabled={c.soon}
+              aria-describedby={c.soon ? `${id}-${c.value}-soon` : undefined}
+              className="sr-only"
+            />
+            <c.icon aria-hidden className={c.soon ? "size-3.5" : "size-4"} strokeWidth={1.75} />
+            <span>{c.label}</span>
+            {c.soon ? (
+              // Sits on the card's top edge, so the card keeps one line at every width.
+              <span
+                id={`${id}-${c.value}-soon`}
+                className="absolute -top-2 right-2 bg-muted px-1.5 py-[3px] font-mono text-[10px] leading-none tracking-[0.08em] whitespace-nowrap text-muted-foreground uppercase"
+              >
+                Coming soon
+              </span>
+            ) : (
+              <Check aria-hidden strokeWidth={2.25} className="ml-auto size-4 text-brand-sm" />
+            )}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
   const [open, setOpen] = useState(false);
+  // Opened from Slack or Discord: focus lands on the channel choice, which brings that section into view.
+  const [atChannels, setAtChannels] = useState(false);
+  const channelRef = useRef<HTMLInputElement>(null);
   const [mode, setMode] = useState<Mode>({ kind: "signup" });
   const [prefs, setPrefs] = useState<Prefs>(EMPTY_PREFS);
   const [frequency, setFrequency] = useState<Frequency>("weekly");
@@ -120,15 +194,31 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
       });
   }, []);
 
+  // Opened from elsewhere (Slack or Discord buttons): open, then bring the channel section into view.
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const section = (e as CustomEvent<{ section?: SubscribeSection }>).detail?.section;
+      setAtChannels(section === "channels");
+      onOpenChangeRef.current(true);
+    };
+    window.addEventListener(OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_EVENT, onOpen);
+  }, []);
+
   /** A fresh sign-up starts from the filters the visitor has on the Jobs page right now. */
   const onOpenChange = (next: boolean) => {
     if (next) {
       if (mode.kind === "signup") setPrefs(window.location.pathname === "/" ? prefsFromQuery(window.location.search) : EMPTY_PREFS);
       setStatus("idle");
       setError(null);
-    } else if (status === "saved") setMode({ kind: "signup" });
+    } else {
+      setAtChannels(false);
+      if (status === "saved") setMode({ kind: "signup" });
+    }
     show(next);
   };
+  const onOpenChangeRef = useRef(onOpenChange);
+  onOpenChangeRef.current = onOpenChange;
 
   const toggleCategory = (c: Category) =>
     setPrefs((p) => ({ ...p, categories: p.categories.includes(c) ? p.categories.filter((x) => x !== c) : CATEGORIES.filter((x) => x === c || p.categories.includes(x)) }));
@@ -185,7 +275,9 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       {/* The trigger plays the open sound, not a click as well. */}
       <DialogTrigger render={trigger} data-sound="none" />
-      <DialogContent className={cn("max-h-[calc(100dvh-2rem)] gap-0 overflow-y-auto overscroll-contain p-0", done ? "sm:max-w-md" : "sm:max-w-xl")}>
+      <DialogContent
+        initialFocus={atChannels ? channelRef : undefined}
+        className={cn("max-h-[calc(100dvh-2rem)] gap-0 overflow-y-auto overscroll-contain p-0", done ? "sm:max-w-md" : "sm:max-w-xl")}>
         {done ? (
           <div className="grid gap-4 p-6 sm:p-8" role="status">
             <span className="flex size-10 items-center justify-center bg-brand-tint text-brand-sm">
@@ -253,6 +345,8 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
                   onSelect={(v) => setPrefs((p) => ({ ...p, remote: v === "any" ? "" : (v as Prefs["remote"]) }))}
                 />
               </div>
+
+              <ChannelPicker emailRef={channelRef} />
 
               <Segmented stacked label="How often" items={FREQUENCY_ITEMS} isActive={(v) => v === frequency} onSelect={(v) => setFrequency(v as Frequency)} />
 

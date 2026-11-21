@@ -3,7 +3,9 @@
 import { Menu } from "@base-ui/react/menu";
 import { Check, Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
+import { openSubscribe } from "@/components/subscribe-dialog";
 import { HEADER_ICON_BUTTON } from "@/components/sound";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { sound } from "@/lib/sound";
@@ -22,13 +24,28 @@ function useChoice() {
   return { choice: mounted ? (theme ?? "light") : null, setTheme };
 }
 
+/** Phones (below Tailwind's sm): the header has no room for the Slack and Discord buttons. */
+const PHONE = "(max-width: 39.999rem)";
+const subscribePhone = (cb: () => void) => {
+  const mq = window.matchMedia(PHONE);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+const usePhone = () => useSyncExternalStore(subscribePhone, () => window.matchMedia(PHONE).matches, () => false);
+
+const SOON = [
+  { name: "Slack", icon: SlackIcon },
+  { name: "Discord", icon: DiscordIcon },
+] as const;
+
 const prefersDark = () => typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 /**
  * One theme button for every screen size. It shows the current choice (Sun, Moon or Monitor) and
  * opens a small menu of Light, Dark and System with the current one marked. Base UI's Menu gives it
  * the keyboard model: arrows move, Enter or Space choose, Escape or a click outside close.
- * Choosing applies at once and closes the menu. Theming itself is unchanged (next-themes: light on a
+ * Choosing applies at once and closes the menu. On phones the menu also holds the Slack and Discord
+ * "coming soon" entries, which sit in the header itself from sm up; each opens the "Get new jobs" modal. Theming itself is unchanged (next-themes: light on a
  * first visit, stored choice applied before paint, System follows the OS live).
  */
 export function ThemeMenu() {
@@ -36,6 +53,7 @@ export function ThemeMenu() {
   const { resolvedTheme } = useTheme();
   const current = OPTIONS.find((o) => o.value === choice) ?? OPTIONS[0];
   const Current = current.icon;
+  const phone = usePhone();
 
   return (
     <Menu.Root
@@ -87,6 +105,27 @@ export function ThemeMenu() {
                 </Menu.RadioItem>
               ))}
             </Menu.RadioGroup>
+            {phone && (
+              <>
+                <Menu.Separator className="my-1 h-px bg-hairline" />
+                <Menu.Group>
+                  <Menu.GroupLabel className="px-3 pt-2 pb-1 label-mono text-muted-foreground">Coming soon</Menu.GroupLabel>
+                  {SOON.map((c) => (
+                    <Menu.Item
+                      key={c.name}
+                      label={c.name}
+                      data-sound="none"
+                      onClick={() => openSubscribe("channels")}
+                      className="flex min-h-11 items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint"
+                    >
+                      <c.icon className="size-4" />
+                      <span className="flex-1">{c.name}</span>
+                      <span className="sr-only">: coming soon</span>
+                    </Menu.Item>
+                  ))}
+                </Menu.Group>
+              </>
+            )}
           </Menu.Popup>
         </Menu.Positioner>
       </Menu.Portal>

@@ -102,3 +102,8 @@ Locally, `npm run refresh` runs the same three steps. The site is on Vercel (pro
 - **Digest:** `scripts/digest.ts` picks postings first seen since each subscriber's last email that match their preferences, within reach first, near-duplicates folded, at most 10, with one line of market insight and a link to the same filters on Ping. No new matches, no email. Weekly subscribers get it on Monday (Tallinn time). Sign-ups never confirmed are deleted after 7 days. `npm run digest -- --dry-run` shows what would go out; `npm run digest -- --test <address> --since-days 7` sends one digest to that confirmed subscriber.
 - **Templates:** `lib/server/templates.ts`, HTML and plain text, tables and inline styles, system fonts, white background, near-black text, emerald accent and the Ping tile.
 
+
+## Logo and channels
+
+- The logo is the block mascot's face on an 8 x 8 pixel grid (`lib/logo.ts`), drawn by `components/logo.tsx` in the header, as table cells in the emails, and as the favicons. `npm run icons` writes `app/icon.svg`, PNGs at 16, 32, 48, 192 and 512 px and `app/apple-icon.png` (180 px), all at whole-pixel scales.
+- Slack and Discord are coming soon: icon buttons in the header (in the theme menu on phones) open the "Get new jobs" modal at "Where to get them", where Email is the only channel that can be picked. The glyphs are Simple Icons (CC0) in `components/brand-icons.tsx`; Slack comes from release 15.22.0, the last that includes it.

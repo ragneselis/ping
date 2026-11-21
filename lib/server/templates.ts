@@ -2,9 +2,10 @@
  * Ping's emails, HTML and plain text. Built for email clients: tables, inline styles, system fonts
  * (Martian Mono and Geist cannot load in most inboxes, so a monospace stack carries the headings and
  * labels, a system sans the body). White background, near-black text, emerald accent, and the Ping
- * mark: the same single solid tile as the site's wordmark, drawn as a coloured cell (no image to block).
+ * mark: the block mascot's face from the site's wordmark, drawn as table cells (no image to block).
  */
 import { CATEGORY_META } from "@/lib/categories";
+import { LOGO_COLORS, LOGO_ROWS } from "@/lib/logo";
 import { REMOTE_LABEL } from "@/lib/categories";
 import { DIGEST_CAP, type Frequency, type Prefs, prefsToQuery } from "@/lib/subscription";
 import type { Category } from "@/lib/types";
@@ -35,6 +36,12 @@ const CAT: Record<Category, [string, string]> = {
   industrial: ["#f59e0b", "#b45309"],
   other: ["#64748b", "#334155"],
 };
+
+/** The logo (the block mascot's face, lib/logo.ts) as an 8 x 8 table of 2px cells: no image to block. */
+const logoTable = `<table role="presentation" width="16" cellpadding="0" cellspacing="0" border="0" style="width:16px;height:16px;border-collapse:collapse;">${LOGO_ROWS.map(
+  (row) =>
+    `<tr>${[...row].map((c) => `<td width="2" height="2" bgcolor="${LOGO_COLORS[c as keyof typeof LOGO_COLORS]}" style="width:2px;height:2px;padding:0;font-size:0;line-height:0;background:${LOGO_COLORS[c as keyof typeof LOGO_COLORS]};"></td>`).join("")}</tr>`,
+).join("")}</table>`;
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -67,7 +74,7 @@ function layout({ preheader, body, footer }: { preheader: string; body: string; 
 <tr><td style="padding:0 0 24px 0;border-bottom:1px solid ${C.rule};">
   <a href="${SITE_URL}" style="text-decoration:none;color:${C.ink};">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td width="12" valign="middle" style="width:12px;"><div style="width:12px;height:12px;background:${C.brand};font-size:0;line-height:0;">&nbsp;</div></td>
+      <td width="16" valign="middle" style="width:16px;">${logoTable}</td>
       <td style="padding-left:8px;font-family:${MONO};font-size:18px;font-weight:700;letter-spacing:-0.02em;color:${C.ink};">Ping</td>
     </tr></table>
   </a>
