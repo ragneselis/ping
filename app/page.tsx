@@ -12,6 +12,7 @@ import { JobRow } from "@/components/job-row";
 import { DataNote } from "@/components/data-note";
 import { Panel } from "@/components/panel";
 import { Readout, type ReadoutItem } from "@/components/readout";
+import { FilterLink, RESULTS_ID, ResultsTarget } from "@/components/filter-link";
 import { ResultsFade } from "@/components/results-fade";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
@@ -133,7 +134,7 @@ export default async function JobsPage({
             footer={
               <Button
                 nativeButton={false}
-                render={<Link href="/?estonia=1&level=reach" />}
+                render={<FilterLink href="/?estonia=1&level=reach" />}
               >
                 Show me those
                 <ArrowRight data-icon="inline-end" />
@@ -152,7 +153,13 @@ export default async function JobsPage({
 
       <Band aria-labelledby="jobs-heading" inner="grid gap-6 py-8 sm:py-10">
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-          <h2 id="jobs-heading">Find your direction</h2>
+          {/* Filter links scroll here and focus it (components/filter-link.tsx); the margin clears the sticky header. */}
+          <h2 id={RESULTS_ID} tabIndex={-1} className="scroll-mt-20 outline-none">
+            Find your direction
+          </h2>
+          <Suspense>
+            <ResultsTarget />
+          </Suspense>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-foreground">
@@ -211,7 +218,7 @@ export default async function JobsPage({
                   {culprit && (
                     <Button
                       nativeButton={false}
-                      render={<Link href={culprit.href} scroll={false} />}
+                      render={<FilterLink href={culprit.href} />}
                     >
                       Remove {culprit.label}
                     </Button>
@@ -220,7 +227,7 @@ export default async function JobsPage({
                     variant="outline"
                     nativeButton={false}
                     render={
-                      <Link
+                      <FilterLink
                         href={filters.sort ? `/?sort=${filters.sort}` : "/"}
                       />
                     }

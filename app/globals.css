@@ -390,6 +390,12 @@
 }
 
 /* GrönLoop's small mono label: 11px, wide tracking, uppercase. */
+/* An icon beside text (components/icon-label.tsx): with the row aligned on the baseline, move the icon
+   down so its centre sits halfway up the capitals. 0.355em is half the cap height of Geist and Geist Mono. */
+@utility cap-icon {
+  translate: 0 calc(var(--icon-size) / 2 - 0.355em);
+}
+
 @utility label-mono {
   @apply font-mono text-[11px] leading-none tracking-[0.14em] uppercase;
 }

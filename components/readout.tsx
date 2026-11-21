@@ -1,8 +1,9 @@
-import Link from "next/link";
 import { SIGNAL_ICON } from "@/components/signal";
 import { CountUp } from "@/components/count-up";
 import { DispersingRules } from "@/components/rules";
 import { FreshTile } from "@/components/tiles";
+import { IconLabel } from "@/components/icon-label";
+import { FilterLink } from "@/components/filter-link";
 import { cn } from "@/lib/utils";
 
 export interface ReadoutItem {
@@ -24,7 +25,7 @@ export interface ReadoutItem {
  * Readout band in GrönLoop's metric-strip style: dashed hairlines above and below, dashed
  * vertical dividers between cells (none on the first, where the frame line already sits), big
  * emerald figures in the display face and small mono labels underneath. The band bleeds out to
- * the frame lines. Items with an href are filters you can click.
+ * the frame lines. Items with an href are filters you can click (FilterLink: they bring the results into view).
  */
 export function Readout({
   items,
@@ -57,17 +58,25 @@ export function Readout({
               it.mark && it.mark !== "new" ? SIGNAL_ICON[it.mark] : null;
             const body = (
               <>
-                <span className="label-mono order-2 flex items-center gap-2 leading-snug text-muted-foreground">
-                  {it.mark === "new" && <FreshTile />}
-                  {Icon && (
-                    <Icon
-                      aria-hidden
-                      className="size-3.5 shrink-0 text-brand-sm"
-                      strokeWidth={1.75}
-                    />
-                  )}
-                  <span data-label>{it.label}</span>
-                </span>
+                {it.mark ? (
+                  <IconLabel
+                    className="label-mono order-2 leading-snug text-muted-foreground"
+                    iconSize={it.mark === "new" ? 8 : 14}
+                    icon={
+                      it.mark === "new" ? (
+                        <FreshTile />
+                      ) : (
+                        Icon && <Icon className="size-3.5 text-brand-sm" strokeWidth={1.75} />
+                      )
+                    }
+                  >
+                    <span data-label>{it.label}</span>
+                  </IconLabel>
+                ) : (
+                  <span className="label-mono order-2 leading-snug text-muted-foreground">
+                    <span data-label>{it.label}</span>
+                  </span>
+                )}
                 <span
                   className={cn(
                     "order-1 font-heading text-4xl leading-none font-semibold tracking-tight tabular-nums sm:text-5xl",
@@ -102,7 +111,7 @@ export function Readout({
                 className={cn("flex", divider, "border-dashed border-hairline")}
               >
                 {it.href ? (
-                  <Link
+                  <FilterLink
                     href={it.href}
                     className={cn(
                       cls,
@@ -110,7 +119,7 @@ export function Readout({
                     )}
                   >
                     {body}
-                  </Link>
+                  </FilterLink>
                 ) : (
                   <div className={cn(cls, "flex-1")}>{body}</div>
                 )}

@@ -16,6 +16,7 @@ import {
   EarlySignalBadge,
 } from "@/components/early-signal";
 import { Readout, type ReadoutItem } from "@/components/readout";
+import { FilterLink } from "@/components/filter-link";
 import { HeroTiles } from "@/components/tiles";
 import { RequirementList } from "@/components/signal";
 import { Button } from "@/components/ui/button";
@@ -145,7 +146,7 @@ export default async function InsightsPage({
               <Button
                 variant="outline"
                 nativeButton={false}
-                render={<Link href={`/?category=${category}`} />}
+                render={<FilterLink href={`/?category=${category}`} />}
               >
                 See the {i.postings} {lowerFirst(CATEGORY_META[category].short)}{" "}
                 jobs
