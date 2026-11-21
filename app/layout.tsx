@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Martian_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { Band } from "@/components/blueprint";
 import { SiteHeader } from "@/components/site-header";
@@ -7,7 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"], weight: ["600"], variable: "--font-bricolage" });
+// Display face: variable weight plus the width axis, so headings can run condensed (see globals.css).
+const martian = Martian_Mono({ subsets: ["latin", "latin-ext"], weight: "variable", axes: ["wdth"], variable: "--font-martian" });
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${martian.variable} ${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <TooltipProvider>

@@ -17,7 +17,7 @@ const NAV = [
 
 export function Wordmark() {
   return (
-    <Link href="/" className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight" aria-label="Ping home">
+    <Link href="/" className="flex shrink-0 items-center gap-2 font-heading text-lg font-semibold tracking-tight sm:text-xl" aria-label="Ping home">
       {/* Ping's mark: a single solid pixel tile. */}
       <Tile name="solid" className="size-3" />
       Ping
@@ -51,7 +51,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-frame-line">
       {/* Only the column is frosted; the gutters keep their hatching. */}
-      <div className={cn(FRAME_COLUMN, "flex h-16 items-center gap-3 bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70 sm:gap-6")}>
+      <div className={cn(FRAME_COLUMN, "flex h-16 items-center gap-1.5 bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70 min-[360px]:gap-3 sm:gap-6")}>
         <Wordmark />
         {/* Two destinations only, so they stay visible as tabs at every width. */}
         <nav className="flex items-center" aria-label="Main">
@@ -61,9 +61,9 @@ export function SiteHeader() {
               href={n.href}
               aria-current={active(n.href) ? "page" : undefined}
               className={cn(
-                "relative flex h-11 items-center px-2.5 text-sm font-medium transition-colors hover:text-brand-sm sm:px-3",
+                "relative flex h-11 items-center px-2 text-sm font-medium transition-colors hover:text-brand-sm min-[360px]:px-2.5 sm:px-3",
                 active(n.href)
-                  ? "text-foreground after:absolute after:inset-x-2.5 after:bottom-2 after:h-0.5 after:bg-brand-lg sm:after:inset-x-3"
+                  ? "text-foreground after:absolute after:inset-x-2 after:bottom-2 after:h-0.5 after:bg-brand-lg min-[360px]:after:inset-x-2.5 sm:after:inset-x-3"
                   : "text-muted-foreground",
               )}
             >

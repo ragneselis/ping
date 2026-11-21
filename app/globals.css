@@ -95,8 +95,9 @@
   --frame-hatch: #1010140f;
 
   --font-sans: var(--font-geist), Geist, ui-sans-serif, system-ui, sans-serif;
-  /* Bricolage Grotesque (semibold) for headings, titles, the wordmark and the big readout numbers. */
-  --font-heading: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  /* Martian Mono for headings, panel titles, the wordmark and the big readout numbers: a monospaced
+     display face that sits with the pixel art. Run condensed and tight (see the base layer). */
+  --font-heading: var(--font-martian), "Martian Mono", ui-monospace, monospace;
   --font-heading-text: var(--font-heading);
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
@@ -269,14 +270,21 @@
     background-image: repeating-linear-gradient(45deg, var(--frame-hatch) 0 1px, transparent 1px 9px);
   }
   /* GrönLoop heading metrics: the hero at -0.02em, section headings at -0.012em. */
+  /* Martian Mono's letterforms are wide: everything set in it runs at 87.5% width,
+     and the large headings close up their tracking so they read as one block. */
+  .font-heading,
+  h1,
+  h2 {
+    font-stretch: 87.5%;
+  }
   h1,
   h2 {
     font-family: var(--font-heading);
     font-weight: 600;
-    letter-spacing: -0.012em;
+    letter-spacing: -0.03em;
   }
   h1 {
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
   }
   ::selection {
     background: var(--brand-tint);

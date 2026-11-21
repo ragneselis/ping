@@ -110,7 +110,7 @@ export default async function JobsPage({
         <HeroTiles variant="jobs" />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
           <div className="grid gap-5">
-            <h1 className="max-w-[14ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.98] text-balance sm:text-6xl xl:text-7xl">
+            <h1 className="max-w-[14ch] text-[clamp(1.75rem,9.4vw,2.75rem)] leading-[1.02] text-balance sm:text-6xl xl:text-7xl">
               Design jobs, minus the doomscrolling
             </h1>
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">

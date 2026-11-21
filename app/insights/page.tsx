@@ -116,7 +116,7 @@ export default async function InsightsPage({
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
-        <h1 className="max-w-[16ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.98] text-balance sm:text-6xl xl:text-7xl">
+        <h1 className="max-w-[16ch] text-[clamp(1.75rem,9.4vw,2.75rem)] leading-[1.02] text-balance sm:text-6xl xl:text-7xl">
           What the market is asking for
         </h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
