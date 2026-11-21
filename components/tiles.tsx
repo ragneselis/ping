@@ -1,24 +1,56 @@
-import Image from "next/image";
+import type React from "react";
 import { Mascot, type MascotName } from "@/components/mascot";
 import { cn } from "@/lib/utils";
 
 /*
- * GrönLoop's tile motif, ported from ~/Documents/gronloop (src/components/hero/hero-tiles.tsx).
- * Nine 64px opaque PNGs in /public/tiles, drawn at 32px on a 32px lattice with zero gap;
- * empty lattice cells, not margins, make a cluster read as dispersing.
+ * Ping's pixel tiles, in the same pixel world as the mascots. Each tile is an SVG of an 8 x 8 grid
+ * of square pixels (shape-rendering crispEdges, no images), drawn only in the brand greens
+ * (--px-1 darkest to --px-5 lightest; dark mode swaps the pale end, see globals.css).
+ * A 32px tile gives 4px pixels: the mascots draw at 4px per pixel on phones and 8px from md,
+ * so every mascot pixel covers exactly 1 x 1 or 2 x 2 tile pixels on one shared 4px grid.
+ * Placement keeps GrönLoop's 32px lattice with zero gap; empty cells make a cluster disperse.
  * Tiles are decorative only: out of flow, never behind text, hidden from screen readers.
  */
 
-export type TileName =
-  | "marble_deep_1"
-  | "marble_lime_1"
-  | "marble_mint_1"
-  | "marble_mint_2"
-  | "marble_vivid_1"
-  | "marble_vivid_2"
-  | "stripe_deep_1"
-  | "stripe_emerald_1"
-  | "stripe_mint_1";
+/** 8 x 8 pixel art; digits pick --px-1 (darkest) to --px-5 (lightest). Flat, no texture. */
+const PIXELS = {
+  /** One flat green. Used for the logo mark and the freshness tile. */
+  solid: Array(8).fill("22222222"),
+  /** Pale flat tile. */
+  pale: Array(8).fill("55555555"),
+  /** Two-tone checker in 2 x 2 blocks. */
+  checker: ["22442244", "22442244", "44224422", "44224422", "22442244", "22442244", "44224422", "44224422"],
+  /** Dither: scattered light pixels on a deep base. */
+  dither: ["11111111", "11141111", "11111114", "14111111", "11111411", "11111111", "11411111", "11111141"],
+  /** Diagonal pixel stripe. */
+  stripe: ["13331333", "33313331", "33133313", "31333133", "13331333", "33313331", "33133313", "31333133"],
+  /** A single lighter pixel in the top-left corner. */
+  corner: ["42222222", "22222222", "22222222", "22222222", "22222222", "22222222", "22222222", "22222222"],
+} satisfies Record<string, string[]>;
+
+export type TileName = keyof typeof PIXELS;
+
+/** One pixel tile. Size it in whole multiples of 8px (8, 16, 32) so pixels stay integer and crisp. */
+export function Tile({ name, className, style }: { name: TileName; className?: string; style?: React.CSSProperties }) {
+  const rows = PIXELS[name];
+  const flat = rows.every((r) => r === rows[0]) && new Set(rows[0]).size === 1;
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 8 8"
+      shapeRendering="crispEdges"
+      className={cn("inline-block size-3 shrink-0", className)}
+      style={style}
+    >
+      {flat ? (
+        <rect width="8" height="8" fill={`var(--px-${rows[0][0]})`} />
+      ) : (
+        rows.flatMap((row, y) => [...row].map((px, x) => <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={`var(--px-${px})`} />))
+      )}
+    </svg>
+  );
+}
 
 /** Lattice pitch in px. Tiles are exactly this wide, so cells butt together. */
 const CELL = 32;
@@ -41,26 +73,26 @@ type Cell = {
  */
 const ARRANGEMENTS: Record<"jobs" | "insights", Cell[]> = {
   jobs: [
-    { side: "left", row: 0, col: 0, tile: "stripe_mint_1" },
-    { side: "left", row: 1, col: 1, tile: "marble_vivid_1" },
-    { side: "left", row: 2, col: 0, tile: "stripe_emerald_1" },
-    { side: "left", row: 0, col: 5, tile: "marble_lime_1", className: "hidden sm:block" },
-    { side: "right", row: 2, col: 0, tile: "stripe_deep_1" },
+    { side: "left", row: 0, col: 0, tile: "pale" },
+    { side: "left", row: 1, col: 1, tile: "dither" },
+    { side: "left", row: 2, col: 0, tile: "checker" },
+    { side: "left", row: 0, col: 5, tile: "corner", className: "hidden sm:block" },
+    { side: "right", row: 2, col: 0, tile: "stripe" },
   ],
   insights: [
-    { side: "left", row: 0, col: 0, tile: "marble_deep_1" },
-    { side: "left", row: 1, col: 1, tile: "stripe_mint_1" },
-    { side: "left", row: 2, col: 2, tile: "marble_vivid_2" },
-    { side: "left", row: 1, col: 7, tile: "stripe_emerald_1", className: "hidden md:block" },
-    { side: "right", row: 0, col: 0, tile: "marble_lime_1" },
+    { side: "left", row: 0, col: 0, tile: "dither" },
+    { side: "left", row: 1, col: 1, tile: "pale" },
+    { side: "left", row: 2, col: 2, tile: "stripe" },
+    { side: "left", row: 1, col: 7, tile: "checker", className: "hidden md:block" },
+    { side: "right", row: 0, col: 0, tile: "corner" },
   ],
 };
 
 const MASCOT: Record<keyof typeof ARRANGEMENTS, MascotName> = { jobs: "block", insights: "student" };
 
 /**
- * The hero's tile band: a fixed-height spacer whose height matches the mascot (64px phones,
- * 96px from md, 128px from lg), with every tile and the mascot absolutely placed on the 32px
+ * The hero's tile band: a fixed-height spacer whose height matches the mascot (64px on phones,
+ * 128px from md), with every tile and the mascot absolutely placed on the 32px
  * lattice, so nothing can add height or sit behind the headline. The band bleeds out to the
  * frame lines; the mascot stands one cell in from the right frame line.
  */
@@ -68,17 +100,12 @@ export function HeroTiles({ variant }: { variant: keyof typeof ARRANGEMENTS }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none relative -mx-4 h-16 overflow-hidden select-none md:-mx-6 md:h-24 lg:-mx-8 lg:h-32"
+      className="pointer-events-none relative -mx-4 h-16 overflow-hidden select-none md:-mx-6 md:h-32 lg:-mx-8"
     >
       {ARRANGEMENTS[variant].map((c) => (
-        <Image
+        <Tile
           key={`${c.side}-${c.row}-${c.col}`}
-          src={`/tiles/${c.tile}.png`}
-          alt=""
-          aria-hidden="true"
-          width={64}
-          height={64}
-          priority
+          name={c.tile}
           className={cn("absolute size-8", c.className)}
           style={{ top: c.row * CELL, [c.side]: c.col * CELL }}
         />
@@ -88,12 +115,7 @@ export function HeroTiles({ variant }: { variant: keyof typeof ARRANGEMENTS }) {
   );
 }
 
-/** One small tile, e.g. the Ping logo mark. */
-export function Tile({ name, className }: { name: TileName; className?: string }) {
-  return <Image src={`/tiles/${name}.png`} alt="" aria-hidden="true" width={64} height={64} className={cn("inline-block size-3 shrink-0", className)} />;
-}
-
 /** The freshness marker: a tiny emerald tile that pulses softly (still under reduced motion). */
 export function FreshTile({ className }: { className?: string }) {
-  return <Tile name="marble_vivid_1" className={cn("tile-pulse size-2", className)} />;
+  return <Tile name="solid" className={cn("tile-pulse size-2", className)} />;
 }

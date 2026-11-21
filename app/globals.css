@@ -78,6 +78,13 @@
   --cat-other: var(--color-slate-500);
   --cat-other-text: var(--color-slate-700);
 
+  /* Pixel tiles: the five brand greens they are drawn in, darkest to lightest. */
+  --px-1: #047857; /* emerald-700 */
+  --px-2: #059669; /* emerald-600 */
+  --px-3: #10b981; /* emerald-500 */
+  --px-4: #6ee7b7; /* emerald-300 */
+  --px-5: #d1fae5; /* emerald-100 */
+
   /* Pixel mascots: the square tile each one sits on. */
   --mascot-tile-block: #d1fae5; /* emerald-100 */
   --mascot-tile-student: #a7f3d0; /* emerald-200 */
@@ -145,6 +152,9 @@
   --cat-other-text: var(--color-slate-300);
 
   --frame-hatch: #ffffff0d;
+  /* Dark: the same ramp, its pale end swapped for the dark emerald of the mascot tiles so nothing glares on navy. */
+  --px-4: #34d399; /* emerald-400 */
+  --px-5: #064e3b; /* emerald-900 */
   --mascot-tile-block: #064e3b; /* dark emerald; the pixel colours stay the same */
   --mascot-tile-student: #064e3b;
 }

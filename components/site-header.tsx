@@ -18,8 +18,8 @@ const NAV = [
 export function Wordmark() {
   return (
     <Link href="/" className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight" aria-label="Ping home">
-      {/* Ping's mark: a single GrönLoop tile. */}
-      <Tile name="marble_vivid_1" className="size-3" />
+      {/* Ping's mark: a single solid pixel tile. */}
+      <Tile name="solid" className="size-3" />
       Ping
     </Link>
   );
