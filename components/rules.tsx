@@ -1,3 +1,4 @@
+import type React from "react";
 import { cn } from "@/lib/utils";
 
 /*
@@ -11,8 +12,9 @@ const DISPERSING_RULES = [3, 4, 6, 10, 14, 18, 20, 32];
 export function DispersingRules({ className }: { className?: string }) {
   return (
     <div aria-hidden="true" className={cn("-mx-4 md:-mx-6 lg:-mx-8", className)}>
+      {/* Each line draws in from the left once on load, a few ms after the one above (globals.css). */}
       {DISPERSING_RULES.map((gap, i) => (
-        <div key={`${gap}-${i}`} style={{ height: gap }} className="border-t border-hairline" />
+        <div key={`${gap}-${i}`} data-rule-draw="" style={{ height: gap, "--i": i } as React.CSSProperties} className="border-t border-hairline" />
       ))}
     </div>
   );

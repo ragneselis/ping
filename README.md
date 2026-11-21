@@ -68,3 +68,13 @@ Dedupe rule: same company + same normalised title is one posting. The ATS versio
 ## Source terms
 
 Remote OK and Himalayas ask for a visible link back to them when jobs are shown. Remotive's API notes ask that jobs are not resubmitted to third-party sites and are delayed by 24h. Lemanoosh has no API: Ping reads its RSS feed and each job page, and every job links back to Lemanoosh. Ask Lemanoosh before showing its jobs publicly. Workable rate-limits bursts (HTTP 429); the fetcher reads Workable boards one at a time and backs off. Check each source's terms before the public launch.
+
+
+## Motion and play
+
+Motion is short and purposeful, set through tokens in `app/globals.css` (`--ease-out`, `--dur-fast`, `--dur-ui`, `--dur-enter`, `--stagger`); only transform and opacity animate, plus the "+N similar" expander's height. Under `prefers-reduced-motion` everything sits in its final state.
+
+- Mascots (`components/mascot.tsx`): frame-based pixel sprites, moving only by whole pixels. Entrance once on load (the block drops in with a stretch and a squash, the student pops up), irregular one-frame blinks, and a hover or tap reaction (wave and hop; look left and right with a pixel "ping") at most every 600ms, with the chirp.
+- Page: hero tiles pop in one by one, dispersing lines draw in from the left, readout figures count up when first seen (`components/count-up.tsx`), panels and the first job rows rise in once (`components/reveal.tsx`), chart bars grow when their panel appears, the job list cross-fades on filter changes (`components/results-fade.tsx`).
+- Sound moments: a soft ping when a count-up lands and a quiet tick when filtered results arrive (both only once audio is running, never on load), open and close sounds on the "+N similar" expander, a ping when the snake eats.
+- Snake (`components/snake.tsx`, in `components/closing-band.tsx` above the footer): ported from GrönLoop's closing call to action. It plays itself until clicked, tapped or started with Enter/Space; arrow keys or WASD steer, swipes on touch. Ping's pixel tiles on exact 32px cells; pauses off screen or in a hidden tab; a still arrangement under reduced motion.

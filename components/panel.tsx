@@ -29,6 +29,7 @@ export function Panel({
   subgrid = false,
   className,
   bodyClassName,
+  revealIndex = 0,
 }: {
   title?: ReactNode;
   titleAs?: "h2" | "h3" | "p";
@@ -47,6 +48,8 @@ export function Panel({
   subgrid?: boolean;
   className?: string;
   bodyClassName?: string;
+  /** Position in its group, for the scroll-reveal stagger. */
+  revealIndex?: number;
 }) {
   const linked = !!href;
   const header =
@@ -84,16 +87,27 @@ export function Panel({
     "group/panel relative border border-border bg-card p-5 text-sm text-card-foreground sm:p-6",
     subgrid ? "row-span-4 grid grid-rows-subgrid gap-4" : "flex flex-col gap-4",
     linked &&
-      "transition-colors hover:border-(--panel-accent) focus-visible:border-(--panel-accent) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+      "transition-[border-color] duration-(--dur-fast) ease-(--ease-out) hover:border-(--panel-accent) focus-visible:border-(--panel-accent) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
     className,
   );
 
+  // Every panel rises into view once (see components/reveal.tsx); a fast colour transition on hover.
+  const reveal = { "data-reveal": "", style: { "--reveal-i": revealIndex } as CSSProperties };
   if (linked) {
     return (
-      <Link href={href} className={base} style={{ "--panel-accent": accent ?? "var(--brand-lg)" } as CSSProperties}>
+      <Link
+        href={href}
+        className={base}
+        data-reveal=""
+        style={{ "--panel-accent": accent ?? "var(--brand-lg)", "--reveal-i": revealIndex } as CSSProperties}
+      >
         {slots}
       </Link>
     );
   }
-  return <div className={base}>{slots}</div>;
+  return (
+    <div className={base} {...reveal}>
+      {slots}
+    </div>
+  );
 }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Martian_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
+import { ClosingBand } from "@/components/closing-band";
+import { RevealObserver } from "@/components/reveal";
 import { SoundEffects } from "@/components/sound";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -25,8 +27,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider>
           <TooltipProvider>
             <SoundEffects />
+            <RevealObserver />
             <SiteHeader />
             <main>{children}</main>
+            <ClosingBand />
             <SiteFooter />
           </TooltipProvider>
         </ThemeProvider>

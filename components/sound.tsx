@@ -9,14 +9,14 @@ import { cn } from "@/lib/utils";
 /** Elements that "ping" on click: buttons, tabs, filters, segmented controls, expanders, menu items. */
 const CLICKABLE = 'button, summary, [role="tab"], [role="radio"], [role="menuitem"], [role="menuitemradio"], [aria-label="Direction"] a, [data-sound="click"]';
 /** Elements that tick on mouse hover. */
-const HOVERABLE = 'a[href], button, summary, [role="menuitem"], [role="menuitemradio"], input, [data-sound="chirp"]';
+const HOVERABLE = 'a[href], button, summary, [role="menuitem"], [role="menuitemradio"], input';
 
 const labelOf = (el: Element) => el.getAttribute("aria-label") ?? el.textContent?.trim().slice(0, 40) ?? "";
 
 /**
  * Wires UI sound once for the whole page with two document-level listeners, so every shared
  * control gets it without its own code. Elements with their own sound (menu and dialog triggers,
- * theme options) opt out with data-sound="none"; mascots chirp with data-sound="chirp".
+ * theme options, expanders) opt out with data-sound="none"; mascots play their own chirp.
  * Every sound call is gated inside lib/sound.ts: with sound off, nothing is created or played.
  */
 export function SoundEffects() {
@@ -33,14 +33,21 @@ export function SoundEffects() {
       if (el === lastHovered) return;
       lastHovered = el;
       if (!el || (el as HTMLButtonElement).disabled) return;
-      if (el.getAttribute("data-sound") === "chirp") sound.chirp();
-      else sound.hover(labelOf(el));
+      sound.hover(labelOf(el));
+    };
+    // Expanders (<details>, e.g. "+N similar") play the open and close sounds. "toggle" does not
+    // bubble, so it is caught in the capture phase.
+    const onToggle = (e: Event) => {
+      const d = e.target;
+      if (d instanceof HTMLDetailsElement && d.hasAttribute("data-expander")) (d.open ? sound.open() : sound.close());
     };
     document.addEventListener("click", onClick, true);
     document.addEventListener("pointerover", onOver, true);
+    document.addEventListener("toggle", onToggle, true);
     return () => {
       document.removeEventListener("click", onClick, true);
       document.removeEventListener("pointerover", onOver, true);
+      document.removeEventListener("toggle", onToggle, true);
     };
   }, []);
   return null;

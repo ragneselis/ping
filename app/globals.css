@@ -13,6 +13,9 @@
    --------------------------------------------------------------------------- */
 
 :root {
+  /* Lets <details> animate to its natural height (the "+N similar" expander). */
+  interpolate-size: allow-keywords;
+
   /* GrönLoop neutrals */
   --ground: #ffffff; /* the hatched gutters */
   --background: #ffffff;
@@ -85,6 +88,10 @@
   --px-4: #6ee7b7; /* emerald-300 */
   --px-5: #d1fae5; /* emerald-100 */
 
+  /* The closing band: deep emerald with white ink, the same in both themes (13:1 for the text). */
+  --band: #064e3b;
+  --band-foreground: #ffffff;
+
   /* Pixel mascots: the square tile each one sits on. */
   --mascot-tile-block: #d1fae5; /* emerald-100 */
   --mascot-tile-student: #a7f3d0; /* emerald-200 */
@@ -100,6 +107,15 @@
   --font-heading: var(--font-martian), "Martian Mono", ui-monospace, monospace;
   --font-heading-text: var(--font-heading);
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+
+  /* Motion: short, snappy, purposeful. Strong ease-out for anything entering or responding;
+     durations stay under 300ms for UI, a little longer for one-off entrances. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-fast: 150ms;
+  --dur-ui: 220ms;
+  --dur-enter: 420ms;
+  --stagger: 45ms;
 
   /* Square corners everywhere; inputs may use 2px. */
   --radius: 0px;
@@ -203,6 +219,8 @@
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-tint: var(--brand-tint);
   --color-brand-pale: var(--brand-pale);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
   --color-hairline: var(--hairline);
   --color-hairline-strong: var(--hairline-strong);
   --color-guide: var(--guide);
@@ -315,8 +333,8 @@
 
 /* ---------------------------------------------------------------------------
    The fresh tile: a tiny emerald tile before jobs posted in the last 24 hours
-   and on the "New today" readout. Its soft square pulse is the page's only
-   motion, and it stays still under prefers-reduced-motion.
+   and on the "New today" readout: a soft square pulse that stays still under
+   prefers-reduced-motion.
    --------------------------------------------------------------------------- */
 @keyframes tile-pulse {
   0% {
@@ -340,4 +358,118 @@
 /* GrönLoop's small mono label: 11px, wide tracking, uppercase. */
 @utility label-mono {
   @apply font-mono text-[11px] leading-none tracking-[0.14em] uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion. Everything below runs only when the reader has not asked for reduced
+   motion; with reduce, every element simply sits in its final state.
+   Only transform and opacity animate (plus the expander's height).
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* The mascot's still waits for its entrance (components/mascot.tsx), so it never flashes first. */
+  [data-mascot-intro="pending"] [data-sprite] {
+    opacity: 0;
+  }
+
+  /* Readout figures wait for their count-up (components/count-up.tsx). */
+  [data-count="waiting"] {
+    opacity: 0;
+  }
+
+  /* Hero tiles load one by one, like pixels arriving: each pops in whole (steps), no fade. */
+  [data-tile-in] {
+    animation: tile-in 1ms steps(1, end) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 60ms);
+  }
+
+  /* Dispersing lines draw in from the left, once. */
+  [data-rule-draw] {
+    transform-origin: left center;
+    animation: rule-draw 520ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 35ms + 120ms);
+  }
+
+  /* Scroll reveal: panels, chart panels and the first job rows rise a few pixels as they enter,
+     once each, staggered by --reveal-i. The observer in components/reveal.tsx sets data-revealed. */
+  [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  [data-reveal][data-revealed] {
+    transition:
+      opacity var(--dur-enter) var(--ease-out),
+      transform var(--dur-enter) var(--ease-out);
+    transition-delay: calc(min(var(--reveal-i, 0), 8) * var(--stagger));
+  }
+
+  /* Chart bars grow from zero once their panel is revealed (and whenever new bars mount after). */
+  [data-reveal]:not([data-revealed]) [data-bars="x"] .recharts-bar-rectangle path {
+    transform: scaleX(0);
+  }
+  [data-reveal]:not([data-revealed]) [data-bars="y"] .recharts-bar-rectangle path {
+    transform: scaleY(0);
+  }
+  [data-revealed] [data-bars] .recharts-bar-rectangle path,
+  [data-bars][data-standalone] .recharts-bar-rectangle path {
+    transform-box: fill-box;
+    animation: bar-grow 560ms var(--ease-out) both;
+    animation-delay: 80ms;
+  }
+  [data-bars="x"] .recharts-bar-rectangle path {
+    transform-origin: left center;
+    --bar-from: scaleX(0);
+  }
+  [data-bars="y"] .recharts-bar-rectangle path {
+    transform-origin: center bottom;
+    --bar-from: scaleY(0);
+  }
+
+  /* The "+N similar" expander opens to its natural height. */
+  details[data-expander]::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--dur-ui) var(--ease-out),
+      content-visibility var(--dur-ui) allow-discrete;
+  }
+  details[data-expander][open]::details-content {
+    block-size: auto;
+  }
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes bar-grow {
+  from {
+    transform: var(--bar-from);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* The job list dims while new filter results load, then fades back in (components/results-fade.tsx). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-results] {
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+  html[data-pending] [data-results] {
+    opacity: 0.4;
+  }
 }

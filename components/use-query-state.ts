@@ -13,6 +13,11 @@ export function useQueryState() {
   const pathname = usePathname();
   const params = useSearchParams();
   const [pending, startTransition] = useTransition();
+  // Marks the page while new results load, so the job list can dim (see components/results-fade.tsx).
+  useEffect(() => {
+    if (pending) document.documentElement.setAttribute("data-pending", "");
+    else document.documentElement.removeAttribute("data-pending");
+  }, [pending]);
   const query = useRef(params.toString());
   useEffect(() => {
     query.current = params.toString();

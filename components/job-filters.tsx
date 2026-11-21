@@ -209,6 +209,11 @@ const SORT_ITEMS = [
   { value: "newest", label: "Newest" },
 ];
 
+/** The sort control before the URL is readable (Suspense fallback): identical, so nothing shifts. */
+export function SortControlFallback({ sort }: { sort: "reach" | "newest" }) {
+  return <Segmented label="Sort" items={SORT_ITEMS} isActive={(v) => v === sort} onSelect={() => {}} />;
+}
+
 /** The explicit sort control, next to "N jobs match" on every screen size. */
 export function SortControl({ sort }: { sort: "reach" | "newest" }) {
   const { set, pending } = useQueryState();

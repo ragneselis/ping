@@ -12,6 +12,9 @@
  *   open    a short higher note; close a short lower note
  *   chirp   two quick rising notes, for the mascots
  *   theme   two notes: rising into dark, falling into light
+ *   settle  a soft low ping when a readout count-up finishes (passive)
+ *   results a quiet tick when filtered results arrive (passive)
+ *   eat     a small bright ping when the snake eats a tile
  * Each element nudges the pitch by a stable amount (from its label), plus a hair of randomness,
  * so repeated clicks never sound mechanical.
  */
@@ -24,6 +27,7 @@ let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
 let lastHover = 0;
 let lastChirp = 0;
+let lastSettle = 0;
 const listeners = new Set<() => void>();
 
 function readStored(): boolean {
@@ -57,9 +61,14 @@ export function subscribeSound(listener: () => void) {
   };
 }
 
-/** The audio graph, created on first use (always inside a user gesture), or null when sound is off. */
-function audio(): AudioContext | null {
+/**
+ * The audio graph, created on first use (always inside a user gesture), or null when sound is off.
+ * Passive sounds (not caused by a click: a count-up finishing, results arriving) never create it:
+ * they only play once a gesture has already started audio, so nothing ever sounds on page load.
+ */
+function audio(passive = false): AudioContext | null {
   if (!isSoundOn()) return null;
+  if (passive && (!ctx || ctx.state !== "running")) return null;
   if (!ctx) {
     const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AC) return null;
@@ -98,6 +107,11 @@ function vary(seed = ""): number {
 }
 
 export const sound = {
+  /** Start audio inside a user gesture without playing anything (e.g. starting a game), so later
+   *  passive sounds in that session can play. Does nothing while sound is off. */
+  unlock() {
+    audio();
+  },
   click(seed?: string) {
     const ac = audio();
     if (!ac) return;
@@ -132,6 +146,29 @@ export const sound = {
     const v = vary();
     tone(ac, { freq: 1900 * v, to: 2050 * v, dur: 0.05, gain: 0.26 });
     tone(ac, { freq: 2500 * v, to: 2700 * v, dur: 0.06, gain: 0.24, delay: 0.065 });
+  },
+  /** A count-up finishing: one soft, low ping (passive). */
+  settle() {
+    // Several figures land together: one ping for the whole band.
+    const now = performance.now();
+    if (now - lastSettle < 500) return;
+    lastSettle = now;
+    const ac = audio(true);
+    if (!ac) return;
+    tone(ac, { freq: 1180, to: 1080, dur: 0.11, gain: 0.28 });
+  },
+  /** New results after a filter or search change: a quiet tick (passive). */
+  results() {
+    const ac = audio(true);
+    if (!ac) return;
+    tone(ac, { freq: 2100, to: 2000, dur: 0.03, gain: 0.08 });
+  },
+  /** The snake eats a tile: a small, bright ping. */
+  eat() {
+    const ac = audio(true);
+    if (!ac) return;
+    const f = 1650 * vary();
+    tone(ac, { freq: f, to: f * 1.08, dur: 0.06, gain: 0.3 });
   },
   theme(toDark: boolean) {
     const ac = audio();

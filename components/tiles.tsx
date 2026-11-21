@@ -30,8 +30,24 @@ const PIXELS = {
 
 export type TileName = keyof typeof PIXELS;
 
+/** The light-theme greens behind --px-1 to --px-5, for places that need a fixed palette (the snake board). */
+export const TILE_PALETTE = ["#047857", "#059669", "#10b981", "#6ee7b7", "#d1fae5"] as const;
+
+/**
+ * A tile as an SVG data URI, for elements created outside React (the snake's segments). Same 8 x 8
+ * pixel grid and crispEdges as <Tile>, in the fixed palette.
+ */
+export function tileDataUri(name: TileName): string {
+  const rows = PIXELS[name];
+  const rects = rows
+    .flatMap((row, y) => [...row].map((px, x) => `<rect x="${x}" y="${y}" width="1" height="1" fill="${TILE_PALETTE[Number(px) - 1]}"/>`))
+    .join("");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" shape-rendering="crispEdges">${rects}</svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
 /** One pixel tile. Size it in whole multiples of 8px (8, 16, 32) so pixels stay integer and crisp. */
-export function Tile({ name, className, style }: { name: TileName; className?: string; style?: React.CSSProperties }) {
+export function Tile({ name, className, style, ...rest }: { name: TileName; className?: string; style?: React.CSSProperties; "data-tile-in"?: string }) {
   const rows = PIXELS[name];
   const flat = rows.every((r) => r === rows[0]) && new Set(rows[0]).size === 1;
   return (
@@ -42,6 +58,7 @@ export function Tile({ name, className, style }: { name: TileName; className?: s
       shapeRendering="crispEdges"
       className={cn("inline-block size-3 shrink-0", className)}
       style={style}
+      {...rest}
     >
       {flat ? (
         <rect width="8" height="8" fill={`var(--px-${rows[0][0]})`} />
@@ -102,12 +119,14 @@ export function HeroTiles({ variant }: { variant: keyof typeof ARRANGEMENTS }) {
       aria-hidden="true"
       className="pointer-events-none relative -mx-4 h-16 overflow-hidden select-none md:-mx-6 md:h-32 lg:-mx-8"
     >
-      {ARRANGEMENTS[variant].map((c) => (
+      {/* On load the tiles pop in one by one, like pixels arriving (globals.css, data-tile-in). */}
+      {ARRANGEMENTS[variant].map((c, i) => (
         <Tile
           key={`${c.side}-${c.row}-${c.col}`}
           name={c.tile}
           className={cn("absolute size-8", c.className)}
-          style={{ top: c.row * CELL, [c.side]: c.col * CELL }}
+          data-tile-in=""
+          style={{ top: c.row * CELL, [c.side]: c.col * CELL, "--i": i } as React.CSSProperties}
         />
       ))}
       <Mascot name={MASCOT[variant]} className="absolute top-0" style={{ right: CELL }} />

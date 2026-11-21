@@ -1,3 +1,4 @@
+import type React from "react";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { CategoryLabel } from "@/components/category";
 import { LevelTag, RequirementList, SignalTag } from "@/components/signal";
@@ -43,10 +44,13 @@ export function JobRow({
   job,
   isNew,
   similar = [],
+  reveal,
 }: {
   job: Job;
   isNew: boolean;
   similar?: Job[];
+  /** Stagger position for rows on the first screen; rows with it rise into view once. */
+  reveal?: number;
 }) {
   const setup = REMOTE_LABEL[job.remote] ?? job.remote;
   const location = job.location || "Location not stated";
@@ -58,8 +62,10 @@ export function JobRow({
   return (
     // Hover is a faint neutral fill; the direction label keeps AA on it (amber-700 at 4.7:1 is the lowest).
     <li
+      data-reveal={reveal === undefined ? undefined : ""}
+      style={reveal === undefined ? undefined : ({ "--reveal-i": reveal } as React.CSSProperties)}
       className={cn(
-        "group relative border-b border-border py-4 transition-colors hover:bg-muted/60 has-[a[data-main]:focus-visible]:bg-muted/60 has-[a[data-main]:focus-visible]:outline-2 has-[a[data-main]:focus-visible]:-outline-offset-2 has-[a[data-main]:focus-visible]:outline-ring",
+        "group relative border-b border-border py-4 transition-[background-color] duration-(--dur-fast) ease-(--ease-out) hover:bg-muted/60 has-[a[data-main]:focus-visible]:bg-muted/60 has-[a[data-main]:focus-visible]:outline-2 has-[a[data-main]:focus-visible]:-outline-offset-2 has-[a[data-main]:focus-visible]:outline-ring",
         ROW_BLEED,
       )}
     >
@@ -138,8 +144,8 @@ export function JobRow({
  */
 function SimilarJobs({ job, similar }: { job: Job; similar: Job[] }) {
   return (
-    <details className="group/similar relative z-10 mt-2 w-fit max-lg:order-last">
-      <summary className="flex min-h-11 w-fit cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden">
+    <details data-expander="" className="group/similar relative z-10 mt-2 w-fit max-lg:order-last">
+      <summary data-sound="none" className="flex min-h-11 w-fit cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden">
         <ChevronDown
           aria-hidden
           className="size-4 transition-transform group-open/similar:rotate-180"

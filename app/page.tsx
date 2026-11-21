@@ -7,11 +7,13 @@ import {
   JobFilters,
   JobListHeader,
   SortControl,
+  SortControlFallback,
 } from "@/components/job-filters";
 import { JobRow } from "@/components/job-row";
 import { DataNote } from "@/components/data-note";
 import { Panel } from "@/components/panel";
 import { Readout, type ReadoutItem } from "@/components/readout";
+import { ResultsFade } from "@/components/results-fade";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
@@ -157,7 +159,7 @@ export default async function JobsPage({
               </span>{" "}
               jobs match
             </p>
-            <Suspense>
+            <Suspense fallback={<SortControlFallback sort={filters.sort} />}>
               <SortControl sort={filters.sort} />
             </Suspense>
           </div>
@@ -177,74 +179,79 @@ export default async function JobsPage({
         )}
       </Band>
 
-      <Band aria-label="Jobs" last inner="grid gap-8 pb-16">
-        {shownGroups.length ? (
-          <div>
-            <Suspense>
-              <JobListHeader sort={filters.sort} />
-            </Suspense>
-            <ul aria-label="Jobs">
-              {shownGroups.map(({ lead, similar }) => (
-                <JobRow
-                  key={lead.id}
-                  job={lead}
-                  similar={similar}
-                  isNew={isNewPosting(lead.postedAt, now)}
-                />
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <Panel
-            titleAs="p"
-            title="Nothing here right now"
-            className="max-w-prose"
-            footer={
-              <div className="flex flex-wrap gap-3">
-                {culprit && (
+      <Band aria-label="Jobs" inner="grid gap-8 pb-16">
+        <ResultsFade
+          signature={JSON.stringify({ ...filters, page: undefined })}
+        >
+          {shownGroups.length ? (
+            <div>
+              <Suspense>
+                <JobListHeader sort={filters.sort} />
+              </Suspense>
+              <ul aria-label="Jobs">
+                {shownGroups.map(({ lead, similar }, n) => (
+                  <JobRow
+                    key={lead.id}
+                    job={lead}
+                    similar={similar}
+                    reveal={n < 12 ? n : undefined}
+                    isNew={isNewPosting(lead.postedAt, now)}
+                  />
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <Panel
+              titleAs="p"
+              title="Nothing here right now"
+              className="max-w-prose"
+              footer={
+                <div className="flex flex-wrap gap-3">
+                  {culprit && (
+                    <Button
+                      nativeButton={false}
+                      render={<Link href={culprit.href} scroll={false} />}
+                    >
+                      Remove {culprit.label}
+                    </Button>
+                  )}
                   <Button
+                    variant="outline"
                     nativeButton={false}
-                    render={<Link href={culprit.href} scroll={false} />}
+                    render={
+                      <Link
+                        href={filters.sort ? `/?sort=${filters.sort}` : "/"}
+                      />
+                    }
                   >
-                    Remove {culprit.label}
+                    Show all jobs
                   </Button>
+                </div>
+              }
+            >
+              <p className="text-base text-muted-foreground">
+                {culprit ? (
+                  <>
+                    No jobs match all of these filters together. Removing{" "}
+                    <span className="font-medium text-foreground">
+                      {culprit.label}
+                    </span>{" "}
+                    brings back{" "}
+                    <span className="font-mono text-foreground">
+                      {culprit.count.toLocaleString("en-GB")}
+                    </span>
+                    .
+                  </>
+                ) : (
+                  <>
+                    That combination is quiet today. Check back soon: new jobs
+                    arrive all the time.
+                  </>
                 )}
-                <Button
-                  variant="outline"
-                  nativeButton={false}
-                  render={
-                    <Link
-                      href={filters.sort ? `/?sort=${filters.sort}` : "/"}
-                    />
-                  }
-                >
-                  Show all jobs
-                </Button>
-              </div>
-            }
-          >
-            <p className="text-base text-muted-foreground">
-              {culprit ? (
-                <>
-                  No jobs match all of these filters together. Removing{" "}
-                  <span className="font-medium text-foreground">
-                    {culprit.label}
-                  </span>{" "}
-                  brings back{" "}
-                  <span className="font-mono text-foreground">
-                    {culprit.count.toLocaleString("en-GB")}
-                  </span>
-                  .
-                </>
-              ) : (
-                <>
-                  That combination is quiet today. Check back soon: new jobs
-                  arrive all the time.
-                </>
-              )}
-            </p>
-          </Panel>
-        )}
+              </p>
+            </Panel>
+          )}
+        </ResultsFade>
 
         {shownGroups.length < groups.length && (
           <div className="flex flex-wrap items-center gap-4">

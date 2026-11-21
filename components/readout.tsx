@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SIGNAL_ICON } from "@/components/signal";
+import { CountUp } from "@/components/count-up";
 import { DispersingRules } from "@/components/rules";
 import { FreshTile } from "@/components/tiles";
 import { cn } from "@/lib/utils";
@@ -77,7 +78,7 @@ export function Readout({
                         : "text-foreground",
                   )}
                 >
-                  {it.value}
+                  <CountUp value={it.value} />
                 </span>
                 {it.hint && (
                   <span className="order-3 -mt-1 text-sm text-pretty text-muted-foreground">

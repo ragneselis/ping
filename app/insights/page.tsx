@@ -213,6 +213,7 @@ export default async function InsightsPage({
               </p>
             )}
             <Panel
+              revealIndex={0}
               title="Most requested skills"
               description={<>Share of postings that mention each skill</>}
             >
@@ -224,6 +225,7 @@ export default async function InsightsPage({
               />
             </Panel>
             <Panel
+              revealIndex={1}
               title="Most requested tools"
               description={<>Share of postings that name each tool</>}
             >
@@ -236,6 +238,7 @@ export default async function InsightsPage({
             </Panel>
             <Panel
               bodyClassName="flex flex-1 flex-col"
+              revealIndex={2}
               title="Seniority"
               description={
                 <>
@@ -256,6 +259,7 @@ export default async function InsightsPage({
             <Panel
               className="xl:col-span-3 4xl:col-span-1"
               bodyClassName="flex flex-1 flex-col"
+              revealIndex={3}
               title="Years of experience asked"
               description={
                 <>
@@ -282,7 +286,6 @@ export default async function InsightsPage({
       {/* ---------- Direction comparison ---------- */}
       <Band
         aria-labelledby="compare-heading"
-        last
         inner="grid gap-6 py-8 pb-16 sm:py-10"
       >
         <div className="grid gap-2">
@@ -309,9 +312,10 @@ export default async function InsightsPage({
         {/* Direction panels: the shared Panel, slot rows on a subgrid so neighbours line up.
             Hover turns the border the direction's colour, underlines the name and shows an arrow. */}
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {comparison.map((c) => (
+          {comparison.map((c, n) => (
             <li key={c.category} className="row-span-4 grid grid-rows-subgrid">
               <Panel
+                revealIndex={n % 3}
                 subgrid
                 href={`/insights?category=${c.category}#asks-heading`}
                 accent={categoryColor(c.category)}

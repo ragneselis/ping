@@ -218,6 +218,7 @@ export function HBarChart({
     // Reserve the height before the first measurement so the page does not jump when the chart appears.
     <div
       ref={ref}
+      data-bars="x"
       className="w-full"
       style={{ minHeight: width > 0 ? undefined : rows.length * ROW_SIDE + 4 }}
     >
@@ -562,7 +563,7 @@ export function DistributionChart({
     series.map((s) => [s.key, { label: s.label, color: colorValue(s.color) }]),
   ) satisfies ChartConfig;
   return (
-    <div className={fill ? "flex h-full min-h-60 flex-col" : undefined}>
+    <div data-bars="y" className={fill ? "flex h-full min-h-60 flex-col" : undefined}>
       <ChartContainer
         config={config}
         className={
