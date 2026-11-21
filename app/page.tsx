@@ -27,8 +27,12 @@ import {
   parseFilters,
 } from "@/lib/view";
 import { REMOTE_LABEL } from "@/lib/categories";
+import { shareMetadata } from "@/lib/share";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+// The tab stays "Ping" (from the layout); a shared Jobs link gets the longer title.
+export const metadata: Metadata = shareMetadata("Ping | Design jobs for EKA students");
 
 const PAGE_SIZE = 50;
 type Search = Record<string, string | string[] | undefined>;

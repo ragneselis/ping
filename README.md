@@ -110,4 +110,4 @@ Locally, `npm run refresh` runs the same three steps. The site is on Vercel (pro
 
 ## Sharing
 
-Every page shares the same card: title "Ping", description "Design jobs for EKA students, updated daily." (set once in `app/layout.tsx`), and the image from `app/opengraph-image.tsx` (reused by `app/twitter-image.tsx`): the mascot tile's light green, "Ping" in Martian Mono (a static 600 weight, 87.5% width instance in `assets/fonts`, OFL) and the block mascot drawn from its grid in `lib/mascots.ts` at 24px per pixel.
+Every page shares the description "New design jobs every morning, sorted by direction and level." (`lib/share.ts`); the Jobs page shares as "Ping | Design jobs for EKA students", other pages as "Ping", and the image from `app/opengraph-image.tsx` (reused by `app/twitter-image.tsx`): the mascot tile's light green, "Ping" in Martian Mono (a static 600 weight, 87.5% width instance in `assets/fonts`, OFL) and the block mascot drawn from its grid in `lib/mascots.ts` at 24px per pixel.
