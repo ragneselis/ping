@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { CategoryDot } from "@/components/category";
 import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -43,7 +43,8 @@ export interface SegmentItem {
 /**
  * Segmented control: square, hairline borders, the selected segment in solid foreground.
  * `isActive` decides selection, so the same control serves single and multiple choice.
- * Fills the width on phones (44px tall), compact from sm up.
+ * Fills the width on phones (44px tall), compact from sm up. `stacked` keeps the label above the
+ * control at every width (forms, where labels of different lengths would otherwise stagger).
  */
 export function Segmented({
   label,
@@ -51,18 +52,21 @@ export function Segmented({
   isActive,
   onSelect,
   className,
+  stacked = false,
 }: {
   label: string;
   items: SegmentItem[];
   isActive: (value: string) => boolean;
   onSelect: (value: string) => void;
   className?: string;
+  stacked?: boolean;
 }) {
-  const id = `seg-${label.toLowerCase().replace(/\W+/g, "-")}`;
+  // Unique per instance: the Jobs filters and the subscription modal can both show a "Level" control.
+  const id = `seg-${useId()}`;
   return (
-    <div className={cn("grid gap-1.5 sm:flex sm:items-center sm:gap-3", className)}>
+    <div className={cn("grid gap-1.5", !stacked && "sm:flex sm:items-center sm:gap-3", className)}>
       <DataLabel id={id}>{label}</DataLabel>
-      <div role="group" aria-labelledby={id} className="flex w-full border border-hairline-strong bg-card sm:w-auto">
+      <div role="group" aria-labelledby={id} className={cn("flex w-full border border-hairline-strong bg-card", stacked ? "sm:w-fit" : "sm:w-auto")}>
         {items.map((it) => {
           const active = isActive(it.value);
           return (

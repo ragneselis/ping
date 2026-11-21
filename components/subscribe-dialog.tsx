@@ -1,41 +1,345 @@
 "use client";
 
-import { BellRing, Mail, MessageSquare } from "lucide-react";
-import type { ReactElement } from "react";
+import { Check, MailCheck } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactElement } from "react";
+import { CategoryDot } from "@/components/category";
+import { DataLabel, Segmented } from "@/components/filter-controls";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { CATEGORY_META } from "@/lib/categories";
 import { sound } from "@/lib/sound";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DIGEST_CAP, EMPTY_PREFS, type Frequency, isEmail, type Prefs, prefsFromQuery } from "@/lib/subscription";
+import { CATEGORIES, type Category } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
-/** "Get new jobs" call to action. Placeholder until email and Slack updates exist. */
-export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
+/*
+ * "Get new jobs": the email subscription modal.
+ * - Sign up: opens pre-filled from the Jobs page filters in the URL; everything stays editable.
+ *   Double opt-in: the server sends a confirmation link and nothing else until it is clicked.
+ * - Manage: the "Change what you get" link in every email opens /?manage=<token>; the modal opens
+ *   by itself with the saved preferences and saves changes to that subscription.
+ * One instance lives in the header, so the manage link opens exactly one dialog.
+ */
+
+const LEVEL_ITEMS = [
+  { value: "any", label: "Any" },
+  { value: "reach", label: "Within reach" },
+  { value: "mid", label: "Mid" },
+  { value: "senior", label: "Senior" },
+];
+const LOCATION_ITEMS = [
+  { value: "any", label: "Anywhere" },
+  { value: "1", label: "Open to Estonia" },
+];
+const REMOTE_ITEMS = [
+  { value: "any", label: "Any" },
+  { value: "remote", label: "Remote" },
+  { value: "hybrid", label: "Hybrid" },
+  { value: "onsite", label: "On-site" },
+];
+const FREQUENCY_ITEMS = [
+  { value: "weekly", label: "Weekly, on Monday" },
+  { value: "daily", label: "Daily" },
+];
+
+type Mode = { kind: "signup" } | { kind: "manage"; token: string; email: string };
+type Status = "idle" | "sending" | "sent" | "saved" | "error";
+
+/** Square checkbox in Ping's style: hairline box, solid emerald when ticked, 44px row on phones. */
+function DirectionCheckbox({ category, checked, onChange }: { category: Category | "all"; checked: boolean; onChange: () => void }) {
   return (
-    <Dialog onOpenChange={(open) => (open ? sound.open() : sound.close())}>
+    <label
+      data-sound="click"
+      className="group flex min-h-11 cursor-pointer items-center gap-3 border-b border-hairline text-sm select-none sm:min-h-9"
+    >
+      <span className="relative flex size-4 shrink-0">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+          className="peer size-4 cursor-pointer appearance-none border border-hairline-strong bg-card transition-colors checked:border-primary checked:bg-primary group-hover:border-brand-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        />
+        <Check aria-hidden strokeWidth={3} className="pointer-events-none absolute inset-0.5 size-3 text-primary-foreground opacity-0 peer-checked:opacity-100" />
+      </span>
+      {category === "all" ? (
+        <span className="font-medium">All directions</span>
+      ) : (
+        <span className="flex items-center gap-2">
+          <CategoryDot category={category} />
+          {CATEGORY_META[category].short}
+        </span>
+      )}
+    </label>
+  );
+}
+
+export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<Mode>({ kind: "signup" });
+  const [prefs, setPrefs] = useState<Prefs>(EMPTY_PREFS);
+  const [frequency, setFrequency] = useState<Frequency>("weekly");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [touched, setTouched] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState<string | null>(null);
+  const honeypot = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const ids = { email: useId(), emailHint: useId(), directions: useId() };
+
+  const show = (next: boolean) => {
+    setOpen(next);
+    if (next) sound.open();
+    else sound.close();
+  };
+
+  // The manage link from an email: load the saved preferences and open by itself. The token is
+  // taken out of the address bar at once, so it does not linger in history or screenshots.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const token = url.searchParams.get("manage");
+    if (!token) return;
+    url.searchParams.delete("manage");
+    window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+    fetch(`/api/subscription?token=${encodeURIComponent(token)}`)
+      .then((r) => r.json())
+      .then((d: { ok: boolean; email?: string; prefs?: Prefs; frequency?: Frequency; error?: string }) => {
+        if (d.ok && d.prefs && d.email) {
+          setMode({ kind: "manage", token, email: d.email });
+          setPrefs({ ...EMPTY_PREFS, ...d.prefs });
+          setFrequency(d.frequency ?? "weekly");
+        } else setError(d.error ?? "This link is not valid any more.");
+        setStatus(d.ok ? "idle" : "error");
+        setOpen(true);
+      })
+      .catch(() => {
+        setError("Your saved preferences could not be loaded. Try the link again.");
+        setStatus("error");
+        setOpen(true);
+      });
+  }, []);
+
+  /** A fresh sign-up starts from the filters the visitor has on the Jobs page right now. */
+  const onOpenChange = (next: boolean) => {
+    if (next) {
+      if (mode.kind === "signup") setPrefs(window.location.pathname === "/" ? prefsFromQuery(window.location.search) : EMPTY_PREFS);
+      setStatus("idle");
+      setError(null);
+    } else if (status === "saved") setMode({ kind: "signup" });
+    show(next);
+  };
+
+  const toggleCategory = (c: Category) =>
+    setPrefs((p) => ({ ...p, categories: p.categories.includes(c) ? p.categories.filter((x) => x !== c) : CATEGORIES.filter((x) => x === c || p.categories.includes(x)) }));
+  const selectLevel = (v: string) =>
+    setPrefs((p) => {
+      if (v === "any") return { ...p, levels: [] };
+      const l = v as Prefs["levels"][number];
+      return { ...p, levels: p.levels.includes(l) ? p.levels.filter((x) => x !== l) : [...p.levels, l] };
+    });
+
+  const validate = (value: string) => {
+    const v = value.trim();
+    if (!v) return "Enter your email address.";
+    if (!isEmail(v)) return "That does not look like an email address. Check for typos.";
+    return null;
+  };
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (mode.kind === "signup") {
+      const problem = validate(email);
+      setTouched(true);
+      setEmailError(problem);
+      if (problem) {
+        emailRef.current?.focus();
+        return;
+      }
+    }
+    setStatus("sending");
+    try {
+      const res =
+        mode.kind === "manage"
+          ? await fetch("/api/subscription", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: mode.token, prefs, frequency }) })
+          : await fetch("/api/subscription", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: email.trim(), prefs, frequency, website: honeypot.current?.value ?? "" }),
+            });
+      const d = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !d.ok) throw new Error(d.error ?? "Something went wrong. Try again in a minute.");
+      setStatus(mode.kind === "manage" ? "saved" : "sent");
+      sound.chirp();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Try again in a minute.");
+      setStatus("error");
+    }
+  };
+
+  const done = status === "sent" || status === "saved";
+  const manage = mode.kind === "manage";
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
       {/* The trigger plays the open sound, not a click as well. */}
       <DialogTrigger render={trigger} data-sound="none" />
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <div className="mb-2 flex size-10 items-center justify-center rounded-lg border border-border text-foreground">
-            <BellRing className="size-5" />
+      <DialogContent className={cn("max-h-[calc(100dvh-2rem)] gap-0 overflow-y-auto overscroll-contain p-0", done ? "sm:max-w-md" : "sm:max-w-xl")}>
+        {done ? (
+          <div className="grid gap-4 p-6 sm:p-8" role="status">
+            <span className="flex size-10 items-center justify-center bg-brand-tint text-brand-sm">
+              <MailCheck aria-hidden className="size-5" strokeWidth={1.75} />
+            </span>
+            <DialogTitle className="font-heading text-xl font-semibold tracking-tight">
+              {status === "sent" ? "Check your inbox to confirm." : "Saved."}
+            </DialogTitle>
+            <DialogDescription className="text-base leading-relaxed text-pretty">
+              {status === "sent" ? (
+                <>
+                  A confirmation link is on its way to <span className="font-medium text-foreground">{email.trim()}</span>. Nothing else is sent until you click
+                  it. No email? Check the spam folder.
+                </>
+              ) : (
+                <>The next email follows your new choices.</>
+              )}
+            </DialogDescription>
+            <div className="pt-2">
+              <DialogClose render={<Button>Done</Button>} />
+            </div>
           </div>
-          <DialogTitle className="text-xl">Coming soon: email and Slack updates</DialogTitle>
-          <DialogDescription>
-            Soon Ping can ping you when new jobs land that match your direction. No spam, no daily digest of
-            senior roles you cannot apply for yet. Until then, check back here: the list refreshes regularly.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-2 text-sm">
-          <div className="flex items-center gap-3 rounded-lg border p-3">
-            <Mail className="size-4 text-muted-foreground" />
-            <span>A weekly email with new roles in your categories</span>
-          </div>
-          <div className="flex items-center gap-3 rounded-lg border p-3">
-            <MessageSquare className="size-4 text-muted-foreground" />
-            <span>A Slack channel for the EKA design crowd</span>
-          </div>
-        </div>
-        <DialogFooter>
-          <DialogClose render={<Button>Sounds good</Button>} />
-        </DialogFooter>
+        ) : (
+          <form onSubmit={submit} noValidate className="grid">
+            <DialogHeader className="gap-2 border-b border-hairline p-6 pr-12 sm:px-8">
+              <DialogTitle className="font-heading text-xl font-semibold tracking-tight">{manage ? "Change what you get" : "Get new jobs by email"}</DialogTitle>
+              <DialogDescription className="text-sm leading-relaxed text-pretty">
+                Only new jobs that match, at most {DIGEST_CAP} per email. Unsubscribe any time.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="grid gap-6 p-6 sm:px-8">
+              <fieldset className="grid gap-1.5">
+                <legend className="mb-1.5">
+                  <DataLabel id={ids.directions}>Directions</DataLabel>
+                </legend>
+                <div className="grid sm:grid-cols-2 sm:gap-x-6">
+                  <DirectionCheckbox category="all" checked={prefs.categories.length === 0} onChange={() => setPrefs((p) => ({ ...p, categories: [] }))} />
+                  {CATEGORIES.map((c) => (
+                    <DirectionCheckbox key={c} category={c} checked={prefs.categories.includes(c)} onChange={() => toggleCategory(c)} />
+                  ))}
+                </div>
+              </fieldset>
+
+              <Segmented
+                stacked
+                label="Level"
+                items={LEVEL_ITEMS}
+                isActive={(v) => (v === "any" ? prefs.levels.length === 0 : prefs.levels.includes(v as Prefs["levels"][number]))}
+                onSelect={selectLevel}
+              />
+              <div className="grid gap-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-x-6">
+                <Segmented
+                  stacked
+                  label="Location"
+                  items={LOCATION_ITEMS}
+                  isActive={(v) => (v === "1") === prefs.estonia}
+                  onSelect={(v) => setPrefs((p) => ({ ...p, estonia: v === "1" }))}
+                />
+                <Segmented
+                  stacked
+                  label="Work setup"
+                  items={REMOTE_ITEMS}
+                  isActive={(v) => (v === "any" ? !prefs.remote : prefs.remote === v)}
+                  onSelect={(v) => setPrefs((p) => ({ ...p, remote: v === "any" ? "" : (v as Prefs["remote"]) }))}
+                />
+              </div>
+
+              <Segmented stacked label="How often" items={FREQUENCY_ITEMS} isActive={(v) => v === frequency} onSelect={(v) => setFrequency(v as Frequency)} />
+
+              {manage ? (
+                <div className="grid gap-1.5">
+                  <DataLabel>Email</DataLabel>
+                  <p className="text-base">{mode.email}</p>
+                </div>
+              ) : (
+                <div className="grid gap-1.5">
+                  <label htmlFor={ids.email}>
+                    <DataLabel>Email</DataLabel>
+                  </label>
+                  <input
+                    ref={emailRef}
+                    id={ids.email}
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    spellCheck={false}
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (touched) setEmailError(validate(e.target.value));
+                    }}
+                    onBlur={() => {
+                      if (!email.trim()) return;
+                      setTouched(true);
+                      setEmailError(validate(email));
+                    }}
+                    aria-invalid={!!emailError}
+                    aria-describedby={emailError ? ids.emailHint : undefined}
+                    placeholder="you@example.com"
+                    className={cn(
+                      "h-11 w-full rounded-sm border bg-card px-3.5 text-base text-foreground transition-colors outline-none placeholder:text-muted-foreground hover:border-foreground/40 focus-visible:border-brand-lg focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring",
+                      emailError ? "border-destructive" : "border-hairline-strong",
+                    )}
+                  />
+                  {emailError && (
+                    <p id={ids.emailHint} className="text-sm text-destructive">
+                      {emailError}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Honeypot: hidden from people and assistive tech; bots that fill every field give themselves away. */}
+              <div aria-hidden className="sr-only">
+                <label>
+                  Website
+                  <input ref={honeypot} type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+                </label>
+              </div>
+            </div>
+
+            <div className="grid gap-4 border-t border-hairline bg-muted/40 p-6 sm:px-8">
+              {error && (
+                <p role="alert" className="text-sm font-medium text-destructive">
+                  {error}
+                </p>
+              )}
+              <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="max-w-[34ch] text-xs leading-relaxed text-muted-foreground">
+                  {manage ? (
+                    <>
+                      Or{" "}
+                      <a href={`/api/subscription/unsubscribe?token=${encodeURIComponent(mode.token)}`} className="text-brand-sm underline underline-offset-3 hover:no-underline">
+                        unsubscribe
+                      </a>
+                      : that deletes your address and choices.
+                    </>
+                  ) : (
+                    <>
+                      Ping stores your email and these choices only to send these emails.{" "}
+                      <Link href="/privacy" onClick={() => show(false)} className="text-brand-sm underline underline-offset-3 hover:no-underline">
+                        Privacy
+                      </Link>
+                    </>
+                  )}
+                </p>
+                <Button type="submit" size="lg" disabled={status === "sending"} className="w-full sm:w-auto">
+                  {status === "sending" ? "Sending" : manage ? "Save changes" : "Get new jobs"}
+                </Button>
+              </div>
+            </div>
+          </form>
+        )}
       </DialogContent>
     </Dialog>
   );

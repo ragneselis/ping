@@ -26,19 +26,17 @@ export function Wordmark() {
   );
 }
 
-/** "Get new jobs" is not live yet, so it is an outline button with a "soon" tag rather than the emerald primary action. */
-export function SubscribeButton({ compact = false }: { compact?: boolean }) {
+/**
+ * "Get new jobs": opens the email subscription modal. One button for every width (so the manage
+ * link from an email opens one dialog): icon only on phones at 44px, icon and label from sm.
+ */
+export function SubscribeButton() {
   return (
     <SubscribeDialog
       trigger={
-        <Button variant="outline" size="sm" aria-label={compact ? "Get new jobs (coming soon)" : undefined} className={cn(compact && "size-11 px-0")}>
-          <BellRing data-icon={compact ? undefined : "inline-start"} className={compact ? "size-5" : undefined} strokeWidth={1.75} />
-          {!compact && (
-            <>
-              Get new jobs
-              <span className="border-l pl-2 font-mono text-[0.7rem] text-muted-foreground uppercase">soon</span>
-            </>
-          )}
+        <Button size="sm" className="max-sm:size-11 max-sm:px-0">
+          <BellRing data-icon="inline-start" className="max-sm:size-5" strokeWidth={1.75} />
+          <span className="max-sm:sr-only">Get new jobs</span>
         </Button>
       }
     />
@@ -80,12 +78,7 @@ export function SiteHeader() {
           <Wordmark />
           {tabs("hidden sm:flex")}
           <div className="ml-auto flex items-center gap-1">
-            <div className="hidden sm:block">
-              <SubscribeButton />
-            </div>
-            <div className="sm:hidden">
-              <SubscribeButton compact />
-            </div>
+            <SubscribeButton />
             <SoundToggle />
             <ThemeMenu />
           </div>

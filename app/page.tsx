@@ -60,7 +60,7 @@ export default async function JobsPage({
   const shownJobs = shownGroups.reduce((n, g) => n + 1 + g.similar.length, 0);
   // Tab counts follow the other filters, but the order is fixed (the same as Market insights)
   // and empty directions stay, dimmed with 0, so nothing moves under the cursor.
-  const withoutCategory = applyFilters(cards, { ...filters, category: "" });
+  const withoutCategory = applyFilters(cards, { ...filters, category: "", categories: [] });
   const categoryCounts = directionOrder(cards.map((c) => c.primary)).map(
     (c) => ({
       value: c,
@@ -304,11 +304,11 @@ function findCulprit(
       drop: ["q"],
       next: { ...f, q: "" },
     });
-  if (f.category)
+  if (f.categories.length)
     options.push({
-      label: CATEGORY_META[f.category].short,
+      label: f.categories.map((c) => CATEGORY_META[c].short).join(" and "),
       drop: ["category"],
-      next: { ...f, category: "" },
+      next: { ...f, category: "", categories: [] },
     });
   if (f.estonia)
     options.push({

@@ -1,4 +1,5 @@
 import { Coffee } from "lucide-react";
+import Link from "next/link";
 import { Band } from "@/components/blueprint";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -16,7 +17,12 @@ export function SiteFooter() {
       <div className="grid gap-1">
         <p>Ping is made for design students at the Estonian Academy of Arts.</p>
         {/* True since the GitHub Actions refresh runs every morning (.github/workflows/daily-refresh.yml). */}
-        <p className="text-xs">Job listings refreshed daily.</p>
+        <p className="text-xs">
+          Job listings refreshed daily.{" "}
+          <Link href="/privacy" className="underline underline-offset-3 hover:text-foreground">
+            Privacy
+          </Link>
+        </p>
       </div>
       <div className="flex items-center gap-1">
         <p>

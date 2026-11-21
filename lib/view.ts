@@ -70,7 +70,10 @@ export type Level = (typeof LEVELS)[number];
 export type Sort = "reach" | "newest";
 
 export interface Filters {
+  /** The one selected direction, or "" for none or several (see categories). */
   category: Category | "";
+  /** Selected directions; empty means all. Several come from email links (?category=product,game). */
+  categories: Category[];
   estonia: boolean;
   remote: "" | "remote" | "hybrid" | "onsite";
   /** Selected level buckets; empty means all levels. */
@@ -196,14 +199,16 @@ export function getDataset(): Dataset {
 
 export function parseFilters(sp: Record<string, string | string[] | undefined>): Filters {
   const one = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string) : "");
-  const category = (CATEGORIES as readonly string[]).includes(one("category")) ? (one("category") as Category) : "";
+  const picked = new Set(one("category").split(","));
+  const categories = CATEGORIES.filter((c) => picked.has(c));
+  const category = categories.length === 1 ? categories[0] : "";
   const remote = ["remote", "hybrid", "onsite"].includes(one("remote")) ? (one("remote") as Filters["remote"]) : "";
   // ?level=reach,mid; the old ?reach=1 still means "within reach".
   const levels = new Set(one("level").split(",").filter((l): l is Level => (LEVELS as readonly string[]).includes(l)));
   if (one("reach") === "1") levels.add("reach");
   const list = LEVELS.filter((l) => levels.has(l));
   const q = one("q").trim().slice(0, 80);
-  return { category, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort"), list), q };
+  return { category, categories, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort"), list), q };
 }
 
 /** Default sort: within reach first, unless the level filter leaves within-reach jobs out. */
@@ -215,12 +220,16 @@ export function resolveSort(raw: string, levels: Level[]): Sort {
 /** Text a search matches against: title, company, location, top requirements and direction name. */
 const searchText = (c: JobCard) => [c.title, c.company, c.location, ...c.chips, CATEGORY_META[c.primary].short].join(" ").toLowerCase();
 
-export function applyFilters(cards: JobCard[], f: Omit<Filters, "sort" | "q"> & { sort?: Sort; q?: string }): JobCard[] {
+export function applyFilters(
+  cards: JobCard[],
+  f: Omit<Filters, "sort" | "q" | "categories"> & { categories?: Category[]; sort?: Sort; q?: string },
+): JobCard[] {
   // Every word of the query has to appear somewhere, in any order.
   const words = (f.q ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+  const cats = f.categories?.length ? f.categories : f.category ? [f.category] : [];
   const out = cards.filter(
     (c) =>
-      (!f.category || c.primary === f.category) &&
+      (!cats.length || cats.includes(c.primary)) &&
       (!f.estonia || c.openToEstonia) &&
       (!f.remote || c.remote === f.remote) &&
       (!f.levels.length || f.levels.includes(c.levelBucket)) &&

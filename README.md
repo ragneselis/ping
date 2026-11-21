@@ -86,7 +86,19 @@ Motion is short and purposeful, set through tokens in `app/globals.css` (`--ease
 
 1. `npm run fetch`: every source, deduplicated. Postings no longer listed drop out. A source that fails keeps its postings from the last good run and is named in the log; a run that loses every source, or more than half the postings, exits without writing, so the site keeps the previous data.
 2. `npm run extract`: classification and requirements for new postings only (both cached by posting id). `ANTHROPIC_API_KEY` comes from the repository's Actions secret.
-3. `npm run stamp`: writes `data/run.json` (last run, next scheduled run, failed sources), which the data note shows in Tallinn time.
+3. `npm run stamp`: writes `data/run.json` (last run, next scheduled run, failed sources), which the data note shows in Tallinn time, and `data/seen.json` (when each posting was first seen), which the email digest uses.
 4. Commits `data/` to main only when postings, classifications or requirements changed. That push deploys on Vercel.
+5. `npm run digest`: emails confirmed subscribers who are due. It can never fail the refresh (it exits 0 with a warning, and the step has `continue-on-error`).
 
 Locally, `npm run refresh` runs the same three steps. The site is on Vercel (production branch main) and reads `data/*.json` at request time (`outputFileTracingIncludes` in `next.config.mjs`), so no local files are needed to build or run it.
+
+## Email subscriptions
+
+"Get new jobs" in the header opens the subscription modal (`components/subscribe-dialog.tsx`). It starts from the visitor's current Jobs filters; directions, level, location, work setup and frequency (weekly on Monday, or daily) stay editable.
+
+- **Storage:** Neon Postgres from the Vercel Marketplace (`ping-db`, Frankfurt), connected to the Vercel project, so `DATABASE_URL` is set there automatically. Locally it is in `.env.local`; in Actions it is a repository secret. `npm run db:setup` creates the tables. `subscribers` keeps only email, preferences, frequency, confirmed, a random token, `created_at` and `last_sent_at`. `rate_limits` keeps a salted IP hash for at most an hour.
+- **Routes:** `POST /api/subscription` signs up (honeypot field, 5 sign-ups per IP and 3 per address per hour, inline and server-side email checks, the same answer whether or not the address exists). `GET`/`PUT` with a token load and save preferences for the "Change what you get" link (`/?manage=<token>`). `/api/subscription/confirm` confirms; `/api/subscription/unsubscribe` deletes the record (GET from the link, POST for one-click `List-Unsubscribe`). Landing pages are `/subscription/confirmed`, `/removed` and `/invalid`; the policy is at `/privacy`.
+- **Sending:** Resend over its HTTP API (`lib/server/email.ts`), with `RESEND_API_KEY` in `.env.local`, Vercel and Actions. The sender is `EMAIL_FROM` (`Ping <jobs@mail.ragne.me>` once `mail.ragne.me` is verified in Resend; until then Resend's test sender, which only delivers to the account owner).
+- **Digest:** `scripts/digest.ts` picks postings first seen since each subscriber's last email that match their preferences, within reach first, near-duplicates folded, at most 10, with one line of market insight and a link to the same filters on Ping. No new matches, no email. Weekly subscribers get it on Monday (Tallinn time). Sign-ups never confirmed are deleted after 7 days. `npm run digest -- --dry-run` shows what would go out; `npm run digest -- --test <address> --since-days 7` sends one digest to that confirmed subscriber.
+- **Templates:** `lib/server/templates.ts`, HTML and plain text, tables and inline styles, system fonts, white background, near-black text, emerald accent and the Ping tile.
+

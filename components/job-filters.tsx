@@ -50,6 +50,8 @@ export function JobFilters({
   const { params, pending, go, set, update } = useQueryState();
 
   const category = params.get("category") ?? "";
+  // Several directions can arrive from an email link (?category=product,game); a tab click picks one.
+  const selected = new Set(category.split(",").filter(Boolean));
   const remote = params.get("remote") ?? "any";
   const estonia = params.get("estonia") === "1" ? "1" : "any";
   const levels = readLevels(params);
@@ -99,10 +101,10 @@ export function JobFilters({
           <button
             key={c.value}
             type="button"
-            aria-pressed={category === c.value}
-            disabled={c.count === 0 && category !== c.value}
+            aria-pressed={selected.has(c.value)}
+            disabled={c.count === 0 && !selected.has(c.value)}
             className={cn(
-              tabClassName(category === c.value),
+              tabClassName(selected.has(c.value)),
               "disabled:opacity-40 disabled:hover:border-transparent disabled:hover:text-muted-foreground",
             )}
             onClick={() => set("category", c.value)}

@@ -40,7 +40,8 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      # Record this run and the next scheduled one (data/run.json) for the page's data note.
+      # Record this run and the next scheduled one (data/run.json) for the page's data note, and when
+      # each posting was first seen (data/seen.json) for the email digest.
       - name: Stamp
         run: npm run stamp
 
@@ -58,3 +59,17 @@ jobs:
           git add data/
           git commit -m "Daily data refresh $(date -u +%Y-%m-%d)"
           git push
+
+      # Email the digest to confirmed subscribers who are due (daily ones every day, weekly ones on
+      # Monday). It runs after the data is committed and can never fail the refresh: the script exits 0
+      # and logs a warning on any sending problem, and continue-on-error covers anything else.
+      # EMAIL_FROM is a repository variable, set once mail.ragne.me is verified in Resend.
+      - name: Send digest
+        if: success()
+        continue-on-error: true
+        timeout-minutes: 10
+        run: npm run digest
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ vars.EMAIL_FROM }}
