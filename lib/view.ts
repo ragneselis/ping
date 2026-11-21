@@ -7,7 +7,7 @@ import { statSync } from "node:fs";
 import path from "node:path";
 import { loadClassifiedJobs, loadCompanies, loadSources, tally, tallyKey, loadRun } from "./data";
 import { byNewest, compareFit, resolveSort, type Sort } from "./sort";
-import { companySlug } from "./company";
+import { companySlug, isReadable } from "./company";
 import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "./types";
 
 export { compareFit, fitRank, resolveSort, SORT_LABEL, SORTS, type Sort } from "./sort";
@@ -250,36 +250,37 @@ export function applyFilters(
 export interface CompanyRow {
   key: string;
   name: string;
-  /** Current design roles that match the filters. */
+  /** One factual line about what they do (data/companies.json). */
+  description: string | null;
+  /** Ping reads their jobs (false: careers link only). */
+  readable: boolean;
+  /** Current design roles (in the chosen direction, when one is chosen). */
   roles: number;
-  /** Of those, open to someone in Estonia. */
-  openToEstonia: number;
-  basedInEstonia: boolean;
   /** Directions of those roles, most roles first. */
   directions: { category: Category; count: number }[];
-  /** Their careers page, for companies on the tracked list (data/companies.json). */
   careersUrl: string | null;
-  /** Newest of those roles. */
-  latest: string | null;
 }
 
-export type CompanySort = "roles" | "newest";
-export const resolveCompanySort = (raw: string): CompanySort => (raw === "newest" ? "newest" : "roles");
+/** A posting located in Estonia: on site or hybrid in Tallinn, Tartu or Estonia, not one country among many remote ones. */
+const locatedInEstonia = (c: JobCard) => /\b(Tallinn|Tartu)\b/.test(c.location) || (/\bEstonia\b/.test(c.location) && !/^\s*Remote/.test(c.location) && c.location.split(",").length < 4);
 
 /**
- * Every company Ping tracks (data/companies.json) or has seen hiring designers (any current posting),
- * one row each, keyed by companySlug. Filters as on Jobs where they apply: a direction keeps companies
- * with roles in it; Open to Estonia keeps companies based in Estonia or with a role open to Estonia.
- * Without filters, tracked companies with no open roles stay listed, so students know whom to watch.
- * Sorted by matching roles (or the newest role), then name.
+ * Discover: a map of who hires designers in Estonia. Every company in data/companies.json that has
+ * designers in Estonia (inEstonia: headquartered there, or a real team in Tallinn or Tartu), readable or
+ * careers link only, plus any company not on the list seen hiring designers located in Estonia. Foreign
+ * remote-friendly companies stay out (their jobs are on Jobs). Companies with open design roles first,
+ * most roles first, then everyone else A to Z. A direction keeps only companies with roles in it.
  */
-export function companyDirectory(f: { category: Category | ""; estonia: boolean; sort: CompanySort }): { rows: CompanyRow[]; byDirection: Record<Category, number>; total: number } {
+export function companyDirectory(f: { category: Category | "" }): { rows: CompanyRow[]; byDirection: Record<Category, number>; total: number } {
   const { cards } = getDataset();
   const list = loadCompanies();
   const tracked = new Map(list.map((c) => [companySlug(c.name), c]));
   const groups = new Map<string, JobCard[]>();
   for (const c of cards) (groups.get(c.companyKey) ?? groups.set(c.companyKey, []).get(c.companyKey)!).push(c);
-  const keys = new Set([...tracked.keys(), ...groups.keys()]);
+  const keys = new Set([
+    ...list.filter((c) => c.inEstonia).map((c) => companySlug(c.name)),
+    ...[...groups.entries()].filter(([key, js]) => !tracked.has(key) && js.some(locatedInEstonia)).map(([key]) => key),
+  ]);
 
   const rowFor = (key: string, category: Category | ""): CompanyRow => {
     const t = tracked.get(key);
@@ -290,33 +291,23 @@ export function companyDirectory(f: { category: Category | ""; estonia: boolean;
     return {
       key,
       name: t?.name ?? all[0].company,
+      description: t?.description ?? null,
+      // A careers-link-only company that still shows up on a job board has roles Ping can see.
+      readable: (t ? isReadable(t) : true) || all.length > 0,
       roles: roles.length,
-      openToEstonia: roles.filter((c) => c.openToEstonia).length,
-      basedInEstonia: t?.basedInEstonia ?? false,
       directions: [...counts.entries()].map(([category, count]) => ({ category, count })).sort((a, b) => b.count - a.count || CATEGORIES.indexOf(a.category) - CATEGORIES.indexOf(b.category)),
       careersUrl: t?.careersUrl ?? null,
-      latest: roles.map((c) => c.postedAt).filter((d): d is string => !!d).sort().pop() ?? null,
     };
   };
-  const estonia = (r: CompanyRow) => r.basedInEstonia || r.openToEstonia > 0;
 
-  // Direction tab counts follow the Estonia filter, as the Jobs tabs follow the other filters.
   const byDirection = Object.fromEntries(CATEGORIES.map((c) => [c, 0])) as Record<Category, number>;
-  for (const key of keys) for (const c of CATEGORIES) {
-    const r = rowFor(key, c);
-    if (r.roles > 0 && (!f.estonia || estonia(r))) byDirection[c]++;
-  }
+  for (const key of keys) for (const c of CATEGORIES) if (rowFor(key, c).roles > 0) byDirection[c]++;
 
   const rows = [...keys]
     .map((key) => rowFor(key, f.category))
-    .filter((r) => (f.category ? r.roles > 0 : true) && (!f.estonia || estonia(r)))
-    .sort((a, b) =>
-      f.sort === "newest"
-        ? (b.latest ?? "").localeCompare(a.latest ?? "") || a.name.localeCompare(b.name)
-        : b.roles - a.roles || a.name.localeCompare(b.name),
-    );
-  const total = [...keys].map((key) => rowFor(key, "")).filter((r) => !f.estonia || estonia(r)).length;
-  return { rows, byDirection, total };
+    .filter((r) => !f.category || r.roles > 0)
+    .sort((a, b) => (b.roles > 0 ? 1 : 0) - (a.roles > 0 ? 1 : 0) || b.roles - a.roles || a.name.localeCompare(b.name, "en"));
+  return { rows, byDirection, total: keys.size };
 }
 
 /** A company's display name by key (the Jobs company filter), or null when Ping does not know it. */

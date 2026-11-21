@@ -1,14 +1,15 @@
 /**
  * Weekly discovery: Claude Haiku with web search looks for companies in Estonia that hire designers
  * and are not on data/companies.json yet. Each candidate's careers page goes through the same
- * detector as hand checks (lib/sources/detect.ts); only a board the real fetcher can read is added,
- * marked "discovery". Runs on Mondays before the daily refresh (.github/workflows/weekly-discovery.yml).
+ * detector as hand checks (lib/sources/detect.ts). A board the real fetcher can read is added as readable;
+ * a careers page with no readable board is added as careers link only (Discover links to it). Both are
+ * marked "discovery", in Estonia, with a one-line description from the model. Runs on Mondays before the daily refresh (.github/workflows/weekly-discovery.yml).
  *
  *   npm run discover                # find, check and add (at most MAX_ADDS), record the run
  *   npm run discover -- --dry-run   # find and check, print what would be added, write nothing
  *
- * Skipped: recruiters and job boards, companies already on the list (same name, careers host or board),
- * careers pages with no supported or readable board, and anything over the weekly cap.
+ * Skipped: recruiters and job boards, gambling, betting and iGaming companies, companies already on the
+ * list (same name, careers host or board), careers pages that do not load, and anything over the weekly cap.
  * A company is marked based in Estonia only when the model says so AND its board has a role located in
  * Estonia, because that flag makes every one of its postings count as open to Estonia.
  * Every run is recorded in data/discovery.json with its cost; /stats shows the latest.
@@ -17,7 +18,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
-import { CompanySchema, companySlug, type Company } from "../lib/company";
+import { CompanySchema, companySlug, isGambling, isReadable, type Company } from "../lib/company";
 import { loadCompanies } from "../lib/data";
 import { costUsd } from "../lib/extraction";
 import { detectBoard, readBoard } from "../lib/sources/detect";
@@ -39,7 +40,11 @@ const Candidates = z.object({
       website: z.string(),
       careersUrl: z.string(),
       kind: z.enum(["employer", "recruiter", "job_board"]),
+      /** Gambling, betting, casino or iGaming business (operators, game studios and suppliers alike). */
+      gambling: z.boolean(),
       hqEstonia: z.boolean(),
+      /** One short factual line about what the company does, at most 80 characters, no marketing words. */
+      description: z.string(),
       why: z.string(),
     }),
   ),
@@ -51,14 +56,16 @@ export interface DiscoveryRun {
   searches: number;
   usage: Usage;
   costUsd: number;
-  added: { name: string; ats: string; slug: string; roles: number; careersUrl: string }[];
+  added: { name: string; ats: string; slug: string; roles: number; careersUrl: string; reason?: string }[];
   skipped: { name: string; reason: string }[];
 }
 
 const SYSTEM = `You find companies for Ping, a job site for design students at the Estonian Academy of Arts (EKA).
 Find companies based in Estonia (headquartered there, or with a real design team in Tallinn or Tartu) that employ designers: product, UX and UI, brand and visual, game, industrial and product design, service design. Product companies, scale-ups, design agencies and studios, game studios, hardware firms, banks and telecoms with in-house design teams all count.
-Use web search. For each company give the URL of the page that lists its open roles (its careers page), as exact as you can.
+Use web search. For each company give the URL of the page that lists its open roles (its careers page), as exact as you can,
+and one short factual line about what the company does (at most 80 characters, British English, no marketing words, no em dashes).
 Mark recruiters, staffing agencies and job boards with their kind; do not leave them out silently.
+Mark every gambling, betting, casino or iGaming business (operators, slot and game studios for casinos, their suppliers) with gambling: true.
 Never suggest a company from the list of names you are given: those are already tracked or already checked.`;
 
 const client = new Anthropic({ maxRetries: 4 });
@@ -123,7 +130,7 @@ async function main() {
 
   const slugs = new Set(companies.map((c) => companySlug(c.name)));
   const hosts = new Set(companies.map((c) => hostOf(c.careersUrl)));
-  const boards = new Set(companies.map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
+  const boards = new Set(companies.filter(isReadable).map((c) => `${c.ats}:${c.slug.toLowerCase()}`));
   const added: DiscoveryRun["added"] = [];
   const skipped: DiscoveryRun["skipped"] = [];
   const newCompanies: Company[] = [];
@@ -135,29 +142,38 @@ async function main() {
       console.log(`  skip  ${c.name}: ${reason}`);
     };
     if (c.kind !== "employer") { skip(c.kind === "recruiter" ? "recruiter" : "job board"); continue; }
+    if (c.gambling || isGambling(c.name)) { skip("gambling, betting or iGaming: Ping does not list them"); continue; }
     if (slugs.has(companySlug(c.name)) || hosts.has(hostOf(c.careersUrl))) { skip("already on the list"); continue; }
     if (added.length >= MAX_ADDS) { skip(`weekly cap of ${MAX_ADDS} reached`); continue; }
-    const d = await detectBoard(c.careersUrl, c.name);
-    if (!d.ok) { skip(d.reason); continue; }
-    if (boards.has(`${d.board.ats}:${d.board.slug.toLowerCase()}`)) { skip("board already on the list"); continue; }
+    const careersUrl = /^https?:\/\//.test(c.careersUrl) ? c.careersUrl : `https://${c.careersUrl}`;
+    const description = c.description.replace(/\s+/g, " ").replace(/[\u2014\u00b7]/g, ",").trim().slice(0, 90);
+    const d = await detectBoard(careersUrl, c.name);
+    // A careers page that does not load cannot even be linked: skip. One that loads but has no board Ping
+    // can read joins the list as careers link only, so Discover still shows the company.
+    if (!d.ok && /could not be loaded/.test(d.reason)) { skip(d.reason); continue; }
+    if (d.ok && boards.has(`${d.board.ats}:${d.board.slug.toLowerCase()}`)) { skip("board already on the list"); continue; }
     // Based in Estonia only with evidence on the board itself (see the header).
-    const read = await readBoard(d.board);
-    const rolesInEstonia = read.ok && read.postings.some((p) => /\b(estonia|eesti|tallinn|tartu)\b/i.test([p.location, ...(p.regionHints ?? [])].join(" ")));
+    const read = d.ok ? await readBoard(d.board) : null;
+    const rolesInEstonia = !!read?.ok && read.postings.some((p) => /\b(estonia|eesti|tallinn|tartu)\b/i.test([p.location, ...(p.regionHints ?? [])].join(" ")));
     const company = CompanySchema.parse({
       name: c.name,
-      careersUrl: /^https?:\/\//.test(c.careersUrl) ? c.careersUrl : `https://${c.careersUrl}`,
-      ats: d.board.ats,
-      slug: d.board.slug,
-      ...(d.board.eu ? { eu: true } : {}),
-      basedInEstonia: c.hqEstonia && rolesInEstonia,
+      careersUrl,
+      ...(d.ok ? { ats: d.board.ats, slug: d.board.slug, ...(d.board.eu ? { eu: true } : {}) } : { careersLinkOnly: true }),
+      basedInEstonia: d.ok ? c.hqEstonia && rolesInEstonia : c.hqEstonia,
+      inEstonia: true,
+      ...(description ? { description } : {}),
       addedAt: today,
       addedBy: "discovery",
     });
     newCompanies.push(company);
     slugs.add(companySlug(c.name));
-    boards.add(`${d.board.ats}:${d.board.slug.toLowerCase()}`);
-    added.push({ name: c.name, ats: d.board.ats, slug: d.board.slug, roles: d.roles, careersUrl: company.careersUrl });
-    console.log(`  ${dryRun ? "would add" : "add"}  ${c.name}: ${d.board.ats} ${d.board.slug}, ${d.roles} open roles${company.basedInEstonia ? ", based in Estonia" : ""}`);
+    if (d.ok) boards.add(`${d.board.ats}:${d.board.slug.toLowerCase()}`);
+    added.push(
+      d.ok
+        ? { name: c.name, ats: d.board.ats, slug: d.board.slug, roles: d.roles, careersUrl }
+        : { name: c.name, ats: "careers link only", slug: "", roles: 0, careersUrl, reason: d.reason },
+    );
+    console.log(`  ${dryRun ? "would add" : "add"}  ${c.name}: ${d.ok ? `${d.board.ats} ${d.board.slug}, ${d.roles} open roles` : `careers link only (${d.reason})`}${company.basedInEstonia ? ", based in Estonia" : ""}`);
   }
 
   if (dryRun) return console.log(`\nDry run: ${added.length} would be added, ${skipped.length} skipped. Nothing written.`);

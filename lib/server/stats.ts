@@ -227,6 +227,8 @@ export async function readStats() {
     latest: discoveryRuns.at(-1) ?? null,
     tracked: companies.length,
     basedInEstonia: companies.filter((c) => c.basedInEstonia).length,
+    inEstonia: companies.filter((c) => c.inEstonia).length,
+    linkOnly: companies.filter((c) => c.careersLinkOnly).length,
     byDiscovery: companies.filter((c) => c.addedBy === "discovery").length,
     addedThisWeek: companies.filter((c) => c.addedBy === "discovery" && c.addedAt >= weekAgo),
     costAll: discoveryRuns.reduce((total, r) => total + r.costUsd, 0),

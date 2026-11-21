@@ -13,7 +13,7 @@
  *    least one of its roles is located in Estonia (so a namesake company elsewhere is never added).
  */
 import { getText } from "../http";
-import { ATS, companySlug, type Ats } from "../company";
+import { BOARDS, companySlug, type Ats } from "../company";
 import type { RawPosting } from "../types";
 import { FETCHERS } from "./ats";
 
@@ -86,7 +86,7 @@ export function slugGuesses(name: string): string[] {
 /** Try likely slugs on every system; keep the first readable board with a role located in Estonia. */
 async function guessBoard(name: string): Promise<{ b: Board; roles: number } | null> {
   for (const slug of slugGuesses(name)) {
-    for (const ats of ATS) {
+    for (const ats of BOARDS) {
       if (ats === "smartrecruiters") continue; // its API answers every slug, even unknown ones
       const r = await readBoard({ ats, slug });
       if (r.ok && r.postings.some((p) => IN_ESTONIA.test([p.location, ...(p.regionHints ?? [])].join(" ")))) return { b: { ats, slug }, roles: r.roles };

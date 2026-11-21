@@ -71331,6 +71331,216 @@
     "cacheRead": 1179,
     "cacheWrite": 0
    }
+  },
+  "arbeitnow:remote-3d-environment-artist-level-designer-457684": {
+   "id": "arbeitnow:remote-3d-environment-artist-level-designer-457684",
+   "skills": [
+    "3d environment art",
+    "Level design",
+    "Greyboxing",
+    "Gameplay design",
+    "Modular kit creation",
+    "Lighting",
+    "Prop modelling",
+    "Texturing",
+    "Layout design",
+    "Playtesting",
+    "Documentation"
+   ],
+   "tools": [
+    "Unity",
+    "Blender",
+    "Substance"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio with environments and levels required",
+    "Some gameplay design experience",
+    "Shipped game experience preferred",
+    "CET time zone overlap",
+    "Full-time long-term B2B contract",
+    "Comfortable on camera meetings",
+    "Works independently from brief"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T20:32:06.021Z",
+   "usage": {
+    "input": 1807,
+    "output": 216,
+    "cacheRead": 0,
+    "cacheWrite": 1179
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/lead-ux-designer-4957135967": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/lead-ux-designer-4957135967",
+   "skills": [
+    "Visual design",
+    "Typography",
+    "Layout",
+    "Design systems",
+    "UI components",
+    "Attention to detail",
+    "Portfolio"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "lead/manager",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Pixel-perfect execution",
+    "Work with engineering",
+    "High ownership and autonomy"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T20:32:07.487Z",
+   "usage": {
+    "input": 950,
+    "output": 138,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "custom:bolt:f17be51e-c75c-47e6-b8b7-0905e2cee6df": {
+   "id": "custom:bolt:f17be51e-c75c-47e6-b8b7-0905e2cee6df",
+   "skills": [
+    "Prototyping",
+    "Design systems",
+    "User research",
+    "Storytelling",
+    "Stakeholder management",
+    "Product thinking",
+    "Interaction design",
+    "Usability testing"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Ads and campaigns domain",
+    "Business metrics understanding",
+    "Marketing tools experience preferred",
+    "AI tools usage",
+    "Cross-functional collaboration"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T20:32:07.682Z",
+   "usage": {
+    "input": 1277,
+    "output": 163,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:marketing-artist-cortex-paris-39875": {
+   "id": "arbeitnow:marketing-artist-cortex-paris-39875",
+   "skills": [
+    "Video ad creation",
+    "Social media growth",
+    "Motion design",
+    "Content creation",
+    "Mobile game marketing",
+    "Visual design",
+    "Competitor benchmarking",
+    "Experimentation",
+    "Performance analytics",
+    "Creative iteration"
+   ],
+   "tools": [
+    "Scenario",
+    "Seedance",
+    "Kling",
+    "Veo",
+    "Runway",
+    "Unity",
+    "Blender",
+    "AppLovin",
+    "Meta",
+    "TikTok"
+   ],
+   "experienceLevel": "junior",
+   "yearsMin": 1,
+   "yearsMax": 3,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio of performing content",
+    "Analytics proof of audience growth",
+    "Hacker mindset",
+    "Mobile puzzle game familiarity",
+    "French a plus",
+    "Paid UA creative experience nice-to-have"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T20:32:07.951Z",
+   "usage": {
+    "input": 1081,
+    "output": 240,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "custom:bolt:6b9af0d9-d5a7-4b97-a95b-e15a8f57253d": {
+   "id": "custom:bolt:6b9af0d9-d5a7-4b97-a95b-e15a8f57253d",
+   "skills": [
+    "Usability testing",
+    "User research",
+    "Prototyping",
+    "Stakeholder management",
+    "Design systems",
+    "Product thinking",
+    "Interaction design",
+    "Visual design",
+    "Mobile design",
+    "Web design"
+   ],
+   "tools": [
+    "Figma",
+    "Jira",
+    "Confluence"
+   ],
+   "experienceLevel": "staff/principal",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Proven shipping track record",
+    "Growth or subscription design experience",
+    "Strong portfolio required",
+    "Mobile and web portfolio",
+    "Daily AI tool use",
+    "Cross-functional influence"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T20:32:08.239Z",
+   "usage": {
+    "input": 1587,
+    "output": 192,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -71450,6 +71660,19 @@
     "cacheWrite": 1179
    },
    "costUsd": 0.0032
+  },
+  {
+   "at": "2026-11-21T20:32:08.239Z",
+   "model": "claude-haiku-5-5",
+   "postings": 5,
+   "failed": 0,
+   "usage": {
+    "input": 6702,
+    "output": 949,
+    "cacheRead": 4716,
+    "cacheWrite": 1179
+   },
+   "costUsd": 0.0013
   }
  ]
 }

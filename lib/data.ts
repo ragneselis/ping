@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { CompanySchema, companySlug, type Company } from "./company";
+import { CompanySchema, companySlug, isGambling, type Company } from "./company";
 import type { Classification, ClassifiedJob, Extraction, Job, SourceReport } from "./types";
 
 const dir = path.join(process.cwd(), "data");
@@ -31,7 +31,7 @@ export interface DiscoveryRun {
   model: string;
   searches: number;
   costUsd: number;
-  added: { name: string; ats: string; slug: string; roles: number; careersUrl: string }[];
+  added: { name: string; ats: string; slug: string; roles: number; careersUrl: string; reason?: string }[];
   skipped: { name: string; reason: string }[];
 }
 
@@ -79,6 +79,8 @@ export function loadClassifiedJobs(store = loadExtractions(), cls = loadClassifi
   // source listed them (their board, or a job board re-listing it).
   const estonian = new Set(loadCompanies().filter((c) => c.basedInEstonia).map((c) => companySlug(c.name)));
   return loadJobs()
+    // Gambling, betting and iGaming companies are never listed (also dropped at fetch time).
+    .filter((j) => !isGambling(j.company))
     .map((j) => (estonian.has(companySlug(j.company)) ? { ...j, openToEstonia: true } : j))
     .map((j) => {
       const c = cls.results[j.id] ?? null;

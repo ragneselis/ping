@@ -7,6 +7,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { arbeitnow, himalayas, lemanoosh, remoteOk, remotive, weWorkRemotely, type SourceResult } from "../lib/sources/boards";
 import { allAts } from "../lib/sources/ats";
+import { isGambling } from "../lib/company";
 import { dedupe, inScope, normalize } from "../lib/normalize";
 import type { Job, SourceReport } from "../lib/types";
 
@@ -58,7 +59,11 @@ async function main() {
       console.log(`${r.source.padEnd(18)} FAILED (${r.error}); kept ${kept.length} postings from the last good run`);
       continue;
     }
-    const matched = r.postings.map((p) => normalize(p, r.source, r.sourceType, DESIGN_ONLY_SOURCES.has(r.source))).filter((j): j is Job => !!j);
+    // Gambling, betting and iGaming companies are never listed, whichever source carries them (lib/company.ts).
+    const matched = r.postings
+      .filter((p) => !isGambling(p.company))
+      .map((p) => normalize(p, r.source, r.sourceType, DESIGN_ONLY_SOURCES.has(r.source)))
+      .filter((j): j is Job => !!j);
     const scoped = matched.filter(inScope);
     all.push(...scoped);
     reports.push({

@@ -1,25 +1,17 @@
 "use client";
 
 import { X } from "lucide-react";
-import { Segmented, TabContent, tabClassName } from "@/components/filter-controls";
+import { TabContent, tabClassName } from "@/components/filter-controls";
 import { TabRow } from "@/components/tab-row";
 import { Button } from "@/components/ui/button";
 import { useQueryState } from "@/components/use-query-state";
 import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const ESTONIA_ITEMS = [
-  { value: "any", label: "Any" },
-  { value: "1", label: "Open to Estonia" },
-];
-const SORT_ITEMS = [
-  { value: "roles", label: "Most roles" },
-  { value: "newest", label: "Newest" },
-];
-
 /**
- * Discover's filters: the Jobs filters that apply to companies (direction, Open to Estonia), with the
- * same tabs, segmented controls and Reset. They live in the URL, so a filtered view can be shared.
+ * Discover's filter: the Jobs direction tabs, for companies with open roles in a direction, and Reset.
+ * It lives in the URL, so a filtered view can be shared. (Everything on Discover is in Estonia, so the
+ * Open to Estonia filter does not apply.)
  */
 export function CompanyFilters({
   directions,
@@ -30,8 +22,6 @@ export function CompanyFilters({
 }) {
   const { params, go, set } = useQueryState();
   const category = params.get("category") ?? "";
-  const estonia = params.get("estonia") === "1" ? "1" : "any";
-  const active = !!(category || params.get("estonia") || params.get("sort") === "newest");
   return (
     <div className="grid gap-5">
       <TabRow label="Direction" activeKey={category}>
@@ -51,33 +41,14 @@ export function CompanyFilters({
           </button>
         ))}
       </TabRow>
-      <div className="grid gap-4 sm:baseline-row sm:flex-wrap sm:gap-x-8">
-        <Segmented label="Location" items={ESTONIA_ITEMS} isActive={(v) => v === estonia} onSelect={(v) => set("estonia", v === "1" ? "1" : null)} />
-        {active && (
+      {category && (
+        <div className="flex">
           <Button variant="ghost" size="sm" className="min-h-11 sm:ml-auto sm:min-h-8" onClick={() => go("")}>
             <X data-icon="inline-start" />
             Reset
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
-}
-
-/** The sort control next to the company count: most roles first, or the newest role first. */
-export function CompanySortControl({ sort }: { sort: "roles" | "newest" }) {
-  const { set, pending } = useQueryState();
-  return (
-    <Segmented
-      label="Sort"
-      items={SORT_ITEMS}
-      isActive={(v) => v === sort}
-      onSelect={(v) => set("sort", v === "roles" ? null : v)}
-      className={cn("transition-opacity", pending && "opacity-60")}
-    />
-  );
-}
-
-export function CompanySortFallback({ sort }: { sort: "roles" | "newest" }) {
-  return <Segmented label="Sort" items={SORT_ITEMS} isActive={(v) => v === sort} onSelect={() => {}} />;
 }

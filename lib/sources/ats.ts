@@ -7,7 +7,8 @@ import { decodeEntities, toIso } from "../text";
 import { designCandidate } from "../classify";
 import type { RawPosting, RemoteStatus } from "../types";
 import type { SourceResult } from "./boards";
-import { ATS_LABEL, boardIdPrefix, type Ats, type Company } from "../company";
+import { ATS_LABEL, boardIdPrefix, isReadable, type Ats, type Company } from "../company";
+import { custom, teamdash, workday } from "./readers";
 import { loadCompanies } from "../data";
 
 export type { Ats };
@@ -215,7 +216,7 @@ async function personio(name: string, slug: string): Promise<RawPosting[]> {
 }
 
 export const FETCHERS: Record<Ats, (name: string, slug: string, eu?: boolean) => Promise<RawPosting[]>> = {
-  greenhouse, lever, ashby, teamtailor, workable, recruitee, smartrecruiters, personio,
+  greenhouse, lever, ashby, teamtailor, workable, recruitee, smartrecruiters, personio, workday, teamdash, custom,
 };
 
 /** A company whose board could not be read today: its postings from the last good run are kept (scripts/fetch.ts). */
@@ -231,7 +232,9 @@ export interface FailedCompany {
  * Every board on the list (data/companies.json): one SourceResult per ATS, plus the companies whose
  * board failed. A company with zero open roles, or zero design roles, is simply an empty board.
  */
-export async function allAts(companies: Company[] = loadCompanies()): Promise<{ results: SourceResult[]; failedCompanies: FailedCompany[] }> {
+export async function allAts(all: Company[] = loadCompanies()): Promise<{ results: SourceResult[]; failedCompanies: FailedCompany[] }> {
+  // Careers-link-only companies have nothing to read: Discover shows their careers page instead.
+  const companies = all.filter(isReadable);
   const perCompany = await pool(companies, 4, async (c) => {
     try {
       return { c, postings: await FETCHERS[c.ats](c.name, c.slug, c.eu), error: null as string | null };

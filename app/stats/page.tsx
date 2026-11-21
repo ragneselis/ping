@@ -258,15 +258,17 @@ export default async function StatsPage() {
               <Fact label="Next run">{when(p.nextRun)}</Fact>
             </dl>
           </Panel>
-          <Panel title="Weekly discovery" description="Mondays at 03:00 UTC: Claude Haiku with web search looks for companies in Estonia that hire designers, and adds the ones whose job board Ping can read.">
+          <Panel title="Weekly discovery" description="Mondays at 03:00 UTC: Claude Haiku with web search looks for companies in Estonia that hire designers. Readable job boards are added as readable, the rest as careers link only; both show on Discover.">
             <dl className="grid gap-3 text-sm sm:grid-cols-[10rem_minmax(0,1fr)]">
               <Fact label="Last run">{d.latest ? when(d.latest.at) : "Not run yet"}</Fact>
-              <Fact label="Added this week">{d.addedThisWeek.length ? d.addedThisWeek.map((c) => c.name).join(", ") : "None"}</Fact>
+              <Fact label="Added this week">
+                {d.addedThisWeek.length ? d.addedThisWeek.map((c) => `${c.name}${c.careersLinkOnly ? " (careers link only)" : ""}`).join(", ") : "None"}
+              </Fact>
               <Fact label="Cost">
                 {d.latest ? `$${d.latest.costUsd.toFixed(4)} last run (${n(d.latest.searches)} ${d.latest.searches === 1 ? "search" : "searches"}), $${d.costAll.toFixed(2)} in all` : "Nothing yet"}
               </Fact>
               <Fact label="Companies">
-                {n(d.tracked)} tracked, {n(d.basedInEstonia)} based in Estonia, {n(d.byDiscovery)} found by discovery
+                {n(d.tracked)} on the list, {n(d.inEstonia)} on Discover (in Estonia), {n(d.linkOnly)} careers link only, {n(d.basedInEstonia)} based in Estonia, {n(d.byDiscovery)} found by discovery
               </Fact>
             </dl>
             {d.latest && d.latest.skipped.length > 0 && (

@@ -96,7 +96,9 @@
     "slug": "wise",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "International money transfers and multi-currency accounts"
   },
   {
     "name": "Veriff",
@@ -105,7 +107,9 @@
     "slug": "veriff",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Identity verification for online businesses"
   },
   {
     "name": "Intercom",
@@ -168,7 +172,9 @@
     "slug": "pipedrive",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Sales CRM and pipeline management software"
   },
   {
     "name": "Notion",
@@ -222,7 +228,9 @@
     "slug": "glia",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Digital customer service platform for banks and insurers"
   },
   {
     "name": "Webflow",
@@ -240,7 +248,9 @@
     "slug": "modash",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Influencer marketing software for finding and managing creators"
   },
   {
     "name": "Adcash",
@@ -249,7 +259,9 @@
     "slug": "adcash",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Online advertising platform for advertisers and publishers"
   },
   {
     "name": "Swedbank",
@@ -258,7 +270,9 @@
     "slug": "jobs.swedbank.com",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Bank for private and business customers"
   },
   {
     "name": "Printful",
@@ -438,16 +452,9 @@
     "slug": "wolt",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
-  },
-  {
-    "name": "Playtech",
-    "careersUrl": "https://careers.smartrecruiters.com/playtech",
-    "ats": "smartrecruiters",
-    "slug": "playtech",
-    "basedInEstonia": false,
-    "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Food and grocery delivery app"
   },
   {
     "name": "Testlio",
@@ -456,7 +463,9 @@
     "slug": "testlio",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Software testing services using a global tester network"
   },
   {
     "name": "Nortal",
@@ -465,7 +474,9 @@
     "slug": "nortal",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Digital transformation and software consultancy"
   },
   {
     "name": "Bondora",
@@ -474,7 +485,9 @@
     "slug": "bondora",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Consumer loans and a platform for investing in them"
   },
   {
     "name": "Inbank",
@@ -483,7 +496,9 @@
     "slug": "inbank",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Consumer financing and buy now, pay later services"
   },
   {
     "name": "Zego",
@@ -501,7 +516,9 @@
     "slug": "katana",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Manufacturing and inventory software for small manufacturers"
   },
   {
     "name": "Gelato",
@@ -519,7 +536,9 @@
     "slug": "starship",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Autonomous delivery robots for food and groceries"
   },
   {
     "name": "Lightyear",
@@ -528,7 +547,9 @@
     "slug": "lightyear",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Investing app for stocks, funds and savings"
   },
   {
     "name": "Monese",
@@ -546,7 +567,9 @@
     "slug": "comodule",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "IoT connectivity for e-bikes and e-scooters"
   },
   {
     "name": "Salv",
@@ -555,7 +578,9 @@
     "slug": "salv",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Anti-money laundering and financial crime prevention software"
   },
   {
     "name": "Skeleton Technologies",
@@ -564,7 +589,9 @@
     "slug": "skeletontech",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Ultracapacitors and energy storage systems"
   },
   {
     "name": "Kahoot",
@@ -591,7 +618,9 @@
     "slug": "careers.montonio.com",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Checkout, payments and shipping tools for online shops"
   },
   {
     "name": "Scoro",
@@ -600,7 +629,9 @@
     "slug": "careers.scoro.com",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Business management software for professional services firms"
   },
   {
     "name": "Xolo",
@@ -609,7 +640,9 @@
     "slug": "xolo-careers",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Business tools for freelancers and solo entrepreneurs"
   },
   {
     "name": "Fractory",
@@ -618,7 +651,9 @@
     "slug": "fractory",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Online platform for ordering custom-made metal parts"
   },
   {
     "name": "Mintos",
@@ -636,7 +671,9 @@
     "slug": "luminorbank",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Bank in Estonia, Latvia and Lithuania"
   },
   {
     "name": "Wrike",
@@ -645,7 +682,9 @@
     "slug": "wrike",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Work and project management software"
   },
   {
     "name": "Tuum",
@@ -655,7 +694,9 @@
     "eu": true,
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Core banking software platform"
   },
   {
     "name": "Proekspert",
@@ -664,7 +705,9 @@
     "slug": "proekspert",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Software development for device and machine manufacturers"
   },
   {
     "name": "Creem",
@@ -673,7 +716,9 @@
     "slug": "creem",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Payments and tax handling for people selling software"
   },
   {
     "name": "Bob W",
@@ -682,7 +727,9 @@
     "slug": "bobw",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Short-stay apartments in European cities"
   },
   {
     "name": "LHV UK",
@@ -988,16 +1035,9 @@
     "slug": "boku",
     "basedInEstonia": false,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
-  },
-  {
-    "name": "Betsson",
-    "careersUrl": "https://job-boards.greenhouse.io/betsson",
-    "ats": "greenhouse",
-    "slug": "betsson",
-    "basedInEstonia": false,
-    "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Mobile payments and carrier billing platform"
   },
   {
     "name": "Whalar",
@@ -1024,7 +1064,9 @@
     "slug": "jobs.outfunnel.com",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Syncs sales and marketing data between CRM and marketing tools"
   },
   {
     "name": "Swappie",
@@ -1060,7 +1102,9 @@
     "slug": "qminder",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Queue management and visitor check-in software"
   },
   {
     "name": "Above",
@@ -1213,7 +1257,9 @@
     "slug": "milrem",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Unmanned ground vehicles and robotic systems for defence"
   },
   {
     "name": "Frankenburg Technologies",
@@ -1222,7 +1268,9 @@
     "slug": "careers.frankenburg.tech",
     "basedInEstonia": true,
     "addedAt": "2026-11-20",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Low-cost missiles for intercepting drones"
   },
   {
     "name": "Aivan",
@@ -1492,7 +1540,9 @@
     "slug": "admirals",
     "basedInEstonia": true,
     "addedAt": "2026-11-21",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Online trading and investing platform"
   },
   {
     "name": "Thorgate",
@@ -1501,7 +1551,9 @@
     "slug": "jobs.thorgate.eu",
     "basedInEstonia": true,
     "addedAt": "2026-11-21",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Web and mobile product design and development studio"
   },
   {
     "name": "Uptime",
@@ -1510,34 +1562,9 @@
     "slug": "uptimedevelopment",
     "basedInEstonia": true,
     "addedAt": "2026-11-21",
-    "addedBy": "manual"
-  },
-  {
-    "name": "Relax Gaming",
-    "careersUrl": "https://careers.relax-gaming.com/",
-    "ats": "teamtailor",
-    "slug": "careers.relax-gaming.com",
-    "basedInEstonia": false,
-    "addedAt": "2026-11-21",
-    "addedBy": "manual"
-  },
-  {
-    "name": "Studioworks",
-    "careersUrl": "https://studioworks.teamtailor.com/jobs",
-    "ats": "teamtailor",
-    "slug": "studioworks",
-    "basedInEstonia": true,
-    "addedAt": "2026-11-21",
-    "addedBy": "manual"
-  },
-  {
-    "name": "Sisu Group",
-    "careersUrl": "https://sisugroup.teamtailor.com/jobs",
-    "ats": "teamtailor",
-    "slug": "sisugroup",
-    "basedInEstonia": true,
-    "addedAt": "2026-11-21",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Custom software development and IT consulting"
   },
   {
     "name": "eAgronom",
@@ -1546,6 +1573,432 @@
     "slug": "eagronom",
     "basedInEstonia": true,
     "addedAt": "2026-11-21",
-    "addedBy": "manual"
+    "addedBy": "manual",
+    "inEstonia": true,
+    "description": "Farm management software and carbon programme for farmers"
+  },
+  {
+    "name": "Bolt",
+    "careersUrl": "https://bolt.eu/en/careers/positions/",
+    "ats": "custom",
+    "slug": "bolt",
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Ride-hailing, food delivery and scooter app"
+  },
+  {
+    "name": "Telia",
+    "careersUrl": "https://www.telia.ee/ettevottest/karjaar-telias",
+    "ats": "workday",
+    "slug": "teliacompany.wd3/Telia_careers",
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Mobile, internet, TV and IT services"
+  },
+  {
+    "name": "Helmes",
+    "careersUrl": "https://www.helmes.com/career/",
+    "ats": "teamdash",
+    "slug": "www.helmes.com/career/",
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Custom software development company"
+  },
+  {
+    "name": "Cybernetica",
+    "careersUrl": "https://cyber.ee/careers/open-positions/",
+    "ats": "teamdash",
+    "slug": "cyber.ee/careers/open-positions/",
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Information security and e-government software"
+  },
+  {
+    "name": "Cleveron",
+    "careersUrl": "https://cleveron.com/join-the-team/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Robotic parcel terminals and click-and-collect systems"
+  },
+  {
+    "name": "Clevon",
+    "careersUrl": "https://clevon.com/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Autonomous road vehicles for last-mile delivery"
+  },
+  {
+    "name": "Toggl",
+    "careersUrl": "https://toggl.com/jobs",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Time tracking and planning software"
+  },
+  {
+    "name": "Lingvist",
+    "careersUrl": "https://lingvist.com/jobs/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Language learning app focused on vocabulary"
+  },
+  {
+    "name": "ESTO",
+    "careersUrl": "https://global.esto.eu/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Buy now, pay later and consumer financing"
+  },
+  {
+    "name": "Funderbeam",
+    "careersUrl": "https://www.funderbeam.com/careers",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Platform for funding and trading shares in private companies"
+  },
+  {
+    "name": "Insly",
+    "careersUrl": "https://insly.com/about-us/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Software for insurance brokers and insurers"
+  },
+  {
+    "name": "Ampler Bikes",
+    "careersUrl": "https://amplerbikes.com/pages/jobs",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Electric bikes designed in Estonia"
+  },
+  {
+    "name": "Auve Tech",
+    "careersUrl": "https://www.auve.tech/careers-and-team",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Self-driving electric shuttles"
+  },
+  {
+    "name": "Elisa Eesti",
+    "careersUrl": "https://www.elisa.ee/et/nextchapter",
+    "careersLinkOnly": true,
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Mobile, internet and TV operator"
+  },
+  {
+    "name": "SEB Estonia",
+    "careersUrl": "https://www.seb.ee/karjaar",
+    "careersLinkOnly": true,
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Bank for private and business customers"
+  },
+  {
+    "name": "Coop Pank",
+    "careersUrl": "https://www.cooppank.ee/coop-pank/tule-toole",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Retail and business bank"
+  },
+  {
+    "name": "Bigbank",
+    "careersUrl": "https://jobs.bigbank.eu/et",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Bank offering consumer loans and savings deposits"
+  },
+  {
+    "name": "Tallink Grupp",
+    "careersUrl": "https://company.tallink.com/jobs-and-careers/job-offers",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Passenger ferries, hotels and cargo shipping on the Baltic Sea"
+  },
+  {
+    "name": "Enefit",
+    "careersUrl": "https://www.enefit.com/et/too-ja-praktika/tule-toole",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Electricity, gas and heat production and sales"
+  },
+  {
+    "name": "Ridango",
+    "careersUrl": "https://www.ridango.com/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Public transport ticketing and passenger information systems"
+  },
+  {
+    "name": "Net Group",
+    "careersUrl": "https://netgroup.com/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Software development and business consulting"
+  },
+  {
+    "name": "Mooncascade",
+    "careersUrl": "https://www.mooncascade.com/career",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Mobile and web product development agency"
+  },
+  {
+    "name": "Trinidad Wiseman",
+    "careersUrl": "https://www.twn.ee/tule-toole",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "UX, service design and software development"
+  },
+  {
+    "name": "Fob Solutions",
+    "careersUrl": "https://www.fob-solutions.com/career/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Software development and quality assurance services"
+  },
+  {
+    "name": "Mobi Lab",
+    "careersUrl": "https://www.lab.mobi/who-we-are",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Mobile app design and development agency"
+  },
+  {
+    "name": "Velvet",
+    "careersUrl": "https://www.velvet.ee/careers",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Design agency for branding, digital products and spaces"
+  },
+  {
+    "name": "celerart",
+    "careersUrl": "https://celerart.com/careers",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Branding and website design studio for tech companies"
+  },
+  {
+    "name": "CM Games",
+    "careersUrl": "https://cm.games/people",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Mobile, PC and VR game developer"
+  },
+  {
+    "name": "Playstack",
+    "careersUrl": "https://www.playstack.com/careers",
+    "careersLinkOnly": true,
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Video game publisher and developer"
+  },
+  {
+    "name": "Bercman Technologies",
+    "careersUrl": "https://bercman.com/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Smart pedestrian crossings for road safety"
+  },
+  {
+    "name": "Woola",
+    "careersUrl": "https://www.woola.io/jobs",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Protective packaging made from waste sheep wool"
+  },
+  {
+    "name": "Karl Storz Video Endoscopy Estonia",
+    "careersUrl": "https://career.karlstorz.com/",
+    "careersLinkOnly": true,
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Manufacturing of medical video endoscopes and their components"
+  },
+  {
+    "name": "DS Smith Packaging Estonia",
+    "careersUrl": "https://www.dssmith.com/careers",
+    "careersLinkOnly": true,
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Corrugated cardboard packaging"
+  },
+  {
+    "name": "Tarmeko",
+    "careersUrl": "https://www.tarmeko.ee/grupist/toopakkumised",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Wooden and upholstered furniture"
+  },
+  {
+    "name": "1oT",
+    "careersUrl": "https://www.1ot.com/jobs",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "eSIM connectivity for IoT devices"
+  },
+  {
+    "name": "Speakly",
+    "careersUrl": "https://speakly.me/en/careers",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Language learning app"
+  },
+  {
+    "name": "Äripäev",
+    "careersUrl": "https://firma.aripaev.ee/tule-toole/",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Business news media and publisher"
+  },
+  {
+    "name": "Omniva",
+    "careersUrl": "https://www.omnivagroup.com/et/karjaar",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Postal, parcel locker and logistics services"
+  },
+  {
+    "name": "SMIT",
+    "careersUrl": "https://www.smit.ee/et/karjaar",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "IT centre of the Estonian Ministry of the Interior"
+  },
+  {
+    "name": "RIK",
+    "careersUrl": "https://www.rik.ee/et/karjaarileht/tere-tulemast-riki",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "State agency running Estonian registers and justice IT systems"
+  },
+  {
+    "name": "TEHIK",
+    "careersUrl": "https://www.tehik.ee/miks-meiega-liituda",
+    "careersLinkOnly": true,
+    "basedInEstonia": true,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "State IT centre for Estonian health and welfare services"
+  },
+  {
+    "name": "Zendesk",
+    "careersUrl": "https://www.zendesk.com/company/careers/",
+    "careersLinkOnly": true,
+    "basedInEstonia": false,
+    "inEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual",
+    "description": "Customer service and help desk software"
   }
 ]

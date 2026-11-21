@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
-import { CompanyFilters, CompanySortControl, CompanySortFallback } from "@/components/company-filters";
+import { CompanyFilters } from "@/components/company-filters";
 import { COMPANY_GRID, CompanyRow } from "@/components/company-row";
 import { DataLabel } from "@/components/filter-controls";
 import { FilterLink, RESULTS_ID, ResultsTarget } from "@/components/filter-link";
@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { CATEGORY_META } from "@/lib/categories";
 import { shareMetadata } from "@/lib/share";
 import { cn } from "@/lib/utils";
-import { companyDirectory, directionOrder, getDataset, parseFilters, resolveCompanySort } from "@/lib/view";
+import { companyDirectory, directionOrder, getDataset, parseFilters } from "@/lib/view";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -28,15 +28,14 @@ type Search = Record<string, string | string[] | undefined>;
 const PAGE_SIZE = 50;
 
 /**
- * Discover: every company Ping tracks or has seen hiring designers (lib/view.ts, companyDirectory),
- * most current design roles first. The Jobs filters that apply to companies (direction, Open to Estonia)
- * work the same way and live in the URL; each row links to that company's jobs on Jobs (?company=).
+ * Discover: a map of who hires designers in Estonia (lib/view.ts, companyDirectory). Companies with open
+ * design roles first, most roles first, then everyone else A to Z. The direction tabs work as on Jobs and
+ * live in the URL; each row links to that company's jobs on Jobs (?company=) and to its careers page.
  */
 export default async function DiscoverPage({ searchParams }: { searchParams: Promise<Search> }) {
   const sp = await searchParams;
-  const { category, estonia } = parseFilters(sp);
-  const sort = resolveCompanySort(typeof sp.sort === "string" ? sp.sort : "");
-  const { rows, byDirection, total } = companyDirectory({ category, estonia, sort });
+  const { category } = parseFilters(sp);
+  const { rows, byDirection, total } = companyDirectory({ category });
   const { cards } = getDataset();
   const directions = directionOrder(cards.map((c) => c.primary)).map((c) => ({ value: c, label: CATEGORY_META[c].short, count: byDirection[c] }));
   const hiring = rows.filter((r) => r.roles > 0).length;
@@ -47,15 +46,15 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
   for (const [k, v] of Object.entries(sp)) if (typeof v === "string" && k !== "page") nextParams.set(k, v);
   nextParams.set("page", String(page + 1));
   // Company links carry the page's own filters to Jobs.
-  const jobsQuery = new URLSearchParams({ ...(category ? { category } : {}), ...(estonia ? { estonia: "1" } : {}) }).toString();
+  const jobsQuery = category ? `category=${category}` : "";
 
   return (
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="discover" />
-        <h1 className="max-w-[28ch]">Places that hire designers</h1>
+        <h1 className="max-w-[28ch]">Places Ping keeps an eye on</h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
-          Some are hiring now, some are worth watching. Ping checks every one of them each morning.
+          Places in Estonia that hire designers. Some are hiring now, some are worth watching, all worth an open application.
         </p>
       </Band>
 
@@ -63,7 +62,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
           {/* Filter links scroll here and focus it (components/filter-link.tsx); the margin clears the sticky header. */}
           <h2 id={RESULTS_ID} tabIndex={-1} className="scroll-mt-20 outline-none">
-            Who&rsquo;s hiring
+            Hiring or quiet
           </h2>
           <Suspense>
             <ResultsTarget />
@@ -73,9 +72,6 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
               <span className="font-mono text-foreground">{rows.length.toLocaleString("en-GB")}</span> companies,{" "}
               <span className="font-mono text-foreground">{hiring.toLocaleString("en-GB")}</span> hiring now
             </p>
-            <Suspense fallback={<CompanySortFallback sort={sort} />}>
-              <CompanySortControl sort={sort} />
-            </Suspense>
           </div>
         </div>
 
@@ -83,7 +79,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
           <CompanyFilters directions={directions} total={total} />
         </Suspense>
 
-        <ResultsFade signature={JSON.stringify({ category, estonia, sort })}>
+        <ResultsFade signature={JSON.stringify({ category })}>
           {rows.length ? (
             <div>
               <div className={cn("hidden border-b border-border-strong lg:block", ROW_BLEED)}>

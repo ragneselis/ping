@@ -27007,6 +27007,102 @@
     "cacheRead": 1906,
     "cacheWrite": 0
    }
+  },
+  "arbeitnow:remote-3d-environment-artist-level-designer-457684": {
+   "id": "arbeitnow:remote-3d-environment-artist-level-designer-457684",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": "other",
+   "reason": "Building and dressing 3D game environments and designing level layouts for a game",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T20:32:00.658Z",
+   "usage": {
+    "input": 1807,
+    "output": 55,
+    "cacheRead": 0,
+    "cacheWrite": 1906
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/lead-ux-designer-4957135967": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/lead-ux-designer-4957135967",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Hands-on UI visual design and design systems for an AI productivity app",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T20:32:01.765Z",
+   "usage": {
+    "input": 950,
+    "output": 53,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "custom:bolt:f17be51e-c75c-47e6-b8b7-0905e2cee6df": {
+   "id": "custom:bolt:f17be51e-c75c-47e6-b8b7-0905e2cee6df",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Owns UX and UI design of merchant-facing campaign and ads management product flows",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T20:32:01.775Z",
+   "usage": {
+    "input": 1277,
+    "output": 59,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "workday:teliacompany.wd3/Telia_careers:/job/Solna/IT-Infrastructure-Solution-Designer_63600-3": {
+   "id": "workday:teliacompany.wd3/Telia_careers:/job/Solna/IT-Infrastructure-Solution-Designer_63600-3",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Designs IT infrastructure solutions (cloud, networks, storage) for enterprise business needs; not product or interface design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T20:32:01.860Z",
+   "usage": {
+    "input": 1602,
+    "output": 70,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "custom:bolt:6b9af0d9-d5a7-4b97-a95b-e15a8f57253d": {
+   "id": "custom:bolt:6b9af0d9-d5a7-4b97-a95b-e15a8f57253d",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing user experience and interfaces for digital subscription and loyalty product Bolt Plus",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T20:32:01.960Z",
+   "usage": {
+    "input": 1587,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:marketing-artist-cortex-paris-39875": {
+   "id": "arbeitnow:marketing-artist-cortex-paris-39875",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Designing mobile video ads and motion graphics for game marketing and social",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T20:32:03.592Z",
+   "usage": {
+    "input": 1081,
+    "output": 413,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -27106,6 +27202,20 @@
     "cacheWrite": 1906
    },
    "costUsd": 0.0031,
+   "note": "classification v4"
+  },
+  {
+   "at": "2026-11-21T20:32:03.592Z",
+   "model": "claude-haiku-5-5",
+   "postings": 6,
+   "failed": 0,
+   "usage": {
+    "input": 8304,
+    "output": 711,
+    "cacheRead": 9530,
+    "cacheWrite": 1906
+   },
+   "costUsd": 0.0015,
    "note": "classification v4"
   }
  ]

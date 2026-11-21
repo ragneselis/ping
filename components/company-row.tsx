@@ -3,34 +3,28 @@ import { CategoryDot } from "@/components/category";
 import { CompanyJobsLink } from "@/components/company-link";
 import { IconText } from "@/components/icon-text";
 import { ROW_BLEED } from "@/components/job-row";
-import { SignalTag } from "@/components/signal";
 import { CATEGORY_META } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 import type { CompanyRow as Row } from "@/lib/view";
 
-/** Columns from lg: company, directions and roles, links. Shared by the header row. */
-export const COMPANY_GRID = "lg:grid-cols-[minmax(0,1fr)_14rem_15rem] lg:gap-x-6";
+/** Columns from lg: company (name and what they do), design roles, links. Shared by the header row. */
+export const COMPANY_GRID = "lg:grid-cols-[minmax(0,1fr)_19rem_15rem] lg:gap-x-6";
 
 /**
- * One company on Discover. Name and the Estonia signal; its directions as category dots beside the number
- * of current design roles; a link to those jobs on Jobs (?company=, plus the page's own filters) and to the
- * company's careers page. With no open roles the row says so quietly and stays, so students know whom to
- * watch. Text sits on the baseline; dots and arrows are centred on the capitals by IconText.
+ * One company on Discover: the name and one line on what they do; when Ping reads their jobs, the current
+ * design roles with their directions as category dots (or a quiet line when there are none); when it
+ * cannot, a note to check their page. Then a link to those jobs on Jobs (?company=, with the page's
+ * direction) and to their careers page. Text on the baseline; dots and arrows on the capitals (IconText).
  */
 export function CompanyRow({ row, jobsQuery }: { row: Row; jobsQuery: string }) {
   const jobsHref = `/?company=${row.key}${jobsQuery ? `&${jobsQuery}` : ""}`;
   const names = row.directions.map((d) => CATEGORY_META[d.category].short);
-  const signal = row.basedInEstonia ? (
-    <SignalTag kind="estonia" label="Based in Estonia" />
-  ) : row.openToEstonia > 0 ? (
-    <SignalTag kind="estonia" label={`${row.openToEstonia} open to Estonia`} />
-  ) : null;
   return (
     <li className={cn("border-b border-border py-4", ROW_BLEED)}>
       <div className={cn("grid gap-1.5 lg:items-baseline", COMPANY_GRID)}>
-        <div className="baseline-row min-w-0 flex-wrap gap-x-4 gap-y-1">
+        <div className="grid min-w-0 gap-0.5">
           <h3 className="leading-snug font-semibold">{row.name}</h3>
-          {signal && <span className="text-sm">{signal}</span>}
+          {row.description && <p className="text-sm text-muted-foreground">{row.description}</p>}
         </div>
 
         {row.roles > 0 ? (
@@ -45,10 +39,12 @@ export function CompanyRow({ row, jobsQuery }: { row: Row; jobsQuery: string }) 
             }
           >
             <span className="sr-only">{names.join(", ")}: </span>
-            <span className="font-mono text-foreground tabular-nums">{row.roles}</span> {row.roles === 1 ? "role" : "roles"}
+            <span className="font-mono text-foreground tabular-nums">{row.roles}</span> design {row.roles === 1 ? "role" : "roles"}
           </IconText>
         ) : (
-          <span className="text-sm text-muted-foreground">Quiet right now. Worth watching.</span>
+          <span className="text-sm text-muted-foreground">
+            {row.readable ? "Quiet right now. Worth watching." : "Ping can't see their jobs. Check their page."}
+          </span>
         )}
 
         <div className="baseline-row flex-wrap gap-x-5 gap-y-1 text-sm lg:justify-end">

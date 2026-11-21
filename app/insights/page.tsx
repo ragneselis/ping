@@ -119,7 +119,7 @@ export default async function InsightsPage({
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
-        <h1 className="max-w-[28ch]">What design roles ask for right now</h1>
+        <h1 className="max-w-[28ch]">What today&rsquo;s design roles ask for</h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
           Ping counted the skills, tools and experience every current posting
           asks for, by direction.
@@ -290,7 +290,7 @@ export default async function InsightsPage({
         inner="grid gap-6 py-8 pb-16 sm:py-10"
       >
         <div className="grid gap-2">
-          <h2 id="compare-heading">Which directions are hiring</h2>
+          <h2 id="compare-heading">Which directions are busiest</h2>
           <p className="max-w-prose text-muted-foreground">
             How many roles each direction has right now, and how many a graduate
             can realistically go for.{" "}
