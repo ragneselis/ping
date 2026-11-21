@@ -325,6 +325,40 @@
     font-size: var(--text-h2);
     line-height: var(--text-h2--line-height);
   }
+  /* Cursors. Tailwind v4 leaves buttons on the arrow cursor; Ping gives every enabled control the
+     pointer, set once here (zero specificity, so a component can still override), and disabled
+     controls the not-allowed cursor. Text fields keep the text cursor (they are not listed). */
+  :where(
+      button,
+      [role="button"],
+      [role="tab"],
+      [role="option"],
+      [role="menuitem"],
+      [role="menuitemradio"],
+      [role="menuitemcheckbox"],
+      [role="radio"],
+      summary,
+      select,
+      label:has(input[type="checkbox"], input[type="radio"])
+    ):not(:disabled, [aria-disabled="true"]) {
+    cursor: pointer;
+  }
+  :where(
+      button,
+      [role="button"],
+      [role="tab"],
+      [role="option"],
+      [role="menuitem"],
+      [role="menuitemradio"],
+      [role="menuitemcheckbox"],
+      [role="radio"],
+      summary,
+      select,
+      input,
+      textarea
+    ):is(:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+  }
   ::selection {
     background: var(--brand-tint);
     color: var(--foreground);

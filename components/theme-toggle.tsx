@@ -77,7 +77,7 @@ export function ThemeMenu() {
                   value={o.value}
                   closeOnClick
                   data-sound="none"
-                  className="flex min-h-11 cursor-default items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint sm:min-h-9"
+                  className="flex min-h-11 items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint sm:min-h-9"
                 >
                   <o.icon aria-hidden className="size-4" strokeWidth={1.75} />
                   <span className="flex-1">{o.label}</span>

@@ -103,7 +103,7 @@ export function JobFilters({
             disabled={c.count === 0 && category !== c.value}
             className={cn(
               tabClassName(category === c.value),
-              "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-transparent disabled:hover:text-muted-foreground",
+              "disabled:opacity-40 disabled:hover:border-transparent disabled:hover:text-muted-foreground",
             )}
             onClick={() => set("category", c.value)}
           >
