@@ -27,7 +27,11 @@ import {
 import { REMOTE_LABEL } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: { absolute: "Jobs | Ping" } };
+export const metadata: Metadata = {
+  title: { absolute: "Jobs | Ping" },
+  description:
+    "Every current design role sorted into nine directions, with what is within reach for a graduate and open to someone in Estonia.",
+};
 
 const PAGE_SIZE = 50;
 type Search = Record<string, string | string[] | undefined>;
@@ -110,13 +114,11 @@ export default async function JobsPage({
         <HeroTiles variant="jobs" />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
           <div className="grid gap-5">
-            <h1 className="max-w-[14ch] text-[clamp(1.75rem,9.4vw,2.75rem)] leading-[1.02] text-balance sm:text-6xl xl:text-7xl">
-              Design jobs, minus the doomscrolling
+            <h1 className="max-w-[28ch] text-[clamp(1.625rem,8.2vw,2.75rem)] leading-[1.02] text-balance sm:text-5xl">
+              Every current design role sorted into nine directions
             </h1>
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
-              Every current design role we can find, sorted into nine
-              directions. The market is tough, not closed: here is where the
-              doors are actually open.
+              {REACH_DEFINITION}
             </p>
           </div>
           {/* The real shortcut for an EKA graduate, on every screen size. */}
@@ -140,8 +142,8 @@ export default async function JobsPage({
           </Panel>
         </div>
 
-        <Readout items={readout} rules note={REACH_DEFINITION} />
-        <p className="-mt-4 flex items-start gap-2 text-sm text-muted-foreground sm:-mt-6">
+        <Readout items={readout} rules />
+        <p className="-mt-2 flex items-start gap-2 text-sm text-muted-foreground sm:-mt-4">
           <CalendarClock
             aria-hidden
             className="mt-0.5 size-3.5 shrink-0"
