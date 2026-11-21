@@ -37,7 +37,7 @@ export function JobRow({ job, isNew }: { job: Job; isNew: boolean }) {
     // Hover is a faint neutral fill; the direction label keeps AA on it (amber-700 at 4.7:1 is the lowest).
     <li
       className={cn(
-        "group relative border-b border-border py-4 transition-colors hover:bg-muted/60 has-[a:focus-visible]:bg-muted/60",
+        "group relative border-b border-border py-4 transition-colors hover:bg-muted/60 has-[a:focus-visible]:bg-muted/60 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:-outline-offset-2 has-[a:focus-visible]:outline-ring",
         ROW_BLEED,
       )}
     >

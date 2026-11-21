@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowDown, X } from "lucide-react";
+import { ArrowDown, Search, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   DataLabel,
   Segmented,
@@ -53,6 +54,7 @@ export function JobFilters({
   const estonia = params.get("estonia") === "1" ? "1" : "any";
   const levels = readLevels(params);
   const active = !!(
+    params.get("q") ||
     category ||
     params.get("estonia") ||
     levels.size ||
@@ -80,6 +82,7 @@ export function JobFilters({
       className={cn("grid gap-5 transition-opacity", pending && "opacity-60")}
       aria-busy={pending}
     >
+      <SearchField value={params.get("q") ?? ""} onChange={(v) => set("q", v || null)} />
       <TabRow label="Direction" activeKey={category}>
         <button
           type="button"
@@ -191,6 +194,55 @@ export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
         {sortButton("newest", "Posted", "date posted, newest first")}
         <span />
       </div>
+    </div>
+  );
+}
+
+/**
+ * Free-text search over title, company, place, top requirements and direction. Square, hairline,
+ * 44px tall; it writes to the URL (`q`) a moment after typing stops, and follows the URL when
+ * filters are cleared elsewhere.
+ */
+function SearchField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const [text, setText] = useState(value);
+  useEffect(() => setText(value), [value]);
+  useEffect(() => {
+    if (text.trim() === value) return;
+    const t = setTimeout(() => onChange(text.trim()), 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
+  return (
+    <div className="relative max-w-xl">
+      <label htmlFor="job-search" className="sr-only">
+        Search jobs
+      </label>
+      <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" strokeWidth={1.75} />
+      <input
+        id="job-search"
+        type="search"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") onChange(text.trim());
+        }}
+        placeholder="Search roles, companies, places or skills"
+        autoComplete="off"
+        className="h-11 w-full rounded-sm border border-hairline-strong bg-card pr-11 pl-10 text-base text-foreground transition-colors outline-none placeholder:text-muted-foreground hover:border-foreground/40 focus-visible:border-brand-lg focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring [&::-webkit-search-cancel-button]:hidden"
+      />
+      {text && (
+        <button
+          type="button"
+          aria-label="Clear search"
+          onClick={() => {
+            setText("");
+            onChange("");
+          }}
+          className="absolute top-1/2 right-1 flex size-9 -translate-y-1/2 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        >
+          <X className="size-4" />
+        </button>
+      )}
     </div>
   );
 }

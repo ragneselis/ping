@@ -19,13 +19,7 @@ import { Readout, type ReadoutItem } from "@/components/readout";
 import { HeroTiles } from "@/components/tiles";
 import { RequirementList } from "@/components/signal";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Panel } from "@/components/panel";
 import {
   CATEGORY_META,
   categoryColor,
@@ -202,28 +196,26 @@ export default async function InsightsPage({
         <Readout items={readout} rules note={REACH_DEFINITION} />
 
         {early ? (
-          <Card>
-            <CardContent className="grid gap-8 md:grid-cols-3">
-              <CountList
-                title="Skills mentioned"
-                items={i.skills}
-                total={i.withRequirements}
-                empty="No skills listed yet."
-              />
-              <CountList
-                title="Tools mentioned"
-                items={i.tools}
-                total={i.withRequirements}
-                empty="No tools named yet."
-              />
-              <CountList
-                title="Levels"
-                items={i.seniority.filter((s) => s.count > 0)}
-                total={i.postings}
-                empty="No levels stated yet."
-              />
-            </CardContent>
-          </Card>
+          <Panel bodyClassName="grid gap-8 md:grid-cols-3">
+            <CountList
+              title="Skills mentioned"
+              items={i.skills}
+              total={i.withRequirements}
+              empty="No skills listed yet."
+            />
+            <CountList
+              title="Tools mentioned"
+              items={i.tools}
+              total={i.withRequirements}
+              empty="No tools named yet."
+            />
+            <CountList
+              title="Levels"
+              items={i.seniority.filter((s) => s.count > 0)}
+              total={i.postings}
+              empty="No levels stated yet."
+            />
+          </Panel>
         ) : (
           <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
             {byDirection && (
@@ -232,76 +224,65 @@ export default async function InsightsPage({
                 splits by direction.
               </p>
             )}
-            <Card>
-              <CardHeader>
-                <CardTitle>Most requested skills</CardTitle>
-                <CardDescription>
-                  Share of postings that mention each skill
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RankingChart
-                  data={i.skills}
-                  color={color}
-                  byDirection={byDirection}
-                  caption="Most requested skills, share of postings"
-                />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Most requested tools</CardTitle>
-                <CardDescription>
-                  Share of postings that name each tool
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <RankingChart
-                  data={i.tools}
-                  color={color}
-                  byDirection={byDirection}
-                  caption="Most requested tools, share of postings"
-                />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Seniority</CardTitle>
-                <CardDescription>
+            <Panel
+              title="Most requested skills"
+              description={<>Share of postings that mention each skill</>}
+            >
+              <RankingChart
+                data={i.skills}
+                color={color}
+                byDirection={byDirection}
+                caption="Most requested skills, share of postings"
+              />
+            </Panel>
+            <Panel
+              title="Most requested tools"
+              description={<>Share of postings that name each tool</>}
+            >
+              <RankingChart
+                data={i.tools}
+                color={color}
+                byDirection={byDirection}
+                caption="Most requested tools, share of postings"
+              />
+            </Panel>
+            <Panel
+              title="Seniority"
+              description={
+                <>
                   How many roles sit at each level. &ldquo;Not stated&rdquo;
                   often means open to a range.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <DistributionChart
-                  data={i.seniority}
-                  color={color}
-                  byDirection={byDirection}
-                  label="Postings"
-                  caption="Postings per seniority level"
-                />
-              </CardContent>
-            </Card>
-            <Card className="xl:col-span-3 4xl:col-span-1">
-              <CardHeader>
-                <CardTitle>Years of experience asked</CardTitle>
-                <CardDescription>
+                </>
+              }
+            >
+              <DistributionChart
+                data={i.seniority}
+                color={color}
+                byDirection={byDirection}
+                label="Postings"
+                caption="Postings per seniority level"
+              />
+            </Panel>
+            <Panel
+              className="xl:col-span-3 4xl:col-span-1"
+              title="Years of experience asked"
+              description={
+                <>
                   Minimum years, where stated (
                   {i.statedYears.toLocaleString("en-GB")} of{" "}
                   {i.withRequirements.toLocaleString("en-GB")} postings). Treat
                   it as a wish list, not a wall.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <DistributionChart
-                  data={i.years}
-                  color={color}
-                  byDirection={byDirection}
-                  label="Postings"
-                  caption="Postings by minimum years of experience asked"
-                />
-              </CardContent>
-            </Card>
+                </>
+              }
+            >
+              <DistributionChart
+                data={i.years}
+                color={color}
+                byDirection={byDirection}
+                label="Postings"
+                caption="Postings by minimum years of experience asked"
+              />
+            </Panel>
           </div>
         )}
       </Band>
@@ -324,76 +305,84 @@ export default async function InsightsPage({
             {lowerFirst(CATEGORY_META[comparison[1].category].short)}.
           </p>
         </div>
-        <Card>
-          <CardContent>
-            <CategoryHiringChart
-              data={comparison.map((c) => ({
-                label: CATEGORY_META[c.category].short,
-                reach: c.withinReach,
-                rest: c.postings - c.withinReach,
-                color: categoryColor(c.category),
-                href: `/insights?category=${c.category}`,
-              }))}
-            />
-          </CardContent>
-        </Card>
-        {/* Per-direction blocks: a hairline grid; colour sits in each block's dot.
-            Subgrid rows (name, blurb, numbers, requirements) keep blocks in the same row aligned. */}
-        <ul className="grid gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3">
+        <Panel>
+          <CategoryHiringChart
+            data={comparison.map((c) => ({
+              label: CATEGORY_META[c.category].short,
+              reach: c.withinReach,
+              rest: c.postings - c.withinReach,
+              color: categoryColor(c.category),
+              href: `/insights?category=${c.category}`,
+            }))}
+          />
+        </Panel>
+        {/* Direction panels: the shared Panel, slot rows on a subgrid so neighbours line up.
+            Hover turns the border the direction's colour, underlines the name and shows an arrow. */}
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {comparison.map((c) => (
-            <li
-              key={c.category}
-              className="row-span-4 grid grid-rows-subgrid border-t border-hairline-strong"
-            >
-              <Link
+            <li key={c.category} className="row-span-4 grid grid-rows-subgrid">
+              <Panel
+                subgrid
                 href={`/insights?category=${c.category}`}
-                className="group row-span-4 grid grid-rows-subgrid gap-y-3 border-b border-border py-5 transition-colors hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
+                accent={categoryColor(c.category)}
+                lead={
+                  <CategoryDot category={c.category} className="size-2.5" />
+                }
+                title={CATEGORY_META[c.category].short}
+                count={c.postings}
+                description={
+                  <div className="grid justify-items-start gap-3">
+                    <p>{CATEGORY_META[c.category].blurb}</p>
+                    {c.earlySignal && (
+                      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+                        <EarlySignalBadge />
+                        <span>{EARLY_SIGNAL_LINE}</span>
+                      </p>
+                    )}
+                  </div>
+                }
+                footer={
+                  <div className="grid gap-1.5">
+                    <span className="label-mono text-muted-foreground">
+                      Top asks
+                    </span>
+                    <RequirementList
+                      className="text-foreground/80"
+                      items={[
+                        ...c.topSkills.slice(0, 2),
+                        ...c.topTools.slice(0, 2),
+                      ]}
+                    />
+                  </div>
+                }
               >
-                <span className="flex items-baseline justify-between gap-3">
-                  <span className="flex items-center gap-2 font-heading-text text-lg font-semibold underline-offset-4 group-hover:underline">
-                    <CategoryDot category={c.category} className="size-2.5" />
-                    {CATEGORY_META[c.category].short}
-                  </span>
-                  <span className="font-mono text-2xl tabular-nums">
-                    {c.postings}
-                  </span>
-                </span>
-                <span className="grid content-start justify-items-start gap-2">
-                  <span className="max-w-prose text-sm text-muted-foreground">
-                    {CATEGORY_META[c.category].blurb}
-                  </span>
-                  {c.earlySignal && (
-                    <>
-                      <EarlySignalBadge />
-                      <span className="text-sm font-medium">
-                        {EARLY_SIGNAL_LINE}
-                      </span>
-                    </>
-                  )}
-                </span>
-                <dl className="grid grid-cols-3 content-start gap-3 border-t border-border pt-3">
+                {/* Within reach leads; Estonia and median years are secondary. */}
+                <dl className="flex flex-wrap items-end gap-x-6 gap-y-3">
+                  <div className="mr-2 grid gap-1.5">
+                    <dt className="label-mono order-2 text-muted-foreground">
+                      Within reach
+                    </dt>
+                    <dd className="order-1 font-heading text-4xl leading-none font-semibold tracking-tight text-brand-lg tabular-nums">
+                      {c.withinReach}
+                    </dd>
+                  </div>
                   {(
                     [
-                      ["Within reach", c.withinReach],
                       ["Open to Estonia", c.openToEstonia],
                       ["Median years", c.medianYears ?? "n/a"],
                     ] as const
                   ).map(([label, value]) => (
-                    <div key={label} className="grid gap-0.5">
-                      <dt className="text-xs text-muted-foreground">{label}</dt>
-                      <dd className="font-mono text-base tabular-nums">
+                    <div key={label} className="grid gap-1 pb-0.5">
+                      <dt className="order-2 text-xs text-muted-foreground">
+                        {label}
+                      </dt>
+                      <dd className="order-1 font-mono text-base leading-none tabular-nums">
                         {value}
                       </dd>
                     </div>
                   ))}
                 </dl>
-                <RequirementList
-                  items={[
-                    ...c.topSkills.slice(0, 2),
-                    ...c.topTools.slice(0, 2),
-                  ]}
-                />
-              </Link>
+              </Panel>
             </li>
           ))}
         </ul>

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
 import { JobFilters, JobListHeader } from "@/components/job-filters";
 import { JobRow } from "@/components/job-row";
+import { Panel } from "@/components/panel";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ import {
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: { absolute: "Jobs | Ping" } };
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 50;
 type Search = Record<string, string | string[] | undefined>;
 
 export default async function JobsPage({
@@ -101,32 +102,29 @@ export default async function JobsPage({
             </h1>
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
               Every current design role we can find, sorted into nine
-              directions.
-              <span className="hidden sm:inline">
-                {" "}
-                The market is tough, not closed: here is where the doors are
-                actually open.
-              </span>
+              directions. The market is tough, not closed: here is where the
+              doors are actually open.
             </p>
           </div>
-          {/* The real shortcut for an EKA graduate. Hidden on phones, where the readout links do the same job. */}
-          <div className="hidden gap-4 border-t border-border-strong pt-4 lg:grid">
-            <p className="font-heading-text text-lg font-semibold">
-              Start here
-            </p>
-            <p className="text-muted-foreground">
+          {/* The real shortcut for an EKA graduate, on every screen size. */}
+          <Panel
+            titleAs="p"
+            title="Start here"
+            footer={
+              <Button
+                nativeButton={false}
+                render={<Link href="/?estonia=1&level=reach" />}
+              >
+                Show me those
+                <ArrowRight data-icon="inline-end" />
+              </Button>
+            }
+          >
+            <p className="text-base text-muted-foreground">
               <span className="font-mono text-foreground">{both}</span> jobs are
               open to someone in Estonia and within reach for a graduate.
             </p>
-            <Button
-              className="w-fit"
-              nativeButton={false}
-              render={<Link href="/?estonia=1&level=reach" />}
-            >
-              Show me those
-              <ArrowRight data-icon="inline-end" />
-            </Button>
-          </div>
+          </Panel>
         </div>
 
         <Readout
@@ -180,22 +178,25 @@ export default async function JobsPage({
             </ul>
           </div>
         ) : (
-          <div className="grid max-w-prose justify-items-start gap-3 border-t border-border-strong py-6">
-            <p className="font-heading-text text-xl font-semibold">
-              Nothing here right now.
-            </p>
-            <p className="text-muted-foreground">
+          <Panel
+            titleAs="p"
+            title="Nothing here right now."
+            className="max-w-prose"
+            footer={
+              <Button
+                variant="outline"
+                nativeButton={false}
+                render={<Link href="/" />}
+              >
+                Show all jobs
+              </Button>
+            }
+          >
+            <p className="text-base text-muted-foreground">
               That combination is quiet today. Try switching off a filter, or
               check back soon: new jobs arrive all the time.
             </p>
-            <Button
-              variant="outline"
-              nativeButton={false}
-              render={<Link href="/" />}
-            >
-              Show all jobs
-            </Button>
-          </div>
+          </Panel>
         )}
 
         {shown.length < results.length && (

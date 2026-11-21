@@ -414,17 +414,18 @@ export function CategoryHiringChart({
 }) {
   return (
     <div className="grid gap-3">
-      {/* Two-tone sample swatch: the legend shows the same dark-plus-light green split as the bars. */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-        <span aria-hidden className="flex h-2.5 w-10 gap-px">
-          <span className="w-1/2 bg-brand-lg" />
-          <span className="w-1/2 bg-brand-pale" />
-        </span>
-        <span>
-          <span className="font-medium text-foreground">Dark green</span> = within reach,{" "}
-          <span className="font-medium text-foreground">light green</span> = mid-level and above. Click a row to open that direction.
-        </span>
-      </div>
+      {/* Legend names the series by meaning, each with its own swatch, so it holds in both themes. */}
+      <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-muted-foreground" aria-label="Colour key">
+        <li className="flex items-center gap-1.5">
+          <span aria-hidden className="size-2.5 bg-brand-lg" />
+          <span className="font-medium text-foreground">Within reach</span>
+        </li>
+        <li className="flex items-center gap-1.5">
+          <span aria-hidden className="size-2.5 bg-brand-pale" />
+          <span className="font-medium text-foreground">Mid-level and above</span>
+        </li>
+        <li>Click a row to open that direction.</li>
+      </ul>
       <HBarChart
         caption="Jobs per direction: within reach and the rest"
         rows={data.map((d) => ({

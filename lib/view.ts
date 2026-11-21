@@ -2,6 +2,7 @@
  * Server-side view layer for the interface: loads the data once per change on disk,
  * turns postings into light job cards, applies URL filters and computes market insights.
  */
+import { CATEGORY_META } from "@/lib/categories";
 import { statSync } from "node:fs";
 import path from "node:path";
 import { loadClassifiedJobs, loadSources, tally, tallyKey } from "./data";
@@ -76,6 +77,8 @@ export interface Filters {
   levels: Level[];
   /** Sort order: explicit from the URL, or the default for the chosen levels. */
   sort: Sort;
+  /** Free-text search over title, company, location, top requirements and direction. */
+  q: string;
 }
 
 /**
@@ -193,7 +196,8 @@ export function parseFilters(sp: Record<string, string | string[] | undefined>):
   const levels = new Set(one("level").split(",").filter((l): l is Level => (LEVELS as readonly string[]).includes(l)));
   if (one("reach") === "1") levels.add("reach");
   const list = LEVELS.filter((l) => levels.has(l));
-  return { category, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort"), list) };
+  const q = one("q").trim().slice(0, 80);
+  return { category, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort"), list), q };
 }
 
 /** Default sort: within reach first, unless the level filter leaves within-reach jobs out. */
@@ -202,13 +206,19 @@ export function resolveSort(raw: string, levels: Level[]): Sort {
   return levels.length && !levels.includes("reach") ? "newest" : "reach";
 }
 
-export function applyFilters(cards: JobCard[], f: Omit<Filters, "sort"> & { sort?: Sort }): JobCard[] {
+/** Text a search matches against: title, company, location, top requirements and direction name. */
+const searchText = (c: JobCard) => [c.title, c.company, c.location, ...c.chips, CATEGORY_META[c.primary].short].join(" ").toLowerCase();
+
+export function applyFilters(cards: JobCard[], f: Omit<Filters, "sort" | "q"> & { sort?: Sort; q?: string }): JobCard[] {
+  // Every word of the query has to appear somewhere, in any order.
+  const words = (f.q ?? "").toLowerCase().split(/\s+/).filter(Boolean);
   const out = cards.filter(
     (c) =>
       (!f.category || c.primary === f.category) &&
       (!f.estonia || c.openToEstonia) &&
       (!f.remote || c.remote === f.remote) &&
-      (!f.levels.length || f.levels.includes(c.levelBucket)),
+      (!f.levels.length || f.levels.includes(c.levelBucket)) &&
+      (!words.length || words.every((w) => searchText(c).includes(w))),
   );
   // Cards arrive within-reach first; "newest" re-sorts by date only.
   return f.sort === "newest" ? [...out].sort((a, b) => (b.postedAt ?? "").localeCompare(a.postedAt ?? "")) : out;

@@ -36,7 +36,8 @@ export function Readout({
   return (
     <div className={cn("grid gap-4", className)}>
       <div>
-        <dl
+        {/* A plain list: each cell reads as "value, label" and may be a link. (Links cannot sit directly in a <dl>.) */}
+        <ul
           className={cn(
             "-mx-4 grid border-y border-dashed border-hairline md:-mx-6 lg:-mx-8",
             four
@@ -51,7 +52,7 @@ export function Readout({
               it.mark && it.mark !== "new" ? SIGNAL_ICON[it.mark] : null;
             const body = (
               <>
-                <dt className="label-mono order-2 flex items-center gap-2 leading-snug text-muted-foreground">
+                <span className="label-mono order-2 flex items-center gap-2 leading-snug text-muted-foreground">
                   {it.mark === "new" && <FreshTile />}
                   {Icon && (
                     <Icon
@@ -60,16 +61,16 @@ export function Readout({
                       strokeWidth={1.75}
                     />
                   )}
-                  <span>{it.label}</span>
-                </dt>
-                <dd
+                  <span data-label>{it.label}</span>
+                </span>
+                <span
                   className={cn(
                     "order-1 font-heading text-4xl leading-none font-semibold tracking-tight tabular-nums sm:text-5xl",
                     it.muted ? "text-muted-foreground" : "text-brand-lg",
                   )}
                 >
                   {it.value}
-                </dd>
+                </span>
               </>
             );
             // Dashed dividers are cell borders, so the band's rules never break. Four items fold to 2 x 2 below lg.
@@ -80,28 +81,29 @@ export function Readout({
                   idx >= 2 && "max-lg:border-t",
                 )
               : idx > 0 && "border-l";
-            const cls = cn(
-              "flex flex-col gap-3 border-dashed border-hairline px-4 py-6 md:px-6 sm:py-8 lg:px-8",
-              divider,
-            );
-            return it.href ? (
-              <Link
+            const cls = "flex flex-col gap-3 px-4 py-6 md:px-6 sm:py-8 lg:px-8";
+            return (
+              <li
                 key={it.label}
-                href={it.href}
-                className={cn(
-                  cls,
-                  "transition-colors hover:bg-brand-tint focus-visible:bg-brand-tint focus-visible:outline-none [&_dt_span]:underline-offset-4 hover:[&_dt_span]:underline",
-                )}
+                className={cn("flex", divider, "border-dashed border-hairline")}
               >
-                {body}
-              </Link>
-            ) : (
-              <div key={it.label} className={cls}>
-                {body}
-              </div>
+                {it.href ? (
+                  <Link
+                    href={it.href}
+                    className={cn(
+                      cls,
+                      "flex-1 transition-colors hover:bg-brand-tint focus-visible:bg-brand-tint focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring [&_[data-label]]:underline-offset-4 hover:[&_[data-label]]:underline focus-visible:[&_[data-label]]:underline",
+                    )}
+                  >
+                    {body}
+                  </Link>
+                ) : (
+                  <div className={cn(cls, "flex-1")}>{body}</div>
+                )}
+              </li>
             );
           })}
-        </dl>
+        </ul>
         {/* GrönLoop's dispersing lines: the first lands on the band's bottom rule, so the band reads as spreading out. */}
         {rules && <DispersingRules />}
       </div>
