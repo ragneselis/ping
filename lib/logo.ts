@@ -14,11 +14,23 @@ export const LOGO_ROWS = [
   "gggggggg",
 ] as const;
 
+/** The sleeping face, shown as the favicon while the tab is in the background (components/tab-presence.tsx). */
+export const SLEEPING_ROWS = [
+  "gggggggg",
+  "gggggggg",
+  "gggggggg",
+  "ggkkgkkg",
+  "gggggggg",
+  "gggggggg",
+  "ggggkggg",
+  "gggggggg",
+] as const;
+
 export const LOGO_COLORS = { g: "#059669", w: "#ffffff", k: "#101014" } as const;
 
-/** The logo as a standalone SVG document (favicon). */
-export function logoSvg(): string {
-  const rects = LOGO_ROWS.flatMap((row, y) =>
+/** A face as a standalone SVG document (favicon). */
+export function logoSvg(rows: readonly string[] = LOGO_ROWS): string {
+  const rects = rows.flatMap((row, y) =>
     [...row].map((c, x) => (c === "g" ? "" : `<rect x="${x}" y="${y}" width="1" height="1" fill="${LOGO_COLORS[c as "w" | "k"]}"/>`)),
   ).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" shape-rendering="crispEdges"><rect width="8" height="8" fill="${LOGO_COLORS.g}"/>${rects}</svg>\n`;

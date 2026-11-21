@@ -109,3 +109,7 @@ Locally, `npm run refresh` runs the same three steps. The site is on Vercel (pro
 ## Sharing
 
 Every page shares the description "New design jobs every morning, sorted by direction and level." (`lib/share.ts`); the Jobs page shares as "Ping | Design jobs for EKA students", other pages as "Ping", and the image from `app/opengraph-image.tsx` (reused by `app/twitter-image.tsx`): the mascot tile's light green, "Ping" in Martian Mono (a static 600 weight, 87.5% width instance in `assets/fonts`, OFL) and the block mascot drawn from its grid in `lib/mascots.ts` at 24px per pixel.
+
+## Ping misses you
+
+`components/tab-presence.tsx` (mounted once in `app/layout.tsx`): when the tab goes to the background (`visibilitychange`), the title becomes "Ping misses you" and the favicon links point at the sleeping face (`public/favicon-sleeping.svg` and `.png`, written by `npm run icons` from `SLEEPING_ROWS` in `lib/logo.ts`). Coming back restores the title saved at that moment and the normal favicons. It never runs on first load; no sound, no animation.

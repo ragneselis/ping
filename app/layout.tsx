@@ -6,6 +6,7 @@ import { ClosingBand } from "@/components/closing-band";
 import { RevealObserver } from "@/components/reveal";
 import { SoundEffects } from "@/components/sound";
 import { SiteHeader } from "@/components/site-header";
+import { TabPresence } from "@/components/tab-presence";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SHARE_DESCRIPTION, shareMetadata } from "@/lib/share";
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <TooltipProvider>
             <SoundEffects />
             <RevealObserver />
+            <TabPresence />
             <SiteHeader />
             <main>{children}</main>
             <ClosingBand />

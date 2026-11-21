@@ -3,12 +3,14 @@
  * crisp: app/icon.svg (modern browsers), PNG fallbacks at 16, 32, 48, 192 and 512 px, and the
  * apple-touch-icon (app/apple-icon.png, 180 px: the face at 22 px per pixel on a 2 px green margin,
  * which blends in because the face's edge is green too). Next.js turns these files into <link> tags.
+ * Also the sleeping face for background tabs (public/favicon-sleeping.svg and a 32px PNG), swapped in
+ * by components/tab-presence.tsx; it lives in public/ so Next.js does not list it as a page icon.
  *
  *   npm run icons
  */
 import { writeFileSync } from "node:fs";
 import { crc32, deflateSync } from "node:zlib";
-import { LOGO_COLORS, LOGO_ROWS, logoSvg } from "@/lib/logo";
+import { LOGO_COLORS, LOGO_ROWS, logoSvg, SLEEPING_ROWS } from "@/lib/logo";
 
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 
@@ -21,8 +23,8 @@ function chunk(type: string, data: Buffer) {
   return Buffer.concat([len, body, crc]);
 }
 
-/** An RGB PNG of the logo: `scale` px per logo pixel, `margin` px of green around it. */
-function png(scale: number, margin = 0) {
+/** An RGB PNG of a face: `scale` px per logo pixel, `margin` px of green around it. */
+function png(scale: number, margin = 0, grid: readonly string[] = LOGO_ROWS) {
   const size = 8 * scale + 2 * margin;
   const green = hex(LOGO_COLORS.g);
   const rows: Buffer[] = [];
@@ -32,7 +34,7 @@ function png(scale: number, margin = 0) {
       const lx = Math.floor((x - margin) / scale);
       const ly = Math.floor((y - margin) / scale);
       const inside = x >= margin && y >= margin && lx < 8 && ly < 8;
-      const c = inside ? hex(LOGO_COLORS[LOGO_ROWS[ly][lx] as keyof typeof LOGO_COLORS]) : green;
+      const c = inside ? hex(LOGO_COLORS[grid[ly][lx] as keyof typeof LOGO_COLORS]) : green;
       row.set(c, 1 + x * 3);
     }
     rows.push(row);
@@ -57,6 +59,8 @@ const out: [string, Buffer | string][] = [
   ["app/icon4.png", png(24)], // 192
   ["app/icon5.png", png(64)], // 512
   ["app/apple-icon.png", png(22, 2)], // 180
+  ["public/favicon-sleeping.svg", logoSvg(SLEEPING_ROWS)],
+  ["public/favicon-sleeping.png", png(4, 0, SLEEPING_ROWS)], // 32
 ];
 for (const [file, data] of out) writeFileSync(file, data);
 console.log(`Wrote ${out.map(([f]) => f).join(", ")}`);
