@@ -26799,6 +26799,22 @@
     "cacheRead": 1906,
     "cacheWrite": 0
    }
+  },
+  "himalayas:https://himalayas.app/companies/headstarter/jobs/founding-designer-7088382678": {
+   "id": "himalayas:https://himalayas.app/companies/headstarter/jobs/founding-designer-7088382678",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing UI/UX for consumer and B2B hiring products, including design system, for startup",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T14:25:24.938Z",
+   "usage": {
+    "input": 861,
+    "output": 61,
+    "cacheRead": 0,
+    "cacheWrite": 1906
+   }
   }
  },
  "runs": [
@@ -26870,6 +26886,20 @@
     "cacheWrite": 1906
    },
    "costUsd": 0.0176,
+   "note": "classification v4"
+  },
+  {
+   "at": "2026-11-21T14:25:24.938Z",
+   "model": "claude-haiku-5-5",
+   "postings": 1,
+   "failed": 0,
+   "usage": {
+    "input": 861,
+    "output": 61,
+    "cacheRead": 0,
+    "cacheWrite": 1906
+   },
+   "costUsd": 0.0004,
    "note": "classification v4"
   }
  ]

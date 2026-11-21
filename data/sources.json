@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-11-21T12:57:27.555Z",
-  "totalInScope": 1808,
-  "duplicatesRemoved": 209,
-  "unique": 1599,
+  "fetchedAt": "2026-11-21T14:25:22.770Z",
+  "totalInScope": 1807,
+  "duplicatesRemoved": 210,
+  "unique": 1597,
   "sources": [
     {
       "source": "Remote OK",
@@ -42,8 +42,8 @@
       "sourceType": "board",
       "ok": true,
       "fetched": 2319,
-      "candidates": 82,
-      "inScope": 67,
+      "candidates": 81,
+      "inScope": 66,
       "notes": "first 8 pages of the general feed (no server-side search)"
     },
     {
@@ -59,10 +59,10 @@
       "source": "Greenhouse",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 3720,
+      "fetched": 3719,
       "candidates": 281,
       "inScope": 155,
-      "notes": "all open roles per company: Figma 147, Airbnb 202, Stripe 778, Discord 29, Dropbox 47, Pinterest 174, GitLab 246, Duolingo 54, Asana 111, Miro 13, Wise 18, Veriff 9, Intercom 120, Monzo 59, N26 23, Typeform 6, Vercel 86, Oura 96, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 186, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 10, Remedy 12, Solita 63, Truecaller 34, Trustpilot 35, Boku 11, Betsson 79, Whalar 10, Yousician 0, Cambridge Consultants 84, On 141, Map Project Office 3, Landor 58, Interbrand 17, IDEO 8, AKQA 46, DEPT 203, Helsing 175"
+      "notes": "all open roles per company: Figma 147, Airbnb 202, Stripe 778, Discord 29, Dropbox 47, Pinterest 174, GitLab 246, Duolingo 54, Asana 111, Miro 13, Wise 18, Veriff 9, Intercom 120, Monzo 59, N26 23, Typeform 6, Vercel 86, Oura 96, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 185, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 10, Remedy 12, Solita 63, Truecaller 34, Trustpilot 35, Boku 11, Betsson 79, Whalar 10, Yousician 0, Cambridge Consultants 84, On 141, Map Project Office 3, Landor 58, Interbrand 17, IDEO 8, AKQA 46, DEPT 203, Helsing 175"
     },
     {
       "source": "Lever",

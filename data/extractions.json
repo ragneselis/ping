@@ -70825,6 +70825,42 @@
     "cacheRead": 1179,
     "cacheWrite": 0
    }
+  },
+  "himalayas:https://himalayas.app/companies/headstarter/jobs/founding-designer-7088382678": {
+   "id": "himalayas:https://himalayas.app/companies/headstarter/jobs/founding-designer-7088382678",
+   "skills": [
+    "UI design",
+    "UX design",
+    "Design systems",
+    "User flows",
+    "Wireframing",
+    "High-fidelity design",
+    "Interaction design",
+    "Stakeholder management"
+   ],
+   "tools": [],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Full-time or contract",
+    "Startup experience preferred",
+    "Seed to Series B preferred",
+    "Consumer or enterprise product experience",
+    "Works closely with engineers",
+    "Leading initiatives and launches",
+    "Willingness to challenge ideas"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T14:25:26.786Z",
+   "usage": {
+    "input": 861,
+    "output": 181,
+    "cacheRead": 0,
+    "cacheWrite": 1179
+   }
   }
  },
  "runs": [
@@ -70918,6 +70954,19 @@
     "cacheWrite": 1179
    },
    "costUsd": 0.0167
+  },
+  {
+   "at": "2026-11-21T14:25:26.786Z",
+   "model": "claude-haiku-5-5",
+   "postings": 1,
+   "failed": 0,
+   "usage": {
+    "input": 861,
+    "output": 181,
+    "cacheRead": 0,
+    "cacheWrite": 1179
+   },
+   "costUsd": 0.0003
   }
  ]
 }
