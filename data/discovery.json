@@ -1,0 +1,83 @@
+{
+  "runs": [
+    {
+      "at": "2026-11-21T20:35:30.139Z",
+      "model": "claude-haiku-5-5",
+      "searches": 3,
+      "usage": {
+        "input": 32073,
+        "output": 2840,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "costUsd": 0.0346,
+      "added": [
+        {
+          "name": "Canonical",
+          "ats": "greenhouse",
+          "slug": "canonical",
+          "roles": 318,
+          "careersUrl": "https://canonical.com/careers"
+        },
+        {
+          "name": "Creditstar Group",
+          "ats": "workable",
+          "slug": "creditstar",
+          "roles": 26,
+          "careersUrl": "https://creditstar.com/careers"
+        },
+        {
+          "name": "Plummy Games",
+          "ats": "teamtailor",
+          "slug": "plummygames",
+          "roles": 4,
+          "careersUrl": "https://www.plummygames.com/careers"
+        },
+        {
+          "name": "Moss",
+          "ats": "ashby",
+          "slug": "moss",
+          "roles": 32,
+          "careersUrl": "https://www.getmoss.com/careers"
+        },
+        {
+          "name": "Trade Nation",
+          "ats": "workable",
+          "slug": "trade-nation",
+          "roles": 62,
+          "careersUrl": "https://www.tradenation.com/careers"
+        }
+      ],
+      "skipped": [
+        {
+          "name": "Printify",
+          "reason": "careers page could not be loaded (HTTP 404 for https://printify.com/careers)"
+        },
+        {
+          "name": "SiteMinder",
+          "reason": "careers page could not be loaded (HTTP 403 for https://www.siteminder.com/careers/)"
+        },
+        {
+          "name": "Ringtail Studios",
+          "reason": "careers page could not be loaded (fetch failed)"
+        },
+        {
+          "name": "Original Games",
+          "reason": "careers page could not be loaded (fetch failed)"
+        },
+        {
+          "name": "Playtech",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        },
+        {
+          "name": "Betsson Group",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        },
+        {
+          "name": "Betmaster",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        }
+      ]
+    }
+  ]
+}
