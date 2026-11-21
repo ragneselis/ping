@@ -31,9 +31,9 @@ import { shareMetadata } from "@/lib/share";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
-// The tab reads "Ping | Design jobs for EKA"; a shared Jobs link gets the longer share title.
+// The tab reads "Ping | Design jobs"; a shared Jobs link gets the longer share title.
 export const metadata: Metadata = {
-  title: { absolute: "Ping | Design jobs for EKA" },
+  title: { absolute: "Ping | Design jobs" },
   ...shareMetadata("Ping | Design jobs for EKA students"),
 };
 
