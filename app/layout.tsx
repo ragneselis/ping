@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Martian_Mono } from "next/font/google";
 import type { ReactNode } from "react";
-import { Band } from "@/components/blueprint";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,10 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <TooltipProvider>
             <SiteHeader />
             <main>{children}</main>
-            <Band as="footer" last inner="flex flex-col gap-1 py-6 text-sm text-muted-foreground sm:flex-row sm:justify-between">
-              <span>Ping is made for design students at the Estonian Academy of Arts.</span>
-              <span>Every job links to the original posting. Apply there.</span>
-            </Band>
+            <SiteFooter />
           </TooltipProvider>
         </ThemeProvider>
       </body>

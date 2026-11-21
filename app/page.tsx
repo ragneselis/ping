@@ -111,7 +111,7 @@ export default async function JobsPage({
 
   return (
     <>
-      <Band aria-label="Introduction" inner="grid gap-8 pb-8 sm:gap-10">
+      <Band aria-label="Introduction" inner="grid gap-8 sm:gap-10">
         <HeroTiles variant="jobs" />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
           <div className="grid gap-5">
@@ -121,10 +121,7 @@ export default async function JobsPage({
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
               {REACH_DEFINITION}
             </p>
-            <DataNote>
-              Based on {cards.length.toLocaleString("en-GB")} current postings.
-              Last updated {updated}.
-            </DataNote>
+            <DataNote postings={cards.length} updatedAt={updatedAt} />
           </div>
           {/* The real shortcut for an EKA graduate, on every screen size. */}
           <Panel

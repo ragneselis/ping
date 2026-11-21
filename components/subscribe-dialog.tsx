@@ -17,7 +17,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
           </div>
           <DialogTitle className="text-xl">Coming soon: email and Slack updates</DialogTitle>
           <DialogDescription>
-            We are building a way to ping you when new jobs land that match your direction. No spam, no daily digest of
+            Soon Ping can ping you when new jobs land that match your direction. No spam, no daily digest of
             senior roles you cannot apply for yet. Until then, check back here: the list refreshes regularly.
           </DialogDescription>
         </DialogHeader>

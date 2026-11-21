@@ -117,17 +117,12 @@ export default async function InsightsPage({
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
-        <h1 className="max-w-[28ch]">What the market is asking for</h1>
+        <h1 className="max-w-[28ch]">What design roles ask for right now</h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
-          We read the requirements in every posting and counted them up. No
-          guesswork, no hype: this is what employers actually write down, so you
-          can spend your portfolio time where it counts.
+          Skills, tools and experience from every current posting, counted and
+          split by direction.
         </p>
-        <DataNote>
-          Based on {jobs.length.toLocaleString("en-GB")} current postings from{" "}
-          {boards} job boards and {companyFeeds} company career pages. Last
-          updated {formatUpdated(updatedAt)}.
-        </DataNote>
+        <DataNote postings={jobs.length} updatedAt={updatedAt} />
       </Band>
 
       {/* ---------- One direction (or all) ---------- */}
@@ -161,7 +156,7 @@ export default async function InsightsPage({
           <p className="max-w-prose text-muted-foreground">
             {category
               ? CATEGORY_META[category].blurb
-              : "Every design role we track, all nine directions together."}
+              : "Every design role on Ping, all nine directions together."}
           </p>
           {early && (
             <p className="text-sm text-muted-foreground">{EARLY_SIGNAL_LINE}</p>

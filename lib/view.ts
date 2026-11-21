@@ -330,9 +330,7 @@ export function categoryComparison(jobs: ClassifiedJob[]) {
 
 /* ---------- Shared presentation helpers ---------- */
 
-/** The one date format on both pages: "20 November 2026". */
-export const formatUpdated = (iso: string | null) =>
-  iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "recently";
+export { formatUpdated } from "./format";
 
 /**
  * The one fixed order of directions, used by the tab rows on Jobs and Market insights:
