@@ -164,7 +164,7 @@ export function digestEmail(d: Digest, prefs: Prefs, frequency: Frequency, token
   const seeAll = `${SITE_URL}/${qs ? `?${qs}` : ""}`;
   const n = d.total;
   const reach = d.withinReach;
-  const subject = `${n} new design ${n === 1 ? "job" : "jobs"} for you${reach ? `, ${reach} within reach` : ""}`;
+  const subject = `${n} new design ${n === 1 ? "job" : "jobs"} for you${reach && reach < n ? `, ${reach} within reach` : ""}`;
   const heading = `${n} new ${n === 1 ? "job matches" : "jobs match"} what you follow`;
   const shown = d.jobs.reduce((k, j) => k + 1 + j.similar, 0);
   const rest = Math.max(0, n - shown);
