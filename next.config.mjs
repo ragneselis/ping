@@ -5,5 +5,10 @@ export default {
   outputFileTracingIncludes: {
     "/": ["./data/**/*"],
     "/insights": ["./data/**/*"],
+    "/discover": ["./data/**/*"],
+  },
+  // The Discover page started out as /companies: old links (query included) land on it.
+  async redirects() {
+    return [{ source: "/companies", destination: "/discover", permanent: true }];
   },
 };

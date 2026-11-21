@@ -88,13 +88,20 @@ type Cell = {
  * staircase in the top-left corner and two single tiles, leaving the right side to the mascot.
  * Rows below the band's height are clipped, never rescaled, so the 32px pitch holds at every width.
  */
-const ARRANGEMENTS: Record<"jobs" | "insights", Cell[]> = {
+const ARRANGEMENTS: Record<"jobs" | "discover" | "insights", Cell[]> = {
   jobs: [
     { side: "left", row: 0, col: 0, tile: "pale" },
     { side: "left", row: 1, col: 1, tile: "dither" },
     { side: "left", row: 2, col: 0, tile: "checker" },
     { side: "left", row: 0, col: 5, tile: "corner", className: "hidden sm:block" },
     { side: "right", row: 2, col: 0, tile: "stripe" },
+  ],
+  discover: [
+    { side: "left", row: 0, col: 1, tile: "checker" },
+    { side: "left", row: 1, col: 0, tile: "stripe" },
+    { side: "left", row: 2, col: 1, tile: "pale" },
+    { side: "left", row: 0, col: 6, tile: "dither", className: "hidden sm:block" },
+    { side: "right", row: 2, col: 1, tile: "corner" },
   ],
   insights: [
     { side: "left", row: 0, col: 0, tile: "dither" },
@@ -105,7 +112,7 @@ const ARRANGEMENTS: Record<"jobs" | "insights", Cell[]> = {
   ],
 };
 
-const MASCOT: Record<keyof typeof ARRANGEMENTS, MascotName> = { jobs: "block", insights: "student" };
+const MASCOT: Record<keyof typeof ARRANGEMENTS, MascotName> = { jobs: "block", discover: "block", insights: "student" };
 
 /**
  * The hero's tile band: a fixed-height spacer whose height matches the mascot (64px on phones,

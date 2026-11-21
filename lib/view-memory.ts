@@ -7,7 +7,7 @@
  * - A URL that already carries any view parameter (a shared or filtered link, an email digest) wins:
  *   nothing is restored.
  * - Reset (the Jobs filters) and "Design jobs live" go back to the default view and clear the memory.
- * - Search is not remembered: it is a one-off.
+ * - Search and the company filter (a Discover link) are not remembered: they are one-offs.
  * - Restoring is not a filter choice, so it is never counted in the usage stats.
  *
  * A full page load restores before paint with VIEW_RESTORE_SCRIPT (inline, app/page.tsx); a client
@@ -34,7 +34,7 @@ export function consumeRestored(): boolean {
 export const REMEMBERED = ["category", "level", "estonia", "remote", "sort"] as const;
 
 /** Parameters that make a URL a chosen view: if any is present, the URL wins over the memory. */
-export const VIEW_PARAMS = [...REMEMBERED, "reach", "q"] as const;
+export const VIEW_PARAMS = [...REMEMBERED, "reach", "q", "company"] as const;
 
 /** The remembered part of a query string, normalised ("" for the default view). */
 export function rememberedQuery(qs: string): string {

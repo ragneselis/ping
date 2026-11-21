@@ -26815,6 +26815,198 @@
     "cacheRead": 0,
     "cacheWrite": 1906
    }
+  },
+  "himalayas:https://himalayas.app/companies/neuraflash/jobs/consultant-conversational-design": {
+   "id": "himalayas:https://himalayas.app/companies/neuraflash/jobs/consultant-conversational-design",
+   "isDesignRole": true,
+   "primary": "ai-behaviour",
+   "secondary": null,
+   "reason": "Designing conversational voice and chat AI interactions and personas for contact center clients",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:35.749Z",
+   "usage": {
+    "input": 2907,
+    "output": 273,
+    "cacheRead": 0,
+    "cacheWrite": 1906
+   }
+  },
+  "himalayas:https://himalayas.app/companies/princeton10/jobs/senior-art-director-pharmaceutical": {
+   "id": "himalayas:https://himalayas.app/companies/princeton10/jobs/senior-art-director-pharmaceutical",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Concepting and art directing integrated pharma campaigns across digital, print, social and video",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.449Z",
+   "usage": {
+    "input": 1468,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:ux-designer-at-private-equity-insights-london-223301": {
+   "id": "arbeitnow:ux-designer-at-private-equity-insights-london-223301",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Graphic design of banners, EDMs, social posts and illustration for marketing; brand-visual work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.535Z",
+   "usage": {
+    "input": 813,
+    "output": 67,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/gemini-senior-product-designer-prediction-markets": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/gemini-senior-product-designer-prediction-markets",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing user journeys and interfaces for crypto prediction markets web and mobile products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.570Z",
+   "usage": {
+    "input": 1572,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/axone-sys/jobs/ux-designer": {
+   "id": "himalayas:https://himalayas.app/companies/axone-sys/jobs/ux-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "UX/UI design of web platforms and business applications, wireframes and prototypes",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.684Z",
+   "usage": {
+    "input": 400,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/sagan-recruitment/jobs/graphic-designer-plggd010": {
+   "id": "himalayas:https://himalayas.app/companies/sagan-recruitment/jobs/graphic-designer-plggd010",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Creating brand, print, and social graphics for marketing and clients",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.696Z",
+   "usage": {
+    "input": 1214,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/gusto-inc-staff-product-designer": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/gusto-inc-staff-product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing AI-enabled fintech and HR product experiences for small businesses, owning end-to-end flows",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.715Z",
+   "usage": {
+    "input": 3239,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/revizto/jobs/product-designer-design-system-6597699822": {
+   "id": "himalayas:https://himalayas.app/companies/revizto/jobs/product-designer-design-system-6597699822",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Owns design system components, tokens, documentation and design QA for a B2B AEC product",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.738Z",
+   "usage": {
+    "input": 1231,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/opentable/jobs/associate-digital-designer-international-marketing": {
+   "id": "himalayas:https://himalayas.app/companies/opentable/jobs/associate-digital-designer-international-marketing",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Localising existing paid ads, social and campaign assets across markets; marketing production work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:37.770Z",
+   "usage": {
+    "input": 1471,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-vfx-artist": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-vfx-artist",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Senior VFX simulation and effects for animated feature film, not games",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:38.299Z",
+   "usage": {
+    "input": 1741,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-rigger-artist": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-rigger-artist",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Creating 3D character rigs for an animated feature film, so game-free film animation",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:40.384Z",
+   "usage": {
+    "input": 1639,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-sets-props-model-artist": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-sets-props-model-artist",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Building 3D environments and props for an animated feature film from concept art",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T18:44:42.279Z",
+   "usage": {
+    "input": 1814,
+    "output": 442,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -26900,6 +27092,20 @@
     "cacheWrite": 1906
    },
    "costUsd": 0.0004,
+   "note": "classification v4"
+  },
+  {
+   "at": "2026-11-21T18:44:42.279Z",
+   "model": "claude-haiku-5-5",
+   "postings": 12,
+   "failed": 0,
+   "usage": {
+    "input": 19509,
+    "output": 1316,
+    "cacheRead": 20966,
+    "cacheWrite": 1906
+   },
+   "costUsd": 0.0031,
    "note": "classification v4"
   }
  ]

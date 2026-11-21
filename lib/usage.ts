@@ -8,6 +8,7 @@
  *   v  v:/path  d:m  d:d  r:host  c:EE     page views, per page, phone or desktop, referrer, country
  *   u                                      visitors: a browser, once per Tallinn day
  *   job:<id>  jobcat:<direction>           job posting clicks
+ *   co:<company key>                       a company's jobs opened from Discover
  *   f:<filter>:<value>  q:<search>         filters and searches used
  *   m:open  m:sent                         "Get new jobs" opened, sign-up sent
  *   g:play  g:best (a maximum, not a sum)  snake games started, best score
@@ -17,7 +18,7 @@
 import { CATEGORIES } from "./types";
 
 /** The pages that count as views. Everything else (/stats, the email landing pages) is not a view. */
-export const PUBLIC_PAGES = ["/", "/insights", "/privacy"] as const;
+export const PUBLIC_PAGES = ["/", "/discover", "/insights", "/privacy"] as const;
 export const isPublicPath = (path: unknown): path is string => typeof path === "string" && (PUBLIC_PAGES as readonly string[]).includes(path);
 
 /** Filters and the values that may be recorded for each. */
@@ -26,7 +27,7 @@ export const FILTER_VALUES: Record<string, readonly string[]> = {
   level: ["reach", "mid", "senior"],
   estonia: ["1"],
   remote: ["remote", "hybrid", "onsite"],
-  sort: ["best", "newest"],
+  sort: ["best", "newest", "roles"],
 };
 
 /** A search as it is counted: lower case, letters, digits and spaces only, at most 40 characters. */
@@ -42,6 +43,7 @@ export function normaliseQuery(q: string): string | null {
 
 export type UsageEvent =
   | { name: "job"; id: string; category: string }
+  | { name: "company"; id: string }
   | { name: "filter"; filter: string; value: string }
   | { name: "search"; q: string }
   | { name: "subscribe-open" }
@@ -56,6 +58,9 @@ export function eventFields(e: UsageEvent): { add: string[]; best?: { field: str
       // Posting ids carry the source and its URL; the collector also checks the id is a current posting.
       if (typeof e.id !== "string" || !/^[\x21-\x7e]{1,300}$/.test(e.id) || !(CATEGORIES as readonly string[]).includes(e.category)) return null;
       return { add: [`job:${e.id}`, `jobcat:${e.category}`] };
+    case "company":
+      // A companySlug; the collector also checks Ping knows the company.
+      return typeof e.id === "string" && /^[a-z0-9-]{1,80}$/.test(e.id) ? { add: [`co:${e.id}`] } : null;
     case "filter":
       if (!FILTER_VALUES[e.filter]?.includes(e.value)) return null;
       return { add: [`f:${e.filter}:${e.value}`] };

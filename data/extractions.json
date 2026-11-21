@@ -70861,6 +70861,476 @@
     "cacheRead": 0,
     "cacheWrite": 1179
    }
+  },
+  "himalayas:https://himalayas.app/companies/neuraflash/jobs/consultant-conversational-design": {
+   "id": "himalayas:https://himalayas.app/companies/neuraflash/jobs/consultant-conversational-design",
+   "skills": [
+    "Conversational design",
+    "Voice user interface design",
+    "Requirement gathering",
+    "Stakeholder presentation",
+    "Data analysis",
+    "Client engagement",
+    "Persona design",
+    "Experience design",
+    "Solution design",
+    "Prompt writing",
+    "Contact center design",
+    "Storytelling"
+   ],
+   "tools": [
+    "Lucidchart",
+    "Visio",
+    "Gliffy",
+    "Draw.io",
+    "Amazon Lex",
+    "Amazon Connect",
+    "Amazon Bedrock",
+    "Salesforce Einstein",
+    "Agentforce",
+    "Google Dialogflow",
+    "Nuance IVR"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 3,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Customer-facing consulting experience",
+    "Remote US position",
+    "Willing to learn new technologies",
+    "Adaptable to design tools",
+    "Comfortable presenting to stakeholders",
+    "Up to 25% travel",
+    "Chatbot flow design experience",
+    "CRM integration experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:44.551Z",
+   "usage": {
+    "input": 2907,
+    "output": 303,
+    "cacheRead": 0,
+    "cacheWrite": 1179
+   }
+  },
+  "himalayas:https://himalayas.app/companies/sagan-recruitment/jobs/graphic-designer-plggd010": {
+   "id": "himalayas:https://himalayas.app/companies/sagan-recruitment/jobs/graphic-designer-plggd010",
+   "skills": [
+    "Graphic design",
+    "Branding",
+    "Print design",
+    "Digital design",
+    "Web design",
+    "Logo design",
+    "Motion graphics",
+    "Attention to detail",
+    "Project management",
+    "Communication",
+    "Time management",
+    "Creativity",
+    "UI/UX design"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Photoshop",
+    "Illustrator",
+    "InDesign",
+    "Google Suite",
+    "Adobe Premiere",
+    "After Effects"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": 2,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Remote work Serbia",
+    "Flexible time zone availability",
+    "Assessment score 80% required",
+    "Pixel-perfect design",
+    "Fast-paced environment"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:45.836Z",
+   "usage": {
+    "input": 1214,
+    "output": 225,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/axone-sys/jobs/ux-designer": {
+   "id": "himalayas:https://himalayas.app/companies/axone-sys/jobs/ux-designer",
+   "skills": [
+    "Wireframing",
+    "Prototyping",
+    "Usability testing",
+    "Responsive design",
+    "Accessibility",
+    "Interface design for multilingual environments"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": "Bac+5 in digital design, UX/UI design, ergonomics, HCI or equivalent",
+   "languages": [
+    "French",
+    "Arabic"
+   ],
+   "other": [
+    "Freelance mission 12 months",
+    "Web platform and business application experience",
+    "Full remote"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:46.524Z",
+   "usage": {
+    "input": 400,
+    "output": 171,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:ux-designer-at-private-equity-insights-london-223301": {
+   "id": "arbeitnow:ux-designer-at-private-equity-insights-london-223301",
+   "skills": [
+    "Visual design",
+    "Graphic design",
+    "Illustration",
+    "Animation",
+    "Brand identity",
+    "Interactive design",
+    "Email marketing design",
+    "Balancing multiple projects"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "HTML/CSS"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Onsite London role",
+    "Agency experience",
+    "Detail-oriented",
+    "Strong communication skills",
+    "Calm under pressure",
+    "Conceptual approach to briefs",
+    "Passion for design innovation"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:46.601Z",
+   "usage": {
+    "input": 813,
+    "output": 189,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/gemini-senior-product-designer-prediction-markets": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/gemini-senior-product-designer-prediction-markets",
+   "skills": [
+    "Product strategy",
+    "User research",
+    "Interaction design",
+    "Prototyping",
+    "Usability testing",
+    "Stakeholder management",
+    "Design systems",
+    "Information architecture",
+    "Cross-functional collaboration",
+    "Wireframing",
+    "Web and mobile design",
+    "Problem solving"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Crypto domain interest",
+    "Independent work ability",
+    "Portfolio required",
+    "Prediction markets experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:46.731Z",
+   "usage": {
+    "input": 1572,
+    "output": 174,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/opentable/jobs/associate-digital-designer-international-marketing": {
+   "id": "himalayas:https://himalayas.app/companies/opentable/jobs/associate-digital-designer-international-marketing",
+   "skills": [
+    "Localisation",
+    "Layout adaptation",
+    "Motion design",
+    "Video editing",
+    "Campaign asset production",
+    "Attention to detail",
+    "Typography",
+    "Brand consistency",
+    "Templates and design systems",
+    "Paid social production"
+   ],
+   "tools": [
+    "Figma",
+    "Adobe Creative Suite",
+    "Adobe After Effects",
+    "Runway",
+    "Midjourney",
+    "Firefly",
+    "ChatGPT",
+    "Veo",
+    "Translation management tools"
+   ],
+   "experienceLevel": "junior",
+   "yearsMin": 3,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Work independently from brief",
+    "Multi-market campaign experience",
+    "Time zone flexibility",
+    "B2C paid-social experience",
+    "Consumer tech or hospitality background"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:46.924Z",
+   "usage": {
+    "input": 1471,
+    "output": 241,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/revizto/jobs/product-designer-design-system-6597699822": {
+   "id": "himalayas:https://himalayas.app/companies/revizto/jobs/product-designer-design-system-6597699822",
+   "skills": [
+    "Design systems",
+    "Design QA",
+    "Visual design",
+    "Accessibility",
+    "Design tokens",
+    "Component documentation",
+    "Design audits",
+    "Design-to-code",
+    "Motion design",
+    "UI design",
+    "Responsive design",
+    "Design debt reduction"
+   ],
+   "tools": [
+    "Figma",
+    "HTML/CSS"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 3,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "WCAG 2.2 AA knowledge",
+    "Authorised to work in Germany, France, UK, or Armenia",
+    "AI tools experience",
+    "AEC/BIM domain experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:46.924Z",
+   "usage": {
+    "input": 1231,
+    "output": 207,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/princeton10/jobs/senior-art-director-pharmaceutical": {
+   "id": "himalayas:https://himalayas.app/companies/princeton10/jobs/senior-art-director-pharmaceutical",
+   "skills": [
+    "Concept development",
+    "Art direction",
+    "Visual design",
+    "Campaign design",
+    "Presentation",
+    "Storytelling",
+    "Typography",
+    "Motion design",
+    "Illustration",
+    "Regulatory compliance"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Figma"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 3,
+   "yearsMax": 5,
+   "education": "Bachelor's degree in graphic design, visual communications or related field",
+   "languages": [],
+   "other": [
+    "Pharmaceutical or healthcare experience",
+    "HCP and/or DTC experience",
+    "Portfolio required",
+    "MLR review knowledge",
+    "Advertising agency experience",
+    "Eastern time zone preferred",
+    "US work authorisation"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:47.030Z",
+   "usage": {
+    "input": 1468,
+    "output": 222,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-sets-props-model-artist": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-sets-props-model-artist",
+   "skills": [
+    "3D modelling",
+    "Environment design",
+    "Texturing",
+    "UV mapping",
+    "Modular modelling",
+    "Organic modelling",
+    "Procedural modelling",
+    "Concept art interpretation",
+    "Sculpting",
+    "Traditional drawing",
+    "Mentoring",
+    "Time management",
+    "Attention to detail",
+    "Problem solving"
+   ],
+   "tools": [
+    "Maya",
+    "SpeedTree",
+    "ZBrush"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Animation production experience",
+    "Feature film experience",
+    "Remote work autonomy",
+    "Rendering engine knowledge",
+    "Feedback receptiveness"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:47.644Z",
+   "usage": {
+    "input": 1814,
+    "output": 212,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/gusto-inc-staff-product-designer": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/gusto-inc-staff-product-designer",
+   "skills": [
+    "Product design",
+    "Interaction design",
+    "User research",
+    "Design systems",
+    "Accessibility",
+    "Stakeholder management",
+    "Storytelling",
+    "Prototyping",
+    "Competitive analysis",
+    "Service blueprinting",
+    "Mentoring"
+   ],
+   "tools": [],
+   "experienceLevel": "staff/principal",
+   "yearsMin": 6,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "B2B SaaS or fintech experience",
+    "AI-enabled experience shipped to users",
+    "Comfort with ambiguity and 0→1",
+    "Regulated or high-stakes domain",
+    "Portfolio required",
+    "Judgment evaluating AI outputs",
+    "Cross-functional collaboration"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:47.899Z",
+   "usage": {
+    "input": 3239,
+    "output": 219,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-vfx-artist": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/lightbox-animation-senior-vfx-artist",
+   "skills": [
+    "Visual effects",
+    "Effects simulation",
+    "Tool development",
+    "Pipeline integration",
+    "Performance optimization",
+    "Composition",
+    "Problem solving",
+    "Attention to detail",
+    "Collaboration",
+    "Autonomy",
+    "Feedback implementation",
+    "Time management"
+   ],
+   "tools": [
+    "Houdini",
+    "Nuke"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Animated TV or feature experience",
+    "Fully remote work",
+    "Europe only",
+    "Good eye for composition and colour",
+    "Creates reusable setups"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-21T18:44:48.566Z",
+   "usage": {
+    "input": 1741,
+    "output": 188,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -70967,6 +71437,19 @@
     "cacheWrite": 1179
    },
    "costUsd": 0.0003
+  },
+  {
+   "at": "2026-11-21T18:44:48.566Z",
+   "model": "claude-haiku-5-5",
+   "postings": 11,
+   "failed": 0,
+   "usage": {
+    "input": 17870,
+    "output": 2351,
+    "cacheRead": 11790,
+    "cacheWrite": 1179
+   },
+   "costUsd": 0.0032
   }
  ]
 }

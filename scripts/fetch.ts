@@ -32,8 +32,9 @@ async function main() {
       safe("Arbeitnow", arbeitnow),
       safe("Lemanoosh", () => lemanoosh()),
     ])),
-    ...(await allAts()),
   ];
+  const ats = await allAts();
+  results.push(...ats.results);
 
   // The last good run, so a source that fails today keeps its postings instead of vanishing.
   const previous: Job[] = existsSync("data/jobs.json") ? JSON.parse(readFileSync("data/jobs.json", "utf8")) : [];
@@ -41,6 +42,13 @@ async function main() {
 
   const reports: SourceReport[] = [];
   const all: Job[] = [];
+  // A company whose board failed keeps its postings from the last good run (data/companies.json).
+  const failedCompanies = ats.failedCompanies.map((c) => {
+    const kept = previous.filter((j) => j.id.startsWith(c.prefix));
+    all.push(...kept);
+    console.log(`${c.name.padEnd(18)} board FAILED (${c.error}); kept ${kept.length} postings from the last good run`);
+    return { name: c.name, ats: c.ats, error: c.error, kept: kept.length };
+  });
   for (const r of results) {
     if (r.error) {
       const kept = previous.filter((j) => j.source === r.source);
@@ -72,6 +80,7 @@ async function main() {
 
   mkdirSync("data", { recursive: true });
   if (failed.length) console.log(`Failed sources (${failed.length}): ${failed.join(", ")}`);
+  if (failedCompanies.length) console.log(`Failed company boards (${failedCompanies.length}): ${failedCompanies.map((c) => c.name).join(", ")}`);
 
   // A run that lost everything, or more than half the postings, is a broken run, not a quiet day:
   // stop without writing, so the site keeps the previous data.
@@ -83,7 +92,7 @@ async function main() {
   writeFileSync("data/jobs.json", JSON.stringify(jobs, null, 2));
   writeFileSync(
     "data/sources.json",
-    JSON.stringify({ fetchedAt: new Date().toISOString(), totalInScope: all.length, duplicatesRemoved: removed, unique: jobs.length, sources: reports }, null, 2),
+    JSON.stringify({ fetchedAt: new Date().toISOString(), totalInScope: all.length, duplicatesRemoved: removed, unique: jobs.length, sources: reports, failedCompanies }, null, 2),
   );
 }
 

@@ -3,10 +3,10 @@
  * the password, see middleware.ts).
  */
 import { CATEGORY_META } from "@/lib/categories";
-import { loadClassifications, loadExtractions, loadRun, loadSources } from "@/lib/data";
+import { loadClassifications, loadCompanies, loadDiscovery, loadExtractions, loadRun, loadSources } from "@/lib/data";
 import { LEVEL_VALUES, type Frequency, type Prefs } from "@/lib/subscription";
 import { CATEGORIES, type Category } from "@/lib/types";
-import { getDataset } from "@/lib/view";
+import { companyName, getDataset } from "@/lib/view";
 import { sql } from "./db";
 import { loadSeen } from "./digest";
 import { readCounts, statsEnv, tallinnDay, type CountRow } from "./usage";
@@ -42,7 +42,7 @@ const countryName = (code: string) => {
   }
 };
 
-const PAGE_NAME: Record<string, string> = { "/": "Jobs", "/insights": "Market insights", "/privacy": "Privacy" };
+const PAGE_NAME: Record<string, string> = { "/": "Jobs", "/discover": "Discover", "/insights": "Market insights", "/privacy": "Privacy" };
 const LEVEL_NAME: Record<string, string> = { reach: "Within reach", mid: "Mid", senior: "Senior" };
 const FILTER_NAME: Record<string, string> = { category: "Direction", level: "Level", estonia: "Location", remote: "Work setup", sort: "Sort" };
 const filterValueName = (filter: string, value: string) =>
@@ -56,7 +56,9 @@ const filterValueName = (filter: string, value: string) =>
           ? { remote: "Remote", hybrid: "Hybrid", onsite: "On-site" }[value] ?? value
           : value === "newest"
             ? "Newest"
-            : "Best fit first";
+            : value === "roles"
+              ? "Most roles (Discover)"
+              : "Best fit first";
 
 export interface SubscriberRow {
   id: number;
@@ -166,6 +168,9 @@ export async function readStats() {
         return { label: `${FILTER_NAME[filter] ?? filter}: ${filterValueName(filter, value)}`, n: f.n };
       }),
     searches: byPrefix(rows, "q:", d30).slice(0, 12).map((q) => ({ label: q.key, n: q.n })),
+    companies: byPrefix(rows, "co:", d30)
+      .slice(0, 10)
+      .map((c) => ({ label: companyName(c.key) ?? c.key, n: c.n, url: `/?company=${c.key}` })),
     funnel: {
       opened: sum(rows, "m:open", d30),
       sent: sum(rows, "m:sent", d30),
@@ -214,7 +219,20 @@ export async function readStats() {
     })),
   };
 
-  return { env, today, visitors, subs, usage, pipeline };
+  /* ---------- Weekly discovery ---------- */
+  const discoveryRuns = loadDiscovery();
+  const companies = loadCompanies();
+  const weekAgo = new Date(Date.now() - 7 * 86_400_000).toISOString().slice(0, 10);
+  const discovery = {
+    latest: discoveryRuns.at(-1) ?? null,
+    tracked: companies.length,
+    basedInEstonia: companies.filter((c) => c.basedInEstonia).length,
+    byDiscovery: companies.filter((c) => c.addedBy === "discovery").length,
+    addedThisWeek: companies.filter((c) => c.addedBy === "discovery" && c.addedAt >= weekAgo),
+    costAll: discoveryRuns.reduce((total, r) => total + r.costUsd, 0),
+  };
+
+  return { env, today, visitors, subs, usage, pipeline, discovery };
 }
 
 export type Stats = Awaited<ReturnType<typeof readStats>>;

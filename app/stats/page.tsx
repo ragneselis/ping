@@ -52,7 +52,7 @@ const GRID = "grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[repeat(2,minmax
 export default async function StatsPage() {
   if (!isStatsAuthorized((await headers()).get("authorization"))) notFound();
   const s = await readStats();
-  const { visitors: v, subs, usage, pipeline: p } = s;
+  const { visitors: v, subs, usage, pipeline: p, discovery: d } = s;
 
   const warnings: string[] = [];
   if (p.stale) warnings.push(`The last data refresh finished ${Number.isFinite(p.ageHours) ? `${Math.round(p.ageHours)} hours ago` : "at an unknown time"}, more than 30 hours ago.`);
@@ -194,6 +194,9 @@ export default async function StatsPage() {
           <Panel title="Searches">
             <RankList rows={usage.searches} />
           </Panel>
+          <Panel title="Companies opened" description="Jobs opened from a company on Discover.">
+            <RankList rows={usage.companies} />
+          </Panel>
           <Panel title="Get new jobs" description="From opening the modal to a confirmed address.">
             <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
               {[
@@ -255,6 +258,31 @@ export default async function StatsPage() {
               </Fact>
               <Fact label="Next run">{when(p.nextRun)}</Fact>
             </dl>
+          </Panel>
+          <Panel title="Weekly discovery" description="Mondays at 03:00 UTC: Claude Haiku with web search looks for companies in Estonia that hire designers, and adds the ones whose job board Ping can read.">
+            <dl className="grid gap-3 text-sm sm:grid-cols-[10rem_minmax(0,1fr)]">
+              <Fact label="Last run">{d.latest ? when(d.latest.at) : "Not run yet"}</Fact>
+              <Fact label="Added this week">{d.addedThisWeek.length ? d.addedThisWeek.map((c) => c.name).join(", ") : "None"}</Fact>
+              <Fact label="Cost">
+                {d.latest ? `$${d.latest.costUsd.toFixed(4)} last run (${n(d.latest.searches)} ${d.latest.searches === 1 ? "search" : "searches"}), $${d.costAll.toFixed(2)} in all` : "Nothing yet"}
+              </Fact>
+              <Fact label="Companies">
+                {n(d.tracked)} tracked, {n(d.basedInEstonia)} based in Estonia, {n(d.byDiscovery)} found by discovery
+              </Fact>
+            </dl>
+            {d.latest && d.latest.skipped.length > 0 && (
+              <div className="mt-5 grid gap-2">
+                <p className="label-mono text-muted-foreground">Skipped last run</p>
+                <ul className="grid gap-1.5 text-sm">
+                  {d.latest.skipped.map((s) => (
+                    <li key={s.name} className="min-w-0">
+                      <span className="font-medium">{s.name}</span>
+                      <span className="text-muted-foreground">: {s.reason}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </Panel>
           <Panel title="Digests, last 14 days">
             {p.digests.some((d) => d.sent || d.failed) ? (

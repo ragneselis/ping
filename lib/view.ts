@@ -5,9 +5,9 @@
 import { CATEGORY_META } from "@/lib/categories";
 import { statSync } from "node:fs";
 import path from "node:path";
-import { loadClassifiedJobs, loadSources, tally, tallyKey, loadRun } from "./data";
-import { COMPANIES } from "./sources/ats";
+import { loadClassifiedJobs, loadCompanies, loadSources, tally, tallyKey, loadRun } from "./data";
 import { byNewest, compareFit, resolveSort, type Sort } from "./sort";
+import { companySlug } from "./company";
 import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "./types";
 
 export { compareFit, fitRank, resolveSort, SORT_LABEL, SORTS, type Sort } from "./sort";
@@ -50,6 +50,8 @@ export interface JobCard {
   id: string;
   title: string;
   company: string;
+  /** companySlug(company): the Jobs company filter (?company=) and the Discover page key. */
+  companyKey: string;
   location: string;
   remote: string;
   primary: Category;
@@ -84,6 +86,8 @@ export interface Filters {
   sort: Sort;
   /** Free-text search over title, company, location, top requirements and direction. */
   q: string;
+  /** One company, by companySlug (?company=bolt): from the Discover page, shareable. */
+  company: string;
 }
 
 /**
@@ -138,6 +142,7 @@ function toCard(j: ClassifiedJob): JobCard {
     id: j.id,
     title: j.title,
     company: j.company,
+    companyKey: companySlug(j.company),
     location: shortLocation(j.location),
     remote: j.remote,
     primary: j.primary!,
@@ -169,7 +174,7 @@ let cache: { key: string; data: Dataset } | null = null;
 /** Design roles with a category, newest first. Re-read only when the data files change. */
 export function getDataset(): Dataset {
   const dir = path.join(process.cwd(), "data");
-  const key = ["jobs.json", "classifications.json", "extractions.json", "run.json"]
+  const key = ["jobs.json", "classifications.json", "extractions.json", "run.json", "companies.json"]
     .map((f) => {
       try {
         return statSync(path.join(dir, f)).mtimeMs;
@@ -195,7 +200,7 @@ export function getDataset(): Dataset {
     lastRun: run?.lastRun ?? sources?.fetchedAt ?? null,
     nextRun: run?.nextRun ?? null,
     boards: sources?.sources.filter((s) => s.sourceType === "board" && s.ok).length ?? 0,
-    companyFeeds: COMPANIES.length,
+    companyFeeds: loadCompanies().length,
   };
   cache = { key, data };
   return data;
@@ -212,7 +217,8 @@ export function parseFilters(sp: Record<string, string | string[] | undefined>):
   if (one("reach") === "1") levels.add("reach");
   const list = LEVELS.filter((l) => levels.has(l));
   const q = one("q").trim().slice(0, 80);
-  return { category, categories, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort")), q };
+  const company = /^[a-z0-9-]{1,80}$/.test(one("company")) ? one("company") : "";
+  return { category, categories, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort")), q, company };
 }
 
 
@@ -221,7 +227,7 @@ const searchText = (c: JobCard) => [c.title, c.company, c.location, ...c.chips, 
 
 export function applyFilters(
   cards: JobCard[],
-  f: Omit<Filters, "sort" | "q" | "categories"> & { categories?: Category[]; sort?: Sort; q?: string },
+  f: Omit<Filters, "sort" | "q" | "categories" | "company"> & { categories?: Category[]; sort?: Sort; q?: string; company?: string },
 ): JobCard[] {
   // Every word of the query has to appear somewhere, in any order.
   const words = (f.q ?? "").toLowerCase().split(/\s+/).filter(Boolean);
@@ -232,10 +238,92 @@ export function applyFilters(
       (!f.estonia || c.openToEstonia) &&
       (!f.remote || c.remote === f.remote) &&
       (!f.levels.length || f.levels.includes(c.levelBucket)) &&
+      (!f.company || c.companyKey === f.company) &&
       (!words.length || words.every((w) => searchText(c).includes(w))),
   );
   // Cards arrive Best fit first (getDataset); "newest" re-sorts by date only.
   return f.sort === "newest" ? [...out].sort(byNewest) : out;
+}
+
+/* ---------- Discover (companies) ---------- */
+
+export interface CompanyRow {
+  key: string;
+  name: string;
+  /** Current design roles that match the filters. */
+  roles: number;
+  /** Of those, open to someone in Estonia. */
+  openToEstonia: number;
+  basedInEstonia: boolean;
+  /** Directions of those roles, most roles first. */
+  directions: { category: Category; count: number }[];
+  /** Their careers page, for companies on the tracked list (data/companies.json). */
+  careersUrl: string | null;
+  /** Newest of those roles. */
+  latest: string | null;
+}
+
+export type CompanySort = "roles" | "newest";
+export const resolveCompanySort = (raw: string): CompanySort => (raw === "newest" ? "newest" : "roles");
+
+/**
+ * Every company Ping tracks (data/companies.json) or has seen hiring designers (any current posting),
+ * one row each, keyed by companySlug. Filters as on Jobs where they apply: a direction keeps companies
+ * with roles in it; Open to Estonia keeps companies based in Estonia or with a role open to Estonia.
+ * Without filters, tracked companies with no open roles stay listed, so students know whom to watch.
+ * Sorted by matching roles (or the newest role), then name.
+ */
+export function companyDirectory(f: { category: Category | ""; estonia: boolean; sort: CompanySort }): { rows: CompanyRow[]; byDirection: Record<Category, number>; total: number } {
+  const { cards } = getDataset();
+  const list = loadCompanies();
+  const tracked = new Map(list.map((c) => [companySlug(c.name), c]));
+  const groups = new Map<string, JobCard[]>();
+  for (const c of cards) (groups.get(c.companyKey) ?? groups.set(c.companyKey, []).get(c.companyKey)!).push(c);
+  const keys = new Set([...tracked.keys(), ...groups.keys()]);
+
+  const rowFor = (key: string, category: Category | ""): CompanyRow => {
+    const t = tracked.get(key);
+    const all = groups.get(key) ?? [];
+    const roles = category ? all.filter((c) => c.primary === category) : all;
+    const counts = new Map<Category, number>();
+    for (const c of roles) counts.set(c.primary, (counts.get(c.primary) ?? 0) + 1);
+    return {
+      key,
+      name: t?.name ?? all[0].company,
+      roles: roles.length,
+      openToEstonia: roles.filter((c) => c.openToEstonia).length,
+      basedInEstonia: t?.basedInEstonia ?? false,
+      directions: [...counts.entries()].map(([category, count]) => ({ category, count })).sort((a, b) => b.count - a.count || CATEGORIES.indexOf(a.category) - CATEGORIES.indexOf(b.category)),
+      careersUrl: t?.careersUrl ?? null,
+      latest: roles.map((c) => c.postedAt).filter((d): d is string => !!d).sort().pop() ?? null,
+    };
+  };
+  const estonia = (r: CompanyRow) => r.basedInEstonia || r.openToEstonia > 0;
+
+  // Direction tab counts follow the Estonia filter, as the Jobs tabs follow the other filters.
+  const byDirection = Object.fromEntries(CATEGORIES.map((c) => [c, 0])) as Record<Category, number>;
+  for (const key of keys) for (const c of CATEGORIES) {
+    const r = rowFor(key, c);
+    if (r.roles > 0 && (!f.estonia || estonia(r))) byDirection[c]++;
+  }
+
+  const rows = [...keys]
+    .map((key) => rowFor(key, f.category))
+    .filter((r) => (f.category ? r.roles > 0 : true) && (!f.estonia || estonia(r)))
+    .sort((a, b) =>
+      f.sort === "newest"
+        ? (b.latest ?? "").localeCompare(a.latest ?? "") || a.name.localeCompare(b.name)
+        : b.roles - a.roles || a.name.localeCompare(b.name),
+    );
+  const total = [...keys].map((key) => rowFor(key, "")).filter((r) => !f.estonia || estonia(r)).length;
+  return { rows, byDirection, total };
+}
+
+/** A company's display name by key (the Jobs company filter), or null when Ping does not know it. */
+export function companyName(key: string): string | null {
+  if (!key) return null;
+  const t = loadCompanies().find((c) => companySlug(c.name) === key);
+  return t?.name ?? getDataset().cards.find((c) => c.companyKey === key)?.company ?? null;
 }
 
 /* ---------- Market insights ---------- */

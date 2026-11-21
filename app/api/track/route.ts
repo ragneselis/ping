@@ -10,7 +10,7 @@
  */
 import { best, count, countryCode, deviceLetter, isBotRequest, referrerName } from "@/lib/server/usage";
 import { eventFields, isPublicPath, type UsageEvent } from "@/lib/usage";
-import { getDataset } from "@/lib/view";
+import { companyName, getDataset } from "@/lib/view";
 
 export const dynamic = "force-dynamic";
 
@@ -48,6 +48,7 @@ export async function POST(request: Request) {
     if (!fields) return done();
     // Only postings that exist are counted, so nothing else can be written under job:.
     if (event.name === "job" && !getDataset().cards.some((c) => c.id === event.id && c.primary === event.category)) return done();
+    if (event.name === "company" && !companyName(event.id)) return done();
     await count(fields.add);
     if (fields.best) await best(fields.best.field, fields.best.value);
   }

@@ -19,7 +19,11 @@ const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getU
 if (next <= now) next.setUTCDate(next.getUTCDate() + 1);
 
 const sources = existsSync("data/sources.json") ? JSON.parse(readFileSync("data/sources.json", "utf8")) : null;
-const failedSources: string[] = (sources?.sources ?? []).filter((s: { ok: boolean }) => !s.ok).map((s: { source: string }) => s.source);
+// Whole sources that failed, then single company boards (both kept their last good postings).
+const failedSources: string[] = [
+  ...(sources?.sources ?? []).filter((s: { ok: boolean }) => !s.ok).map((s: { source: string }) => s.source),
+  ...(sources?.failedCompanies ?? []).map((c: { name: string }) => `${c.name} board`),
+];
 
 const run = {
   lastRun: now.toISOString(),

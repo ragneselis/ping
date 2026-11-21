@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
 import {
   applyFilters,
+  companyName,
   directionOrder,
   type Filters,
   formatUpdated,
@@ -180,6 +181,7 @@ export default async function JobsPage({
 
         <Suspense>
           <JobFilters
+            company={filters.company ? { key: filters.company, name: companyName(filters.company) ?? filters.company } : null}
             categories={categoryCounts}
             total={withoutCategory.length}
           />
@@ -340,6 +342,12 @@ function findCulprit(
       label: f.levels.map((l) => LEVEL_NAME[l]).join(" and "),
       drop: ["level", "reach"],
       next: { ...f, levels: [] },
+    });
+  if (f.company)
+    options.push({
+      label: companyName(f.company) ?? "the company filter",
+      drop: ["company"],
+      next: { ...f, company: "" },
     });
   const best = options
     .map((o) => ({ ...o, count: applyFilters(cards, o.next).length }))

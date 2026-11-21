@@ -1,0 +1,51 @@
+name: Weekly discovery
+
+# Mondays at 03:00 UTC, an hour before the daily refresh (04:00), and by hand.
+# Claude Haiku with web search looks for companies in Estonia that hire designers and are not on
+# data/companies.json yet; only companies whose job board Ping can actually read are added
+# (scripts/discover.ts, at most 5 a week). The daily refresh then reads their boards like any other.
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Same group as the daily refresh, so the two never push at the same time.
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Records the run, its cost and every skipped candidate with the reason in data/discovery.json.
+      - name: Discover
+        run: npm run discover
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # Authored as the repository owner, like the daily refresh, so Vercel deploys it.
+      - name: Commit and push
+        run: |
+          if git diff --quiet -- data/companies.json data/discovery.json && [ -z "$(git status --porcelain data/discovery.json)" ]; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git config user.name "ragneselis"
+          git config user.email "90755249+ragneselis@users.noreply.github.com"
+          git add data/companies.json data/discovery.json
+          git commit -m "Weekly discovery $(date -u +%Y-%m-%d)"
+          git push

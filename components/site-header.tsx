@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/", label: "Jobs", short: "Jobs" },
+  { href: "/discover", label: "Discover", short: "Discover" },
   { href: "/insights", label: "Market insights", short: "Insights" },
 ];
 
@@ -74,7 +75,7 @@ export function SiteHeader() {
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   const tabs = (className?: string) => (
-    // Two destinations only, so they stay visible as tabs at every width.
+    // Three short destinations, so they stay visible as tabs at every width.
     <nav className={cn("flex items-center", className)} aria-label="Main">
       {NAV.map((n) => (
         <Link

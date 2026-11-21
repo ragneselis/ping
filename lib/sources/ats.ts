@@ -7,184 +7,12 @@ import { decodeEntities, toIso } from "../text";
 import { designCandidate } from "../classify";
 import type { RawPosting, RemoteStatus } from "../types";
 import type { SourceResult } from "./boards";
+import { ATS_LABEL, boardIdPrefix, type Ats, type Company } from "../company";
+import { loadCompanies } from "../data";
 
-/** Starter list of companies that hire product/UX/UI designers. Board slug per ATS. */
-export type Ats = "greenhouse" | "lever" | "ashby" | "teamtailor" | "workable" | "recruitee" | "smartrecruiters" | "personio";
+export type { Ats };
 
-/**
- * Companies that hire product/UX/UI designers. Board slug per ATS
- * (for Teamtailor the slug can also be a custom careers host, e.g. "jobs.example.com").
- */
-export const COMPANIES: { name: string; ats: Ats; slug: string; eu?: boolean }[] = [
-  { name: "Figma", ats: "greenhouse", slug: "figma" },
-  { name: "Airbnb", ats: "greenhouse", slug: "airbnb" },
-  { name: "Stripe", ats: "greenhouse", slug: "stripe" },
-  { name: "Discord", ats: "greenhouse", slug: "discord" },
-  { name: "Dropbox", ats: "greenhouse", slug: "dropbox" },
-  { name: "Pinterest", ats: "greenhouse", slug: "pinterest" },
-  { name: "GitLab", ats: "greenhouse", slug: "gitlab" },
-  { name: "Duolingo", ats: "greenhouse", slug: "duolingo" },
-  { name: "Asana", ats: "greenhouse", slug: "asana" },
-  { name: "Miro", ats: "greenhouse", slug: "realtimeboardglobal" },
-  { name: "Wise", ats: "greenhouse", slug: "wise" },
-  { name: "Veriff", ats: "greenhouse", slug: "veriff" },
-  { name: "Intercom", ats: "greenhouse", slug: "intercom" },
-  { name: "Monzo", ats: "greenhouse", slug: "monzo" },
-  { name: "N26", ats: "greenhouse", slug: "n26" },
-  { name: "Typeform", ats: "greenhouse", slug: "typeform" },
-  { name: "Vercel", ats: "greenhouse", slug: "vercel" },
-  { name: "Spotify", ats: "lever", slug: "spotify" },
-  { name: "Pipedrive", ats: "lever", slug: "pipedrive" },
-  { name: "Notion", ats: "ashby", slug: "notion" },
-  { name: "Linear", ats: "ashby", slug: "linear" },
-  { name: "Ramp", ats: "ashby", slug: "ramp" },
-  { name: "ElevenLabs", ats: "ashby", slug: "elevenlabs" },
-  { name: "Supabase", ats: "ashby", slug: "supabase" },
-  { name: "Glia", ats: "ashby", slug: "glia" },
-  { name: "Webflow", ats: "ashby", slug: "webflow" },
-  // Estonian, Baltic and Nordic companies (feeds verified 2026-11-20).
-  { name: "Modash", ats: "workable", slug: "modash" },
-  { name: "Adcash", ats: "teamtailor", slug: "adcash" },
-  { name: "Swedbank", ats: "teamtailor", slug: "jobs.swedbank.com" },
-  { name: "Printful", ats: "teamtailor", slug: "printfulinc" },
-  { name: "Restream", ats: "ashby", slug: "restream" },
-  { name: "Oura", ats: "greenhouse", slug: "oura" },
-  { name: "Smartly.io", ats: "greenhouse", slug: "smartlyio" },
-  { name: "RELEX", ats: "greenhouse", slug: "relex" },
-  { name: "Supercell", ats: "ashby", slug: "supercell" },
-  { name: "Housemarque", ats: "greenhouse", slug: "housemarque" },
-  { name: "Mentimeter", ats: "greenhouse", slug: "mentimeter" },
-  { name: "Lovable", ats: "ashby", slug: "lovable" },
-  { name: "Legora", ats: "ashby", slug: "legora" },
-  { name: "Embark Studios", ats: "teamtailor", slug: "embarkstudios" },
-  { name: "Oda", ats: "teamtailor", slug: "careers.oda.com" },
-  { name: "Cognite", ats: "greenhouse", slug: "cognite" },
-  { name: "Schibsted", ats: "teamtailor", slug: "schibsted" },
-  { name: "Lunar", ats: "teamtailor", slug: "lunar" },
-  { name: "Nexos.ai", ats: "lever", slug: "Nexos" },
-  { name: "Hostinger", ats: "ashby", slug: "hostinger" },
-  { name: "Omnisend", ats: "lever", slug: "omnisend" },
-  { name: "Surfshark", ats: "ashby", slug: "surfshark" },
-  { name: "Wolt", ats: "greenhouse", slug: "wolt" },
-  { name: "Playtech", ats: "smartrecruiters", slug: "playtech" },
-  { name: "Testlio", ats: "greenhouse", slug: "testlio" },
-  { name: "Nortal", ats: "greenhouse", slug: "nortal" },
-  { name: "Bondora", ats: "greenhouse", slug: "bondora" },
-  { name: "Inbank", ats: "greenhouse", slug: "inbank" },
-  { name: "Zego", ats: "ashby", slug: "zego" },
-  { name: "Katana", ats: "ashby", slug: "katana" },
-  { name: "Gelato", ats: "ashby", slug: "gelato" },
-  { name: "Starship", ats: "teamtailor", slug: "starship" },
-  { name: "Lightyear", ats: "teamtailor", slug: "lightyear" },
-  { name: "Monese", ats: "teamtailor", slug: "monese" },
-  { name: "Comodule", ats: "teamtailor", slug: "comodule" },
-  { name: "Salv", ats: "personio", slug: "salv" },
-  { name: "Skeleton Technologies", ats: "workable", slug: "skeletontech" },
-  { name: "Kahoot", ats: "workable", slug: "kahoot" },
-  { name: "Sympower", ats: "recruitee", slug: "sympower" },
-  { name: "Montonio", ats: "teamtailor", slug: "careers.montonio.com" },
-  { name: "Scoro", ats: "teamtailor", slug: "careers.scoro.com" },
-  { name: "Xolo", ats: "workable", slug: "xolo-careers" },
-  { name: "Fractory", ats: "teamtailor", slug: "fractory" },
-  { name: "Mintos", ats: "teamtailor", slug: "mintos" },
-  { name: "Luminor", ats: "teamtailor", slug: "luminorbank" },
-  { name: "Wrike", ats: "greenhouse", slug: "wrike" },
-  { name: "Tuum", ats: "lever", slug: "tuumplatform", eu: true },
-  { name: "Proekspert", ats: "smartrecruiters", slug: "proekspert" },
-  { name: "Creem", ats: "ashby", slug: "creem" },
-  { name: "Bob W", ats: "teamtailor", slug: "bobw" },
-  { name: "LHV UK", ats: "greenhouse", slug: "lhvuk" },
-  { name: "Supermetrics", ats: "greenhouse", slug: "supermetricsoy" },
-  { name: "Varjo", ats: "workable", slug: "varjo-1" },
-  { name: "Remedy", ats: "greenhouse", slug: "remedy" },
-  { name: "Reaktor", ats: "ashby", slug: "reaktor" },
-  { name: "Futurice", ats: "teamtailor", slug: "careers.futurice.com" },
-  { name: "Vincit", ats: "teamtailor", slug: "vincitoyj" },
-  { name: "Nitor", ats: "workable", slug: "nitor" },
-  { name: "Solita", ats: "greenhouse", slug: "solita" },
-  { name: "Siili", ats: "teamtailor", slug: "siili" },
-  { name: "Hoxhunt", ats: "ashby", slug: "hoxhunt" },
-  { name: "Qvik", ats: "teamtailor", slug: "qvik" },
-  { name: "Holvi", ats: "teamtailor", slug: "holvi" },
-  { name: "Epidemic Sound", ats: "ashby", slug: "epidemic-sound" },
-  { name: "Trustly", ats: "ashby", slug: "trustly" },
-  { name: "Truecaller", ats: "greenhouse", slug: "truecaller" },
-  { name: "Kry", ats: "teamtailor", slug: "kry-1719827697" },
-  { name: "Tibber", ats: "teamtailor", slug: "tibber" },
-  { name: "Storytel", ats: "teamtailor", slug: "storytel" },
-  { name: "Hemnet", ats: "teamtailor", slug: "hemnet" },
-  { name: "Anyfin", ats: "teamtailor", slug: "anyfin" },
-  { name: "Detectify", ats: "teamtailor", slug: "detectify" },
-  { name: "Quinyx", ats: "teamtailor", slug: "quinyx" },
-  { name: "Bannerflow", ats: "teamtailor", slug: "bannerflow" },
-  { name: "Vipps", ats: "teamtailor", slug: "vipps" },
-  { name: "reMarkable", ats: "teamtailor", slug: "remarkable" },
-  { name: "Pleo", ats: "ashby", slug: "pleo" },
-  { name: "Too Good To Go", ats: "ashby", slug: "toogoodtogo" },
-  { name: "Trustpilot", ats: "greenhouse", slug: "trustpilot" },
-  { name: "Templafy", ats: "teamtailor", slug: "templafy" },
-  { name: "Corti", ats: "ashby", slug: "corti" },
-  { name: "Eneba", ats: "ashby", slug: "eneba" },
-  { name: "NFQ", ats: "lever", slug: "nfq" },
-  { name: "Boku", ats: "greenhouse", slug: "boku" },
-  { name: "Betsson", ats: "greenhouse", slug: "betsson" },
-  { name: "Whalar", ats: "greenhouse", slug: "whalar" },
-  { name: "Pactum", ats: "teamtailor", slug: "careers.pactum.com" },
-  { name: "Outfunnel", ats: "teamtailor", slug: "jobs.outfunnel.com" },
-  { name: "Swappie", ats: "teamtailor", slug: "careers.swappie.com" },
-  { name: "Vivino", ats: "teamtailor", slug: "careers.vivino.com" },
-  { name: "Yousician", ats: "greenhouse", slug: "yousician" },
-  { name: "Qminder", ats: "workable", slug: "qminder" },
-  // Industrial design, hardware and design studios (feeds verified 2026-11-20).
-  { name: "Above", ats: "teamtailor", slug: "above" },
-  { name: "Nofence", ats: "teamtailor", slug: "nofence" },
-  { name: "Justera Group", ats: "teamtailor", slug: "justergroupab" },
-  { name: "Kurppa Hosk", ats: "teamtailor", slug: "kurppahosk" },
-  { name: "Bold Scandinavia", ats: "teamtailor", slug: "bold" },
-  { name: "Teenage Engineering", ats: "teamtailor", slug: "careers.teenage.engineering" },
-  { name: "Eleiko", ats: "teamtailor", slug: "career.eleiko.com" },
-  { name: "Marshall Group", ats: "teamtailor", slug: "marshallgroup" },
-  { name: "Huawei Sweden", ats: "teamtailor", slug: "huaweisweden" },
-  { name: "Flokk", ats: "teamtailor", slug: "flokk" },
-  { name: "Voi", ats: "teamtailor", slug: "careers.voi.com" },
-  { name: "X Shore", ats: "teamtailor", slug: "xshore" },
-  { name: "Knightec Group", ats: "teamtailor", slug: "knightecgroup" },
-  { name: "Narbutas", ats: "teamtailor", slug: "narbutas" },
-  { name: "Teltonika", ats: "workable", slug: "teltonika" },
-  { name: "Aerones", ats: "workable", slug: "aerones" },
-  { name: "Milrem Robotics", ats: "teamtailor", slug: "milrem" },
-  { name: "Frankenburg Technologies", ats: "teamtailor", slug: "careers.frankenburg.tech" },
-  { name: "Aivan", ats: "personio", slug: "aivan-oy" },
-  { name: "Genelec", ats: "teamtailor", slug: "genelec" },
-  { name: "Rokoko", ats: "teamtailor", slug: "careers.rokoko.com" },
-  { name: "Kempower", ats: "teamtailor", slug: "careers.kempower.com" },
-  { name: "Inventas", ats: "teamtailor", slug: "karriere.inventas.no" },
-  { name: "Vesoma", ats: "ashby", slug: "vesoma" },
-  { name: "Sereact", ats: "ashby", slug: "sereact" },
-  { name: "TwentyFour Industries", ats: "personio", slug: "twentyfour-industries" },
-  { name: "Highcat", ats: "recruitee", slug: "highcat" },
-  { name: "Phoenix Design", ats: "personio", slug: "phoenix" },
-  { name: "Nacar Design", ats: "recruitee", slug: "nacardesign" },
-  { name: "Cambridge Consultants", ats: "greenhouse", slug: "cambridgeconsultantslimited" },
-  { name: "Huawei R&D UK", ats: "teamtailor", slug: "huaweiuk" },
-  { name: "Huawei Italia", ats: "teamtailor", slug: "huaweitechnologiesitalia" },
-  { name: "On", ats: "greenhouse", slug: "onrunning" },
-  { name: "Salomon", ats: "smartrecruiters", slug: "Salomon" },
-  { name: "Map Project Office", ats: "greenhouse", slug: "mapprojectoffice" },
-  { name: "Ensera Design", ats: "recruitee", slug: "enseradesign" },
-  { name: "Landor", ats: "greenhouse", slug: "landor" },
-  { name: "Interbrand", ats: "greenhouse", slug: "interbrand" },
-  { name: "Koto", ats: "teamtailor", slug: "koto" },
-  { name: "IDEO", ats: "greenhouse", slug: "ideo" },
-  { name: "AKQA", ats: "greenhouse", slug: "akqa" },
-  { name: "DEPT", ats: "greenhouse", slug: "dept" },
-  { name: "Withings", ats: "workable", slug: "withings" },
-  { name: "Fairphone", ats: "personio", slug: "fairphone" },
-  { name: "Helsing", ats: "greenhouse", slug: "helsing" },
-  { name: "Tonies", ats: "ashby", slug: "tonies" },
-  { name: "Cell Labs", ats: "personio", slug: "cell-labs" },
-];
-
+/* The companies whose boards are read live in data/companies.json (lib/company.ts, loadCompanies). */
 function wp(v: string | undefined | null): RemoteStatus | undefined {
   const s = (v ?? "").toLowerCase();
   if (s.includes("remote") || s === "fully") return "remote";
@@ -389,31 +217,43 @@ async function personio(name: string, slug: string): Promise<RawPosting[]> {
 export const FETCHERS: Record<Ats, (name: string, slug: string, eu?: boolean) => Promise<RawPosting[]>> = {
   greenhouse, lever, ashby, teamtailor, workable, recruitee, smartrecruiters, personio,
 };
-const LABEL: Record<Ats, string> = {
-  greenhouse: "Greenhouse", lever: "Lever", ashby: "Ashby", teamtailor: "Teamtailor",
-  workable: "Workable", recruitee: "Recruitee", smartrecruiters: "SmartRecruiters", personio: "Personio",
-};
 
-/** One SourceResult per ATS, plus per-company errors in notes. */
-export async function allAts(): Promise<(SourceResult & { error?: string })[]> {
-  const perCompany = await pool(COMPANIES, 4, async (c) => {
+/** A company whose board could not be read today: its postings from the last good run are kept (scripts/fetch.ts). */
+export interface FailedCompany {
+  name: string;
+  ats: Ats;
+  /** Posting ids from this board start with it (boardIdPrefix). */
+  prefix: string;
+  error: string;
+}
+
+/**
+ * Every board on the list (data/companies.json): one SourceResult per ATS, plus the companies whose
+ * board failed. A company with zero open roles, or zero design roles, is simply an empty board.
+ */
+export async function allAts(companies: Company[] = loadCompanies()): Promise<{ results: SourceResult[]; failedCompanies: FailedCompany[] }> {
+  const perCompany = await pool(companies, 4, async (c) => {
     try {
       return { c, postings: await FETCHERS[c.ats](c.name, c.slug, c.eu), error: null as string | null };
     } catch (e: any) {
       return { c, postings: [] as RawPosting[], error: String(e?.message ?? e) };
     }
   });
-  return (Object.keys(LABEL) as Ats[]).filter((ats) => COMPANIES.some((c) => c.ats === ats)).map((ats) => {
-    const rows = perCompany.filter((r) => r.c.ats === ats);
-    const failed = rows.filter((r) => r.error);
-    const counts = rows.map((r) => `${r.c.name} ${r.error ? "FAILED" : r.postings.length}`).join(", ");
-    return {
-      source: LABEL[ats],
-      sourceType: "ats" as const,
-      fetched: rows.reduce((n, r) => n + r.postings.length, 0),
-      postings: rows.flatMap((r) => r.postings),
-      notes: `all open roles per company: ${counts}`,
-      error: failed.length === rows.length && rows.length ? failed.map((f) => f.error).join("; ") : undefined,
-    };
-  });
+  const results = (Object.keys(ATS_LABEL) as Ats[])
+    .filter((ats) => companies.some((c) => c.ats === ats))
+    .map((ats) => {
+      const rows = perCompany.filter((r) => r.c.ats === ats);
+      const counts = rows.map((r) => `${r.c.name} ${r.error ? "FAILED" : r.postings.length}`).join(", ");
+      return {
+        source: ATS_LABEL[ats],
+        sourceType: "ats" as const,
+        fetched: rows.reduce((n, r) => n + r.postings.length, 0),
+        postings: rows.flatMap((r) => r.postings),
+        notes: `all open roles per company: ${counts}`,
+      };
+    });
+  const failedCompanies = perCompany
+    .filter((r) => r.error)
+    .map((r) => ({ name: r.c.name, ats: r.c.ats, prefix: boardIdPrefix(r.c), error: r.error! }));
+  return { results, failedCompanies };
 }

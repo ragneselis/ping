@@ -1,0 +1,1551 @@
+[
+  {
+    "name": "Figma",
+    "careersUrl": "https://job-boards.greenhouse.io/figma",
+    "ats": "greenhouse",
+    "slug": "figma",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Airbnb",
+    "careersUrl": "https://job-boards.greenhouse.io/airbnb",
+    "ats": "greenhouse",
+    "slug": "airbnb",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Stripe",
+    "careersUrl": "https://job-boards.greenhouse.io/stripe",
+    "ats": "greenhouse",
+    "slug": "stripe",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Discord",
+    "careersUrl": "https://job-boards.greenhouse.io/discord",
+    "ats": "greenhouse",
+    "slug": "discord",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Dropbox",
+    "careersUrl": "https://job-boards.greenhouse.io/dropbox",
+    "ats": "greenhouse",
+    "slug": "dropbox",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Pinterest",
+    "careersUrl": "https://job-boards.greenhouse.io/pinterest",
+    "ats": "greenhouse",
+    "slug": "pinterest",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "GitLab",
+    "careersUrl": "https://job-boards.greenhouse.io/gitlab",
+    "ats": "greenhouse",
+    "slug": "gitlab",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Duolingo",
+    "careersUrl": "https://job-boards.greenhouse.io/duolingo",
+    "ats": "greenhouse",
+    "slug": "duolingo",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Asana",
+    "careersUrl": "https://job-boards.greenhouse.io/asana",
+    "ats": "greenhouse",
+    "slug": "asana",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Miro",
+    "careersUrl": "https://job-boards.greenhouse.io/realtimeboardglobal",
+    "ats": "greenhouse",
+    "slug": "realtimeboardglobal",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Wise",
+    "careersUrl": "https://job-boards.greenhouse.io/wise",
+    "ats": "greenhouse",
+    "slug": "wise",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Veriff",
+    "careersUrl": "https://job-boards.greenhouse.io/veriff",
+    "ats": "greenhouse",
+    "slug": "veriff",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Intercom",
+    "careersUrl": "https://job-boards.greenhouse.io/intercom",
+    "ats": "greenhouse",
+    "slug": "intercom",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Monzo",
+    "careersUrl": "https://job-boards.greenhouse.io/monzo",
+    "ats": "greenhouse",
+    "slug": "monzo",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "N26",
+    "careersUrl": "https://job-boards.greenhouse.io/n26",
+    "ats": "greenhouse",
+    "slug": "n26",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Typeform",
+    "careersUrl": "https://job-boards.greenhouse.io/typeform",
+    "ats": "greenhouse",
+    "slug": "typeform",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Vercel",
+    "careersUrl": "https://job-boards.greenhouse.io/vercel",
+    "ats": "greenhouse",
+    "slug": "vercel",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Spotify",
+    "careersUrl": "https://jobs.lever.co/spotify",
+    "ats": "lever",
+    "slug": "spotify",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Pipedrive",
+    "careersUrl": "https://jobs.lever.co/pipedrive",
+    "ats": "lever",
+    "slug": "pipedrive",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Notion",
+    "careersUrl": "https://jobs.ashbyhq.com/notion",
+    "ats": "ashby",
+    "slug": "notion",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Linear",
+    "careersUrl": "https://jobs.ashbyhq.com/linear",
+    "ats": "ashby",
+    "slug": "linear",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Ramp",
+    "careersUrl": "https://jobs.ashbyhq.com/ramp",
+    "ats": "ashby",
+    "slug": "ramp",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "ElevenLabs",
+    "careersUrl": "https://jobs.ashbyhq.com/elevenlabs",
+    "ats": "ashby",
+    "slug": "elevenlabs",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Supabase",
+    "careersUrl": "https://jobs.ashbyhq.com/supabase",
+    "ats": "ashby",
+    "slug": "supabase",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Glia",
+    "careersUrl": "https://jobs.ashbyhq.com/glia",
+    "ats": "ashby",
+    "slug": "glia",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Webflow",
+    "careersUrl": "https://jobs.ashbyhq.com/webflow",
+    "ats": "ashby",
+    "slug": "webflow",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Modash",
+    "careersUrl": "https://apply.workable.com/modash/",
+    "ats": "workable",
+    "slug": "modash",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Adcash",
+    "careersUrl": "https://adcash.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "adcash",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Swedbank",
+    "careersUrl": "https://jobs.swedbank.com/jobs",
+    "ats": "teamtailor",
+    "slug": "jobs.swedbank.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Printful",
+    "careersUrl": "https://printfulinc.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "printfulinc",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Restream",
+    "careersUrl": "https://jobs.ashbyhq.com/restream",
+    "ats": "ashby",
+    "slug": "restream",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Oura",
+    "careersUrl": "https://job-boards.greenhouse.io/oura",
+    "ats": "greenhouse",
+    "slug": "oura",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Smartly.io",
+    "careersUrl": "https://job-boards.greenhouse.io/smartlyio",
+    "ats": "greenhouse",
+    "slug": "smartlyio",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "RELEX",
+    "careersUrl": "https://job-boards.greenhouse.io/relex",
+    "ats": "greenhouse",
+    "slug": "relex",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Supercell",
+    "careersUrl": "https://jobs.ashbyhq.com/supercell",
+    "ats": "ashby",
+    "slug": "supercell",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Housemarque",
+    "careersUrl": "https://job-boards.greenhouse.io/housemarque",
+    "ats": "greenhouse",
+    "slug": "housemarque",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Mentimeter",
+    "careersUrl": "https://job-boards.greenhouse.io/mentimeter",
+    "ats": "greenhouse",
+    "slug": "mentimeter",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Lovable",
+    "careersUrl": "https://jobs.ashbyhq.com/lovable",
+    "ats": "ashby",
+    "slug": "lovable",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Legora",
+    "careersUrl": "https://jobs.ashbyhq.com/legora",
+    "ats": "ashby",
+    "slug": "legora",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Embark Studios",
+    "careersUrl": "https://embarkstudios.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "embarkstudios",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Oda",
+    "careersUrl": "https://careers.oda.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.oda.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Cognite",
+    "careersUrl": "https://job-boards.greenhouse.io/cognite",
+    "ats": "greenhouse",
+    "slug": "cognite",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Schibsted",
+    "careersUrl": "https://schibsted.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "schibsted",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Lunar",
+    "careersUrl": "https://lunar.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "lunar",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Nexos.ai",
+    "careersUrl": "https://jobs.lever.co/Nexos",
+    "ats": "lever",
+    "slug": "Nexos",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Hostinger",
+    "careersUrl": "https://jobs.ashbyhq.com/hostinger",
+    "ats": "ashby",
+    "slug": "hostinger",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Omnisend",
+    "careersUrl": "https://jobs.lever.co/omnisend",
+    "ats": "lever",
+    "slug": "omnisend",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Surfshark",
+    "careersUrl": "https://jobs.ashbyhq.com/surfshark",
+    "ats": "ashby",
+    "slug": "surfshark",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Wolt",
+    "careersUrl": "https://job-boards.greenhouse.io/wolt",
+    "ats": "greenhouse",
+    "slug": "wolt",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Playtech",
+    "careersUrl": "https://careers.smartrecruiters.com/playtech",
+    "ats": "smartrecruiters",
+    "slug": "playtech",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Testlio",
+    "careersUrl": "https://job-boards.greenhouse.io/testlio",
+    "ats": "greenhouse",
+    "slug": "testlio",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Nortal",
+    "careersUrl": "https://job-boards.greenhouse.io/nortal",
+    "ats": "greenhouse",
+    "slug": "nortal",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Bondora",
+    "careersUrl": "https://job-boards.greenhouse.io/bondora",
+    "ats": "greenhouse",
+    "slug": "bondora",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Inbank",
+    "careersUrl": "https://job-boards.greenhouse.io/inbank",
+    "ats": "greenhouse",
+    "slug": "inbank",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Zego",
+    "careersUrl": "https://jobs.ashbyhq.com/zego",
+    "ats": "ashby",
+    "slug": "zego",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Katana",
+    "careersUrl": "https://jobs.ashbyhq.com/katana",
+    "ats": "ashby",
+    "slug": "katana",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Gelato",
+    "careersUrl": "https://jobs.ashbyhq.com/gelato",
+    "ats": "ashby",
+    "slug": "gelato",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Starship",
+    "careersUrl": "https://starship.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "starship",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Lightyear",
+    "careersUrl": "https://lightyear.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "lightyear",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Monese",
+    "careersUrl": "https://monese.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "monese",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Comodule",
+    "careersUrl": "https://comodule.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "comodule",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Salv",
+    "careersUrl": "https://salv.jobs.personio.de/",
+    "ats": "personio",
+    "slug": "salv",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Skeleton Technologies",
+    "careersUrl": "https://apply.workable.com/skeletontech/",
+    "ats": "workable",
+    "slug": "skeletontech",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Kahoot",
+    "careersUrl": "https://apply.workable.com/kahoot/",
+    "ats": "workable",
+    "slug": "kahoot",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Sympower",
+    "careersUrl": "https://sympower.recruitee.com/",
+    "ats": "recruitee",
+    "slug": "sympower",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Montonio",
+    "careersUrl": "https://careers.montonio.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.montonio.com",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Scoro",
+    "careersUrl": "https://careers.scoro.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.scoro.com",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Xolo",
+    "careersUrl": "https://apply.workable.com/xolo-careers/",
+    "ats": "workable",
+    "slug": "xolo-careers",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Fractory",
+    "careersUrl": "https://fractory.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "fractory",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Mintos",
+    "careersUrl": "https://mintos.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "mintos",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Luminor",
+    "careersUrl": "https://luminorbank.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "luminorbank",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Wrike",
+    "careersUrl": "https://job-boards.greenhouse.io/wrike",
+    "ats": "greenhouse",
+    "slug": "wrike",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Tuum",
+    "careersUrl": "https://jobs.eu.lever.co/tuumplatform",
+    "ats": "lever",
+    "slug": "tuumplatform",
+    "eu": true,
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Proekspert",
+    "careersUrl": "https://careers.smartrecruiters.com/proekspert",
+    "ats": "smartrecruiters",
+    "slug": "proekspert",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Creem",
+    "careersUrl": "https://jobs.ashbyhq.com/creem",
+    "ats": "ashby",
+    "slug": "creem",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Bob W",
+    "careersUrl": "https://bobw.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "bobw",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "LHV UK",
+    "careersUrl": "https://job-boards.greenhouse.io/lhvuk",
+    "ats": "greenhouse",
+    "slug": "lhvuk",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Supermetrics",
+    "careersUrl": "https://job-boards.greenhouse.io/supermetricsoy",
+    "ats": "greenhouse",
+    "slug": "supermetricsoy",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Varjo",
+    "careersUrl": "https://apply.workable.com/varjo-1/",
+    "ats": "workable",
+    "slug": "varjo-1",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Remedy",
+    "careersUrl": "https://job-boards.greenhouse.io/remedy",
+    "ats": "greenhouse",
+    "slug": "remedy",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Reaktor",
+    "careersUrl": "https://jobs.ashbyhq.com/reaktor",
+    "ats": "ashby",
+    "slug": "reaktor",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Futurice",
+    "careersUrl": "https://careers.futurice.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.futurice.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Vincit",
+    "careersUrl": "https://vincitoyj.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "vincitoyj",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Nitor",
+    "careersUrl": "https://apply.workable.com/nitor/",
+    "ats": "workable",
+    "slug": "nitor",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Solita",
+    "careersUrl": "https://job-boards.greenhouse.io/solita",
+    "ats": "greenhouse",
+    "slug": "solita",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Siili",
+    "careersUrl": "https://siili.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "siili",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Hoxhunt",
+    "careersUrl": "https://jobs.ashbyhq.com/hoxhunt",
+    "ats": "ashby",
+    "slug": "hoxhunt",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Qvik",
+    "careersUrl": "https://qvik.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "qvik",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Holvi",
+    "careersUrl": "https://holvi.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "holvi",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Epidemic Sound",
+    "careersUrl": "https://jobs.ashbyhq.com/epidemic-sound",
+    "ats": "ashby",
+    "slug": "epidemic-sound",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Trustly",
+    "careersUrl": "https://jobs.ashbyhq.com/trustly",
+    "ats": "ashby",
+    "slug": "trustly",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Truecaller",
+    "careersUrl": "https://job-boards.greenhouse.io/truecaller",
+    "ats": "greenhouse",
+    "slug": "truecaller",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Kry",
+    "careersUrl": "https://kry-1719827697.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "kry-1719827697",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Tibber",
+    "careersUrl": "https://tibber.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "tibber",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Storytel",
+    "careersUrl": "https://storytel.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "storytel",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Hemnet",
+    "careersUrl": "https://hemnet.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "hemnet",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Anyfin",
+    "careersUrl": "https://anyfin.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "anyfin",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Detectify",
+    "careersUrl": "https://detectify.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "detectify",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Quinyx",
+    "careersUrl": "https://quinyx.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "quinyx",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Bannerflow",
+    "careersUrl": "https://bannerflow.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "bannerflow",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Vipps",
+    "careersUrl": "https://vipps.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "vipps",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "reMarkable",
+    "careersUrl": "https://remarkable.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "remarkable",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Pleo",
+    "careersUrl": "https://jobs.ashbyhq.com/pleo",
+    "ats": "ashby",
+    "slug": "pleo",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Too Good To Go",
+    "careersUrl": "https://jobs.ashbyhq.com/toogoodtogo",
+    "ats": "ashby",
+    "slug": "toogoodtogo",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Trustpilot",
+    "careersUrl": "https://job-boards.greenhouse.io/trustpilot",
+    "ats": "greenhouse",
+    "slug": "trustpilot",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Templafy",
+    "careersUrl": "https://templafy.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "templafy",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Corti",
+    "careersUrl": "https://jobs.ashbyhq.com/corti",
+    "ats": "ashby",
+    "slug": "corti",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Eneba",
+    "careersUrl": "https://jobs.ashbyhq.com/eneba",
+    "ats": "ashby",
+    "slug": "eneba",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "NFQ",
+    "careersUrl": "https://jobs.lever.co/nfq",
+    "ats": "lever",
+    "slug": "nfq",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Boku",
+    "careersUrl": "https://job-boards.greenhouse.io/boku",
+    "ats": "greenhouse",
+    "slug": "boku",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Betsson",
+    "careersUrl": "https://job-boards.greenhouse.io/betsson",
+    "ats": "greenhouse",
+    "slug": "betsson",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Whalar",
+    "careersUrl": "https://job-boards.greenhouse.io/whalar",
+    "ats": "greenhouse",
+    "slug": "whalar",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Pactum",
+    "careersUrl": "https://careers.pactum.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.pactum.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Outfunnel",
+    "careersUrl": "https://jobs.outfunnel.com/jobs",
+    "ats": "teamtailor",
+    "slug": "jobs.outfunnel.com",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Swappie",
+    "careersUrl": "https://careers.swappie.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.swappie.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Vivino",
+    "careersUrl": "https://careers.vivino.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.vivino.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Yousician",
+    "careersUrl": "https://job-boards.greenhouse.io/yousician",
+    "ats": "greenhouse",
+    "slug": "yousician",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Qminder",
+    "careersUrl": "https://apply.workable.com/qminder/",
+    "ats": "workable",
+    "slug": "qminder",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Above",
+    "careersUrl": "https://above.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "above",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Nofence",
+    "careersUrl": "https://nofence.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "nofence",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Justera Group",
+    "careersUrl": "https://justergroupab.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "justergroupab",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Kurppa Hosk",
+    "careersUrl": "https://kurppahosk.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "kurppahosk",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Bold Scandinavia",
+    "careersUrl": "https://bold.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "bold",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Teenage Engineering",
+    "careersUrl": "https://careers.teenage.engineering/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.teenage.engineering",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Eleiko",
+    "careersUrl": "https://career.eleiko.com/jobs",
+    "ats": "teamtailor",
+    "slug": "career.eleiko.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Marshall Group",
+    "careersUrl": "https://marshallgroup.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "marshallgroup",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Huawei Sweden",
+    "careersUrl": "https://huaweisweden.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "huaweisweden",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Flokk",
+    "careersUrl": "https://flokk.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "flokk",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Voi",
+    "careersUrl": "https://careers.voi.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.voi.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "X Shore",
+    "careersUrl": "https://xshore.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "xshore",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Knightec Group",
+    "careersUrl": "https://knightecgroup.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "knightecgroup",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Narbutas",
+    "careersUrl": "https://narbutas.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "narbutas",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Teltonika",
+    "careersUrl": "https://apply.workable.com/teltonika/",
+    "ats": "workable",
+    "slug": "teltonika",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Aerones",
+    "careersUrl": "https://apply.workable.com/aerones/",
+    "ats": "workable",
+    "slug": "aerones",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Milrem Robotics",
+    "careersUrl": "https://milrem.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "milrem",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Frankenburg Technologies",
+    "careersUrl": "https://careers.frankenburg.tech/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.frankenburg.tech",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Aivan",
+    "careersUrl": "https://aivan-oy.jobs.personio.de/",
+    "ats": "personio",
+    "slug": "aivan-oy",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Genelec",
+    "careersUrl": "https://genelec.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "genelec",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Rokoko",
+    "careersUrl": "https://careers.rokoko.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.rokoko.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Kempower",
+    "careersUrl": "https://careers.kempower.com/jobs",
+    "ats": "teamtailor",
+    "slug": "careers.kempower.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Inventas",
+    "careersUrl": "https://karriere.inventas.no/jobs",
+    "ats": "teamtailor",
+    "slug": "karriere.inventas.no",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Vesoma",
+    "careersUrl": "https://jobs.ashbyhq.com/vesoma",
+    "ats": "ashby",
+    "slug": "vesoma",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Sereact",
+    "careersUrl": "https://jobs.ashbyhq.com/sereact",
+    "ats": "ashby",
+    "slug": "sereact",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "TwentyFour Industries",
+    "careersUrl": "https://twentyfour-industries.jobs.personio.de/",
+    "ats": "personio",
+    "slug": "twentyfour-industries",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Highcat",
+    "careersUrl": "https://highcat.recruitee.com/",
+    "ats": "recruitee",
+    "slug": "highcat",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Phoenix Design",
+    "careersUrl": "https://phoenix.jobs.personio.de/",
+    "ats": "personio",
+    "slug": "phoenix",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Nacar Design",
+    "careersUrl": "https://nacardesign.recruitee.com/",
+    "ats": "recruitee",
+    "slug": "nacardesign",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Cambridge Consultants",
+    "careersUrl": "https://job-boards.greenhouse.io/cambridgeconsultantslimited",
+    "ats": "greenhouse",
+    "slug": "cambridgeconsultantslimited",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Huawei R&D UK",
+    "careersUrl": "https://huaweiuk.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "huaweiuk",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Huawei Italia",
+    "careersUrl": "https://huaweitechnologiesitalia.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "huaweitechnologiesitalia",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "On",
+    "careersUrl": "https://job-boards.greenhouse.io/onrunning",
+    "ats": "greenhouse",
+    "slug": "onrunning",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Salomon",
+    "careersUrl": "https://careers.smartrecruiters.com/Salomon",
+    "ats": "smartrecruiters",
+    "slug": "Salomon",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Map Project Office",
+    "careersUrl": "https://job-boards.greenhouse.io/mapprojectoffice",
+    "ats": "greenhouse",
+    "slug": "mapprojectoffice",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Ensera Design",
+    "careersUrl": "https://enseradesign.recruitee.com/",
+    "ats": "recruitee",
+    "slug": "enseradesign",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Landor",
+    "careersUrl": "https://job-boards.greenhouse.io/landor",
+    "ats": "greenhouse",
+    "slug": "landor",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Interbrand",
+    "careersUrl": "https://job-boards.greenhouse.io/interbrand",
+    "ats": "greenhouse",
+    "slug": "interbrand",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Koto",
+    "careersUrl": "https://koto.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "koto",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "IDEO",
+    "careersUrl": "https://job-boards.greenhouse.io/ideo",
+    "ats": "greenhouse",
+    "slug": "ideo",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "AKQA",
+    "careersUrl": "https://job-boards.greenhouse.io/akqa",
+    "ats": "greenhouse",
+    "slug": "akqa",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "DEPT",
+    "careersUrl": "https://job-boards.greenhouse.io/dept",
+    "ats": "greenhouse",
+    "slug": "dept",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Withings",
+    "careersUrl": "https://apply.workable.com/withings/",
+    "ats": "workable",
+    "slug": "withings",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Fairphone",
+    "careersUrl": "https://fairphone.jobs.personio.de/",
+    "ats": "personio",
+    "slug": "fairphone",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Helsing",
+    "careersUrl": "https://job-boards.greenhouse.io/helsing",
+    "ats": "greenhouse",
+    "slug": "helsing",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Tonies",
+    "careersUrl": "https://jobs.ashbyhq.com/tonies",
+    "ats": "ashby",
+    "slug": "tonies",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Cell Labs",
+    "careersUrl": "https://cell-labs.jobs.personio.de/",
+    "ats": "personio",
+    "slug": "cell-labs",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-20",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Admirals",
+    "careersUrl": "https://apply.workable.com/admirals/",
+    "ats": "workable",
+    "slug": "admirals",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Thorgate",
+    "careersUrl": "https://jobs.thorgate.eu/",
+    "ats": "teamtailor",
+    "slug": "jobs.thorgate.eu",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Uptime",
+    "careersUrl": "https://www.uptime.eu/careers/",
+    "ats": "recruitee",
+    "slug": "uptimedevelopment",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Relax Gaming",
+    "careersUrl": "https://careers.relax-gaming.com/",
+    "ats": "teamtailor",
+    "slug": "careers.relax-gaming.com",
+    "basedInEstonia": false,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Studioworks",
+    "careersUrl": "https://studioworks.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "studioworks",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  },
+  {
+    "name": "Sisu Group",
+    "careersUrl": "https://sisugroup.teamtailor.com/jobs",
+    "ats": "teamtailor",
+    "slug": "sisugroup",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  },
+  {
+    "name": "eAgronom",
+    "careersUrl": "https://www.eagronom.com/careers",
+    "ats": "personio",
+    "slug": "eagronom",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-21",
+    "addedBy": "manual"
+  }
+]

@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { CompanySchema, companySlug, type Company } from "./company";
 import type { Classification, ClassifiedJob, Extraction, Job, SourceReport } from "./types";
 
 const dir = path.join(process.cwd(), "data");
@@ -14,7 +15,34 @@ export function loadJobs(): Job[] {
 }
 
 export function loadSources() {
-  return read<{ fetchedAt: string; totalInScope: number; duplicatesRemoved: number; unique: number; sources: SourceReport[] } | null>("sources.json", null);
+  return read<{
+    fetchedAt: string;
+    totalInScope: number;
+    duplicatesRemoved: number;
+    unique: number;
+    sources: SourceReport[];
+    /** Companies whose board failed this run (their last good postings were kept). */
+    failedCompanies?: { name: string; ats: string; error: string; kept: number }[];
+  } | null>("sources.json", null);
+}
+
+export interface DiscoveryRun {
+  at: string;
+  model: string;
+  searches: number;
+  costUsd: number;
+  added: { name: string; ats: string; slug: string; roles: number; careersUrl: string }[];
+  skipped: { name: string; reason: string }[];
+}
+
+/** The weekly discovery runs (scripts/discover.ts), oldest first. */
+export function loadDiscovery(): DiscoveryRun[] {
+  return read<{ runs: DiscoveryRun[] }>("discovery.json", { runs: [] }).runs;
+}
+
+/** The companies whose boards Ping reads (data/companies.json), validated. */
+export function loadCompanies(): Company[] {
+  return CompanySchema.array().parse(read<unknown[]>("companies.json", []));
 }
 
 /** When the daily refresh last finished and when the next one is due (written by scripts/stamp.ts). */
@@ -44,9 +72,14 @@ export function loadClassifications(): ClassificationStore {
  * Candidates joined with the model's classification and requirements. Postings classified as not design
  * work are dropped; postings not classified yet are kept without a category until the next extract run.
  * The model's experience level replaces the title-based seniority when the title says nothing.
+ * Postings from companies based in Estonia (data/companies.json) are always open to Estonia.
  */
 export function loadClassifiedJobs(store = loadExtractions(), cls = loadClassifications()): ClassifiedJob[] {
+  // Postings from companies headquartered in Estonia always count as open to Estonia, whichever
+  // source listed them (their board, or a job board re-listing it).
+  const estonian = new Set(loadCompanies().filter((c) => c.basedInEstonia).map((c) => companySlug(c.name)));
   return loadJobs()
+    .map((j) => (estonian.has(companySlug(j.company)) ? { ...j, openToEstonia: true } : j))
     .map((j) => {
       const c = cls.results[j.id] ?? null;
       const e = c?.isDesignRole ? store.results[j.id] ?? null : null;

@@ -24,7 +24,7 @@ import { consumeRestored, rememberView } from "@/lib/view-memory";
 export const RESULTS_ID = "jobs-heading";
 
 /** Query parameters that are filters (a plain sort or "load more" page is not). */
-const FILTER_PARAMS = ["category", "estonia", "level", "reach", "remote", "q"];
+const FILTER_PARAMS = ["category", "estonia", "level", "reach", "remote", "q", "company"];
 
 let pending = false;
 

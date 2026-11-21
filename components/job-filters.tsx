@@ -44,9 +44,12 @@ const readLevels = (params: URLSearchParams) => {
 export function JobFilters({
   categories,
   total,
+  company,
 }: {
   categories: { value: Category; label: string; count: number }[];
   total: number;
+  /** The company filter (?company=), from a Discover link or a shared URL, with its display name. */
+  company?: { key: string; name: string } | null;
 }) {
   const { params, pending, go, set, update } = useQueryState();
 
@@ -63,6 +66,7 @@ export function JobFilters({
     params.get("estonia") ||
     levels.size ||
     params.get("remote") ||
+    params.get("company") ||
     params.get("sort") === "newest"
   );
 
@@ -84,6 +88,18 @@ export function JobFilters({
         value={params.get("q") ?? ""}
         onChange={(v) => set("q", v || null)}
       />
+      {company && (
+        // Only jobs at one company (a Discover link): on the label's baseline, removable on its own.
+        <div className="baseline-row flex-wrap gap-x-3 gap-y-1">
+          <DataLabel>Company</DataLabel>
+          <span className="font-medium">{company.name}</span>
+          <Button variant="ghost" size="sm" className="min-h-11 sm:min-h-8" onClick={() => set("company", null)}>
+            <X data-icon="inline-start" />
+            <span className="sr-only">Show jobs at every company, not only {company.name}</span>
+            <span aria-hidden>All companies</span>
+          </Button>
+        </div>
+      )}
       <TabRow label="Direction" activeKey={category}>
         <button
           type="button"
