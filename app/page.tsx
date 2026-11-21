@@ -160,7 +160,7 @@ export default async function JobsPage({
           <Suspense>
             <ResultsTarget />
           </Suspense>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <div className="baseline-row flex-wrap gap-x-5 gap-y-2">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-foreground">
                 {results.length.toLocaleString("en-GB")}

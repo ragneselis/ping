@@ -20,6 +20,7 @@ export function Panel({
   title,
   titleAs: Title = "h3",
   lead,
+  leadSize = 10,
   count,
   description,
   footer,
@@ -35,6 +36,8 @@ export function Panel({
   titleAs?: "h2" | "h3" | "p";
   /** A small mark before the title, e.g. a category dot. */
   lead?: ReactNode;
+  /** The lead's rendered size in px, so it can sit on the title's capitals (size-2.5 = 10). */
+  leadSize?: number;
   /** A figure set at the far end of the header. */
   count?: ReactNode;
   description?: ReactNode;
@@ -54,20 +57,25 @@ export function Panel({
   const linked = !!href;
   const header =
     title || count !== undefined ? (
-      <div className="flex items-baseline justify-between gap-4">
+      <div className="baseline-row justify-between gap-4">
         <Title
           className={cn(
-            "flex min-w-0 items-center gap-2 font-heading text-title font-semibold tracking-tight",
+            /* On the text baseline, so the count at the far end sits on the title's line; the dot
+               and the arrow are centred on the capitals by `cap-icon` (the icon rule). */
+            "baseline-row min-w-0 gap-2 font-heading text-title font-semibold tracking-tight",
             linked && "underline-offset-4 decoration-1 group-hover/panel:underline group-focus-visible/panel:underline",
           )}
         >
-          {lead}
+          {lead && (
+            <span aria-hidden className="cap-icon flex shrink-0" style={{ "--icon-size": `${leadSize}px` } as CSSProperties}>
+              {lead}
+            </span>
+          )}
           <span className="min-w-0">{title}</span>
           {linked && (
-            <ArrowUpRight
-              aria-hidden
-              className="size-4 shrink-0 opacity-0 transition-opacity group-hover/panel:opacity-100 group-focus-visible/panel:opacity-100"
-            />
+            <span aria-hidden className="cap-icon flex shrink-0" style={{ "--icon-size": "16px" } as CSSProperties}>
+              <ArrowUpRight className="size-4 opacity-0 transition-opacity group-hover/panel:opacity-100 group-focus-visible/panel:opacity-100" />
+            </span>
           )}
         </Title>
         {count !== undefined && <span className="shrink-0 font-mono text-2xl leading-none tabular-nums">{count}</span>}

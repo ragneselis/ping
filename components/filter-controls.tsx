@@ -26,7 +26,7 @@ export function TabContent({ label, count, category }: { label: string; count?: 
   );
 }
 
-/** Small mono label for a filter group or a table column. */
+/** Small mono label for a filter group or a table column. Beside other text, in a `baseline-row` (globals.css). */
 export function DataLabel({ children, className, ...rest }: { children: ReactNode; className?: string; id?: string }) {
   return (
     <span className={cn("label-mono text-muted-foreground", className)} {...rest}>
@@ -43,7 +43,8 @@ export interface SegmentItem {
 /**
  * Segmented control: square, hairline borders, the selected segment in solid foreground.
  * `isActive` decides selection, so the same control serves single and multiple choice.
- * Fills the width on phones (44px tall), compact from sm up. `stacked` keeps the label above the
+ * From sm the label sits beside the control on its text baseline (`baseline-row`), so LEVEL reads on
+ * the same line as the segment words. Fills the width on phones (44px tall), compact from sm up. `stacked` keeps the label above the
  * control at every width (forms, where labels of different lengths would otherwise stagger).
  */
 export function Segmented({
@@ -64,7 +65,7 @@ export function Segmented({
   // Unique per instance: the Jobs filters and the subscription modal can both show a "Level" control.
   const id = `seg-${useId()}`;
   return (
-    <div className={cn("grid gap-1.5", !stacked && "sm:flex sm:items-center sm:gap-3", className)}>
+    <div className={cn("grid gap-1.5", !stacked && "sm:baseline-row sm:gap-3", className)}>
       <DataLabel id={id}>{label}</DataLabel>
       <div role="group" aria-labelledby={id} className={cn("flex w-full border border-hairline-strong bg-card", stacked ? "sm:w-fit" : "sm:w-auto")}>
         {items.map((it) => {

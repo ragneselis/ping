@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -129,14 +130,16 @@ export default async function InsightsPage({
       {/* ---------- One direction (or all) ---------- */}
       <Band aria-labelledby="asks-heading" inner="grid gap-6 py-8 sm:py-10">
         <div className="grid gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="baseline-row flex-wrap justify-between gap-3">
+            <div className="baseline-row flex-wrap gap-3">
               <h2
                 id="asks-heading"
-                className="scroll-mt-24 flex items-center gap-3"
+                className="scroll-mt-24 baseline-row gap-3"
               >
                 {category && (
-                  <CategoryDot category={category} className="size-3" />
+                  <span aria-hidden className="cap-icon flex shrink-0" style={{ "--icon-size": "12px" } as CSSProperties}>
+                    <CategoryDot category={category} className="size-3" />
+                  </span>
                 )}
                 {category ? CATEGORY_LABEL[category] : "All directions"}
               </h2>
@@ -329,7 +332,7 @@ export default async function InsightsPage({
                   <div className="grid justify-items-start gap-3">
                     <p>{CATEGORY_META[c.category].blurb}</p>
                     {c.earlySignal && (
-                      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+                      <p className="baseline-row flex-wrap gap-x-2 gap-y-1 text-xs">
                         <EarlySignalBadge />
                         <span>{EARLY_SIGNAL_LINE}</span>
                       </p>
@@ -351,8 +354,9 @@ export default async function InsightsPage({
                   </div>
                 }
               >
-                {/* Within reach leads; Estonia and median years are secondary. */}
-                <dl className="flex flex-wrap items-end gap-x-6 gap-y-3">
+                {/* Within reach leads; Estonia and median years are secondary. Each is a figure over its
+                    label; side by side they align on the labels' baseline, so the words share a line. */}
+                <dl className="flex flex-wrap items-baseline-last gap-x-6 gap-y-3">
                   <div className="mr-2 grid gap-1.5">
                     <dt className="label-mono order-2 text-muted-foreground">
                       Within reach
@@ -373,7 +377,7 @@ export default async function InsightsPage({
                       ["Median years", c.medianYears ?? "n/a"],
                     ] as const
                   ).map(([label, value]) => (
-                    <div key={label} className="grid gap-1 pb-0.5">
+                    <div key={label} className="grid gap-1">
                       <dt className="order-2 text-xs text-muted-foreground">
                         {label}
                       </dt>

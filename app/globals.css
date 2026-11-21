@@ -389,7 +389,18 @@
   }
 }
 
-/* GrönLoop's small mono label: 11px, wide tracking, uppercase. */
+/* THE BASELINE RULE. A row that puts text beside text of another size or style (a count and its
+   label, a small mono label beside its control, a heading beside a badge, a panel header) aligns on
+   the TEXT BASELINE, never on the centre of the boxes: an 11px uppercase mono label fills the top of
+   its box and lowercase text sits low in its own, so centred boxes put the words on different lines.
+   `baseline-row` is that row; a control in it (Segmented, a Button, a Badge) offers its own label's
+   baseline. Where an icon sits beside text, the icon rule below applies instead. */
+@utility baseline-row {
+  display: flex;
+  align-items: baseline;
+}
+
+/* The small mono label: 11px, wide tracking, uppercase. Beside other text it sits in a baseline-row. */
 /* An icon beside text (components/icon-label.tsx): with the row aligned on the baseline, move the icon
    down so its centre sits halfway up the capitals. 0.355em is half the cap height of Geist and Geist Mono. */
 @utility cap-icon {

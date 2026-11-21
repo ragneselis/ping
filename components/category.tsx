@@ -21,8 +21,11 @@ export function CategoryDot({ category, className }: { category: Category; class
 /** Dot plus the direction's short name in its text colour, as on a job row. */
 export function CategoryLabel({ category, className }: { category: Category; className?: string }) {
   return (
-    <span style={categoryVars(category)} className={cn("inline-flex items-center gap-2 text-sm font-medium", categoryClass.text, className)}>
-      <CategoryDot category={category} />
+    // On the text baseline beside other text (the baseline rule, globals.css); the dot centred on the capitals.
+    <span style={categoryVars(category)} className={cn("inline-flex items-baseline gap-2 text-sm font-medium", categoryClass.text, className)}>
+      <span aria-hidden className="cap-icon flex shrink-0 [--icon-size:8px]">
+        <CategoryDot category={category} />
+      </span>
       {CATEGORY_META[category].short}
     </span>
   );

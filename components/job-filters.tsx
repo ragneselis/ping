@@ -113,7 +113,7 @@ export function JobFilters({
           </button>
         ))}
       </TabRow>
-      <div className="grid gap-4 sm:flex sm:flex-wrap sm:items-end sm:gap-x-8">
+      <div className="grid gap-4 sm:baseline-row sm:flex-wrap sm:gap-x-8">
         <Segmented
           label="Level"
           items={LEVEL_ITEMS}
@@ -193,7 +193,7 @@ export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
         pending && "opacity-60",
       )}
     >
-      <div className={cn(JOB_GRID, "grid py-2.5")}>
+      <div className={cn(JOB_GRID, "grid items-baseline py-2.5")}>
         <DataLabel>Direction</DataLabel>
         <DataLabel>Role</DataLabel>
         <DataLabel>Location</DataLabel>

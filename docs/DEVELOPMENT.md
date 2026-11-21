@@ -68,6 +68,10 @@ Dedupe rule: same company + same normalised title is one posting. The ATS versio
 Remote OK and Himalayas ask for a visible link back to them when jobs are shown. Remotive's API notes ask that jobs are not resubmitted to third-party sites and are delayed by 24h. Lemanoosh has no API: Ping reads its RSS feed and each job page, and every job links back to Lemanoosh. Ask Lemanoosh before showing its jobs publicly. Workable rate-limits bursts (HTTP 429); the fetcher reads Workable boards one at a time and backs off. Check each source's terms before the public launch.
 
 
+## Alignment
+
+Rows that put text beside text of another size or style (a count and its label, a small mono label beside its control, a heading beside a badge, a panel header, figures and their labels side by side) align on the text baseline, never on the centre of the boxes: an 11px uppercase `label-mono` fills the top of its box and lowercase text sits low in its own, so centred boxes put the words on different lines. Use the `baseline-row` utility (`app/globals.css`); `Segmented`, `Panel`, `Badge` and `CategoryLabel` already follow it, and a control offers its own label's baseline. Figures stacked over labels and set side by side align on the labels (`items-baseline-last`). Where an icon or dot sits beside text, the row is still on the baseline and the icon is centred on the capitals with `cap-icon` (`components/icon-label.tsx`). Do not name a utility `text-*`: `cn()` merges it away as a text size.
+
 ## Motion and play
 
 Motion is short and purposeful, set through tokens in `app/globals.css` (`--ease-out`, `--dur-fast`, `--dur-ui`, `--dur-enter`, `--stagger`); only transform and opacity animate, plus the "+N similar" expander's height. Under `prefers-reduced-motion` everything sits in its final state.
