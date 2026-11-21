@@ -5,6 +5,7 @@
  */
 import { NextResponse, type NextRequest } from "next/server";
 import { sql } from "@/lib/server/db";
+import { count } from "@/lib/server/usage";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,8 @@ async function remove(req: NextRequest) {
   const token = req.nextUrl.searchParams.get("token") ?? "";
   if (token.length < 20) return 0;
   const rows = await sql()`delete from subscribers where token = ${token} returning id`;
+  // The record is gone; only the number of unsubscribes per day is kept, for /stats.
+  if (rows.length) await count(["sub:unsub"]);
   return rows.length;
 }
 

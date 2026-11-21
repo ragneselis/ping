@@ -86,6 +86,8 @@ export function JobRow({
             {isNew && <FreshTile className="absolute top-[0.5em] -left-3.5" />}
             <a
               data-main
+              data-job-id={job.id}
+              data-job-category={job.primary}
               href={job.url}
               target="_blank"
               rel="noopener noreferrer"
@@ -157,6 +159,8 @@ function SimilarJobs({ job, similar }: { job: Job; similar: Job[] }) {
         {similar.map((s) => (
           <li key={s.id} className="text-sm">
             <a
+              data-job-id={s.id}
+              data-job-category={s.primary}
               href={s.url}
               target="_blank"
               rel="noopener noreferrer"

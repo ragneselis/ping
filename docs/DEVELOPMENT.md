@@ -113,3 +113,10 @@ Every page shares the description "New design jobs every morning, sorted by dire
 ## Ping misses you
 
 `components/tab-presence.tsx` (mounted once in `app/layout.tsx`): when the tab goes to the background (`visibilitychange`), the title becomes "Ping misses you" and the favicon links point at the sleeping face (`public/favicon-sleeping.svg` and `.png`, written by `npm run icons` from `SLEEPING_ROWS` in `lib/logo.ts`). Coming back restores the title saved at that moment and the normal favicons. It never runs on first load; no sound, no animation.
+
+## /stats and usage stats
+
+`/stats` is the private back office: visitors, subscribers, what people use and pipeline health. Access works as on ragne.me: HTTP Basic Auth with `STATS_PASSWORD` (any user name), asked for by `middleware.ts` (Node runtime) and checked again by the page and `/api/stats/*`. Wrong passwords are limited to 10 per hashed IP per 15 minutes. "Log out" sends the user name `logout` with a throwaway password, which the browser then caches instead of the real one. Everything under `/stats` is noindex and linked from nowhere.
+
+Usage stats are anonymous daily counters in Neon (`daily_counts`, see `lib/usage.ts`), on ragne.me's method: `components/usage-beacon.tsx` reports views (once per page per 30 minutes) and visitors (once per browser per Tallinn day) with a note in localStorage, plus events (job clicks, filters, searches, the subscription modal, the snake); `app/api/track` drops bots and prefetches and adds to the counters. No cookie, no IP, no identifier. Local and preview runs are filed under `dev`, apart from production's `prod`. Subscriptions (sign-up, confirm, unsubscribe) and the digest (sent, failed) add to the same counters server-side.
+

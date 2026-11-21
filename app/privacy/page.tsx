@@ -46,7 +46,7 @@ export default function PrivacyPage() {
             </li>
           ))}
         </ul>
-        <p className="text-muted-foreground">Nothing else: no name, no tracking pixels, no click tracking, no analytics.</p>
+        <p className="text-muted-foreground">Nothing else: no name, no tracking pixels in the emails, no click tracking in the emails.</p>
       </Section>
 
       <Section label="Why">
@@ -78,8 +78,21 @@ export default function PrivacyPage() {
         </p>
       </Section>
 
+      <Section label="Usage stats">
+        <p>
+          To see how Ping is used, it counts anonymous numbers per day: page views and visitors, which page a visit came from (the site&rsquo;s name
+          only), the country, phone or desktop, which job postings are opened, which filters and searches are used, how often &ldquo;Get new jobs&rdquo; is
+          opened, and snake games.
+        </p>
+        <p className="text-muted-foreground">
+          No cookies, no IP addresses and no identifier: nothing is stored that could tell one visitor from another, and the numbers are only ever
+          totals. Your browser keeps a small note in its own storage so a reload or a second visit on the same day is not counted twice; it never
+          leaves your device.
+        </p>
+      </Section>
+
       <Section label="On this device">
-        <p className="text-muted-foreground">Your theme and sound choices are saved in this browser only, and never leave it.</p>
+        <p className="text-muted-foreground">Your theme and sound choices, and the note that today&rsquo;s visit was counted, are saved in this browser only and never leave it.</p>
       </Section>
     </Band>
   );

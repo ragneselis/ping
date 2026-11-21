@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, type ComponentProps } from "react";
+import { track } from "@/components/usage-beacon";
+import { FILTER_VALUES } from "@/lib/usage";
 
 /*
  * Links that set Jobs filters land on the results, not at the top of the page.
@@ -42,6 +44,10 @@ export function FilterLink({ onClick, ...props }: ComponentProps<typeof Link>) {
         onClick?.(e);
         if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         const target = new URL(String(props.href), window.location.href);
+        // Anonymous usage stats: the filters this link sets count as chosen.
+        target.searchParams.forEach((value, key) => {
+          if (FILTER_VALUES[key]) for (const v of value.split(",")) track({ name: "filter", filter: key, value: v });
+        });
         const here = target.pathname === window.location.pathname && target.search === window.location.search;
         if (here) scrollToResults();
         else pending = true;

@@ -32,6 +32,7 @@ Put environment variables in `.env.local` (git-ignored). Never commit them.
 | `RESEND_API_KEY` | Sending email (Resend) |
 | `EMAIL_FROM` | Optional: the sender address for email |
 | `SITE_URL` | Optional: the base URL used in email links (defaults to the live site, or localhost in development) |
+| `STATS_PASSWORD` | The private `/stats` page (HTTP Basic Auth, any user name) |
 
 With none of them set, the site still runs on the committed data; only refreshing and email need them. `npm run db:setup` creates the subscription tables, and `npm run digest -- --dry-run` shows what the digest would send.
 

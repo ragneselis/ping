@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { type TileName, tileDataUri } from "@/components/tiles";
+import { track } from "@/components/usage-beacon";
 import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
@@ -386,6 +387,7 @@ export function Snake({ className }: { className?: string }) {
     const startGame = () => {
       // Always from a click, tap or key: start audio now so the eat ping can play during the game.
       sound.unlock();
+      track({ name: "snake-play" });
       clearAll();
       hideMessage();
       mode = "countdown";
@@ -418,6 +420,7 @@ export function Snake({ className }: { className?: string }) {
     };
 
     const die = () => {
+      track({ name: "snake-score", score });
       mode = "dead";
       running = false;
       setPlaying(false);

@@ -12,6 +12,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { allow, newToken, sql, type Subscriber } from "@/lib/server/db";
 import { emailConfigured, links, sendEmail } from "@/lib/server/email";
 import { confirmationEmail, describePrefs } from "@/lib/server/templates";
+import { count } from "@/lib/server/usage";
 import { ManageSchema, normalisePrefs, SubscribeSchema } from "@/lib/subscription";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +63,7 @@ export async function POST(req: NextRequest) {
     const mail = confirmationEmail(token, prefs, frequency);
     try {
       await sendEmail({ to: email, ...mail });
+      if (!existing) await count(["sub:signup"]);
     } catch (e) {
       // Nothing was sent, so nothing is kept for a brand-new address.
       if (!existing) await db`delete from subscribers where token = ${token} and confirmed = false`;

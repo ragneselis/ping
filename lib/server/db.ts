@@ -34,6 +34,15 @@ export const SCHEMA = [
     created_at timestamptz not null default now(),
     last_sent_at timestamptz
   )`,
+  // Anonymous usage stats (lib/usage.ts): one counter per field per Tallinn day, kept apart for
+  // production ("prod") and local or preview runs ("dev"), so testing never moves the real numbers.
+  `create table if not exists daily_counts (
+    env text not null,
+    day date not null,
+    field text not null,
+    n bigint not null default 0,
+    primary key (env, day, field)
+  )`,
   `create table if not exists rate_limits (
     key text primary key,
     hits integer not null,
@@ -60,6 +69,12 @@ export function hashKey(value: string) {
   return createHash("sha256")
     .update(`${process.env.DATABASE_URL ?? ""}|ping-rate|${value}`)
     .digest("base64url");
+}
+
+/** True when `key` has already used up `limit` in the current window (does not count this call). */
+export async function blocked(key: string, limit: number, windowMinutes = 60): Promise<boolean> {
+  const rows = (await sql()`select hits from rate_limits where key = ${hashKey(key)} and window_start >= now() - make_interval(mins => ${windowMinutes})`) as { hits: number }[];
+  return (rows[0]?.hits ?? 0) >= limit;
 }
 
 /**

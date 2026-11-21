@@ -9,6 +9,7 @@ import { DataLabel, Segmented } from "@/components/filter-controls";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { CATEGORY_META } from "@/lib/categories";
+import { track } from "@/components/usage-beacon";
 import { sound } from "@/lib/sound";
 import { DIGEST_CAP, EMPTY_PREFS, type Frequency, isEmail, type Prefs, prefsFromQuery } from "@/lib/subscription";
 import { CATEGORIES, type Category } from "@/lib/types";
@@ -208,6 +209,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
   /** A fresh sign-up starts from the filters the visitor has on the Jobs page right now. */
   const onOpenChange = (next: boolean) => {
     if (next) {
+      if (mode.kind === "signup") track({ name: "subscribe-open" });
       if (mode.kind === "signup") setPrefs(window.location.pathname === "/" ? prefsFromQuery(window.location.search) : EMPTY_PREFS);
       setStatus("idle");
       setError(null);
@@ -261,6 +263,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
       const d = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !d.ok) throw new Error(d.error ?? "Something went wrong. Try again in a minute.");
       setStatus(mode.kind === "manage" ? "saved" : "sent");
+      if (mode.kind === "signup") track({ name: "subscribe-sent" });
       sound.chirp();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Try again in a minute.");

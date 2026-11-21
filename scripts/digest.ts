@@ -16,6 +16,7 @@ import { buildDigest } from "@/lib/server/digest";
 import { sql, type Subscriber } from "@/lib/server/db";
 import { emailConfigured, sendEmail } from "@/lib/server/email";
 import { digestEmail } from "@/lib/server/templates";
+import { add } from "@/lib/server/usage";
 import { EMPTY_PREFS } from "@/lib/subscription";
 
 const args = process.argv.slice(2);
@@ -87,6 +88,11 @@ async function main() {
     await sleep(600);
   }
   console.log(`Digest: ${sent} sent, ${empty} skipped (no new matching jobs), ${failed} failed.`);
+  // For /stats: digests sent and failed per day (a test send counts too).
+  if (!dryRun) {
+    await add("digest:sent", sent);
+    await add("digest:failed", failed);
+  }
 }
 
 main().catch((e) => {

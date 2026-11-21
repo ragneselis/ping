@@ -7,6 +7,7 @@ import { RevealObserver } from "@/components/reveal";
 import { SoundEffects } from "@/components/sound";
 import { SiteHeader } from "@/components/site-header";
 import { TabPresence } from "@/components/tab-presence";
+import { UsageBeacon } from "@/components/usage-beacon";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SHARE_DESCRIPTION, shareMetadata } from "@/lib/share";
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <SoundEffects />
             <RevealObserver />
             <TabPresence />
+            <UsageBeacon />
             <SiteHeader />
             <main>{children}</main>
             <ClosingBand />

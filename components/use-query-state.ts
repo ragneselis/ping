@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useTransition } from "react";
+import { track, trackSearch } from "@/components/usage-beacon";
+import { FILTER_VALUES } from "@/lib/usage";
 
 /**
  * Read and write the page's URL query (filters and sort live there, so views can be shared).
@@ -32,6 +34,9 @@ export function useQueryState() {
     for (const [k, v] of Object.entries(changes)) {
       if (v) next.set(k, v);
       else next.delete(k);
+      // Anonymous usage stats: which filters are picked (a level list counts each level), and searches.
+      if (k === "q" && v) trackSearch(v);
+      else if (v && FILTER_VALUES[k]) for (const value of v.split(",")) track({ name: "filter", filter: k, value });
     }
     next.delete("page");
     go(next.toString());
