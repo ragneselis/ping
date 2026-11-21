@@ -34,7 +34,8 @@ export function CategoryLegend({ className }: { className?: string }) {
     <ul className={cn("flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-muted-foreground", className)} aria-label="Colour key for the charts">
       {CATEGORIES.map((c) => (
         <li key={c} className="flex items-center gap-1.5">
-          <CategoryDot category={c} />
+          {/* Legend dots match the bars, so they use the chart tone. */}
+          <span aria-hidden style={categoryVars(c)} className="inline-block size-2 shrink-0 rounded-full bg-(--cat-chart)" />
           {CATEGORY_META[c].short}
         </li>
       ))}

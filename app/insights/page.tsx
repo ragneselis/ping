@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/card";
 import {
   CATEGORY_META,
-  categoryColor,
+  categoryChartColor,
   categoryStrongColor,
   categoryVars,
   REACH_DEFINITION,
@@ -73,7 +73,7 @@ export default async function InsightsPage({
   const comparison = categoryComparison(jobs);
   const early = !!category && isEarlySignal(scope.length);
   // "All directions": bars stacked by direction (vivid category colours). One direction: its own colour.
-  const color = category ? categoryColor(category) : undefined;
+  const color = category ? categoryChartColor(category) : undefined;
   const stacked = !category;
   const filterHref = (extra: string) =>
     `/?${category ? `category=${category}&` : ""}${extra}`.replace(/[?&]$/, "");
@@ -337,7 +337,7 @@ export default async function InsightsPage({
                 label: CATEGORY_META[c.category].short,
                 reach: c.withinReach,
                 rest: c.postings - c.withinReach,
-                color: categoryColor(c.category),
+                color: categoryChartColor(c.category),
                 href: `/insights?category=${c.category}`,
               }))}
             />

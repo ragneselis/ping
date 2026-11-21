@@ -37,8 +37,11 @@ export const CATEGORY_TOKEN: Record<Category, string> = {
   other: "--cat-other",
 };
 
-/** The category pastel: chart fills, row highlights, the top rule of direction blocks. Never for text or thin marks. */
+/** The category pastel: large fills only (row highlights, the top rule of direction blocks). Never for text, bars or thin marks. */
 export const categoryColor = (c: Category) => `var(${CATEGORY_TOKEN[c]})`;
+
+/** The chart tone of the same hue (2:1 or more on white): chart bars, stacked segments and their legend dots. */
+export const categoryChartColor = (c: Category) => `var(${CATEGORY_TOKEN[c]}-chart)`;
 
 /** The strong tone of the same hue (3:1 or more on white): dots and anything thin. */
 export const categoryStrongColor = (c: Category) => `var(${CATEGORY_TOKEN[c]}-strong)`;
@@ -46,9 +49,9 @@ export const categoryStrongColor = (c: Category) => `var(${CATEGORY_TOKEN[c]}-st
 /** Contrast-safe category colour, for category tag text only. */
 export const categoryTextColor = (c: Category) => `var(${CATEGORY_TOKEN[c]}-text)`;
 
-/** Inline style that sets `--cat` (pastel), `--cat-strong` and `--cat-text` for a subtree, read by the shared category classes. */
+/** Inline style that sets `--cat` (pastel), `--cat-chart`, `--cat-strong` and `--cat-text` for a subtree, read by the shared category classes. */
 export const categoryVars = (c: Category) =>
-  ({ "--cat": categoryColor(c), "--cat-strong": categoryStrongColor(c), "--cat-text": categoryTextColor(c) }) as React.CSSProperties;
+  ({ "--cat": categoryColor(c), "--cat-chart": categoryChartColor(c), "--cat-strong": categoryStrongColor(c), "--cat-text": categoryTextColor(c) }) as React.CSSProperties;
 
 /** One-line definition shown wherever "within reach" appears (the rule lives in lib/view.ts isWithinReach). */
 export const REACH_DEFINITION = "Within reach: internships, junior roles and roles asking for 0 to 2 years of experience.";

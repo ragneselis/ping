@@ -16,7 +16,7 @@ import {
   ChartContainer,
   ChartTooltip,
 } from "@/components/ui/chart";
-import { CATEGORY_META, categoryColor } from "@/lib/categories";
+import { CATEGORY_META, categoryChartColor } from "@/lib/categories";
 import { CATEGORIES, type Category } from "@/lib/types";
 
 /** A chart token number (--chart-n) or any CSS colour, e.g. a category colour from lib/categories. */
@@ -346,7 +346,7 @@ function DataTable({
 const CATEGORY_SERIES: HBarSeries[] = CATEGORIES.map((c) => ({
   key: c,
   label: CATEGORY_META[c].short,
-  color: categoryColor(c),
+  color: categoryChartColor(c),
 }));
 
 type RankItem = {
@@ -409,7 +409,7 @@ export function RankingChart({
   );
 }
 
-/** Jobs per direction in each direction's own pastel: full = within reach, paler = the rest. Rows link to the direction. */
+/** Jobs per direction in each direction's chart tone: full = within reach, paler = the rest. Rows link to the direction. */
 export function CategoryHiringChart({
   data,
 }: {
@@ -426,8 +426,8 @@ export function CategoryHiringChart({
       {/* Two-tone sample swatch: the legend shows the same full-plus-pale split as the bars. */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span aria-hidden className="flex h-2.5 w-10 gap-px">
-          <span className="w-1/2 bg-cat-other" />
-          <span className="w-1/2 bg-cat-other/40" />
+          <span className="w-1/2 bg-cat-other-chart" />
+          <span className="w-1/2 bg-cat-other-chart/45" />
         </span>
         <span>
           <span className="font-medium text-foreground">Full</span> = within
@@ -441,7 +441,7 @@ export function CategoryHiringChart({
           label: d.label,
           values: [d.reach, d.rest],
           end: String(d.reach + d.rest),
-          colors: [d.color, `color-mix(in oklab, ${d.color} 40%, var(--card))`],
+          colors: [d.color, `color-mix(in oklab, ${d.color} 45%, var(--card))`],
           href: d.href,
         }))}
         series={[
