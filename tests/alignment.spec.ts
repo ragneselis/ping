@@ -145,8 +145,10 @@ async function open(page: Page, path: string, theme: (typeof THEMES)[number]) {
       localStorage.setItem("ping-theme", t);
     } catch {}
   }, theme);
-  const res = await page.goto(path, { waitUntil: "networkidle" });
+  const res = await page.goto(path, { waitUntil: "load" });
   expect(res?.status(), `${path} answered`).toBeLessThan(400);
+  // Live sites can keep a connection open: wait for quiet, but never more than a few seconds.
+  await page.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => {});
   await page.evaluate(async () => {
     await document.fonts.ready;
     for (let y = 0; y < document.documentElement.scrollHeight; y += 600) {
