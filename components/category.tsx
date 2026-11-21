@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils";
 
 /*
  * Shared category styles. Every category colour on the site comes through here:
- * the element gets `--cat` and `--cat-text` from categoryVars() and these classes read them.
- * Colour is used only for the dot, the label on a job row, chart fills and per-direction blocks.
+ * the element gets `--cat`, `--cat-strong` and `--cat-text` from categoryVars() and these classes read them.
+ * Colour is used only for the dot, the label on a job row, row highlights, chart fills and per-direction blocks.
  */
 export const categoryClass = {
-  /** Small dot in the graphics colour. */
-  dot: "bg-(--cat)",
+  /** Small dot in the strong tone (thin marks need 3:1 on white). */
+  dot: "bg-(--cat-strong)",
   /** Contrast-safe label text (AA on the surface). */
   text: "text-(--cat-text)",
 } as const;

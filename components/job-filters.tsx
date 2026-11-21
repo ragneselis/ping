@@ -1,8 +1,13 @@
 "use client";
 
 import { ArrowDown, X } from "lucide-react";
-import { ChipScroller } from "@/components/chip-scroller";
-import { DataLabel, Segmented, TAB_LIST, TabContent, tabClassName } from "@/components/filter-controls";
+import {
+  DataLabel,
+  Segmented,
+  TabContent,
+  tabClassName,
+} from "@/components/filter-controls";
+import { TabRow } from "@/components/tab-row";
 import { JOB_GRID, ROW_BLEED } from "@/components/job-row";
 import { useQueryState } from "@/components/use-query-state";
 import { Button } from "@/components/ui/button";
@@ -34,45 +39,94 @@ const readLevels = (params: URLSearchParams) => {
 };
 
 /** Filters that live in the URL, so a filtered view can be shared. Changing one resets "load more". */
-export function JobFilters({ categories, total }: { categories: { value: Category; label: string; count: number }[]; total: number }) {
+export function JobFilters({
+  categories,
+  total,
+}: {
+  categories: { value: Category; label: string; count: number }[];
+  total: number;
+}) {
   const { params, pending, go, set, update } = useQueryState();
 
   const category = params.get("category") ?? "";
   const remote = params.get("remote") ?? "any";
   const estonia = params.get("estonia") === "1" ? "1" : "any";
   const levels = readLevels(params);
-  const active = !!(category || params.get("estonia") || levels.size || params.get("remote") || params.get("sort"));
+  const active = !!(
+    category ||
+    params.get("estonia") ||
+    levels.size ||
+    params.get("remote") ||
+    params.get("sort")
+  );
 
   const selectLevel = (value: string) => {
-    if (value === "any") return update({ level: null, reach: null, sort: null });
+    if (value === "any")
+      return update({ level: null, reach: null, sort: null });
     const next = new Set(levels);
     if (next.has(value)) next.delete(value);
     else next.add(value);
     const list = LEVEL_ITEMS.map((l) => l.value).filter((v) => next.has(v));
     // A sort chosen for the previous selection may no longer fit; let the default follow the levels.
-    update({ level: list.length ? list.join(",") : null, reach: null, sort: null });
+    update({
+      level: list.length ? list.join(",") : null,
+      reach: null,
+      sort: null,
+    });
   };
 
   return (
-    <div className={cn("grid gap-5 transition-opacity", pending && "opacity-60")} aria-busy={pending}>
-      <ChipScroller activeKey={category}>
-        <div className={TAB_LIST} role="group" aria-label="Direction">
-          <button type="button" aria-pressed={!category} className={tabClassName(!category)} onClick={() => set("category", null)}>
-            <TabContent label="All directions" count={total} />
+    <div
+      className={cn("grid gap-5 transition-opacity", pending && "opacity-60")}
+      aria-busy={pending}
+    >
+      <TabRow label="Direction" activeKey={category}>
+        <button
+          type="button"
+          aria-pressed={!category}
+          className={tabClassName(!category)}
+          onClick={() => set("category", null)}
+        >
+          <TabContent label="All directions" count={total} />
+        </button>
+        {categories.map((c) => (
+          <button
+            key={c.value}
+            type="button"
+            aria-pressed={category === c.value}
+            className={tabClassName(category === c.value)}
+            onClick={() => set("category", c.value)}
+          >
+            <TabContent label={c.label} count={c.count} category={c.value} />
           </button>
-          {categories.map((c) => (
-            <button key={c.value} type="button" aria-pressed={category === c.value} className={tabClassName(category === c.value)} onClick={() => set("category", c.value)}>
-              <TabContent label={c.label} count={c.count} category={c.value} />
-            </button>
-          ))}
-        </div>
-      </ChipScroller>
+        ))}
+      </TabRow>
       <div className="grid gap-4 sm:flex sm:flex-wrap sm:items-end sm:gap-x-8">
-        <Segmented label="Level" items={LEVEL_ITEMS} isActive={(v) => (v === "any" ? levels.size === 0 : levels.has(v))} onSelect={selectLevel} />
-        <Segmented label="Location" items={ESTONIA_ITEMS} isActive={(v) => v === estonia} onSelect={(v) => set("estonia", v === "1" ? "1" : null)} />
-        <Segmented label="Work setup" items={REMOTE_ITEMS} isActive={(v) => v === remote} onSelect={(v) => set("remote", v === "any" ? null : v)} />
+        <Segmented
+          label="Level"
+          items={LEVEL_ITEMS}
+          isActive={(v) => (v === "any" ? levels.size === 0 : levels.has(v))}
+          onSelect={selectLevel}
+        />
+        <Segmented
+          label="Location"
+          items={ESTONIA_ITEMS}
+          isActive={(v) => v === estonia}
+          onSelect={(v) => set("estonia", v === "1" ? "1" : null)}
+        />
+        <Segmented
+          label="Work setup"
+          items={REMOTE_ITEMS}
+          isActive={(v) => v === remote}
+          onSelect={(v) => set("remote", v === "any" ? null : v)}
+        />
         {active && (
-          <Button variant="ghost" size="sm" className="min-h-11 sm:ml-auto sm:min-h-8" onClick={() => go("")}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="min-h-11 sm:ml-auto sm:min-h-8"
+            onClick={() => go("")}
+          >
             <X data-icon="inline-start" />
             Clear filters
           </Button>
@@ -89,7 +143,12 @@ export function JobFilters({ categories, total }: { categories: { value: Categor
  */
 export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
   const { set, pending } = useQueryState();
-  const sortButton = (value: "reach" | "newest", label: string, hint: string, className?: string) => (
+  const sortButton = (
+    value: "reach" | "newest",
+    label: string,
+    hint: string,
+    className?: string,
+  ) => (
     <button
       type="button"
       aria-pressed={sort === value}
@@ -97,16 +156,27 @@ export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
       onClick={() => set("sort", value)}
       className={cn(
         "-mx-1 flex min-h-11 items-center gap-1 px-1 font-mono text-[0.7rem] tracking-wider uppercase transition-colors focus-visible:outline-2 focus-visible:outline-ring lg:min-h-0",
-        sort === value ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+        sort === value
+          ? "text-foreground"
+          : "text-muted-foreground hover:text-foreground",
         className,
       )}
     >
       {label}
-      <ArrowDown aria-hidden className={cn("size-3", sort !== value && "opacity-0")} />
+      <ArrowDown
+        aria-hidden
+        className={cn("size-3", sort !== value && "opacity-0")}
+      />
     </button>
   );
   return (
-    <div className={cn("border-b border-foreground transition-opacity", ROW_BLEED, pending && "opacity-60")}>
+    <div
+      className={cn(
+        "border-b border-border-strong transition-opacity",
+        ROW_BLEED,
+        pending && "opacity-60",
+      )}
+    >
       <div className="flex items-center gap-4 lg:hidden">
         <DataLabel>Sort</DataLabel>
         {sortButton("reach", "Within reach first", "level, within reach first")}

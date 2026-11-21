@@ -1,12 +1,13 @@
 import { ArrowUpRight } from "lucide-react";
 import { CategoryLabel } from "@/components/category";
 import { LevelTag, PulseDot, RequirementList, SignalTag } from "@/components/signal";
-import { CATEGORY_META, REMOTE_LABEL } from "@/lib/categories";
+import { CATEGORY_META, categoryVars, REMOTE_LABEL } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 import type { JobCard as Job } from "@/lib/view";
 
 /** Columns of the jobs table from lg up: direction, role, location, level, signals, posted, arrow. Shared by the header row. */
-export const JOB_GRID = "lg:grid-cols-[minmax(9rem,12rem)_minmax(0,1fr)_minmax(8rem,15rem)_7rem_9rem_4.5rem_1rem] lg:gap-x-6";
+export const JOB_GRID =
+  "lg:grid-cols-[9.5rem_minmax(0,1fr)_10rem_6.5rem_8.5rem_4rem_1rem] lg:gap-x-5 2xl:grid-cols-[11rem_minmax(0,1fr)_14rem_7rem_9rem_4.5rem_1rem] 2xl:gap-x-6";
 /** Rows bleed to the frame lines, so the hover fill and the hairlines run edge to edge. */
 export const ROW_BLEED = "-mx-4 px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8";
 
@@ -32,7 +33,14 @@ export function JobRow({ job, isNew }: { job: Job; isNew: boolean }) {
   const location = job.location || "Location not stated";
   const posted = <time dateTime={job.postedAt ?? undefined} title={fullDate(job.postedAt)}>{postedShort(job.postedAt)}</time>;
   return (
-    <li className={cn("group relative border-b border-border py-4 transition-colors hover:bg-muted has-[a:focus-visible]:bg-muted", ROW_BLEED)}>
+    // Hover highlights the row in its direction's pastel.
+    <li
+      style={categoryVars(job.primary)}
+      className={cn(
+        "group relative border-b border-border py-4 transition-colors hover:bg-(--cat)/35 has-[a:focus-visible]:bg-(--cat)/35 dark:hover:bg-(--cat)/15 dark:has-[a:focus-visible]:bg-(--cat)/15",
+        ROW_BLEED,
+      )}
+    >
       <div className={cn("grid gap-1 lg:items-baseline", JOB_GRID)}>
         <div className="hidden min-w-0 gap-1 lg:grid">
           <CategoryLabel category={job.primary} />

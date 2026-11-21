@@ -11,18 +11,20 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  /* Warm neutrals */
-  --background: oklch(0.975 0.006 80);
-  --foreground: oklch(0.2 0.01 60);
-  --card: oklch(0.995 0.002 80);
+  /* Clean neutrals: white page and surfaces, a soft ground only in the hatched gutters and bands. */
+  --ground: #f2f1ee;
+  --background: #ffffff;
+  --foreground: #101014;
+  --card: #ffffff;
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --muted: oklch(0.95 0.006 80);
-  --muted-foreground: oklch(0.5 0.012 60); /* 5.6:1 on --background */
-  --border: oklch(0.88 0.008 75);
+  --muted: #f5f5f6; /* hover fills */
+  --muted-foreground: #5b5b61; /* 6.7:1 on white */
+  --border: #e3e1db; /* hairlines */
+  --border-strong: #8a887f; /* active tabs, table header rule */
   --input: var(--border);
-  --ring: oklch(0.2 0.01 60 / 40%);
+  --ring: oklch(0.2 0.01 285 / 40%);
 
   /* Actions: primary is solid foreground, secondary is outline */
   --primary: var(--foreground);
@@ -37,31 +39,42 @@
   /* Ping's signature: the pulse. Logo dot and "new today" only. */
   --pulse: var(--color-pink-500);
 
-  /* Category colours, one rule: same lightness and chroma, only the hue changes
-     (80-120 skipped, it turns olive). Graphics L 0.62 C 0.12; text L 0.45 C 0.12.
-     Text passes AA (>= 5.2:1) on its 15% tint and on the surfaces. */
-  --cat-brand: oklch(0.62 0.12 25);
-  --cat-brand-text: oklch(0.45 0.12 25);
-  --cat-industrial: oklch(0.62 0.12 55);
-  --cat-industrial-text: oklch(0.45 0.12 55);
-  --cat-game: oklch(0.62 0.12 145);
-  --cat-game-text: oklch(0.45 0.12 145);
-  --cat-research: oklch(0.62 0.12 175);
-  --cat-research-text: oklch(0.45 0.12 175);
-  --cat-product: oklch(0.62 0.12 215);
-  --cat-product-text: oklch(0.45 0.12 215);
-  --cat-engineering: oklch(0.62 0.12 255);
-  --cat-engineering-text: oklch(0.45 0.12 255);
-  --cat-ai: oklch(0.62 0.12 295);
-  --cat-ai-text: oklch(0.45 0.12 295);
-  --cat-customer: oklch(0.62 0.12 335);
-  --cat-customer-text: oklch(0.45 0.12 335);
-  --cat-other: oklch(0.62 0.015 70);
-  --cat-other-text: oklch(0.45 0.015 70);
+  /* Category colours, three per direction, all on the pastel's own hue:
+     --cat-<name>         the pastel: chart fills, row highlights, the top rule of direction blocks
+     --cat-<name>-strong  L 0.60 C 0.13: dots and anything thin (>= 3.5:1 on white)
+     --cat-<name>-text    AA on white (>= 5.9:1) and on its pastel (>= 4.6:1)
+     Industrial's strong and text tones sit at hue 85 so they read gold, not olive. */
+  --cat-brand: #f3cdc6;
+  --cat-brand-strong: oklch(0.6 0.13 30);
+  --cat-brand-text: oklch(0.48 0.12 30);
+  --cat-industrial: #f2e6a6;
+  --cat-industrial-strong: oklch(0.6 0.13 85);
+  --cat-industrial-text: oklch(0.5 0.12 85);
+  --cat-game: #cde3bf;
+  --cat-game-strong: oklch(0.6 0.13 133);
+  --cat-game-text: oklch(0.47 0.12 133);
+  --cat-research: #bde4e1;
+  --cat-research-strong: oklch(0.6 0.13 191);
+  --cat-research-text: oklch(0.46 0.12 191);
+  --cat-product: #c4dcf2;
+  --cat-product-strong: oklch(0.6 0.13 246);
+  --cat-product-text: oklch(0.47 0.12 246);
+  --cat-engineering: #d2d4f2;
+  --cat-engineering-strong: oklch(0.6 0.13 283);
+  --cat-engineering-text: oklch(0.48 0.12 283);
+  --cat-ai: #e4d0f0;
+  --cat-ai-strong: oklch(0.6 0.13 313);
+  --cat-ai-text: oklch(0.49 0.12 313);
+  --cat-customer: #f8d3b9;
+  --cat-customer-strong: oklch(0.6 0.13 57);
+  --cat-customer-text: oklch(0.49 0.12 57);
+  --cat-other: #e8e6e0;
+  --cat-other-strong: oklch(0.6 0.01 90);
+  --cat-other-text: oklch(0.48 0.005 90);
 
   /* Blueprint frame: hairlines on the column edges and between sections, hatching in the gutters */
-  --frame-line: oklch(0.9 0.008 75);
-  --frame-hatch: color-mix(in oklab, var(--frame-line) 80%, transparent);
+  --frame-line: var(--border);
+  --frame-hatch: #e3e1db;
 
   --font-sans: var(--font-geist), Geist, ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
@@ -75,37 +88,48 @@
 }
 
 .dark {
-  --background: oklch(0.19 0.006 70);
-  --foreground: oklch(0.94 0.008 80);
-  --card: oklch(0.225 0.006 70);
-  --muted: oklch(0.25 0.006 70);
-  --muted-foreground: oklch(0.7 0.01 70); /* 6.4:1 on --background */
-  --border: oklch(0.32 0.008 70);
-  --ring: oklch(0.94 0.008 80 / 40%);
+  --ground: #0b0b0d;
+  --background: #111113;
+  --foreground: #f2f1ee;
+  --card: #18181b;
+  --muted: #1f1f23;
+  --muted-foreground: #a1a1aa; /* 6.9:1 on the surface */
+  --border: #2a2a2e;
+  --border-strong: #5c5c63;
+  --ring: oklch(0.95 0.005 90 / 40%);
 
   --pulse: var(--color-pink-400);
 
-  /* Same rule on dark: graphics L 0.74 C 0.11; text L 0.85 C 0.11 (>= 7.6:1). */
-  --cat-brand: oklch(0.74 0.11 25);
-  --cat-brand-text: oklch(0.85 0.11 25);
-  --cat-industrial: oklch(0.74 0.11 55);
-  --cat-industrial-text: oklch(0.85 0.11 55);
-  --cat-game: oklch(0.74 0.11 145);
-  --cat-game-text: oklch(0.85 0.11 145);
-  --cat-research: oklch(0.74 0.11 175);
-  --cat-research-text: oklch(0.85 0.11 175);
-  --cat-product: oklch(0.74 0.11 215);
-  --cat-product-text: oklch(0.85 0.11 215);
-  --cat-engineering: oklch(0.74 0.11 255);
-  --cat-engineering-text: oklch(0.85 0.11 255);
-  --cat-ai: oklch(0.74 0.11 295);
-  --cat-ai-text: oklch(0.85 0.11 295);
-  --cat-customer: oklch(0.74 0.11 335);
-  --cat-customer-text: oklch(0.85 0.11 335);
-  --cat-other: oklch(0.74 0.015 70);
-  --cat-other-text: oklch(0.85 0.015 70);
+  /* Dark: fills and dots share one clean tone (L 0.72 C 0.09); text at L 0.82 (>= 9.8:1). */
+  --cat-brand: oklch(0.72 0.09 30);
+  --cat-brand-strong: var(--cat-brand);
+  --cat-brand-text: oklch(0.82 0.09 30);
+  --cat-industrial: oklch(0.72 0.09 85);
+  --cat-industrial-strong: var(--cat-industrial);
+  --cat-industrial-text: oklch(0.82 0.09 85);
+  --cat-game: oklch(0.72 0.09 133);
+  --cat-game-strong: var(--cat-game);
+  --cat-game-text: oklch(0.82 0.09 133);
+  --cat-research: oklch(0.72 0.09 191);
+  --cat-research-strong: var(--cat-research);
+  --cat-research-text: oklch(0.82 0.09 191);
+  --cat-product: oklch(0.72 0.09 246);
+  --cat-product-strong: var(--cat-product);
+  --cat-product-text: oklch(0.82 0.09 246);
+  --cat-engineering: oklch(0.72 0.09 283);
+  --cat-engineering-strong: var(--cat-engineering);
+  --cat-engineering-text: oklch(0.82 0.09 283);
+  --cat-ai: oklch(0.72 0.09 313);
+  --cat-ai-strong: var(--cat-ai);
+  --cat-ai-text: oklch(0.82 0.09 313);
+  --cat-customer: oklch(0.72 0.09 57);
+  --cat-customer-strong: var(--cat-customer);
+  --cat-customer-text: oklch(0.82 0.09 57);
+  --cat-other: oklch(0.72 0.01 90);
+  --cat-other-strong: var(--cat-other);
+  --cat-other-text: oklch(0.82 0.01 90);
 
-  --frame-line: oklch(0.27 0.006 70);
+  --frame-hatch: #1d1d21;
 }
 
 @media (min-width: 48rem) {
@@ -146,24 +170,35 @@
   --color-ring: var(--ring);
   --color-pulse: var(--pulse);
   --color-frame-line: var(--frame-line);
+  --color-border-strong: var(--border-strong);
+  --color-ground: var(--ground);
 
   --color-cat-brand: var(--cat-brand);
+  --color-cat-brand-strong: var(--cat-brand-strong);
   --color-cat-brand-text: var(--cat-brand-text);
   --color-cat-industrial: var(--cat-industrial);
+  --color-cat-industrial-strong: var(--cat-industrial-strong);
   --color-cat-industrial-text: var(--cat-industrial-text);
   --color-cat-game: var(--cat-game);
+  --color-cat-game-strong: var(--cat-game-strong);
   --color-cat-game-text: var(--cat-game-text);
   --color-cat-research: var(--cat-research);
+  --color-cat-research-strong: var(--cat-research-strong);
   --color-cat-research-text: var(--cat-research-text);
   --color-cat-product: var(--cat-product);
+  --color-cat-product-strong: var(--cat-product-strong);
   --color-cat-product-text: var(--cat-product-text);
   --color-cat-engineering: var(--cat-engineering);
+  --color-cat-engineering-strong: var(--cat-engineering-strong);
   --color-cat-engineering-text: var(--cat-engineering-text);
   --color-cat-ai: var(--cat-ai);
+  --color-cat-ai-strong: var(--cat-ai-strong);
   --color-cat-ai-text: var(--cat-ai-text);
   --color-cat-customer: var(--cat-customer);
+  --color-cat-customer-strong: var(--cat-customer-strong);
   --color-cat-customer-text: var(--cat-customer-text);
   --color-cat-other: var(--cat-other);
+  --color-cat-other-strong: var(--cat-other-strong);
   --color-cat-other-text: var(--cat-other-text);
 
   --font-sans: var(--font-sans);
@@ -201,8 +236,8 @@
     scrollbar-color: var(--border) transparent;
   }
   body {
-    @apply bg-background text-foreground;
-    /* Fine 45-degree hatching; the frame column covers it, so it only shows in the gutters. */
+    @apply bg-ground text-foreground;
+    /* Fine 45-degree hatching on the ground; the white frame column covers it, so it only shows in the gutters. */
     background-image: repeating-linear-gradient(45deg, var(--frame-hatch) 0 1px, transparent 1px 9px);
   }
   h1,

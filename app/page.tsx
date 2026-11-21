@@ -60,7 +60,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
             </p>
           </div>
           {/* The real shortcut for an EKA graduate. Hidden on phones, where the readout links do the same job. */}
-          <div className="hidden gap-4 border-t border-foreground pt-4 lg:grid">
+          <div className="hidden gap-4 border-t border-border-strong pt-4 lg:grid">
             <p className="font-heading text-lg font-semibold tracking-tight">Start here</p>
             <p className="text-muted-foreground">
               <span className="font-mono text-foreground">{both}</span> jobs are open to someone in Estonia and within reach for a graduate.
@@ -105,7 +105,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
             </ul>
           </div>
         ) : (
-          <div className="grid max-w-prose justify-items-start gap-3 border-t border-foreground py-6">
+          <div className="grid max-w-prose justify-items-start gap-3 border-t border-border-strong py-6">
             <p className="font-heading text-xl font-semibold tracking-tight">Nothing here right now.</p>
             <p className="text-muted-foreground">
               That combination is quiet today. Try switching off a filter, or check back soon: new jobs arrive all the time.

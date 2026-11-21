@@ -8,13 +8,11 @@ import { cn } from "@/lib/utils";
  * No pills. Hairlines and type carry the state; colour appears only as a direction's dot.
  */
 
-/** A row of text tabs sitting on one hairline. The active tab gets a foreground rule. */
-export const TAB_LIST = "flex w-max min-w-full gap-6 border-b border-border";
-
+/** A text tab inside TabRow (components/tab-row.tsx). 44px tall, matching the row's repeating hairline. The active tab gets the strong rule. */
 export function tabClassName(active: boolean) {
   return cn(
-    "relative -mb-px flex min-h-11 items-center gap-2 border-b text-sm whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:after:absolute focus-visible:after:inset-x-0 focus-visible:after:inset-y-2 focus-visible:after:ring-2 focus-visible:after:ring-ring",
-    active ? "border-foreground font-medium text-foreground" : "border-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground",
+    "relative flex h-11 snap-start items-center gap-2 border-b text-sm whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:after:absolute focus-visible:after:inset-x-0 focus-visible:after:inset-y-2 focus-visible:after:ring-2 focus-visible:after:ring-ring",
+    active ? "border-border-strong font-medium text-foreground" : "border-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground",
   );
 }
 

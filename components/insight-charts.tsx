@@ -409,7 +409,7 @@ export function RankingChart({
   );
 }
 
-/** Jobs per direction in each direction's own colour: solid = within reach, faded = the rest. Rows link to the direction. */
+/** Jobs per direction in each direction's own pastel: full = within reach, paler = the rest. Rows link to the direction. */
 export function CategoryHiringChart({
   data,
 }: {
@@ -423,15 +423,15 @@ export function CategoryHiringChart({
 }) {
   return (
     <div className="grid gap-3">
-      {/* Two-tone sample swatch: the legend shows the same solid-plus-faded split as the bars. */}
+      {/* Two-tone sample swatch: the legend shows the same full-plus-pale split as the bars. */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span aria-hidden className="flex h-2.5 w-10 gap-px">
-          <span className="w-1/2 bg-foreground" />
-          <span className="w-1/2 bg-foreground/30" />
+          <span className="w-1/2 bg-cat-other" />
+          <span className="w-1/2 bg-cat-other/40" />
         </span>
         <span>
-          <span className="font-medium text-foreground">Solid</span> = within
-          reach, <span className="font-medium text-foreground">faded</span> =
+          <span className="font-medium text-foreground">Full</span> = within
+          reach, <span className="font-medium text-foreground">pale</span> =
           mid-level and above. Click a row to open that direction.
         </span>
       </div>
@@ -441,7 +441,7 @@ export function CategoryHiringChart({
           label: d.label,
           values: [d.reach, d.rest],
           end: String(d.reach + d.rest),
-          colors: [d.color, `color-mix(in oklab, ${d.color} 35%, transparent)`],
+          colors: [d.color, `color-mix(in oklab, ${d.color} 40%, var(--card))`],
           href: d.href,
         }))}
         series={[
