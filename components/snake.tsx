@@ -36,9 +36,13 @@ const MAX_COLS = 40;
 const MIN_ROWS = 4;
 const MAX_ROWS = 30;
 
-/** ms per tick. The demo is slower: it is scenery. */
-const TICK_PLAY = 135;
-const TICK_DEMO = 190;
+/** ms per tick. */
+/** A game starts slow and easy, and each tile eaten makes it about 6% faster, down to a floor. */
+const TICK_PLAY_START = 260;
+const TICK_PLAY_MIN = 120;
+const SPEED_UP = 0.94;
+/** The self-playing demo keeps a calm, constant pace. */
+const TICK_DEMO = 220;
 const DEMO_FOOD = 5;
 const SPAWN_STAGGER = 240;
 const FADE_SEG = 320;
@@ -62,7 +66,8 @@ const DEMO_FOOD_TILES: TileName[] = ["pale", "corner", "stripe", "checker", "sol
 
 const COPY = {
   label: "Snake, playable",
-  score: "SCORE",
+  score: "Score",
+  speed: "speed",
   ready: "READY?",
   go: "GO!",
   gameOver: "GAME OVER",
@@ -178,9 +183,10 @@ export function Snake({ className }: { className?: string }) {
         el.style.transition = `opacity ${FADE_FOOD}ms`;
         el.style.opacity = "0";
         board.appendChild(el);
-        requestAnimationFrame(() => {
-          el.style.opacity = "1";
-        });
+        // Lay it out at opacity 0 first, so the transition has a start. A forced layout does this
+        // without waiting for an animation frame.
+        void el.offsetWidth;
+        el.style.opacity = "1";
       } else board.appendChild(el);
       const item = { ...spot, el };
       food.push(item);
@@ -346,9 +352,12 @@ export function Snake({ className }: { className?: string }) {
 
     // ---- the real game --------------------------------------------------------
 
+    // The current pace and its level (1 at the start, +1 per speed-up until the floor is reached).
+    let tickPlay = TICK_PLAY_START;
+    let level = 1;
     const setScore = (n: number) => {
       score = n;
-      scoreEl.textContent = `${COPY.score} ${n}`;
+      scoreEl.textContent = `${COPY.score} ${n}, ${COPY.speed} ${level}`;
     };
     const showMessage = (title: string, sub?: string) => {
       messageEl.replaceChildren();
@@ -382,6 +391,9 @@ export function Snake({ className }: { className?: string }) {
       mode = "countdown";
       setPlaying(true);
       running = false;
+      // A new game (and "Play again") always starts at the easy pace.
+      tickPlay = TICK_PLAY_START;
+      level = 1;
       setScore(0);
       scoreEl.dataset.show = "true";
       const cy = Math.floor(rows / 2);
@@ -426,6 +438,11 @@ export function Snake({ className }: { className?: string }) {
       advance(nx, ny, eaten);
       if (eaten) {
         sound.eat();
+        const next = Math.max(TICK_PLAY_MIN, Math.round(tickPlay * SPEED_UP));
+        if (next < tickPlay) {
+          tickPlay = next;
+          level++;
+        }
         setScore(score + 1);
         spawnFood();
       }
@@ -440,10 +457,10 @@ export function Snake({ className }: { className?: string }) {
       if (!active() || (reduced && mode === "demo")) return;
       if (mode === "demo") demoTick();
       else if (mode === "playing") playTick();
-      tickId = later(loop, mode === "playing" ? TICK_PLAY : TICK_DEMO);
+      tickId = later(loop, mode === "playing" ? tickPlay : TICK_DEMO);
     };
     const resume = () => {
-      if (tickId === null && active()) tickId = later(loop, mode === "playing" ? TICK_PLAY : TICK_DEMO);
+      if (tickId === null && active()) tickId = later(loop, mode === "playing" ? tickPlay : TICK_DEMO);
     };
 
     // ---- input -------------------------------------------------------------------
