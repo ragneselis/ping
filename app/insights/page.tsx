@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarClock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -19,6 +19,7 @@ import { Readout, type ReadoutItem } from "@/components/readout";
 import { HeroTiles } from "@/components/tiles";
 import { RequirementList } from "@/components/signal";
 import { Button } from "@/components/ui/button";
+import { DataNote } from "@/components/data-note";
 import { Panel } from "@/components/panel";
 import { cn } from "@/lib/utils";
 import {
@@ -116,26 +117,17 @@ export default async function InsightsPage({
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
-        <h1 className="max-w-[16ch] text-[clamp(1.75rem,9.4vw,2.75rem)] leading-[1.02] text-balance sm:text-6xl xl:text-7xl">
-          What the market is asking for
-        </h1>
+        <h1 className="max-w-[28ch]">What the market is asking for</h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
           We read the requirements in every posting and counted them up. No
           guesswork, no hype: this is what employers actually write down, so you
           can spend your portfolio time where it counts.
         </p>
-        <p className="flex max-w-prose items-start gap-2 text-sm text-muted-foreground">
-          <CalendarClock
-            aria-hidden
-            className="mt-0.5 size-3.5 shrink-0"
-            strokeWidth={1.75}
-          />
-          <span>
-            Based on {jobs.length.toLocaleString("en-GB")} current postings from{" "}
-            {boards} job boards and {companyFeeds} company career pages. Last
-            updated {formatUpdated(updatedAt)}.
-          </span>
-        </p>
+        <DataNote>
+          Based on {jobs.length.toLocaleString("en-GB")} current postings from{" "}
+          {boards} job boards and {companyFeeds} company career pages. Last
+          updated {formatUpdated(updatedAt)}.
+        </DataNote>
       </Band>
 
       {/* ---------- One direction (or all) ---------- */}
@@ -145,7 +137,7 @@ export default async function InsightsPage({
             <div className="flex flex-wrap items-center gap-3">
               <h2
                 id="asks-heading"
-                className="scroll-mt-24 flex items-center gap-3 text-3xl sm:text-4xl"
+                className="scroll-mt-24 flex items-center gap-3"
               >
                 {category && (
                   <CategoryDot category={category} className="size-3" />
@@ -299,12 +291,7 @@ export default async function InsightsPage({
         inner="grid gap-6 py-8 pb-16 sm:py-10"
       >
         <div className="grid gap-2">
-          <h2
-            id="compare-heading"
-            className="text-3xl text-balance sm:text-4xl"
-          >
-            Which directions are hiring
-          </h2>
+          <h2 id="compare-heading">Which directions are hiring</h2>
           <p className="max-w-prose text-muted-foreground">
             How many roles each direction has right now, and how many a graduate
             can realistically go for.{" "}

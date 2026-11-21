@@ -54,7 +54,7 @@ export function Panel({
       <div className="flex items-baseline justify-between gap-4">
         <Title
           className={cn(
-            "flex min-w-0 items-center gap-2 font-heading text-lg leading-snug font-semibold tracking-tight",
+            "flex min-w-0 items-center gap-2 font-heading text-title font-semibold tracking-tight",
             linked && "underline-offset-4 decoration-1 group-hover/panel:underline group-focus-visible/panel:underline",
           )}
         >

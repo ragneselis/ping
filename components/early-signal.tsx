@@ -18,7 +18,7 @@ export function EarlySignalBadge({ className }: { className?: string }) {
 export function CountList({ title, items, total, empty }: { title: string; items: { label: string; count: number }[]; total: number; empty: string }) {
   return (
     <div className="grid content-start gap-3">
-      <h3 className="font-semibold">{title}</h3>
+      <h3 className="font-heading text-title font-semibold tracking-tight">{title}</h3>
       {items.length ? (
         <ul className="grid gap-1.5">
           {items.map((i) => (

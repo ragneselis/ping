@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, CalendarClock } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -9,6 +9,7 @@ import {
   SortControl,
 } from "@/components/job-filters";
 import { JobRow } from "@/components/job-row";
+import { DataNote } from "@/components/data-note";
 import { Panel } from "@/components/panel";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { HeroTiles } from "@/components/tiles";
@@ -114,12 +115,16 @@ export default async function JobsPage({
         <HeroTiles variant="jobs" />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
           <div className="grid gap-5">
-            <h1 className="max-w-[28ch] text-[clamp(1.625rem,8.2vw,2.75rem)] leading-[1.02] text-balance sm:text-5xl">
+            <h1 className="max-w-[28ch]">
               Every current design role sorted into nine directions
             </h1>
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
               {REACH_DEFINITION}
             </p>
+            <DataNote>
+              Based on {cards.length.toLocaleString("en-GB")} current postings.
+              Last updated {updated}.
+            </DataNote>
           </div>
           {/* The real shortcut for an EKA graduate, on every screen size. */}
           <Panel
@@ -143,21 +148,11 @@ export default async function JobsPage({
         </div>
 
         <Readout items={readout} rules />
-        <p className="-mt-2 flex items-start gap-2 text-sm text-muted-foreground sm:-mt-4">
-          <CalendarClock
-            aria-hidden
-            className="mt-0.5 size-3.5 shrink-0"
-            strokeWidth={1.75}
-          />
-          <span>Last updated {updated}.</span>
-        </p>
       </Band>
 
       <Band aria-labelledby="jobs-heading" inner="grid gap-6 py-8 sm:py-10">
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-          <h2 id="jobs-heading" className="text-3xl sm:text-4xl">
-            Find your direction
-          </h2>
+          <h2 id="jobs-heading">Find your direction</h2>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-foreground">
