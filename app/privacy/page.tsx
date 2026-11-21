@@ -92,7 +92,7 @@ export default function PrivacyPage() {
       </Section>
 
       <Section label="On this device">
-        <p className="text-muted-foreground">Your theme and sound choices, and the note that today&rsquo;s visit was counted, are saved in this browser only and never leave it.</p>
+        <p className="text-muted-foreground">Your theme and sound choices, and the note that today&rsquo;s visit was counted, are saved in this browser only and never leave it. Your filter and sort choices on Jobs are kept in your own browser too, so they are there next time; Reset clears them.</p>
       </Section>
     </Band>
   );

@@ -13,6 +13,7 @@ import { JOB_GRID, ROW_BLEED } from "@/components/job-row";
 import { useQueryState } from "@/components/use-query-state";
 import { Button } from "@/components/ui/button";
 import type { Category } from "@/lib/types";
+import { SORT_LABEL, SORTS, type Sort } from "@/lib/sort";
 import { cn } from "@/lib/utils";
 
 /** Level options, in order. Several can be selected; none selected means all levels. */
@@ -55,27 +56,23 @@ export function JobFilters({
   const remote = params.get("remote") ?? "any";
   const estonia = params.get("estonia") === "1" ? "1" : "any";
   const levels = readLevels(params);
+  // Anything other than the default view (filters, search, or the Newest sort) can be reset.
   const active = !!(
     params.get("q") ||
     category ||
     params.get("estonia") ||
     levels.size ||
-    params.get("remote")
+    params.get("remote") ||
+    params.get("sort") === "newest"
   );
 
   const selectLevel = (value: string) => {
-    if (value === "any")
-      return update({ level: null, reach: null, sort: null });
+    if (value === "any") return update({ level: null, reach: null });
     const next = new Set(levels);
     if (next.has(value)) next.delete(value);
     else next.add(value);
     const list = LEVEL_ITEMS.map((l) => l.value).filter((v) => next.has(v));
-    // A sort chosen for the previous selection may no longer fit; let the default follow the levels.
-    update({
-      level: list.length ? list.join(",") : null,
-      reach: null,
-      sort: null,
-    });
+    update({ level: list.length ? list.join(",") : null, reach: null });
   };
 
   return (
@@ -137,13 +134,11 @@ export function JobFilters({
             variant="ghost"
             size="sm"
             className="min-h-11 sm:ml-auto sm:min-h-8"
-            // Clearing keeps the chosen sort.
-            onClick={() =>
-              go(params.get("sort") ? `sort=${params.get("sort")}` : "")
-            }
+            // Back to the default view: every filter, the search and the sort, and the remembered view.
+            onClick={() => go("")}
           >
             <X data-icon="inline-start" />
-            Clear filters
+            Reset
           </Button>
         )}
       </div>
@@ -153,13 +148,13 @@ export function JobFilters({
 
 /**
  * The list's header row (from lg): small mono column labels. Level and Posted also sort, as in
- * a table: by level puts roles within reach first, by posted puts the newest first. The explicit
+ * a table: by level gives Best fit first (fitRank in lib/view.ts), by posted the newest first. The explicit
  * Sort control next to the job count does the same on every screen size.
  */
-export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
+export function JobListHeader({ sort }: { sort: Sort }) {
   const { set, pending } = useQueryState();
   const sortButton = (
-    value: "reach" | "newest",
+    value: Sort,
     label: string,
     hint: string,
     className?: string,
@@ -197,7 +192,7 @@ export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
         <DataLabel>Direction</DataLabel>
         <DataLabel>Role</DataLabel>
         <DataLabel>Location</DataLabel>
-        {sortButton("reach", "Level", "level, within reach first")}
+        {sortButton("best", "Level", "best fit: within reach and open to Estonia first")}
         <DataLabel>For you</DataLabel>
         {sortButton("newest", "Posted", "date posted, newest first")}
         <span />
@@ -206,18 +201,15 @@ export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
   );
 }
 
-const SORT_ITEMS = [
-  { value: "reach", label: "Within reach first" },
-  { value: "newest", label: "Newest" },
-];
+const SORT_ITEMS = SORTS.map((value) => ({ value, label: SORT_LABEL[value] }));
 
 /** The sort control before the URL is readable (Suspense fallback): identical, so nothing shifts. */
-export function SortControlFallback({ sort }: { sort: "reach" | "newest" }) {
+export function SortControlFallback({ sort }: { sort: Sort }) {
   return <Segmented label="Sort" items={SORT_ITEMS} isActive={(v) => v === sort} onSelect={() => {}} />;
 }
 
 /** The explicit sort control, next to "N jobs match" on every screen size. */
-export function SortControl({ sort }: { sort: "reach" | "newest" }) {
+export function SortControl({ sort }: { sort: Sort }) {
   const { set, pending } = useQueryState();
   return (
     <Segmented

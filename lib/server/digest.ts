@@ -1,6 +1,6 @@
 /**
  * What one subscriber's digest contains: postings first seen since their last email that match their
- * preferences, within reach first, at most DIGEST_CAP, plus one line of market insight from the
+ * preferences, Best fit first (fitRank in lib/view.ts), at most DIGEST_CAP, plus one line of market insight from the
  * current data. Used by scripts/digest.ts; pure apart from reading the data files.
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -67,7 +67,8 @@ export function buildDigest(prefs: Prefs, since: Date, now = Date.now()): Digest
   const { cards } = getDataset();
   const seen = loadSeen();
   const t = since.getTime();
-  // Cards arrive within reach first, then newest first: the order the email keeps.
+  // Cards arrive Best fit first (within reach and open to Estonia, within reach, open to Estonia, the
+  // rest), newest first inside each group: the same order as the Jobs list, and the email keeps it.
   const fresh = cards.filter((c) => seen[c.id] && new Date(seen[c.id]).getTime() > t && matches(c, prefs));
   // Near-identical postings from one company fold into one row, so ten rows show ten different jobs.
   const rows = groupSimilar(fresh)

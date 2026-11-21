@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, type ComponentProps } from "react";
 import { track } from "@/components/usage-beacon";
 import { FILTER_VALUES } from "@/lib/usage";
+import { consumeRestored, rememberView } from "@/lib/view-memory";
 
 /*
  * Links that set Jobs filters land on the results, not at the top of the page.
@@ -48,6 +49,8 @@ export function FilterLink({ onClick, ...props }: ComponentProps<typeof Link>) {
         target.searchParams.forEach((value, key) => {
           if (FILTER_VALUES[key]) for (const v of value.split(",")) track({ name: "filter", filter: key, value: v });
         });
+        // A link to Jobs is a view the visitor chose: remember it ("/" alone clears the memory).
+        if (target.pathname === "/") rememberView(target.search);
         const here = target.pathname === window.location.pathname && target.search === window.location.search;
         if (here) scrollToResults();
         else pending = true;
@@ -60,7 +63,8 @@ export function ResultsTarget() {
   const params = useSearchParams();
   const first = useRef(true);
   useEffect(() => {
-    const opened = first.current && FILTER_PARAMS.some((k) => params.has(k));
+    // A view restored from the visitor's memory (lib/view-memory.ts) is not a shared link: no scroll.
+    const opened = first.current && FILTER_PARAMS.some((k) => params.has(k)) && !consumeRestored();
     first.current = false;
     if (!pending && !opened) return;
     pending = false;

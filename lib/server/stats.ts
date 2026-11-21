@@ -56,7 +56,7 @@ const filterValueName = (filter: string, value: string) =>
           ? { remote: "Remote", hybrid: "Hybrid", onsite: "On-site" }[value] ?? value
           : value === "newest"
             ? "Newest"
-            : "Within reach first";
+            : "Best fit first";
 
 export interface SubscriberRow {
   id: number;

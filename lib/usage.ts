@@ -26,7 +26,7 @@ export const FILTER_VALUES: Record<string, readonly string[]> = {
   level: ["reach", "mid", "senior"],
   estonia: ["1"],
   remote: ["remote", "hybrid", "onsite"],
-  sort: ["reach", "newest"],
+  sort: ["best", "newest"],
 };
 
 /** A search as it is counted: lower case, letters, digits and spaces only, at most 40 characters. */

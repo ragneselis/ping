@@ -7,7 +7,10 @@ import { statSync } from "node:fs";
 import path from "node:path";
 import { loadClassifiedJobs, loadSources, tally, tallyKey, loadRun } from "./data";
 import { COMPANIES } from "./sources/ats";
+import { byNewest, compareFit, resolveSort, type Sort } from "./sort";
 import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "./types";
+
+export { compareFit, fitRank, resolveSort, SORT_LABEL, SORTS, type Sort } from "./sort";
 
 /** Directions with fewer postings than this are an "early signal": shown as lists, not charts. */
 export const EARLY_SIGNAL_THRESHOLD = 15;
@@ -67,7 +70,6 @@ export const isNewPosting = (iso: string | null, now = Date.now()) => !!iso && n
 
 export const LEVELS = ["reach", "mid", "senior"] as const;
 export type Level = (typeof LEVELS)[number];
-export type Sort = "reach" | "newest";
 
 export interface Filters {
   /** The one selected direction, or "" for none or several (see categories). */
@@ -78,7 +80,7 @@ export interface Filters {
   remote: "" | "remote" | "hybrid" | "onsite";
   /** Selected level buckets; empty means all levels. */
   levels: Level[];
-  /** Sort order: explicit from the URL, or the default for the chosen levels. */
+  /** Sort order from the URL; Best fit first when none is given. */
   sort: Sort;
   /** Free-text search over title, company, location, top requirements and direction. */
   q: string;
@@ -178,15 +180,17 @@ export function getDataset(): Dataset {
     .join("|");
   if (cache?.key === key) return cache.data;
 
-  // Within-reach jobs first (graduates see what they can apply for), then newest first.
-  const jobs = loadClassifiedJobs()
+  // Cards (and jobs, in step) in the default order: Best fit first (fitRank), newest first inside each group.
+  const ranked = loadClassifiedJobs()
     .filter((j) => j.primary)
-    .sort((a, b) => Number(isWithinReach(b)) - Number(isWithinReach(a)) || (b.postedAt ?? "").localeCompare(a.postedAt ?? ""));
+    .map((j) => ({ j, c: toCard(j) }))
+    .sort((a, b) => compareFit(a.c, b.c));
+  const jobs = ranked.map((r) => r.j);
   const sources = loadSources();
   const run = loadRun();
   const data: Dataset = {
     jobs,
-    cards: jobs.map(toCard),
+    cards: ranked.map((r) => r.c),
     updatedAt: sources?.fetchedAt ?? null,
     lastRun: run?.lastRun ?? sources?.fetchedAt ?? null,
     nextRun: run?.nextRun ?? null,
@@ -208,14 +212,9 @@ export function parseFilters(sp: Record<string, string | string[] | undefined>):
   if (one("reach") === "1") levels.add("reach");
   const list = LEVELS.filter((l) => levels.has(l));
   const q = one("q").trim().slice(0, 80);
-  return { category, categories, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort"), list), q };
+  return { category, categories, estonia: one("estonia") === "1", remote, levels: list, sort: resolveSort(one("sort")), q };
 }
 
-/** Default sort: within reach first, unless the level filter leaves within-reach jobs out. */
-export function resolveSort(raw: string, levels: Level[]): Sort {
-  if (raw === "reach" || raw === "newest") return raw;
-  return levels.length && !levels.includes("reach") ? "newest" : "reach";
-}
 
 /** Text a search matches against: title, company, location, top requirements and direction name. */
 const searchText = (c: JobCard) => [c.title, c.company, c.location, ...c.chips, CATEGORY_META[c.primary].short].join(" ").toLowerCase();
@@ -235,8 +234,8 @@ export function applyFilters(
       (!f.levels.length || f.levels.includes(c.levelBucket)) &&
       (!words.length || words.every((w) => searchText(c).includes(w))),
   );
-  // Cards arrive within-reach first; "newest" re-sorts by date only.
-  return f.sort === "newest" ? [...out].sort((a, b) => (b.postedAt ?? "").localeCompare(a.postedAt ?? "")) : out;
+  // Cards arrive Best fit first (getDataset); "newest" re-sorts by date only.
+  return f.sort === "newest" ? [...out].sort(byNewest) : out;
 }
 
 /* ---------- Market insights ---------- */

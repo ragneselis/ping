@@ -14,6 +14,8 @@ import { Panel } from "@/components/panel";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { FilterLink, RESULTS_ID, ResultsTarget } from "@/components/filter-link";
 import { ResultsFade } from "@/components/results-fade";
+import { RestoreView } from "@/components/view-memory";
+import { VIEW_RESTORE_SCRIPT } from "@/lib/view-memory";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
@@ -115,6 +117,8 @@ export default async function JobsPage({
 
   return (
     <>
+      {/* The visitor's remembered view (lib/view-memory.ts): on a full load with a plain URL, swap to it before paint. */}
+      <script dangerouslySetInnerHTML={{ __html: VIEW_RESTORE_SCRIPT }} />
       <Band aria-label="Introduction" inner="grid gap-8 sm:gap-10">
         <HeroTiles variant="jobs" />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
@@ -159,6 +163,7 @@ export default async function JobsPage({
           </h2>
           <Suspense>
             <ResultsTarget />
+            <RestoreView />
           </Suspense>
           <div className="baseline-row flex-wrap gap-x-5 gap-y-2">
             <p className="text-sm text-muted-foreground">
@@ -228,7 +233,7 @@ export default async function JobsPage({
                     nativeButton={false}
                     render={
                       <FilterLink
-                        href={filters.sort ? `/?sort=${filters.sort}` : "/"}
+                        href={filters.sort === "newest" ? "/?sort=newest" : "/"}
                       />
                     }
                   >

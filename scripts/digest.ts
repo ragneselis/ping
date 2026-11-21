@@ -8,7 +8,7 @@
  *                    [--since-days 7]       with jobs from the last N days (default: since their last email)
  *
  * Each email holds only postings first seen since that subscriber's last email that match their
- * preferences, within reach first, at most 10. No new matches, no email. A failed send is logged
+ * preferences, Best fit first (as on Jobs), at most 10. No new matches, no email. A failed send is logged
  * and skipped; the script never fails the workflow because of email (it exits 0 and warns).
  * It also deletes sign-ups never confirmed within 7 days.
  */
