@@ -52,7 +52,8 @@
   /* Category colours from Tailwind's palette, so they share one lightness and chroma family.
      --cat-<name>      shade 600 (light) / 400 (dark): dots, chart bars, fills, tag tint
      --cat-<name>-text shade 700 (light) / 300 (dark): category tag text. Where 700 failed AA on its
-                       15% tint (orange, teal, lime, amber) the text token is one shade darker, 800. */
+                       15% tint (orange, teal, lime) the text token is one shade darker, 800.
+     Industrial is yellow: 500 for graphics in light (600 turns mustard), 800 for its text. */
   --cat-product: var(--color-sky-600);
   --cat-product-text: var(--color-sky-700);
   --cat-engineering: var(--color-indigo-600);
@@ -67,8 +68,8 @@
   --cat-customer-text: var(--color-red-700);
   --cat-game: var(--color-lime-600);
   --cat-game-text: var(--color-lime-800);
-  --cat-industrial: var(--color-amber-600);
-  --cat-industrial-text: var(--color-amber-800);
+  --cat-industrial: var(--color-yellow-500);
+  --cat-industrial-text: var(--color-yellow-800);
   --cat-other: var(--color-slate-600);
   --cat-other-text: var(--color-slate-700);
   /* Blueprint frame: hairlines around the content column and between sections; hatching in the gutters. */
@@ -152,8 +153,8 @@
   --cat-customer-text: var(--color-red-300);
   --cat-game: var(--color-lime-400);
   --cat-game-text: var(--color-lime-300);
-  --cat-industrial: var(--color-amber-400);
-  --cat-industrial-text: var(--color-amber-300);
+  --cat-industrial: var(--color-yellow-400);
+  --cat-industrial-text: var(--color-yellow-300);
   --cat-other: var(--color-slate-400);
   --cat-other-text: var(--color-slate-300);
   --frame-line: oklch(0.2700 0.0500 281);
