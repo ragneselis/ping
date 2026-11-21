@@ -61,7 +61,7 @@ export interface JobCard {
 }
 
 /** Level buckets for the level filter. Every job is in exactly one. */
-/** Posted in the last 24 hours: gets Ping's pulse dot. */
+/** Posted in the last 24 hours: gets the fresh tile. */
 export const isNewPosting = (iso: string | null, now = Date.now()) => !!iso && now - new Date(iso).getTime() < 86_400_000;
 
 export const LEVELS = ["reach", "mid", "senior"] as const;

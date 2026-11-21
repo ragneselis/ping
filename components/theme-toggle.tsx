@@ -25,7 +25,7 @@ function useChoice() {
 export function ThemeSwitch({ className }: { className?: string }) {
   const { choice, setTheme } = useChoice();
   return (
-    <div role="radiogroup" aria-label="Colour theme" className={cn("flex items-center border border-border", className)}>
+    <div role="radiogroup" aria-label="Colour theme" className={cn("flex items-center border border-hairline-strong", className)}>
       {OPTIONS.map((o) => {
         const active = choice === o.value;
         return (
@@ -39,8 +39,8 @@ export function ThemeSwitch({ className }: { className?: string }) {
                   aria-label={`${o.label} theme`}
                   onClick={() => setTheme(o.value)}
                   className={cn(
-                    "flex size-8 items-center justify-center border-l border-border text-muted-foreground transition-colors first:border-l-0 hover:text-foreground focus-visible:relative focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
-                    active && "bg-foreground text-background hover:text-background",
+                    "flex size-8 items-center justify-center border-l border-hairline-strong text-muted-foreground transition-colors first:border-l-0 hover:text-foreground focus-visible:relative focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+                    active && "bg-primary text-primary-foreground hover:text-primary-foreground",
                   )}
                 />
               }
@@ -88,7 +88,7 @@ export function ThemeMenu() {
                 onClick={() => setTheme(o.value)}
                 className={cn(
                   "flex min-h-11 items-center gap-3 rounded-sm px-3 text-sm font-medium transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-                  active && "bg-foreground text-background hover:bg-foreground",
+                  active && "bg-primary text-primary-foreground hover:bg-primary",
                 )}
               >
                 <o.icon aria-hidden className="size-4" strokeWidth={1.75} />

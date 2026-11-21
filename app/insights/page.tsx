@@ -16,6 +16,7 @@ import {
   EarlySignalBadge,
 } from "@/components/early-signal";
 import { Readout, type ReadoutItem } from "@/components/readout";
+import { HeroTiles } from "@/components/tiles";
 import { RequirementList } from "@/components/signal";
 import { Button } from "@/components/ui/button";
 import {
@@ -124,10 +125,8 @@ export default async function InsightsPage({
 
   return (
     <>
-      <Band
-        aria-label="Introduction"
-        inner="grid gap-5 pt-10 pb-10 sm:pt-16 lg:pt-20"
-      >
+      <Band aria-label="Introduction" inner="grid gap-5 pb-10">
+        <HeroTiles variant="insights" />
         <h1 className="max-w-[16ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.95] text-balance sm:text-6xl xl:text-7xl">
           What the market is asking for
         </h1>
@@ -202,7 +201,7 @@ export default async function InsightsPage({
           </TabRow>
         </div>
 
-        <Readout items={readout} note={REACH_DEFINITION} />
+        <Readout items={readout} rules note={REACH_DEFINITION} />
 
         {early ? (
           <Card>

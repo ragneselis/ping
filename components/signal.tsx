@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /*
  * Signals: the facts a graduate decides on (open to Estonia, within reach).
- * Quiet by design: a small Lucide icon and plain text, both in the foreground colour. No fill, no colour.
+ * In Ping's emerald accent: a small Lucide icon and the label in --brand-sm (5.48:1 on white).
  */
 export const SIGNAL_ICON = { estonia: Globe2, reach: GraduationCap } as const;
 export const SIGNAL_LABEL = { estonia: "Open to Estonia", reach: "Within reach" } as const;
@@ -11,16 +11,11 @@ export const SIGNAL_LABEL = { estonia: "Open to Estonia", reach: "Within reach" 
 export function SignalTag({ kind, className }: { kind: "estonia" | "reach"; className?: string }) {
   const Icon = SIGNAL_ICON[kind];
   return (
-    <span className={cn("flex items-center gap-1.5 whitespace-nowrap text-foreground", className)}>
+    <span className={cn("flex items-center gap-1.5 font-medium whitespace-nowrap text-brand-sm", className)}>
       <Icon aria-hidden className="size-3.5 shrink-0" strokeWidth={1.75} />
       {SIGNAL_LABEL[kind]}
     </span>
   );
-}
-
-/** Ping's signature: a pink dot. Pulses softly unless the reader prefers reduced motion. */
-export function PulseDot({ once = false, className }: { once?: boolean; className?: string }) {
-  return <span aria-hidden className={cn("pulse-dot", once ? "pulse-once" : "pulse-soft", className)} />;
 }
 
 /** Seniority as a quiet mono readout, e.g. "JUNIOR" or "NOT STATED". */

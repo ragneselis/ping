@@ -7,6 +7,7 @@ import { FRAME_COLUMN } from "@/components/blueprint";
 import { SubscribeDialog } from "@/components/subscribe-dialog";
 import { ThemeMenu, ThemeSwitch } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { Tile } from "@/components/tiles";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -17,14 +18,14 @@ const NAV = [
 export function Wordmark() {
   return (
     <Link href="/" className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight" aria-label="Ping home">
-      {/* Ping's signature: the pink dot breathes once on load. */}
-      <span aria-hidden className="pulse-dot pulse-once size-2.5" />
+      {/* Ping's mark: a single GrönLoop tile. */}
+      <Tile name="marble_vivid_1" className="size-3" />
       Ping
     </Link>
   );
 }
 
-/** "Get new jobs" is not live yet, so it is an outline button with a "soon" tag rather than a pink action. */
+/** "Get new jobs" is not live yet, so it is an outline button with a "soon" tag rather than the emerald primary action. */
 export function SubscribeButton({ compact = false }: { compact?: boolean }) {
   return (
     <SubscribeDialog
@@ -60,9 +61,9 @@ export function SiteHeader() {
               href={n.href}
               aria-current={active(n.href) ? "page" : undefined}
               className={cn(
-                "relative flex h-11 items-center px-2.5 text-sm font-medium transition-colors hover:text-foreground sm:px-3",
+                "relative flex h-11 items-center px-2.5 text-sm font-medium transition-colors hover:text-brand-sm sm:px-3",
                 active(n.href)
-                  ? "text-foreground after:absolute after:inset-x-2.5 after:bottom-2 after:h-px after:bg-foreground sm:after:inset-x-3"
+                  ? "text-foreground after:absolute after:inset-x-2.5 after:bottom-2 after:h-0.5 after:bg-brand-lg sm:after:inset-x-3"
                   : "text-muted-foreground",
               )}
             >

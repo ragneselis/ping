@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 export function tabClassName(active: boolean) {
   return cn(
     "relative flex h-11 snap-start items-center gap-2 border-b text-sm whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:after:absolute focus-visible:after:inset-x-0 focus-visible:after:inset-y-2 focus-visible:after:ring-2 focus-visible:after:ring-ring",
-    active ? "border-border-strong font-medium text-foreground" : "border-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground",
+    active ? "border-brand-lg font-medium text-foreground" : "border-transparent text-muted-foreground hover:border-hairline-strong hover:text-foreground",
   );
 }
 
@@ -29,7 +29,7 @@ export function TabContent({ label, count, category }: { label: string; count?: 
 /** Small mono label for a filter group or a table column. */
 export function DataLabel({ children, className, ...rest }: { children: ReactNode; className?: string; id?: string }) {
   return (
-    <span className={cn("font-mono text-[0.7rem] tracking-wider text-muted-foreground uppercase", className)} {...rest}>
+    <span className={cn("label-mono text-muted-foreground", className)} {...rest}>
       {children}
     </span>
   );
@@ -62,7 +62,7 @@ export function Segmented({
   return (
     <div className={cn("grid gap-1.5 sm:flex sm:items-center sm:gap-3", className)}>
       <DataLabel id={id}>{label}</DataLabel>
-      <div role="group" aria-labelledby={id} className="flex w-full border border-border bg-card sm:w-auto">
+      <div role="group" aria-labelledby={id} className="flex w-full border border-hairline-strong bg-card sm:w-auto">
         {items.map((it) => {
           const active = isActive(it.value);
           return (
@@ -72,8 +72,8 @@ export function Segmented({
               aria-pressed={active}
               onClick={() => onSelect(it.value)}
               className={cn(
-                "min-h-11 flex-1 border-l border-border px-3 text-sm whitespace-nowrap transition-colors first:border-l-0 focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-8 sm:flex-none",
-                active ? "bg-foreground font-medium text-background" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                "min-h-11 flex-1 border-l border-hairline-strong px-3 text-sm whitespace-nowrap transition-colors first:border-l-0 focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-8 sm:flex-none",
+                active ? "bg-primary font-medium text-primary-foreground" : "text-muted-foreground hover:bg-brand-tint hover:text-foreground",
               )}
             >
               {it.label}

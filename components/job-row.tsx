@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { CategoryLabel } from "@/components/category";
-import { LevelTag, PulseDot, RequirementList, SignalTag } from "@/components/signal";
+import { LevelTag, RequirementList, SignalTag } from "@/components/signal";
+import { FreshTile } from "@/components/tiles";
 import { CATEGORY_META, categoryVars, REMOTE_LABEL } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 import type { JobCard as Job } from "@/lib/view";
@@ -50,7 +51,7 @@ export function JobRow({ job, isNew }: { job: Job; isNew: boolean }) {
         <div className="grid min-w-0 gap-0.5 pr-8 lg:pr-0">
           <h3 className="relative leading-snug font-semibold text-pretty">
             {/* Hangs in the gap before the title, so titles stay aligned down the column. */}
-            {isNew && <PulseDot className="absolute top-[0.45em] -left-3.5" />}
+            {isNew && <FreshTile className="absolute top-[0.5em] -left-3.5" />}
             <a href={job.url} target="_blank" rel="noopener noreferrer" className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none">
               {isNew && <span className="sr-only">New today: </span>}
               {job.title}
