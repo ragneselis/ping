@@ -13,7 +13,11 @@ const AUTHOR_URL = "https://ragne.me";
 export function SiteFooter() {
   return (
     <Band as="footer" last inner="flex flex-col gap-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-      <p>Ping is made for design students at the Estonian Academy of Arts.</p>
+      <div className="grid gap-1">
+        <p>Ping is made for design students at the Estonian Academy of Arts.</p>
+        {/* True since the GitHub Actions refresh runs every morning (.github/workflows/daily-refresh.yml). */}
+        <p className="text-xs">Job listings refreshed daily.</p>
+      </div>
       <div className="flex items-center gap-1">
         <p>
           Built and maintained by{" "}

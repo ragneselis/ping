@@ -78,3 +78,15 @@ Motion is short and purposeful, set through tokens in `app/globals.css` (`--ease
 - Page: hero tiles pop in one by one, dispersing lines draw in from the left, readout figures count up when first seen (`components/count-up.tsx`), panels and the first job rows rise in once (`components/reveal.tsx`), chart bars grow when their panel appears, the job list cross-fades on filter changes (`components/results-fade.tsx`).
 - Sound moments: a soft ping when a count-up lands and a quiet tick when filtered results arrive (both only once audio is running, never on load), open and close sounds on the "+N similar" expander, a ping when the snake eats.
 - Snake (`components/snake.tsx`, in `components/closing-band.tsx` above the footer): ported from GrönLoop's closing call to action. It plays itself until clicked, tapped or started with Enter/Space; arrow keys or WASD steer, swipes on touch. A game starts at 260ms per step and each tile eaten makes it about 6% faster, down to 120ms; the label shows the score and speed level, and Play again resets the pace. The demo moves at a steady 220ms. Ping's pixel tiles on exact 32px cells; pauses off screen or in a hidden tab; a still arrangement under reduced motion.
+
+
+## Daily refresh and deploy
+
+`.github/workflows/daily-refresh.yml` runs every day at 04:00 UTC (06:00 in Tallinn in winter, 07:00 in summer) and can be started by hand (Actions, "Daily refresh", Run workflow):
+
+1. `npm run fetch`: every source, deduplicated. Postings no longer listed drop out. A source that fails keeps its postings from the last good run and is named in the log; a run that loses every source, or more than half the postings, exits without writing, so the site keeps the previous data.
+2. `npm run extract`: classification and requirements for new postings only (both cached by posting id). `ANTHROPIC_API_KEY` comes from the repository's Actions secret.
+3. `npm run stamp`: writes `data/run.json` (last run, next scheduled run, failed sources), which the data note shows in Tallinn time.
+4. Commits `data/` to main only when postings, classifications or requirements changed. That push deploys on Vercel.
+
+Locally, `npm run refresh` runs the same three steps. The site is on Vercel (production branch main) and reads `data/*.json` at request time (`outputFileTracingIncludes` in `next.config.mjs`), so no local files are needed to build or run it.

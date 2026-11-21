@@ -17,6 +17,11 @@ export function loadSources() {
   return read<{ fetchedAt: string; totalInScope: number; duplicatesRemoved: number; unique: number; sources: SourceReport[] } | null>("sources.json", null);
 }
 
+/** When the daily refresh last finished and when the next one is due (written by scripts/stamp.ts). */
+export function loadRun() {
+  return read<{ lastRun: string; nextRun: string; schedule: string; failedSources: string[] } | null>("run.json", null);
+}
+
 export interface ExtractionStore {
   results: Record<string, Extraction>;
   runs: { at: string; model: string; postings: number; failed: number; usage: Extraction["usage"]; costUsd: number; note?: string }[];

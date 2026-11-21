@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "fetch": "tsx scripts/fetch.ts",
-    "extract": "tsx --env-file-if-exists=.env.local scripts/extract.ts"
+    "extract": "tsx --env-file-if-exists=.env.local scripts/extract.ts",
+    "stamp": "tsx scripts/stamp.ts",
+    "refresh": "npm run fetch && npm run extract && npm run stamp"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.11.0",

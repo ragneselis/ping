@@ -1,0 +1,60 @@
+name: Daily refresh
+
+# Every day at 04:00 UTC (06:00 in Tallinn in winter, 07:00 in summer), and by hand.
+# Keep the hour in step with RUN_HOUR_UTC in scripts/stamp.ts.
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Fetch every source and deduplicate. A failed source keeps its postings from the last good run
+      # and is listed in the log; a run that loses everything (or over half) exits without writing,
+      # so the job fails here and the site keeps the previous data. Postings no longer listed drop out.
+      - name: Fetch
+        run: npm run fetch
+
+      # Classify and extract requirements for new postings only: both steps are cached by posting id.
+      - name: Classify and extract
+        run: npm run extract
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # Record this run and the next scheduled one (data/run.json) for the page's data note.
+      - name: Stamp
+        run: npm run stamp
+
+      # Commit only when the postings, classifications or requirements changed. The push deploys on Vercel.
+      # Commits are authored as the repository owner: on Vercel's Hobby plan a private repository only
+      # deploys commits by its owner.
+      - name: Commit and push
+        run: |
+          if git diff --quiet -- data/jobs.json data/classifications.json data/extractions.json; then
+            echo "No new or removed postings. Nothing to commit."
+            exit 0
+          fi
+          git config user.name "ragneselis"
+          git config user.email "90755249+ragneselis@users.noreply.github.com"
+          git add data/
+          git commit -m "Daily data refresh $(date -u +%Y-%m-%d)"
+          git push

@@ -1,2 +1,9 @@
 /** @type {import("next").NextConfig} */
-export default {};
+export default {
+  // The pages read data/*.json from disk at request time (lib/data.ts), so the serverless functions
+  // must ship with those files.
+  outputFileTracingIncludes: {
+    "/": ["./data/**/*"],
+    "/insights": ["./data/**/*"],
+  },
+};

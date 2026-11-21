@@ -54,7 +54,7 @@ export default async function InsightsPage({
   searchParams: Promise<Search>;
 }) {
   const { category } = parseFilters(await searchParams);
-  const { jobs, updatedAt, boards, companyFeeds } = getDataset();
+  const { jobs, updatedAt, boards, companyFeeds, lastRun, nextRun } = getDataset();
   const scope = category ? jobs.filter((j) => j.primary === category) : jobs;
   const i = insightFor(scope, 10);
   const comparison = categoryComparison(jobs);
@@ -122,7 +122,7 @@ export default async function InsightsPage({
           Skills, tools and experience from every current posting, counted and
           split by direction.
         </p>
-        <DataNote postings={jobs.length} updatedAt={updatedAt} />
+        <DataNote postings={jobs.length} lastRun={lastRun} nextRun={nextRun} />
       </Band>
 
       {/* ---------- One direction (or all) ---------- */}

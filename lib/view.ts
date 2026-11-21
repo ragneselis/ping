@@ -5,7 +5,7 @@
 import { CATEGORY_META } from "@/lib/categories";
 import { statSync } from "node:fs";
 import path from "node:path";
-import { loadClassifiedJobs, loadSources, tally, tallyKey } from "./data";
+import { loadClassifiedJobs, loadSources, tally, tallyKey, loadRun } from "./data";
 import { COMPANIES } from "./sources/ats";
 import { CATEGORIES, type Category, type ClassifiedJob, type Extraction } from "./types";
 
@@ -152,6 +152,9 @@ interface Dataset {
   jobs: ClassifiedJob[];
   cards: JobCard[];
   updatedAt: string | null;
+  /** The last finished daily refresh and the next scheduled one (data/run.json), if recorded. */
+  lastRun: string | null;
+  nextRun: string | null;
   boards: number;
   companyFeeds: number;
 }
@@ -161,7 +164,7 @@ let cache: { key: string; data: Dataset } | null = null;
 /** Design roles with a category, newest first. Re-read only when the data files change. */
 export function getDataset(): Dataset {
   const dir = path.join(process.cwd(), "data");
-  const key = ["jobs.json", "classifications.json", "extractions.json"]
+  const key = ["jobs.json", "classifications.json", "extractions.json", "run.json"]
     .map((f) => {
       try {
         return statSync(path.join(dir, f)).mtimeMs;
@@ -177,10 +180,13 @@ export function getDataset(): Dataset {
     .filter((j) => j.primary)
     .sort((a, b) => Number(isWithinReach(b)) - Number(isWithinReach(a)) || (b.postedAt ?? "").localeCompare(a.postedAt ?? ""));
   const sources = loadSources();
+  const run = loadRun();
   const data: Dataset = {
     jobs,
     cards: jobs.map(toCard),
     updatedAt: sources?.fetchedAt ?? null,
+    lastRun: run?.lastRun ?? sources?.fetchedAt ?? null,
+    nextRun: run?.nextRun ?? null,
     boards: sources?.sources.filter((s) => s.sourceType === "board" && s.ok).length ?? 0,
     companyFeeds: COMPANIES.length,
   };
