@@ -3,13 +3,15 @@
 import { BellRing, Mail, MessageSquare } from "lucide-react";
 import type { ReactElement } from "react";
 import { Button } from "@/components/ui/button";
+import { sound } from "@/lib/sound";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 /** "Get new jobs" call to action. Placeholder until email and Slack updates exist. */
 export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
   return (
-    <Dialog>
-      <DialogTrigger render={trigger} />
+    <Dialog onOpenChange={(open) => (open ? sound.open() : sound.close())}>
+      {/* The trigger plays the open sound, not a click as well. */}
+      <DialogTrigger render={trigger} data-sound="none" />
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="mb-2 flex size-10 items-center justify-center rounded-lg border border-border text-foreground">

@@ -68,7 +68,9 @@ export function Mascot({ name, className, style }: { name: MascotName; className
       focusable="false"
       viewBox="0 0 16 16"
       shapeRendering="crispEdges"
-      className={cn("block size-16 shrink-0 md:size-32", className)}
+      // The only part of the hero band that takes the pointer: hovering a mascot chirps (when sound is on).
+      data-sound="chirp"
+      className={cn("pointer-events-auto block size-16 shrink-0 md:size-32", className)}
       style={style}
     >
       <rect width="16" height="16" fill={`var(--mascot-tile-${name})`} />

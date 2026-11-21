@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FRAME_COLUMN } from "@/components/blueprint";
 import { SubscribeDialog } from "@/components/subscribe-dialog";
-import { ThemeMenu, ThemeSwitch } from "@/components/theme-toggle";
+import { SoundToggle } from "@/components/sound";
+import { ThemeMenu } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Tile } from "@/components/tiles";
 import { cn } from "@/lib/utils";
@@ -48,43 +49,52 @@ export function SiteHeader() {
   const pathname = usePathname();
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  const tabs = (className?: string) => (
+    // Two destinations only, so they stay visible as tabs at every width.
+    <nav className={cn("flex items-center", className)} aria-label="Main">
+      {NAV.map((n) => (
+        <Link
+          key={n.href}
+          href={n.href}
+          aria-current={active(n.href) ? "page" : undefined}
+          className={cn(
+            "relative flex h-11 items-center px-3 text-sm font-medium transition-colors first:-ml-3 hover:text-brand-sm sm:first:ml-0",
+            active(n.href)
+              ? "text-foreground after:absolute after:inset-x-3 after:bottom-1.5 after:h-0.5 after:bg-brand-lg"
+              : "text-muted-foreground",
+          )}
+        >
+          <span className="sm:hidden">{n.short}</span>
+          <span className="hidden sm:inline">{n.label}</span>
+        </Link>
+      ))}
+    </nav>
+  );
+
   return (
-    <header className="sticky top-0 z-40 border-b border-frame-line">
-      {/* Only the column is frosted; the gutters keep their hatching. */}
-      <div className={cn(FRAME_COLUMN, "flex h-16 items-center gap-1.5 bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70 min-[360px]:gap-3 sm:gap-6")}>
-        <Wordmark />
-        {/* Two destinations only, so they stay visible as tabs at every width. */}
-        <nav className="flex items-center" aria-label="Main">
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              aria-current={active(n.href) ? "page" : undefined}
-              className={cn(
-                "relative flex h-11 items-center px-2 text-sm font-medium transition-colors hover:text-brand-sm min-[360px]:px-2.5 sm:px-3",
-                active(n.href)
-                  ? "text-foreground after:absolute after:inset-x-2 after:bottom-2 after:h-0.5 after:bg-brand-lg min-[360px]:after:inset-x-2.5 sm:after:inset-x-3"
-                  : "text-muted-foreground",
-              )}
-            >
-              <span className="sm:hidden">{n.short}</span>
-              <span className="hidden sm:inline">{n.label}</span>
-            </Link>
-          ))}
-        </nav>
-        <div className="ml-auto flex items-center gap-1">
-          <div className="hidden sm:block">
-            <SubscribeButton />
-          </div>
-          <div className="sm:hidden">
-            <SubscribeButton compact />
-          </div>
-          <ThemeSwitch className="ml-1 hidden sm:flex" />
-          <div className="sm:hidden">
+    <>
+      {/* Sticky row: wordmark and the header buttons; from sm the tabs sit here too. */}
+      <header className="sticky top-0 z-40 border-b border-frame-line">
+        {/* Only the column is frosted; the gutters keep their hatching. */}
+        <div className={cn(FRAME_COLUMN, "flex h-16 items-center gap-3 bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70 sm:gap-6")}>
+          <Wordmark />
+          {tabs("hidden sm:flex")}
+          <div className="ml-auto flex items-center gap-1">
+            <div className="hidden sm:block">
+              <SubscribeButton />
+            </div>
+            <div className="sm:hidden">
+              <SubscribeButton compact />
+            </div>
+            <SoundToggle />
             <ThemeMenu />
           </div>
         </div>
+      </header>
+      {/* Phones: three 44px buttons leave no room for the tabs in the sticky row, so they get a row of their own. */}
+      <div className="border-b border-frame-line sm:hidden">
+        <div className={FRAME_COLUMN}>{tabs()}</div>
       </div>
-    </header>
+    </>
   );
 }
