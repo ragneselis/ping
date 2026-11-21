@@ -8,7 +8,7 @@ import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
 import { openSubscribe } from "@/components/subscribe-dialog";
 import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { sound } from "@/lib/sound";
+import { OWN_CLICK_SOUND, sound } from "@/lib/sound";
 
 const OPTIONS = [
   { value: "light", label: "Light", icon: Sun },
@@ -67,7 +67,7 @@ export function ThemeMenu() {
           render={
             <Menu.Trigger
               aria-label={`Colour theme: ${choice === null ? "Light" : current.label}`}
-              data-sound="none"
+              {...OWN_CLICK_SOUND}
               className={ICON_BUTTON}
             />
           }
@@ -94,7 +94,7 @@ export function ThemeMenu() {
                   key={o.value}
                   value={o.value}
                   closeOnClick
-                  data-sound="none"
+                  {...OWN_CLICK_SOUND}
                   className="flex min-h-11 items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint sm:min-h-9"
                 >
                   <o.icon aria-hidden className="size-4" strokeWidth={1.75} />
@@ -114,7 +114,7 @@ export function ThemeMenu() {
                     <Menu.Item
                       key={c.name}
                       label={c.name}
-                      data-sound="none"
+                      {...OWN_CLICK_SOUND}
                       onClick={() => openSubscribe("channels")}
                       className="flex min-h-11 items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint"
                     >

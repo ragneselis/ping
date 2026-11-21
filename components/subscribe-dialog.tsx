@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { CATEGORY_META } from "@/lib/categories";
 import { track } from "@/components/usage-beacon";
-import { sound } from "@/lib/sound";
+import { OWN_CLICK_SOUND, sound } from "@/lib/sound";
 import { DIGEST_CAP, EMPTY_PREFS, type Frequency, isEmail, type Prefs, prefsFromQuery } from "@/lib/subscription";
 import { CATEGORIES, type Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -277,7 +277,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {/* The trigger plays the open sound, not a click as well. */}
-      <DialogTrigger render={trigger} data-sound="none" />
+      <DialogTrigger render={trigger} {...OWN_CLICK_SOUND} />
       <DialogContent
         initialFocus={atChannels ? channelRef : undefined}
         className={cn("max-h-[calc(100dvh-2rem)] gap-0 overflow-y-auto overscroll-contain p-0", done ? "sm:max-w-md" : "sm:max-w-xl")}>

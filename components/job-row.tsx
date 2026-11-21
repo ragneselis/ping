@@ -1,4 +1,5 @@
 import type React from "react";
+import { OWN_CLICK_SOUND } from "@/lib/sound";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { CategoryLabel } from "@/components/category";
 import { LevelTag, RequirementList, SignalTag } from "@/components/signal";
@@ -148,7 +149,7 @@ export function JobRow({
 function SimilarJobs({ job, similar }: { job: Job; similar: Job[] }) {
   return (
     <details data-expander="" className="group/similar relative z-10 mt-2 w-fit max-lg:order-last">
-      <summary data-sound="none" className="flex min-h-11 w-fit list-none items-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden">
+      <summary {...OWN_CLICK_SOUND} className="flex min-h-11 w-fit list-none items-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden">
         <ChevronDown
           aria-hidden
           className="size-4 transition-transform group-open/similar:rotate-180"

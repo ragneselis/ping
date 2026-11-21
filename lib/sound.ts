@@ -2,8 +2,10 @@
  * Ping's UI sound, synthesised with the Web Audio API: no audio files.
  *
  * Off by default. The choice lives in localStorage ("ping-sound"), read and written in try/catch.
- * The AudioContext is created lazily inside the first sound call, and every sound call comes from a
- * user gesture (click, hover, key), so nothing is ever created or played on page load. With sound
+ * The AudioContext is created lazily inside the first click or key press (browsers keep audio suspended
+ * until one), so nothing is ever created or played on page load. Hover ticks (hover, row, bar) are passive:
+ * they never create or resume audio, they play only once a click or key press anywhere has started it.
+ * Before that they are skipped, not queued, so no burst of stale ticks plays on the first click. With sound
  * off, or on a touch device (isTouchDevice), every call returns before touching audio at all.
  *
  * Voices (all sine, fast attack, exponential decay, master volume kept low):
@@ -22,6 +24,12 @@
  */
 
 const STORAGE_KEY = "ping-sound";
+
+/**
+ * Spread on a control that plays its own sound when pressed (components/sound.tsx): it keeps the
+ * hover tick like every other control, and the delegated click ping is skipped.
+ */
+export const OWN_CLICK_SOUND = { "data-sound": "own-click" } as const;
 
 /**
  * Touch devices have no UI sound at all: no hover, phones are often on silent, and the header is tight.
@@ -145,7 +153,7 @@ export const sound = {
   hover(seed?: string) {
     const now = performance.now();
     if (now - lastHover < 40) return;
-    const ac = audio();
+    const ac = audio(true);
     if (!ac) return;
     lastHover = now;
     const f = 2400 * vary(seed);
@@ -155,7 +163,7 @@ export const sound = {
   row(seed?: string) {
     const now = performance.now();
     if (now - lastRow < 80) return;
-    const ac = audio();
+    const ac = audio(true);
     if (!ac) return;
     lastRow = now;
     const f = 1900 * vary(seed);
@@ -165,7 +173,7 @@ export const sound = {
   bar(share: number) {
     const now = performance.now();
     if (now - lastHover < 40) return;
-    const ac = audio();
+    const ac = audio(true);
     if (!ac) return;
     lastHover = now;
     const f = 1500 * (1 + 0.8 * Math.max(0, Math.min(1, share)));

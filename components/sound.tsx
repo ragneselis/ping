@@ -4,7 +4,7 @@ import { Volume2, VolumeX } from "lucide-react";
 import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { useEffect, useSyncExternalStore } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { isSoundOn, isTouchDevice, setSoundOn, sound, subscribeSound, subscribeTouch } from "@/lib/sound";
+import { isSoundOn, isTouchDevice, OWN_CLICK_SOUND, setSoundOn, sound, subscribeSound, subscribeTouch } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
 /*
@@ -18,8 +18,12 @@ import { cn } from "@/lib/utils";
  *   chart bars     a hover tick whose pitch rises with the bar's value
  *   search         no sound per keystroke; the results update plays a quiet tick (components/results-fade.tsx)
  *
- * Opt out with data-sound="none" on an element or any ancestor (elements with their own sound: the
- * theme menu, the "Get new jobs" dialog trigger, the sound toggle, expander summaries, the snake board).
+ * Two opt-outs, on an element or any ancestor:
+ *   data-sound="own-click"  keeps the hover tick, skips the click ping: the element plays its own sound
+ *                           when pressed (OWN_CLICK_SOUND: the header icon buttons, the theme menu and its
+ *                           items, expander summaries). Every control still ticks on hover, the same way.
+ *   data-sound="none"       no sound at all (the snake board, which pings when the snake eats).
+ * Disabled controls stay silent: they cannot be pressed.
  * Expanders, dialogs and menus play open and close; mascots chirp; the snake pings when it eats.
  * Every call is gated in lib/sound.ts: with sound off nothing is created or played, and nothing plays on load.
  * Touch devices (useTouchDevice) get no sound at all: no listeners, no toggle, no AudioContext.
@@ -36,7 +40,10 @@ const HOVERABLE =
   'a[href], button, summary, [role="tab"], [role="radio"], [role="menuitem"], [role="menuitemradio"], [role="option"], input, select, [data-panel]';
 const BAR = ".recharts-bar-rectangle";
 
-const optedOut = (el: Element) => !!el.closest('[data-sound="none"]');
+/** No sound at all from this element or anything inside it. */
+const silent = (el: Element) => !!el.closest('[data-sound="none"]');
+/** No delegated click ping: silent, or it plays its own click sound. */
+const ownClick = (el: Element) => !!el.closest('[data-sound="none"], [data-sound="own-click"]');
 const labelOf = (el: Element) => el.getAttribute("aria-label") ?? el.textContent?.trim().slice(0, 40) ?? "";
 
 /** A chart bar's value as a share of the largest bar in the same chart, from its drawn size. */
@@ -63,14 +70,14 @@ export function SoundEffects() {
 
     const onClick = (e: MouseEvent) => {
       const el = (e.target as Element | null)?.closest(CLICKABLE);
-      if (!el || optedOut(el) || (el as HTMLButtonElement).disabled) return;
+      if (!el || ownClick(el) || (el as HTMLButtonElement).disabled) return;
       sound.click(labelOf(el));
     };
 
     const onOver = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
       const target = e.target as Element | null;
-      if (!target || optedOut(target)) return;
+      if (!target || silent(target)) return;
 
       // Job rows: one soft tick per new row, whatever inside the row the pointer is on.
       const row = target.closest("[data-row]");
@@ -144,7 +151,7 @@ export function SoundToggle({ className }: { className?: string }) {
             type="button"
             aria-label={label}
             aria-pressed={on}
-            data-sound="none"
+            {...OWN_CLICK_SOUND}
             onClick={() => {
               setSoundOn(!on);
               // Turning sound on confirms itself with one ping; turning it off stays silent.

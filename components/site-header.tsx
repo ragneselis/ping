@@ -1,6 +1,7 @@
 "use client";
 
 import { BellRing } from "lucide-react";
+import { OWN_CLICK_SOUND } from "@/lib/sound";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FRAME_COLUMN } from "@/components/blueprint";
@@ -58,7 +59,7 @@ function ChannelButton({ name, icon: Icon }: (typeof SOON_CHANNELS)[number]) {
       <TooltipTrigger
         render={
           // The modal plays its own open sound, so no click on top.
-          <button type="button" aria-label={`${name}: coming soon`} data-sound="none" onClick={() => openSubscribe("channels")} className={ICON_BUTTON} />
+          <button type="button" aria-label={`${name}: coming soon`} {...OWN_CLICK_SOUND} onClick={() => openSubscribe("channels")} className={ICON_BUTTON} />
         }
       >
         <Icon className={ICON_SIZE.glyph} />
