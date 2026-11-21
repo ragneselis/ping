@@ -107,3 +107,7 @@ Locally, `npm run refresh` runs the same three steps. The site is on Vercel (pro
 
 - The logo is the block mascot's face on an 8 x 8 pixel grid (`lib/logo.ts`), drawn by `components/logo.tsx` in the header, as table cells in the emails, and as the favicons. `npm run icons` writes `app/icon.svg`, PNGs at 16, 32, 48, 192 and 512 px and `app/apple-icon.png` (180 px), all at whole-pixel scales.
 - Slack and Discord are coming soon: icon buttons in the header (in the theme menu on phones) open the "Get new jobs" modal at "Where to get them", where Email is the only channel that can be picked. The glyphs are Simple Icons (CC0) in `components/brand-icons.tsx`; Slack comes from release 15.22.0, the last that includes it.
+
+## Sharing
+
+Every page shares the same card: title "Ping", description "Design jobs for EKA students, updated daily." (set once in `app/layout.tsx`), and the image from `app/opengraph-image.tsx` (reused by `app/twitter-image.tsx`): the mascot tile's light green, "Ping" in Martian Mono (a static 600 weight, 87.5% width instance in `assets/fonts`, OFL) and the block mascot drawn from its grid in `lib/mascots.ts` at 24px per pixel.

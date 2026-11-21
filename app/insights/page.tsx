@@ -39,7 +39,7 @@ import {
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: { absolute: "Market insights | Ping" },
+  title: "Market insights",
 };
 
 type Search = Record<string, string | string[] | undefined>;

@@ -5,7 +5,6 @@ import { DataLabel } from "@/components/filter-controls";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "What Ping stores for job emails, why, and how to delete it.",
 };
 
 function Section({ label, children }: { label: string; children: ReactNode }) {

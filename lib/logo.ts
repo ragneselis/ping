@@ -9,7 +9,7 @@ export const LOGO_ROWS = [
   "ggwkgwkg",
   "ggwkgwkg",
   "gggggggg",
-  "ggkgggkg",
+  "gggggggg",
   "gggkkkgg",
   "gggggggg",
 ] as const;

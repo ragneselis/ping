@@ -1,5 +1,4 @@
 import { ArrowDown, ArrowRight } from "lucide-react";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
@@ -30,11 +29,6 @@ import {
 import { REMOTE_LABEL } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
-  title: { absolute: "Jobs | Ping" },
-  description:
-    "Every current design role sorted into nine directions, with what is within reach for a graduate and open to someone in Estonia.",
-};
 
 const PAGE_SIZE = 50;
 type Search = Record<string, string | string[] | undefined>;

@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { BLOCK, MASCOT_PALETTE as PALETTE, STUDENT } from "@/lib/mascots";
 import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
@@ -21,53 +22,6 @@ import { cn } from "@/lib/utils";
  *             head. At most once every 600ms, with the mascot chirp.
  * Decorative only: aria-hidden, never covering text.
  */
-
-const PALETTE: Record<string, string> = {
-  k: "#101014",
-  g: "#059669",
-  d: "#047857",
-  l: "#6ee7b7",
-  w: "#ffffff",
-  r: "#10b981", // the "ping" signal
-};
-
-const BLOCK = [
-  "................",
-  "................",
-  "..kkkkkkkkkkkk..",
-  "..kgdgggggggdk..",
-  "..kggggggggggk..",
-  "..kggwkggwkggk..",
-  "..kggwkggwkggk..",
-  ".kkggggggggggkk.",
-  "k.kgggkkkggggk.k",
-  "..kgggggggggdk..",
-  "..kdgggggggggk..",
-  "..kgggggggdggk..",
-  "..kkkkkkkkkkkk..",
-  "...kk......kk...",
-  "...kk......kk...",
-  "................",
-];
-
-const STUDENT = [
-  "................",
-  "................",
-  ".....kkkkkk.....",
-  "....kkkkkkkk....",
-  "...kkkkkkkkkk...",
-  "...kkwwwwwwkk...",
-  "...kwwwwwwwwk...",
-  "...kwkwwwwkwk...",
-  "...kwwwwwwwwk...",
-  "...kwwwkkwwwk...",
-  "....kwwwwwwk....",
-  ".....kkkkkk.....",
-  "....kddddddk....",
-  "...kddllddddk...",
-  "...kddddddddk...",
-  "...kddddddddk...",
-];
 
 const withRows = (base: string[], rows: Record<number, string>) => base.map((r, i) => rows[i] ?? r);
 const LEGS = "...kk......kk...";
