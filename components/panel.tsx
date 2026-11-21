@@ -98,6 +98,7 @@ export function Panel({
       <Link
         href={href}
         className={base}
+        data-panel=""
         data-reveal=""
         style={{ "--panel-accent": accent ?? "var(--brand-lg)", "--reveal-i": revealIndex } as CSSProperties}
       >
@@ -106,7 +107,7 @@ export function Panel({
     );
   }
   return (
-    <div className={base} {...reveal}>
+    <div className={base} data-panel="" {...reveal}>
       {slots}
     </div>
   );

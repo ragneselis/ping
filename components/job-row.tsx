@@ -62,6 +62,7 @@ export function JobRow({
   return (
     // Hover is a faint neutral fill; the direction label keeps AA on it (amber-700 at 4.7:1 is the lowest).
     <li
+      data-row=""
       data-reveal={reveal === undefined ? undefined : ""}
       style={reveal === undefined ? undefined : ({ "--reveal-i": reveal } as React.CSSProperties)}
       className={cn(

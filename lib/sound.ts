@@ -8,7 +8,9 @@
  *
  * Voices (all sine, fast attack, exponential decay, master volume kept low):
  *   click   a soft "ping": about 1.3 kHz gliding slightly down, 90ms
- *   hover   a barely audible tick: high, 25ms, very quiet, at most once every 40ms
+ *   hover   a short tick, clearly audible but well under the click, at most once every 40ms
+ *   row     a softer, lower tick when the pointer reaches a new job row, at most every 80ms
+ *   bar     a tick on chart bars whose pitch rises with the bar's value
  *   open    a short higher note; close a short lower note
  *   chirp   two quick rising notes, for the mascots
  *   theme   two notes: rising into dark, falling into light
@@ -20,7 +22,7 @@
  */
 
 const STORAGE_KEY = "ping-sound";
-const MASTER_VOLUME = 0.16;
+const MASTER_VOLUME = 0.24;
 
 let enabled: boolean | null = null;
 let ctx: AudioContext | null = null;
@@ -28,6 +30,7 @@ let master: GainNode | null = null;
 let lastHover = 0;
 let lastChirp = 0;
 let lastSettle = 0;
+let lastRow = 0;
 const listeners = new Set<() => void>();
 
 function readStored(): boolean {
@@ -118,14 +121,35 @@ export const sound = {
     const f = 1300 * vary(seed);
     tone(ac, { freq: f, to: f * 0.86, dur: 0.09, gain: 0.5 });
   },
+  /** Hover on a control: a short tick, clearly audible but well under the click (gain 0.16 vs 0.5). */
   hover(seed?: string) {
     const now = performance.now();
     if (now - lastHover < 40) return;
     const ac = audio();
     if (!ac) return;
     lastHover = now;
-    const f = 2600 * vary(seed);
-    tone(ac, { freq: f, to: f * 0.97, dur: 0.025, gain: 0.05 });
+    const f = 2400 * vary(seed);
+    tone(ac, { freq: f, to: f * 0.96, dur: 0.032, gain: 0.16 });
+  },
+  /** Moving onto a new job row: a softer, lower tick, at most one every 80ms. */
+  row(seed?: string) {
+    const now = performance.now();
+    if (now - lastRow < 80) return;
+    const ac = audio();
+    if (!ac) return;
+    lastRow = now;
+    const f = 1900 * vary(seed);
+    tone(ac, { freq: f, to: f * 0.97, dur: 0.028, gain: 0.1 });
+  },
+  /** Hover on a chart bar: a tick whose pitch rises with the bar's value (share 0 to 1). */
+  bar(share: number) {
+    const now = performance.now();
+    if (now - lastHover < 40) return;
+    const ac = audio();
+    if (!ac) return;
+    lastHover = now;
+    const f = 1500 * (1 + 0.8 * Math.max(0, Math.min(1, share)));
+    tone(ac, { freq: f, to: f * 0.98, dur: 0.04, gain: 0.15 });
   },
   open() {
     const ac = audio();
