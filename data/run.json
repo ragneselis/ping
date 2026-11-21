@@ -1,8 +1,6 @@
 {
-  "lastRun": "2026-11-20T16:11:23.439Z",
+  "lastRun": "2026-11-21T12:57:51.167Z",
   "nextRun": "2026-11-22T04:00:00.000Z",
   "schedule": "daily at 04:00 UTC",
-  "failedSources": [
-    "Workable"
-  ]
+  "failedSources": []
 }

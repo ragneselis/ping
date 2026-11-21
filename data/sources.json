@@ -1,14 +1,14 @@
 {
-  "fetchedAt": "2026-11-20T16:11:23.439Z",
-  "totalInScope": 1821,
-  "duplicatesRemoved": 228,
-  "unique": 1593,
+  "fetchedAt": "2026-11-21T12:57:27.555Z",
+  "totalInScope": 1808,
+  "duplicatesRemoved": 209,
+  "unique": 1599,
   "sources": [
     {
       "source": "Remote OK",
       "sourceType": "board",
       "ok": true,
-      "fetched": 305,
+      "fetched": 331,
       "candidates": 51,
       "inScope": 51
     },
@@ -16,24 +16,24 @@
       "source": "We Work Remotely",
       "sourceType": "board",
       "ok": true,
-      "fetched": 47,
-      "candidates": 13,
-      "inScope": 13
+      "fetched": 54,
+      "candidates": 16,
+      "inScope": 16
     },
     {
       "source": "Himalayas",
       "sourceType": "board",
       "ok": true,
-      "fetched": 1422,
-      "candidates": 1320,
-      "inScope": 1320,
+      "fetched": 1417,
+      "candidates": 1311,
+      "inScope": 1311,
       "notes": "search queries: designer, product designer, ux designer, ui designer, design lead, design engineer, ux researcher, service designer, brand designer, graphic designer, visual designer, motion designer, art director, creative director, illustrator, industrial designer, game designer, level designer, technical artist"
     },
     {
       "source": "Remotive",
       "sourceType": "board",
       "ok": true,
-      "fetched": 15,
+      "fetched": 16,
       "candidates": 0,
       "inScope": 0
     },
@@ -41,9 +41,9 @@
       "source": "Arbeitnow",
       "sourceType": "board",
       "ok": true,
-      "fetched": 2333,
-      "candidates": 90,
-      "inScope": 77,
+      "fetched": 2319,
+      "candidates": 82,
+      "inScope": 67,
       "notes": "first 8 pages of the general feed (no server-side search)"
     },
     {
@@ -52,54 +52,53 @@
       "ok": true,
       "fetched": 100,
       "candidates": 100,
-      "inScope": 50,
+      "inScope": 49,
       "notes": "industrial design board, 10 RSS pages + job pages"
     },
     {
       "source": "Greenhouse",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 3715,
-      "candidates": 282,
-      "inScope": 156,
-      "notes": "all open roles per company: Figma 146, Airbnb 201, Stripe 774, Discord 29, Dropbox 47, Pinterest 175, GitLab 245, Duolingo 54, Asana 113, Miro 13, Wise 18, Veriff 10, Intercom 120, Monzo 59, N26 24, Typeform 6, Vercel 86, Oura 97, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 184, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 9, Remedy 14, Solita 63, Truecaller 34, Trustpilot 34, Boku 11, Betsson 79, Whalar 10, Yousician 0, Cambridge Consultants 84, On 141, Map Project Office 3, Landor 58, Interbrand 17, IDEO 8, AKQA 46, DEPT 201, Helsing 175"
+      "fetched": 3720,
+      "candidates": 281,
+      "inScope": 155,
+      "notes": "all open roles per company: Figma 147, Airbnb 202, Stripe 778, Discord 29, Dropbox 47, Pinterest 174, GitLab 246, Duolingo 54, Asana 111, Miro 13, Wise 18, Veriff 9, Intercom 120, Monzo 59, N26 23, Typeform 6, Vercel 86, Oura 96, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 186, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 10, Remedy 12, Solita 63, Truecaller 34, Trustpilot 35, Boku 11, Betsson 79, Whalar 10, Yousician 0, Cambridge Consultants 84, On 141, Map Project Office 3, Landor 58, Interbrand 17, IDEO 8, AKQA 46, DEPT 203, Helsing 175"
     },
     {
       "source": "Lever",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 121,
+      "fetched": 122,
       "candidates": 11,
       "inScope": 8,
-      "notes": "all open roles per company: Spotify 90, Pipedrive 0, Nexos.ai 9, Omnisend 12, Tuum 1, NFQ 9"
+      "notes": "all open roles per company: Spotify 91, Pipedrive 0, Nexos.ai 9, Omnisend 12, Tuum 1, NFQ 9"
     },
     {
       "source": "Ashby",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 1517,
+      "fetched": 1528,
       "candidates": 72,
       "inScope": 54,
-      "notes": "all open roles per company: Notion 169, Linear 32, Ramp 185, ElevenLabs 124, Supabase 80, Glia 28, Webflow 30, Restream 9, Supercell 28, Lovable 80, Legora 338, Hostinger 42, Surfshark 32, Zego 29, Katana 1, Gelato 3, Creem 3, Reaktor 12, Hoxhunt 11, Epidemic Sound 28, Trustly 39, Pleo 31, Too Good To Go 60, Corti 4, Eneba 33, Vesoma 30, Sereact 47, Tonies 9"
+      "notes": "all open roles per company: Notion 170, Linear 32, Ramp 187, ElevenLabs 122, Supabase 80, Glia 29, Webflow 31, Restream 9, Supercell 28, Lovable 78, Legora 341, Hostinger 42, Surfshark 32, Zego 29, Katana 1, Gelato 3, Creem 3, Reaktor 12, Hoxhunt 12, Epidemic Sound 28, Trustly 39, Pleo 33, Too Good To Go 63, Corti 4, Eneba 33, Vesoma 30, Sereact 48, Tonies 9"
     },
     {
       "source": "Teamtailor",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 965,
+      "fetched": 950,
       "candidates": 79,
       "inScope": 69,
-      "notes": "all open roles per company: Adcash 2, Swedbank 63, Printful 29, Embark Studios 16, Oda 3, Schibsted 38, Lunar 26, Starship 3, Lightyear 2, Monese 3, Comodule 2, Montonio 1, Scoro 5, Fractory 7, Mintos 9, Luminor 71, Bob W 7, Futurice 11, Vincit 4, Siili 6, Qvik 2, Holvi 1, Kry 51, Tibber 13, Storytel 4, Hemnet 5, Anyfin 14, Detectify 3, Quinyx 10, Bannerflow 8, Vipps 7, reMarkable 20, Templafy 3, Pactum 0, Outfunnel 0, Swappie 0, Vivino 0, Above 2, Nofence 6, Justera Group 100, Kurppa Hosk 10, Bold Scandinavia 4, Teenage Engineering 2, Eleiko 4, Marshall Group 16, Huawei Sweden 30, Flokk 8, Voi 80, X Shore 14, Knightec Group 100, Narbutas 20, Milrem Robotics 4, Frankenburg Technologies 17, Genelec 1, Rokoko 1, Kempower 0, Inventas 0, Huawei R&D UK 53, Huawei Italia 15, Koto 29"
+      "notes": "all open roles per company: Adcash 2, Swedbank 57, Printful 29, Embark Studios 16, Oda 3, Schibsted 38, Lunar 26, Starship 3, Lightyear 2, Monese 1, Comodule 2, Montonio 1, Scoro 5, Fractory 7, Mintos 9, Luminor 65, Bob W 7, Futurice 11, Vincit 4, Siili 6, Qvik 2, Holvi 1, Kry 51, Tibber 13, Storytel 4, Hemnet 5, Anyfin 14, Detectify 3, Quinyx 10, Bannerflow 8, Vipps 7, reMarkable 20, Templafy 3, Pactum 0, Outfunnel 0, Swappie 0, Vivino 0, Above 2, Nofence 6, Justera Group 100, Kurppa Hosk 10, Bold Scandinavia 4, Teenage Engineering 2, Eleiko 4, Marshall Group 16, Huawei Sweden 30, Flokk 8, Voi 80, X Shore 14, Knightec Group 100, Narbutas 20, Milrem Robotics 4, Frankenburg Technologies 16, Genelec 1, Rokoko 1, Kempower 0, Inventas 0, Huawei R&D UK 53, Huawei Italia 15, Koto 29"
     },
     {
       "source": "Workable",
       "sourceType": "ats",
-      "ok": false,
-      "error": "HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/modash?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/skeletontech?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/kahoot?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/xolo-careers?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/varjo-1?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/nitor?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/qminder?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/teltonika?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/aerones?details=true; HTTP 429 for https://apply.workable.com/api/v1/widget/accounts/withings?details=true",
-      "fetched": 0,
-      "candidates": 0,
-      "inScope": 0,
-      "notes": "all open roles per company: Modash FAILED, Skeleton Technologies FAILED, Kahoot FAILED, Xolo FAILED, Varjo FAILED, Nitor FAILED, Qminder FAILED, Teltonika FAILED, Aerones FAILED, Withings FAILED"
+      "ok": true,
+      "fetched": 366,
+      "candidates": 6,
+      "inScope": 5,
+      "notes": "all open roles per company: Modash 33, Skeleton Technologies 32, Kahoot 14, Xolo 5, Varjo 2, Nitor 11, Qminder 0, Teltonika 210, Aerones 25, Withings 34"
     },
     {
       "source": "Recruitee",
@@ -114,19 +113,19 @@
       "source": "SmartRecruiters",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 163,
+      "fetched": 162,
       "candidates": 14,
       "inScope": 13,
-      "notes": "all open roles per company: Playtech 102, Proekspert 2, Salomon 59"
+      "notes": "all open roles per company: Playtech 101, Proekspert 2, Salomon 59"
     },
     {
       "source": "Personio",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 46,
+      "fetched": 43,
       "candidates": 9,
       "inScope": 3,
-      "notes": "all open roles per company: Salv 2, Aivan 3, TwentyFour Industries 16, Phoenix Design 13, Fairphone 10, Cell Labs 2"
+      "notes": "all open roles per company: Salv 2, Aivan 3, TwentyFour Industries 16, Phoenix Design 13, Fairphone 9, Cell Labs 0"
     }
   ]
 }

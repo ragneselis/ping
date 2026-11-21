@@ -25487,6 +25487,1318 @@
     "cacheRead": 1906,
     "cacheWrite": 0
    }
+  },
+  "himalayas:https://himalayas.app/companies/lifelancer/jobs/senior-ux-researcher-design": {
+   "id": "himalayas:https://himalayas.app/companies/lifelancer/jobs/senior-ux-researcher-design",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": "research-service",
+   "reason": "Leads UX research and design for AI-enabled clinical technology software products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:29.643Z",
+   "usage": {
+    "input": 2764,
+    "output": 57,
+    "cacheRead": 0,
+    "cacheWrite": 1906
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bobbie-deutschland-gmbh/jobs/digital-product-design-lead": {
+   "id": "himalayas:https://himalayas.app/companies/bobbie-deutschland-gmbh/jobs/digital-product-design-lead",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Leading in-house UX/UI for DTC subscription app and web, plus design system ownership",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.501Z",
+   "usage": {
+    "input": 3475,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:langfuse-product-designer-berlin-465839": {
+   "id": "arbeitnow:langfuse-product-designer-berlin-465839",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing complex data-dense web app interfaces and design system for developers debugging LLM apps",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.502Z",
+   "usage": {
+    "input": 1704,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-product-designer-remote-in-europe-amsterdam-443609": {
+   "id": "arbeitnow:senior-product-designer-remote-in-europe-amsterdam-443609",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing credit, card and repayment flows for a fintech mobile-first product",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.503Z",
+   "usage": {
+    "input": 1958,
+    "output": 55,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/kmc-solutions-inc/jobs/xtn-f1a7395-mechanical-designer": {
+   "id": "himalayas:https://himalayas.app/companies/kmc-solutions-inc/jobs/xtn-f1a7395-mechanical-designer",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Designing automation welding equipment, fixtures and tooling with CAD for industrial manufacturing; engineering drawings.",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.511Z",
+   "usage": {
+    "input": 886,
+    "output": 71,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/mutual-of-omaha/jobs/sr-creative-graphic-designer-remote": {
+   "id": "himalayas:https://himalayas.app/companies/mutual-of-omaha/jobs/sr-creative-graphic-designer-remote",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Print and digital marketing collateral, catalogs, direct mail and web for brand goals",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.513Z",
+   "usage": {
+    "input": 1065,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/princeton10/jobs/associate-creative-director-art-3467184255": {
+   "id": "himalayas:https://himalayas.app/companies/princeton10/jobs/associate-creative-director-art-3467184255",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Leads pharma marketing creative agency art team; core is agency leadership, client-facing creative direction",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.533Z",
+   "usage": {
+    "input": 1098,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:ux-designer-at-united-media-london-151382": {
+   "id": "arbeitnow:ux-designer-at-united-media-london-151382",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Banner ads, EDM designs, social posts and illustration for marketing brand channels; titled UX but visual brand work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.565Z",
+   "usage": {
+    "input": 809,
+    "output": 73,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/entity-games/jobs/senior-visual-designer": {
+   "id": "himalayas:https://himalayas.app/companies/entity-games/jobs/senior-visual-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Brand, campaign, motion and print visual design for a games platform's marketing",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:30.582Z",
+   "usage": {
+    "input": 2175,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/flying-bisons/jobs/lead-product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/flying-bisons/jobs/lead-product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Hands-on designing digital product interfaces and flows for enterprise and government clients",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.243Z",
+   "usage": {
+    "input": 1535,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/usaa/jobs/director-design": {
+   "id": "himalayas:https://himalayas.app/companies/usaa/jobs/director-design",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "Leads upstream human-centered design and research for banking member experiences, managing designers and researchers",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.291Z",
+   "usage": {
+    "input": 1847,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:phd-researcher-video-understanding-vlms-berlin-102437": {
+   "id": "arbeitnow:phd-researcher-video-understanding-vlms-berlin-102437",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Computer vision ML research on factory video for VLMs; not design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.303Z",
+   "usage": {
+    "input": 1303,
+    "output": 52,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:spacecraft-thermal-engineer-munich-221465": {
+   "id": "arbeitnow:spacecraft-thermal-engineer-munich-221465",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Spacecraft thermal control testing, verification and supplier follow-up; engineering, not design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.330Z",
+   "usage": {
+    "input": 2191,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:ui-designer-casual-games-freelance-remote-berlin-403179": {
+   "id": "arbeitnow:ui-designer-casual-games-freelance-remote-berlin-403179",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Designing casual game UI assets and 2D art for mobile games",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.355Z",
+   "usage": {
+    "input": 1027,
+    "output": 51,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:head-of-product-design-berlin-398688": {
+   "id": "arbeitnow:head-of-product-design-berlin-398688",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Leading design org and quality bar for AI workflow automation product UX",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.383Z",
+   "usage": {
+    "input": 3356,
+    "output": 54,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:product-design-manager-germany-410873": {
+   "id": "arbeitnow:product-design-manager-germany-410873",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Managing product design team for workflow automation platform; people management primarily, design judgment oversight",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.393Z",
+   "usage": {
+    "input": 3830,
+    "output": 59,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-ai-content-producer-foto-video-motion-berlin-331792": {
+   "id": "arbeitnow:senior-ai-content-producer-foto-video-motion-berlin-331792",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Producing foto, video and motion ad creatives at volume for Meta/TikTok performance marketing and e-commerce",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:31.488Z",
+   "usage": {
+    "input": 1341,
+    "output": 69,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:junior-artist-manager-influencer-manager-berlin-50483": {
+   "id": "arbeitnow:junior-artist-manager-influencer-manager-berlin-50483",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Artist and influencer management, partner negotiations, marketing coordination; no hands-on design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.051Z",
+   "usage": {
+    "input": 1621,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:artist-manager-influencer-manager-berlin-355178": {
+   "id": "arbeitnow:artist-manager-influencer-manager-berlin-355178",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Managing influencer talent, partnerships, negotiations and contracts; artist management, not designing anything",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.091Z",
+   "usage": {
+    "input": 1718,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-artist-manager-influencer-manager-berlin-315256": {
+   "id": "arbeitnow:senior-artist-manager-influencer-manager-berlin-315256",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Artist management, influencer marketing, sales and negotiation; no hands-on design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.142Z",
+   "usage": {
+    "input": 1778,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/silverback-strategies/jobs/senior-motion-graphic-designer-3888715816": {
+   "id": "himalayas:https://himalayas.app/companies/silverback-strategies/jobs/senior-motion-graphic-designer-3888715816",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Producing static and video paid-social ad creative for performance marketing clients",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.142Z",
+   "usage": {
+    "input": 2124,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/genesis/jobs/youtube-visual-designer-freelance-subsub": {
+   "id": "himalayas:https://himalayas.app/companies/genesis/jobs/youtube-visual-designer-freelance-subsub",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Creating YouTube channel covers, banners and logos for media brands; graphic design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.167Z",
+   "usage": {
+    "input": 996,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:das-gesicht-unserer-brand-auf-tiktok-berlin-445866": {
+   "id": "arbeitnow:das-gesicht-unserer-brand-auf-tiktok-berlin-445866",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "On-camera face and content creator for TikTok videos and livestreams for a jewellery brand",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.173Z",
+   "usage": {
+    "input": 1121,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:graphic-designer-digital-content-creation-intern-h1-2027-massy-492062": {
+   "id": "arbeitnow:graphic-designer-digital-content-creation-intern-h1-2027-massy-492062",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Graphic design and social content creation for brand marketing visuals and short videos",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.190Z",
+   "usage": {
+    "input": 951,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/made-of-storm/jobs/game-designer": {
+   "id": "himalayas:https://himalayas.app/companies/made-of-storm/jobs/game-designer",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Designing slot and instant game mechanics, bonuses and GDDs for casino games",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.234Z",
+   "usage": {
+    "input": 793,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/remotejobsone/jobs/ui-ux-designer-remote-worldwide": {
+   "id": "himalayas:https://himalayas.app/companies/remotejobsone/jobs/ui-ux-designer-remote-worldwide",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Owns UI/UX design of web and digital products, design systems, some marketing assets",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.862Z",
+   "usage": {
+    "input": 1606,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/enjoy-gaming-llc/jobs/senior-vfx-artist-gamedev-igaming": {
+   "id": "himalayas:https://himalayas.app/companies/enjoy-gaming-llc/jobs/senior-vfx-artist-gamedev-igaming",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Real-time VFX creation in Unreal for slot and live casino games",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.898Z",
+   "usage": {
+    "input": 1033,
+    "output": 53,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/brainstack-net/jobs/motion-designer-astrology": {
+   "id": "himalayas:https://himalayas.app/companies/brainstack-net/jobs/motion-designer-astrology",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Making video ads for B2C astrology products for Meta, TikTok, Google marketing",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.924Z",
+   "usage": {
+    "input": 1141,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/netforemost-inc/jobs/ui-ux-designer": {
+   "id": "himalayas:https://himalayas.app/companies/netforemost-inc/jobs/ui-ux-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designs digital product UI and UX, wireframes, prototypes, usability testing for clients",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.951Z",
+   "usage": {
+    "input": 1149,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/hunt-st/jobs/facade-designer-engineer-029-1238": {
+   "id": "himalayas:https://himalayas.app/companies/hunt-st/jobs/facade-designer-engineer-029-1238",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Facade system design and AutoCAD drawings for commercial construction, compliance with Australian Standards; engineering authority, not creative design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.952Z",
+   "usage": {
+    "input": 1440,
+    "output": 74,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/sperasoft/jobs/lead-props-environment-3d-artist": {
+   "id": "himalayas:https://himalayas.app/companies/sperasoft/jobs/lead-props-environment-3d-artist",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Leading team creating hard-surface and organic 3D props for AAA game environments",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:32.962Z",
+   "usage": {
+    "input": 1229,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/kainos/jobs/service-designer": {
+   "id": "himalayas:https://himalayas.app/companies/kainos/jobs/service-designer",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "Designing end-to-end digital service experiences through service design and research for public and enterprise services",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.103Z",
+   "usage": {
+    "input": 1125,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/atlassian/jobs/design-lead": {
+   "id": "himalayas:https://himalayas.app/companies/atlassian/jobs/design-lead",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Leads brand identity system evolution and brand design craft for Atlassian's brand",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.135Z",
+   "usage": {
+    "input": 1712,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/boardroom-appointments/jobs/senior-product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/boardroom-appointments/jobs/senior-product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing digital product UX and UI for Android, iOS and web apps",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.661Z",
+   "usage": {
+    "input": 1403,
+    "output": 53,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/logistics-management-institute/jobs/design-lead": {
+   "id": "himalayas:https://himalayas.app/companies/logistics-management-institute/jobs/design-lead",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Leads UX/UI design of a web-based federal acquisitions system for GSA users",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.739Z",
+   "usage": {
+    "input": 2151,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/edf-renewables-north-america/jobs/senior-solar-design-engineer-remote-7737009541": {
+   "id": "himalayas:https://himalayas.app/companies/edf-renewables-north-america/jobs/senior-solar-design-engineer-remote-7737009541",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Electrical engineering of solar PV and BESS plants, NEC compliance, drawings for utility projects",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.750Z",
+   "usage": {
+    "input": 2674,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/emf-media/jobs/graphic-motion-designer-ads": {
+   "id": "himalayas:https://himalayas.app/companies/emf-media/jobs/graphic-motion-designer-ads",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Designing static and motion ad graphics for paid social campaigns and e-commerce brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.762Z",
+   "usage": {
+    "input": 1665,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/kultremedia-llc/jobs/km-graphic-web-designer-paid-ads-funnels-motion": {
+   "id": "himalayas:https://himalayas.app/companies/kultremedia-llc/jobs/km-graphic-web-designer-paid-ads-funnels-motion",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": "product",
+   "reason": "Designing paid ad graphics, motion overlays, and funnel web layouts for direct-response marketing",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.783Z",
+   "usage": {
+    "input": 966,
+    "output": 70,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/fuku/jobs/industrial-designer-uk-remote": {
+   "id": "himalayas:https://himalayas.app/companies/fuku/jobs/industrial-designer-uk-remote",
+   "isDesignRole": true,
+   "primary": "industrial",
+   "secondary": null,
+   "reason": "Designing physical maternal and baby products with CAD, prototypes, and manufacturing work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.867Z",
+   "usage": {
+    "input": 856,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/neogroup-eu/jobs/lead-brand-designer": {
+   "id": "himalayas:https://himalayas.app/companies/neogroup-eu/jobs/lead-brand-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Brand identity, guidelines and visual campaign design for marketing and products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:33.901Z",
+   "usage": {
+    "input": 1186,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/boardroom-appointments/jobs/specialist-customer-experience-design": {
+   "id": "himalayas:https://himalayas.app/companies/boardroom-appointments/jobs/specialist-customer-experience-design",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "Designs customer journeys and service experiences, plus user research and usability testing",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:34.299Z",
+   "usage": {
+    "input": 1223,
+    "output": 241,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/alten/jobs/3000-design-release-engineer-jr": {
+   "id": "himalayas:https://himalayas.app/companies/alten/jobs/3000-design-release-engineer-jr",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Engineering documentation release, DFMEA/DVP&R, BOMs and drawings for automotive components; engineering not design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:34.438Z",
+   "usage": {
+    "input": 1066,
+    "output": 72,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/flying-bisons/jobs/freelance-ui-designer": {
+   "id": "himalayas:https://himalayas.app/companies/flying-bisons/jobs/freelance-ui-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing scalable UI for digital products and components, freelance pool",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:34.495Z",
+   "usage": {
+    "input": 1027,
+    "output": 51,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/feazer/jobs/senior-brand-designer-pt": {
+   "id": "himalayas:https://himalayas.app/companies/feazer/jobs/senior-brand-designer-pt",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Brand identity, logo and guideline design for agency clients; brand and visual craft.",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:34.575Z",
+   "usage": {
+    "input": 807,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/feazer/jobs/senior-brand-designer-es": {
+   "id": "himalayas:https://himalayas.app/companies/feazer/jobs/senior-brand-designer-es",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Brand identity, logo and guideline design for agency clients; brand and visual craft",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:34.616Z",
+   "usage": {
+    "input": 806,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/duelit/jobs/ui-ux-designer-intern-unpaid-3464163356": {
+   "id": "himalayas:https://himalayas.app/companies/duelit/jobs/ui-ux-designer-intern-unpaid-3464163356",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing UI/UX for a mobile betting-game app's features and screens",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.109Z",
+   "usage": {
+    "input": 2122,
+    "output": 212,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/pointclickcare/jobs/senior-ux-researcher-6-month-contract-8945166704": {
+   "id": "himalayas:https://himalayas.app/companies/pointclickcare/jobs/senior-ux-researcher-6-month-contract-8945166704",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "Senior UX research for healthcare software products, planning studies and synthesizing insights for product teams",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.223Z",
+   "usage": {
+    "input": 2639,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "remoteok:1137873": {
+   "id": "remoteok:1137873",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing digital healthcare platform product experiences, UX and UI for customers",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.282Z",
+   "usage": {
+    "input": 2589,
+    "output": 55,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/sperasoft/jobs/3d-environment-artist-legendary-aaa-stylized-project": {
+   "id": "himalayas:https://himalayas.app/companies/sperasoft/jobs/3d-environment-artist-legendary-aaa-stylized-project",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Building stylized 3D environment assets, textures and LODs for a AAA game",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.307Z",
+   "usage": {
+    "input": 2296,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/active-theory/jobs/senior-designer": {
+   "id": "himalayas:https://himalayas.app/companies/active-theory/jobs/senior-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": "product",
+   "reason": "Visual design, animation and immersive digital experiences for client projects; mixed brand and product-style UI",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.371Z",
+   "usage": {
+    "input": 1129,
+    "output": 69,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/intetics/jobs/1173-senior-ux-designer": {
+   "id": "himalayas:https://himalayas.app/companies/intetics/jobs/1173-senior-ux-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing user flows, prototypes and design systems for medical device software products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.573Z",
+   "usage": {
+    "input": 740,
+    "output": 52,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/forbes/jobs/design-lead-social": {
+   "id": "himalayas:https://himalayas.app/companies/forbes/jobs/design-lead-social",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": "brand-visual",
+   "reason": "Designs paid-social ad creative and post-click landing, quiz and comparison experiences for conversion",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.603Z",
+   "usage": {
+    "input": 1673,
+    "output": 308,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "remoteok:1137901": {
+   "id": "remoteok:1137901",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Defining visual aesthetic direction and concept art for a security brand's campaigns and launches",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.729Z",
+   "usage": {
+    "input": 2162,
+    "output": 249,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/goairship/jobs/ui-artist": {
+   "id": "himalayas:https://himalayas.app/companies/goairship/jobs/ui-artist",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Freelance UI art for AAA video game titles, game interface visuals",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:35.878Z",
+   "usage": {
+    "input": 504,
+    "output": 53,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/twelve-nyc/jobs/packaging-designer-4395812243": {
+   "id": "himalayas:https://himalayas.app/companies/twelve-nyc/jobs/packaging-designer-4395812243",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": "industrial",
+   "reason": "Designing retail packaging layouts, graphics and mockups for luxury brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.007Z",
+   "usage": {
+    "input": 1335,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/pandvil/jobs/ui-graphic-designer": {
+   "id": "himalayas:https://himalayas.app/companies/pandvil/jobs/ui-graphic-designer",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": "brand-visual",
+   "reason": "In-game UI implementation and thumbnails for Fortnite/UEFN game projects; game-specific work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.192Z",
+   "usage": {
+    "input": 859,
+    "output": 73,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/hire-overseas/jobs/senior-product-designer-pcs947": {
+   "id": "himalayas:https://himalayas.app/companies/hire-overseas/jobs/senior-product-designer-pcs947",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing web and native mobile B2B planning and permitting products for government inspectors",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.374Z",
+   "usage": {
+    "input": 2093,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:praktikantin-brand-product-marketing-berlin-3588": {
+   "id": "arbeitnow:praktikantin-brand-product-marketing-berlin-3588",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Brand, product marketing, copywriting, social media and content creation for energy software",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.451Z",
+   "usage": {
+    "input": 1969,
+    "output": 55,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:product-designer-bereal-paris-292149": {
+   "id": "arbeitnow:product-designer-bereal-paris-292149",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing end-to-end features and flows for a consumer social app, plus research and design system work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.598Z",
+   "usage": {
+    "input": 754,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/ui-designer-ai-neobank-app-5830291473": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/ui-designer-ai-neobank-app-5830291473",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing mobile fintech app UI, flows and design system for digital products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.676Z",
+   "usage": {
+    "input": 1529,
+    "output": 53,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/mobile-ui-designer-9462582488": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/mobile-ui-designer-9462582488",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designs mobile iOS and Android UI for fintech insurance and banking apps",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.877Z",
+   "usage": {
+    "input": 1480,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/endavant/jobs/experience-designer": {
+   "id": "himalayas:https://himalayas.app/companies/endavant/jobs/experience-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Adapting and producing marketing digital assets, banners, motion and landing pages for brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.941Z",
+   "usage": {
+    "input": 1543,
+    "output": 238,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/sagan-recruitment/jobs/product-ui-ux-designer-hr31536da": {
+   "id": "himalayas:https://himalayas.app/companies/sagan-recruitment/jobs/product-ui-ux-designer-hr31536da",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing UI and UX for AI-powered web software products and design systems",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:36.989Z",
+   "usage": {
+    "input": 1197,
+    "output": 54,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/clever-digital-marketing/jobs/head-of-creative-strategy": {
+   "id": "himalayas:https://himalayas.app/companies/clever-digital-marketing/jobs/head-of-creative-strategy",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Leads paid-media creative strategy, people and operating systems; not hands-on design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.094Z",
+   "usage": {
+    "input": 1712,
+    "output": 299,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:wolt:8355612": {
+   "id": "greenhouse:wolt:8355612",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Executive recruiting research: talent mapping and sourcing for leadership searches, not design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.153Z",
+   "usage": {
+    "input": 1545,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "workable:withings:CD9C1E1B0B": {
+   "id": "workable:withings:CD9C1E1B0B",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Operational brand marketing support: influencer, UGC, events, PR coordination, social content assistance",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.263Z",
+   "usage": {
+    "input": 1767,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/mercor/jobs/figma-designer-ux-specialist-5547137072": {
+   "id": "himalayas:https://himalayas.app/companies/mercor/jobs/figma-designer-ux-specialist-5547137072",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Hands-on Figma UX/UI design tasks with an AI design agent, for AI research labs' projects",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.432Z",
+   "usage": {
+    "input": 494,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/mercor/jobs/brand-design-specialist-fully-remote-upto-150-hr-2933668262": {
+   "id": "himalayas:https://himalayas.app/companies/mercor/jobs/brand-design-specialist-fully-remote-upto-150-hr-2933668262",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Scoring brand design work for AI training; judging, not producing, design outputs",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.497Z",
+   "usage": {
+    "input": 744,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/stamm-media/jobs/experiential-designer": {
+   "id": "himalayas:https://himalayas.app/companies/stamm-media/jobs/experiential-designer",
+   "isDesignRole": true,
+   "primary": "other",
+   "secondary": null,
+   "reason": "Designing storyboards, mockups and interactive visual experiences for tradeshow and installation displays",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.722Z",
+   "usage": {
+    "input": 957,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/kinsei-talent/jobs/product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/kinsei-talent/jobs/product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing UX and UI for an NFT marketplace product, shipped with engineering",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.777Z",
+   "usage": {
+    "input": 1190,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/toplent/jobs/senior-ux-ui-designer": {
+   "id": "himalayas:https://himalayas.app/companies/toplent/jobs/senior-ux-ui-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing web and mobile app UX/UI, wireframes, prototypes, design systems for digital products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.938Z",
+   "usage": {
+    "input": 716,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "workable:teltonika:A5296AEED6": {
+   "id": "workable:teltonika:A5296AEED6",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Hardware electronics engineering: schematics, PCBs, measurement and debugging of power electronics for GPS trackers",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:37.972Z",
+   "usage": {
+    "input": 1810,
+    "output": 71,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/toplent/jobs/ux-ui-designer": {
+   "id": "himalayas:https://himalayas.app/companies/toplent/jobs/ux-ui-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing UI and UX for web and mobile digital products, with wireframes and design systems",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.019Z",
+   "usage": {
+    "input": 713,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/aida-recruitment/jobs/ux-ui-designer_working": {
+   "id": "himalayas:https://himalayas.app/companies/aida-recruitment/jobs/ux-ui-designer_working",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designs user-centred interfaces and wireframes for public sector digital solutions",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.147Z",
+   "usage": {
+    "input": 471,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "workable:modash:2E1104CE35": {
+   "id": "workable:modash:2E1104CE35",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing payment flows for B2B SaaS creator payments, owning design and PM; product UX",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.329Z",
+   "usage": {
+    "input": 2729,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/ux-designer-5661939903": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/ux-designer-5661939903",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": "ai-behaviour",
+   "reason": "Designing end-to-end UX flows for a consumer AI productivity app across mobile and web",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.554Z",
+   "usage": {
+    "input": 1296,
+    "output": 70,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/seekout-senior-product-designer-remote": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/seekout-senior-product-designer-remote",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing AI recruiting SaaS product experiences, flows, interfaces and design systems",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.805Z",
+   "usage": {
+    "input": 2076,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/ledgy-head-of-design": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/ledgy-head-of-design",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Leads product design team and hands-on designs B2B fintech equity product with AI agents",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.890Z",
+   "usage": {
+    "input": 1694,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "remoteok:1134352": {
+   "id": "remoteok:1134352",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Visual, motion and social content design for Forbes branded content and pitches",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:38.944Z",
+   "usage": {
+    "input": 2111,
+    "output": 57,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/mercor/jobs/graphic-design-specialist-fully-remote-upto-180-hr-6204815751": {
+   "id": "himalayas:https://himalayas.app/companies/mercor/jobs/graphic-design-specialist-fully-remote-upto-180-hr-6204815751",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Producing graphics and professional documents for AI labs' contract work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:39.054Z",
+   "usage": {
+    "input": 590,
+    "output": 388,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/elation-health-head-of-design": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/elation-health-head-of-design",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Leads design strategy and org for a clinical EHR software platform's product experience",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:39.105Z",
+   "usage": {
+    "input": 2409,
+    "output": 146,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/edclub/jobs/ui-ux-designer-5893125820": {
+   "id": "himalayas:https://himalayas.app/companies/edclub/jobs/ui-ux-designer-5893125820",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": "brand-visual",
+   "reason": "UI/UX and visual, illustration and animation design for K-12 educational digital content",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-21T12:57:39.406Z",
+   "usage": {
+    "input": 804,
+    "output": 294,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -25544,6 +26856,20 @@
     "cacheWrite": 1906
    },
    "costUsd": 0.3504,
+   "note": "classification v4"
+  },
+  {
+   "at": "2026-11-21T12:57:39.406Z",
+   "model": "claude-haiku-5-5",
+   "postings": 82,
+   "failed": 0,
+   "usage": {
+    "input": 124172,
+    "output": 6786,
+    "cacheRead": 154386,
+    "cacheWrite": 1906
+   },
+   "costUsd": 0.0176,
    "note": "classification v4"
   }
  ]
