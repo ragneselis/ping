@@ -121,8 +121,8 @@ export default async function InsightsPage({
         <HeroTiles variant="insights" />
         <h1 className="max-w-[28ch]">What design roles ask for right now</h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
-          Skills, tools and experience from every current posting, counted and
-          split by direction.
+          Ping counted the skills, tools and experience every current posting
+          asks for, by direction.
         </p>
         <DataNote postings={jobs.length} lastRun={lastRun} nextRun={nextRun} />
       </Band>

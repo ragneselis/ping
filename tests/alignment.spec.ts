@@ -179,7 +179,7 @@ for (const size of SIZES) {
       test(`wrapped data note ${theme}`, async ({ page }) => {
         await open(page, "/", theme);
         await page.evaluate(() => {
-          const note = [...document.querySelectorAll<HTMLElement>("[data-icon-text]")].find((e) => /current postings/.test(e.textContent ?? ""));
+          const note = document.querySelector<HTMLElement>("[data-note]");
           if (!note) throw new Error("data note not found");
           note.style.maxWidth = "12rem";
         });

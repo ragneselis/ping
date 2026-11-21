@@ -110,7 +110,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
                 </Button>
               }
             >
-              <p className="text-base text-muted-foreground">No company matches all of these filters right now. Ping will keep looking.</p>
+              <p className="text-base text-muted-foreground">No company fits all of these right now. Ping will keep sniffing around.</p>
             </Panel>
           )}
         </ResultsFade>

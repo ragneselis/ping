@@ -71,6 +71,19 @@ Dedupe rule: same company + same normalised title is one posting. The ATS versio
 Remote OK and Himalayas ask for a visible link back to them when jobs are shown. Remotive's API notes ask that jobs are not resubmitted to third-party sites and are delayed by 24h. Lemanoosh has no API: Ping reads its RSS feed and each job page, and every job links back to Lemanoosh. Ask Lemanoosh before showing its jobs publicly. Workable rate-limits bursts (HTTP 429); the fetcher reads Workable boards one at a time and backs off. Check each source's terms before the public launch.
 
 
+## Voice
+
+Ping is a small, curious scout (the pixel block mascot). Every morning he goes out, looks through job boards and company career pages, and brings back what he found. Friendly, a little proud of his finds, warm and light. All user-facing copy follows it; /stats is exempt (it is a tool), and /privacy stays factual and plain apart from at most one friendly first line.
+
+- Talk about Ping in the third person ("Ping found", "Ping went looking"). Never "we", never "I".
+- Facts stay exact: numbers, levels, dates, filters and legal text are never made vague or cute.
+- At most one playful line per section. Buttons, filter labels and form fields stay short and plain.
+- Casual, short sentences, no marketing jargon, no em dashes, no middots. British English.
+- Encouraging toward students, never patronising.
+- "Ping misses you" (the background tab title) is the reference for the tone.
+
+Examples in use: the closing band ("Ping goes out again tomorrow. See you then."), the data note ("Ping went out at 06:00 this morning and found 1,278 roles. Back tomorrow at 06:00.", `scoutNote` in `lib/format.ts`), the empty states ("Nothing here yet" / "Ping will keep sniffing around."), Discover's quiet companies ("Quiet right now. Worth watching."), the digest subject ("Ping found 5 new design jobs for you, 2 within reach"), the 404 ("Ping looked everywhere") and the error page ("Ping tripped over something").
+
 ## Alignment
 
 Two rules, enforced by `npm run check:align` (Playwright, `tests/alignment.spec.ts`; also on every push in `.github/workflows/checks.yml`).

@@ -305,11 +305,11 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
             <DialogDescription className="text-base leading-relaxed text-pretty">
               {status === "sent" ? (
                 <>
-                  A confirmation link is on its way to <span className="font-medium text-foreground">{email.trim()}</span>. Nothing else is sent until you click
+                  Ping sent a confirmation link to <span className="font-medium text-foreground">{email.trim()}</span>. Nothing else arrives until you click
                   it. No email? Check the spam folder.
                 </>
               ) : (
-                <>The next email follows your new choices.</>
+                <>Ping will use your new choices from the next email.</>
               )}
             </DialogDescription>
             <div className="pt-2">

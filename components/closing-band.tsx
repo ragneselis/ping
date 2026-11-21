@@ -12,7 +12,7 @@ export function ClosingBand() {
       inner="grid items-center gap-6 bg-band py-8 text-band-foreground sm:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-12"
     >
       <div className="grid max-w-prose gap-3">
-        <h2>New jobs land every day. Come back tomorrow.</h2>
+        <h2>Ping goes out again tomorrow. See you then.</h2>
         <p className="label-mono leading-relaxed text-band-foreground/75">
           <span className="hidden sm:inline">Click the board to play. Steer with the arrow keys.</span>
           <span className="sm:hidden">Tap the board to play. Swipe to steer.</span>

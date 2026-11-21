@@ -105,7 +105,7 @@ export function confirmationEmail(token: string, prefs: Prefs, frequency: Freque
   const body = `
 <tr><td style="padding:32px 0 8px 0;font-family:${MONO};font-size:22px;line-height:28px;font-weight:700;letter-spacing:-0.02em;color:${C.ink};">Confirm your email</td></tr>
 <tr><td style="padding:0 0 24px 0;font-family:${SANS};font-size:15px;line-height:23px;color:${C.ink};">
-  Someone, hopefully you, asked Ping to email this address when new design jobs land.
+  Someone, hopefully you, asked Ping to bring new design jobs to this address.
   Nothing is sent until you confirm.
 </td></tr>
 <tr><td style="padding:0 0 24px 0;">${button(url, "Confirm and get new jobs")}</td></tr>
@@ -122,7 +122,7 @@ export function confirmationEmail(token: string, prefs: Prefs, frequency: Freque
       "",
       "Confirm your email",
       "",
-      "Someone, hopefully you, asked Ping to email this address when new design jobs land. Nothing is sent until you confirm.",
+      "Someone, hopefully you, asked Ping to bring new design jobs to this address. Nothing is sent until you confirm.",
       "",
       `Confirm: ${url}`,
       "",
@@ -171,8 +171,8 @@ export function digestEmail(d: Digest, prefs: Prefs, frequency: Frequency, token
   const seeAll = `${SITE_URL}/${qs ? `?${qs}` : ""}`;
   const n = d.total;
   const reach = d.withinReach;
-  const subject = `${n} new design ${n === 1 ? "job" : "jobs"} for you${reach && reach < n ? `, ${reach} within reach` : ""}`;
-  const heading = `${n} new ${n === 1 ? "job matches" : "jobs match"} what you follow`;
+  const subject = `Ping found ${n} new design ${n === 1 ? "job" : "jobs"} for you${reach && reach < n ? `, ${reach} within reach` : ""}`;
+  const heading = `Ping found ${n} new ${n === 1 ? "job" : "jobs"} that ${n === 1 ? "matches" : "match"} what you follow`;
   const shown = d.jobs.reduce((k, j) => k + 1 + j.similar, 0);
   const rest = Math.max(0, n - shown);
   const what = describePrefs(prefs, frequency);

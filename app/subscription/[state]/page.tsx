@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 /** Where the confirm and unsubscribe links in Ping's emails land. */
 const STATES = {
   confirmed: {
-    title: "You are in",
-    body: "Your email is confirmed. Ping will send new jobs that match what you picked, at most 10 per email, and only when there is something new.",
+    title: "You're in",
+    body: "Your email is confirmed. When Ping finds new jobs that match what you picked, they come to your inbox, at most 10 per email. No new finds, no email.",
     note: "Every email has a link to change what you get and a link to unsubscribe.",
   },
   removed: {

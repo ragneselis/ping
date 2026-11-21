@@ -147,8 +147,8 @@ export default async function JobsPage({
             }
           >
             <p className="text-base text-muted-foreground">
-              <span className="font-mono text-foreground">{both}</span> jobs are
-              open to someone in Estonia and within reach for a graduate.
+              <span className="font-mono text-foreground">{both}</span> of
+              today&rsquo;s finds are open to someone in Estonia and within reach for a graduate.
             </p>
           </Panel>
         </div>
@@ -218,7 +218,7 @@ export default async function JobsPage({
           ) : (
             <Panel
               titleAs="p"
-              title="Nothing here right now"
+              title="Nothing here yet"
               className="max-w-prose"
               footer={
                 <div className="flex flex-wrap gap-3">
@@ -247,7 +247,7 @@ export default async function JobsPage({
               <p className="text-base text-muted-foreground">
                 {culprit ? (
                   <>
-                    No jobs match all of these filters together. Removing{" "}
+                    Ping found nothing that fits all of these at once. Removing{" "}
                     <span className="font-medium text-foreground">
                       {culprit.label}
                     </span>{" "}
@@ -259,8 +259,8 @@ export default async function JobsPage({
                   </>
                 ) : (
                   <>
-                    That combination is quiet today. Check back soon: new jobs
-                    arrive all the time.
+                    Ping will keep sniffing around. New finds come in every
+                    morning.
                   </>
                 )}
               </p>

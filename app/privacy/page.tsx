@@ -33,7 +33,7 @@ export default function PrivacyPage() {
       <div className="grid gap-4">
         <h1 id="privacy-heading">Privacy</h1>
         <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
-          Ping needs no account. The only personal data it keeps is for the job emails, and only if you sign up for them.
+          Ping is curious about jobs, not about you. No account needed: the only personal data kept is for the job emails, and only if you sign up for them.
         </p>
       </div>
 
