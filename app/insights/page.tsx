@@ -127,7 +127,7 @@ export default async function InsightsPage({
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
-        <h1 className="max-w-[16ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.95] text-balance sm:text-6xl xl:text-7xl">
+        <h1 className="max-w-[16ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[1.05] text-balance sm:text-6xl xl:text-7xl">
           What the market is asking for
         </h1>
         <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
@@ -356,7 +356,7 @@ export default async function InsightsPage({
                 className="group row-span-4 grid grid-rows-subgrid gap-y-3 border-b border-border py-5 transition-colors hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
               >
                 <span className="flex items-baseline justify-between gap-3">
-                  <span className="flex items-center gap-2 font-heading text-lg font-semibold tracking-tight underline-offset-4 group-hover:underline">
+                  <span className="flex items-center gap-2 font-heading-text text-lg font-semibold underline-offset-4 group-hover:underline">
                     <CategoryDot category={c.category} className="size-2.5" />
                     {CATEGORY_META[c.category].short}
                   </span>

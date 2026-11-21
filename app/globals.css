@@ -103,7 +103,9 @@
   --frame-hatch: #001f400f;
 
   --font-sans: var(--font-geist), Geist, ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  /* GrönLoop type: Ariata Display for large headings and figures, Ariata Text for 18 to 30px titles. */
+  --font-heading: var(--font-ariata-display), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-heading-text: var(--font-ariata-text), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
   /* Square corners everywhere; inputs may use 2px. */
@@ -265,6 +267,7 @@
 
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
+  --font-heading-text: var(--font-heading-text);
   --font-mono: var(--font-mono);
 
   --radius-sm: 2px;
@@ -295,6 +298,8 @@
   }
   html {
     @apply font-sans;
+    /* Ariata ships one Regular master: never fake a bold. Geist is variable, so it is unaffected. */
+    font-synthesis-weight: none;
     scrollbar-color: var(--border) transparent;
   }
   body {
@@ -302,10 +307,14 @@
     /* Fine 45-degree hatching on the ground; the white frame column covers it, so it only shows in the gutters. */
     background-image: repeating-linear-gradient(45deg, var(--frame-hatch) 0 1px, transparent 1px 9px);
   }
+  /* GrönLoop heading metrics: the hero at -0.02em, section headings at -0.012em. */
   h1,
   h2 {
     font-family: var(--font-heading);
     font-weight: 600;
+    letter-spacing: -0.012em;
+  }
+  h1 {
     letter-spacing: -0.02em;
   }
   ::selection {
