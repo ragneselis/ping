@@ -11,7 +11,7 @@ import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { SoundToggle } from "@/components/sound";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeMenu } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLabel } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -37,9 +37,9 @@ export function SubscribeButton() {
   return (
     <SubscribeDialog
       trigger={
-        <Button size="sm" className="max-sm:size-11 max-sm:px-0">
-          <BellRing data-icon="inline-start" className="max-sm:size-5" strokeWidth={1.75} />
-          <span className="max-sm:sr-only">Get new jobs</span>
+        <Button size="sm" iconOnlyBelow="sm">
+          <BellRing data-icon="inline-start" strokeWidth={1.75} />
+          <ButtonLabel>Get new jobs</ButtonLabel>
         </Button>
       }
     />

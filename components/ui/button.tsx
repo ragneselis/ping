@@ -1,3 +1,4 @@
+import type * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
@@ -32,10 +33,20 @@ const buttonVariants = cva(
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
       },
+      /*
+       * Icon-only below a breakpoint: the label (wrap it in <ButtonLabel>) is visually hidden and the
+       * button becomes the header icon buttons' square (components/icon-button.tsx): 44px, no padding
+       * (including the inline-start/end padding the sizes add), the icon at 20px, centred on both axes.
+       */
+      iconOnlyBelow: {
+        none: "",
+        sm: "max-sm:size-11 max-sm:gap-0 max-sm:p-0 max-sm:has-data-[icon=inline-start]:pl-0 max-sm:has-data-[icon=inline-end]:pr-0 max-sm:[&_svg]:size-5! max-sm:[&_[data-slot=button-label]]:sr-only",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      iconOnlyBelow: "none",
     },
   }
 )
@@ -44,15 +55,21 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  iconOnlyBelow = "none",
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, iconOnlyBelow, className }))}
       {...props}
     />
   )
 }
 
-export { Button, buttonVariants }
+/** A button's text label; hidden visually (kept for screen readers) where the button is icon-only. */
+function ButtonLabel(props: React.ComponentProps<"span">) {
+  return <span data-slot="button-label" {...props} />
+}
+
+export { Button, ButtonLabel, buttonVariants }
