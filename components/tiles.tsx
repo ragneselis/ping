@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Mascot, type MascotName } from "@/components/mascot";
 import { cn } from "@/lib/utils";
 
 /*
@@ -34,51 +35,40 @@ type Cell = {
 };
 
 /**
- * Two arrangements so Jobs and Market insights don't repeat each other. Both keep GrönLoop's
- * staircase falling away from the outer corners, then let a few stray tiles drift along the
- * top edge. Stray tiles are held back below md, where the two corners would meet.
+ * Two light arrangements so Jobs and Market insights don't repeat each other: one small, loose
+ * staircase in the top-left corner and two single tiles, leaving the right side to the mascot.
+ * Rows below the band's height are clipped, never rescaled, so the 32px pitch holds at every width.
  */
 const ARRANGEMENTS: Record<"jobs" | "insights", Cell[]> = {
   jobs: [
     { side: "left", row: 0, col: 0, tile: "stripe_mint_1" },
-    { side: "left", row: 0, col: 2, tile: "stripe_deep_1" },
     { side: "left", row: 1, col: 1, tile: "marble_vivid_1" },
     { side: "left", row: 2, col: 0, tile: "stripe_emerald_1" },
-    { side: "left", row: 0, col: 4, tile: "marble_lime_1", className: "hidden sm:block" },
-    { side: "left", row: 1, col: 7, tile: "marble_mint_2", className: "hidden lg:block" },
-    { side: "right", row: 0, col: 0, tile: "marble_vivid_2" },
-    { side: "right", row: 1, col: 0, tile: "stripe_mint_1" },
-    { side: "right", row: 0, col: 2, tile: "marble_deep_1" },
-    { side: "right", row: 2, col: 1, tile: "stripe_emerald_1" },
-    { side: "right", row: 0, col: 6, tile: "marble_lime_1", className: "hidden md:block" },
-    { side: "right", row: 1, col: 11, tile: "stripe_deep_1", className: "hidden xl:block" },
+    { side: "left", row: 0, col: 5, tile: "marble_lime_1", className: "hidden sm:block" },
+    { side: "right", row: 2, col: 0, tile: "stripe_deep_1" },
   ],
   insights: [
     { side: "left", row: 0, col: 0, tile: "marble_deep_1" },
-    { side: "left", row: 1, col: 0, tile: "marble_vivid_2" },
-    { side: "left", row: 0, col: 1, tile: "stripe_mint_1" },
-    { side: "left", row: 2, col: 2, tile: "marble_lime_1", className: "hidden sm:block" },
-    { side: "left", row: 0, col: 5, tile: "stripe_emerald_1", className: "hidden md:block" },
-    { side: "left", row: 1, col: 9, tile: "marble_mint_1", className: "hidden xl:block" },
-    { side: "right", row: 0, col: 0, tile: "stripe_emerald_1" },
-    { side: "right", row: 0, col: 1, tile: "marble_mint_2" },
-    { side: "right", row: 1, col: 2, tile: "stripe_deep_1" },
-    { side: "right", row: 2, col: 0, tile: "marble_vivid_1" },
-    { side: "right", row: 0, col: 4, tile: "marble_lime_1", className: "hidden sm:block" },
-    { side: "right", row: 1, col: 8, tile: "stripe_mint_1", className: "hidden lg:block" },
+    { side: "left", row: 1, col: 1, tile: "stripe_mint_1" },
+    { side: "left", row: 2, col: 2, tile: "marble_vivid_2" },
+    { side: "left", row: 1, col: 7, tile: "stripe_emerald_1", className: "hidden md:block" },
+    { side: "right", row: 0, col: 0, tile: "marble_lime_1" },
   ],
 };
 
+const MASCOT: Record<keyof typeof ARRANGEMENTS, MascotName> = { jobs: "block", insights: "student" };
+
 /**
- * The hero's tile band: a fixed-height spacer (two lattice rows on phones, three from 960px)
- * whose tiles are absolutely placed, so they can never add height or sit behind the headline.
- * It bleeds out to the frame lines, so column 0 of each corner lands on the frame.
+ * The hero's tile band: a fixed-height spacer whose height matches the mascot (64px phones,
+ * 96px from md, 128px from lg), with every tile and the mascot absolutely placed on the 32px
+ * lattice, so nothing can add height or sit behind the headline. The band bleeds out to the
+ * frame lines; the mascot stands one cell in from the right frame line.
  */
 export function HeroTiles({ variant }: { variant: keyof typeof ARRANGEMENTS }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none relative -mx-4 h-16 overflow-hidden select-none md:-mx-6 lg:-mx-8 min-[960px]:h-25 min-[960px]:overflow-visible"
+      className="pointer-events-none relative -mx-4 h-16 overflow-hidden select-none md:-mx-6 md:h-24 lg:-mx-8 lg:h-32"
     >
       {ARRANGEMENTS[variant].map((c) => (
         <Image
@@ -93,6 +83,7 @@ export function HeroTiles({ variant }: { variant: keyof typeof ARRANGEMENTS }) {
           style={{ top: c.row * CELL, [c.side]: c.col * CELL }}
         />
       ))}
+      <Mascot name={MASCOT[variant]} className="absolute top-0" style={{ right: CELL }} />
     </div>
   );
 }

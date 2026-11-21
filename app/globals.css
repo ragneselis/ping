@@ -6,7 +6,7 @@
 
 /* ---------------------------------------------------------------------------
    Ping design tokens, on the GrönLoop visual system (~/Documents/gronloop,
-   src/app/globals.css): white surfaces, navy ink, navy hairlines at low alpha,
+   src/app/globals.css): white surfaces, near-black ink, hairlines at low alpha,
    one emerald accent in three contrast rungs, square corners, no shadows.
    Colour only where it means something: emerald for Ping's accent and signals,
    category colours for categories.
@@ -16,20 +16,20 @@
   /* GrönLoop neutrals */
   --ground: #ffffff; /* the hatched gutters */
   --background: #ffffff;
-  --foreground: #001f40; /* navy, 16.5:1 on white */
+  --foreground: #101014; /* near-black, 18.6:1 on white */
   --card: #ffffff;
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
   --muted: #ececea; /* secondary surface, hover fills */
-  --muted-foreground: #566779; /* muted navy: 5.8:1 on white, 4.9:1 on --muted */
+  --muted-foreground: #5b5b61; /* neutral grey: 6.7:1 on white, 5.7:1 on --muted */
   --border: #e2e2df;
   --input: #dcdcd8;
 
-  /* GrönLoop rules: navy at low alpha */
-  --hairline: #001f401a;
-  --hairline-strong: #001f4052; /* active tabs, table header rule */
-  --guide: #001f4021; /* the frame's vertical lines and section bands */
+  /* GrönLoop rules, in near-black at the same low alphas */
+  --hairline: #1010141a;
+  --hairline-strong: #10101452; /* active tabs, table header rule */
+  --guide: #10101421; /* the frame's vertical lines and section bands */
   --border-strong: var(--hairline-strong);
 
   /* Brand emerald, three rungs by contrast duty (measured on white):
@@ -42,6 +42,7 @@
   --brand-sm-hover: color-mix(in oklch, var(--brand-sm), black 8%);
   --brand-foreground: #ffffff;
   --brand-tint: color-mix(in oklch, var(--brand), white 88%);
+  --brand-pale: var(--color-emerald-200); /* the lighter of the two chart greens */
   --ring: var(--brand-lg);
 
   /* Actions: primary is the emerald fill (white label 5.48:1), secondary is a hairline outline */
@@ -77,15 +78,19 @@
   --cat-other: var(--color-slate-500);
   --cat-other-text: var(--color-slate-700);
 
-  /* Blueprint frame in the navy rule tokens: guide lines on the column edges and between sections,
-     navy hatching in the gutters (GrönLoop's diagonal hatch stroke). */
+  /* Pixel mascots: the square tile each one sits on. */
+  --mascot-tile-block: #d1fae5; /* emerald-100 */
+  --mascot-tile-student: #a7f3d0; /* emerald-200 */
+
+  /* Blueprint frame in the rule tokens: guide lines on the column edges and between sections,
+     fine hatching in the gutters (GrönLoop's diagonal hatch stroke). */
   --frame-line: var(--guide);
-  --frame-hatch: #001f400f;
+  --frame-hatch: #1010140f;
 
   --font-sans: var(--font-geist), Geist, ui-sans-serif, system-ui, sans-serif;
-  /* GrönLoop type: Ariata Display for large headings and figures, Ariata Text for 18 to 30px titles. */
-  --font-heading: var(--font-ariata-display), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-heading-text: var(--font-ariata-text), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  /* Bricolage Grotesque (semibold) for headings, titles, the wordmark and the big readout numbers. */
+  --font-heading: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-heading-text: var(--font-heading);
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
   /* Square corners everywhere; inputs may use 2px. */
@@ -117,6 +122,7 @@
   --brand-sm-hover: color-mix(in oklch, #34d399, white 12%);
   --brand-foreground: #04302a; /* 7.5:1 on the emerald fill */
   --brand-tint: color-mix(in oklch, #34d399, #0a1320 84%);
+  --brand-pale: color-mix(in oklch, #34d399 32%, #111c2c); /* a dim emerald on the card */
 
   /* Dark: graphics on shade 400 (6:1 or more on the page), text on shade 300 (7.7:1 or more on every dark surface). */
   --cat-product: var(--color-blue-400);
@@ -139,6 +145,8 @@
   --cat-other-text: var(--color-slate-300);
 
   --frame-hatch: #ffffff0d;
+  --mascot-tile-block: #064e3b; /* dark emerald; the pixel colours stay the same */
+  --mascot-tile-student: #064e3b;
 }
 
 @media (min-width: 48rem) {
@@ -183,6 +191,7 @@
   --color-brand-sm-hover: var(--brand-sm-hover);
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-tint: var(--brand-tint);
+  --color-brand-pale: var(--brand-pale);
   --color-hairline: var(--hairline);
   --color-hairline-strong: var(--hairline-strong);
   --color-guide: var(--guide);
@@ -242,8 +251,6 @@
   }
   html {
     @apply font-sans;
-    /* Ariata ships one Regular master: never fake a bold. Geist is variable, so it is unaffected. */
-    font-synthesis-weight: none;
     scrollbar-color: var(--border) transparent;
   }
   body {

@@ -95,6 +95,8 @@ interface HBarRow {
   colors?: string[];
   /** Makes the row clickable. */
   href?: string;
+  /** A category dot drawn before the row label. */
+  dot?: string;
   /** Postings per direction, in CATEGORY_SERIES order: shown in the tooltip and data table only, never drawn. */
   breakdown?: number[];
 }
@@ -170,8 +172,10 @@ export function HBarChart({
     true,
   );
   const side = width >= SIDE_LABELS_MIN_WIDTH;
+  // Room for the category dot (8px plus a 6px gap) when rows carry one.
+  const dotSpace = rows.some((r) => r.dot) ? 14 : 0;
   const labelCol = Math.min(
-    Math.max(...labelWidths, 40) + 16,
+    Math.max(...labelWidths, 40) + 16 + dotSpace,
     Math.round(width * 0.42),
   );
   const endCol = Math.max(...endWidths, 16) + 10;
@@ -224,18 +228,25 @@ export function HBarChart({
               tickLine={false}
               axisLine={false}
               interval={0}
-              tick={({ y, payload }) => (
-                <text
-                  x={0}
-                  y={side ? y : Number(y) - BAR_STACKED / 2 - 6}
-                  dy={side ? "0.35em" : 0}
-                  textAnchor="start"
-                  fontSize={LABEL_FONT_PX}
-                  className="fill-foreground font-mono"
-                >
-                  {payload.value}
-                </text>
-              )}
+              tick={({ y, payload, index }) => {
+                const ty = side ? Number(y) : Number(y) - BAR_STACKED / 2 - 6;
+                const dot = rows[index]?.dot;
+                return (
+                  <g>
+                    {dot && <circle cx={4} cy={side ? ty : ty - 4} r={4} fill={dot} />}
+                    <text
+                      x={dotSpace}
+                      y={ty}
+                      dy={side ? "0.35em" : 0}
+                      textAnchor="start"
+                      fontSize={LABEL_FONT_PX}
+                      className="fill-foreground font-mono"
+                    >
+                      {payload.value}
+                    </text>
+                  </g>
+                );
+              }}
             />
             <ChartTooltip
               cursor={false}
@@ -389,7 +400,7 @@ export function RankingChart({
   );
 }
 
-/** Jobs per direction in each direction's colour: full = within reach, paler = the rest. Rows link to the direction. */
+/** Jobs per direction in two greens: --brand-lg = within reach, --brand-pale = mid-level and above. Each row's category dot is the only category colour. Rows link to the direction. */
 export function CategoryHiringChart({
   data,
 }: {
@@ -403,16 +414,15 @@ export function CategoryHiringChart({
 }) {
   return (
     <div className="grid gap-3">
-      {/* Two-tone sample swatch: the legend shows the same full-plus-pale split as the bars. */}
+      {/* Two-tone sample swatch: the legend shows the same dark-plus-light green split as the bars. */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span aria-hidden className="flex h-2.5 w-10 gap-px">
-          <span className="w-1/2 bg-cat-other" />
-          <span className="w-1/2 bg-cat-other/45" />
+          <span className="w-1/2 bg-brand-lg" />
+          <span className="w-1/2 bg-brand-pale" />
         </span>
         <span>
-          <span className="font-medium text-foreground">Full</span> = within
-          reach, <span className="font-medium text-foreground">pale</span> =
-          mid-level and above. Click a row to open that direction.
+          <span className="font-medium text-foreground">Dark green</span> = within reach,{" "}
+          <span className="font-medium text-foreground">light green</span> = mid-level and above. Click a row to open that direction.
         </span>
       </div>
       <HBarChart
@@ -421,15 +431,15 @@ export function CategoryHiringChart({
           label: d.label,
           values: [d.reach, d.rest],
           end: String(d.reach + d.rest),
-          colors: [d.color, `color-mix(in oklab, ${d.color} 45%, var(--card))`],
+          dot: d.color,
           href: d.href,
         }))}
         series={[
-          { key: "reach", label: "Within reach", color: "var(--foreground)" },
+          { key: "reach", label: "Within reach", color: "var(--brand-lg)" },
           {
             key: "rest",
             label: "Mid-level and above",
-            color: "var(--foreground)",
+            color: "var(--brand-pale)",
           },
         ]}
       />

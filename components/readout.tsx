@@ -16,7 +16,7 @@ export interface ReadoutItem {
 }
 
 /**
- * Readout band in GrönLoop's metric-strip style: dashed navy hairlines above and below, dashed
+ * Readout band in GrönLoop's metric-strip style: dashed hairlines above and below, dashed
  * vertical dividers between cells (none on the first, where the frame line already sits), big
  * emerald figures in the display face and small mono labels underneath. The band bleeds out to
  * the frame lines. Items with an href are filters you can click.
