@@ -3,6 +3,8 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+/* Touch devices (no hover, coarse pointer), by input and not width. Same query as TOUCH_QUERY in lib/sound.ts. */
+@custom-variant touch (@media (hover: none) and (pointer: coarse));
 
 /* ---------------------------------------------------------------------------
    Ping design tokens, on the GrönLoop visual system (~/Documents/gronloop,

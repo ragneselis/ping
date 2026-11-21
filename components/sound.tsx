@@ -4,7 +4,7 @@ import { Volume2, VolumeX } from "lucide-react";
 import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { useEffect, useSyncExternalStore } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { isSoundOn, setSoundOn, sound, subscribeSound } from "@/lib/sound";
+import { isSoundOn, isTouchDevice, setSoundOn, sound, subscribeSound, subscribeTouch } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
 /*
@@ -22,7 +22,13 @@ import { cn } from "@/lib/utils";
  * theme menu, the "Get new jobs" dialog trigger, the sound toggle, expander summaries, the snake board).
  * Expanders, dialogs and menus play open and close; mascots chirp; the snake pings when it eats.
  * Every call is gated in lib/sound.ts: with sound off nothing is created or played, and nothing plays on load.
+ * Touch devices (useTouchDevice) get no sound at all: no listeners, no toggle, no AudioContext.
  */
+
+/** True on touch devices ((hover: none) and (pointer: coarse), lib/sound.ts), live if that changes. False on the server. */
+export function useTouchDevice() {
+  return useSyncExternalStore(subscribeTouch, isTouchDevice, () => false);
+}
 
 const CLICKABLE =
   'a[href], button, summary, [role="tab"], [role="radio"], [role="menuitem"], [role="menuitemradio"], [role="option"], [data-sound="click"], .recharts-bar-rectangle';
@@ -49,7 +55,9 @@ function barShare(bar: Element): number {
 }
 
 export function SoundEffects() {
+  const touch = useTouchDevice();
   useEffect(() => {
+    if (touch) return;
     let lastHovered: Element | null = null;
     let lastRow: Element | null = null;
 
@@ -116,14 +124,16 @@ export function SoundEffects() {
       document.removeEventListener("keydown", onGesture, true);
       document.removeEventListener("toggle", onToggle, true);
     };
-  }, []);
+  }, [touch]);
   return null;
 }
 
-/** Sound on or off: one header button, remembered in localStorage. Off by default. */
+/** Sound on or off: one header button, remembered in localStorage. Off by default. Absent on touch devices. */
 export function SoundToggle({ className }: { className?: string }) {
   // Server and first client render say "off" (nothing stored can be read there); the stored choice follows.
   const on = useSyncExternalStore(subscribeSound, isSoundOn, () => false);
+  // Not on touch devices. The server cannot know, so the `touch:hidden` class keeps it from ever painting.
+  if (useTouchDevice()) return null;
   const label = on ? "Turn sound off" : "Turn sound on";
   const Icon = on ? Volume2 : VolumeX;
   return (
@@ -140,7 +150,7 @@ export function SoundToggle({ className }: { className?: string }) {
               // Turning sound on confirms itself with one ping; turning it off stays silent.
               if (!on) sound.click("sound");
             }}
-            className={cn(ICON_BUTTON, className)}
+            className={cn(ICON_BUTTON, "touch:hidden", className)}
           />
         }
       >

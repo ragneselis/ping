@@ -4,7 +4,7 @@
  * Off by default. The choice lives in localStorage ("ping-sound"), read and written in try/catch.
  * The AudioContext is created lazily inside the first sound call, and every sound call comes from a
  * user gesture (click, hover, key), so nothing is ever created or played on page load. With sound
- * off, every call returns before touching audio at all.
+ * off, or on a touch device (isTouchDevice), every call returns before touching audio at all.
  *
  * Voices (all sine, fast attack, exponential decay, master volume kept low):
  *   click   a soft "ping": about 1.3 kHz gliding slightly down, 90ms
@@ -22,6 +22,25 @@
  */
 
 const STORAGE_KEY = "ping-sound";
+
+/**
+ * Touch devices have no UI sound at all: no hover, phones are often on silent, and the header is tight.
+ * Detected by input, not width, so a narrow desktop window keeps sound. The same query is the `touch:`
+ * CSS variant in app/globals.css (it hides the toggle before any script runs); keep the two in step.
+ */
+export const TOUCH_QUERY = "(hover: none) and (pointer: coarse)";
+
+export function isTouchDevice(): boolean {
+  if (typeof window === "undefined" || !window.matchMedia) return false;
+  return window.matchMedia(TOUCH_QUERY).matches;
+}
+
+export function subscribeTouch(listener: () => void) {
+  if (typeof window === "undefined" || !window.matchMedia) return () => {};
+  const mq = window.matchMedia(TOUCH_QUERY);
+  mq.addEventListener("change", listener);
+  return () => mq.removeEventListener("change", listener);
+}
 const MASTER_VOLUME = 0.24;
 
 let enabled: boolean | null = null;
@@ -70,7 +89,8 @@ export function subscribeSound(listener: () => void) {
  * they only play once a gesture has already started audio, so nothing ever sounds on page load.
  */
 function audio(passive = false): AudioContext | null {
-  if (!isSoundOn()) return null;
+  // On touch devices sound does not exist, whatever a desktop visit stored (the stored choice is kept).
+  if (!isSoundOn() || isTouchDevice()) return null;
   if (passive && (!ctx || ctx.state !== "running")) return null;
   if (!ctx) {
     const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
