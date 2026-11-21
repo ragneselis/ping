@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { CategoryLabel } from "@/components/category";
 import { LevelTag, RequirementList, SignalTag } from "@/components/signal";
 import { FreshTile } from "@/components/tiles";
-import { CATEGORY_META, categoryVars, REMOTE_LABEL } from "@/lib/categories";
+import { CATEGORY_META, REMOTE_LABEL } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 import type { JobCard as Job } from "@/lib/view";
 
@@ -34,11 +34,10 @@ export function JobRow({ job, isNew }: { job: Job; isNew: boolean }) {
   const location = job.location || "Location not stated";
   const posted = <time dateTime={job.postedAt ?? undefined} title={fullDate(job.postedAt)}>{postedShort(job.postedAt)}</time>;
   return (
-    // Hover highlights the row in its direction's pastel.
+    // Hover is a faint neutral fill; the direction label keeps AA on it (amber-700 at 4.7:1 is the lowest).
     <li
-      style={categoryVars(job.primary)}
       className={cn(
-        "group relative border-b border-border py-4 transition-colors hover:bg-(--cat)/35 has-[a:focus-visible]:bg-(--cat)/35 dark:hover:bg-(--cat)/15 dark:has-[a:focus-visible]:bg-(--cat)/15",
+        "group relative border-b border-border py-4 transition-colors hover:bg-muted/60 has-[a:focus-visible]:bg-muted/60",
         ROW_BLEED,
       )}
     >

@@ -16,7 +16,7 @@ import {
   ChartContainer,
   ChartTooltip,
 } from "@/components/ui/chart";
-import { CATEGORY_META, categoryChartColor } from "@/lib/categories";
+import { CATEGORY_META, categoryColor } from "@/lib/categories";
 import { CATEGORIES, type Category } from "@/lib/types";
 
 /** A chart token number (--chart-n) or any CSS colour, e.g. a category colour from lib/categories. */
@@ -95,6 +95,8 @@ interface HBarRow {
   colors?: string[];
   /** Makes the row clickable. */
   href?: string;
+  /** Postings per direction, in CATEGORY_SERIES order: shown in the tooltip and data table only, never drawn. */
+  breakdown?: number[];
 }
 
 /** Tooltip listing every non-empty segment of the hovered bar, with its colour. */
@@ -114,26 +116,24 @@ function BreakdownTooltip({
   const idx = payload?.[0]?.payload?.idx;
   if (!active || idx === undefined) return null;
   const row = rows[idx];
-  const items = series
-    .map((s, i) => ({ s, i }))
-    .filter(({ i }) => row.values[i] > 0);
+  // A row with a breakdown lists its directions (with their dots) instead of the drawn segments.
+  const items = row.breakdown
+    ? CATEGORY_SERIES.map((s, i) => ({ s, i, color: colorValue(s.color), text: String(row.breakdown![i]) })).filter(({ i }) => row.breakdown![i] > 0)
+    : series
+        .map((s, i) => ({ s, i, color: row.colors?.[i] ?? colorValue(s.color), text: row.detail?.[i] ?? String(row.values[i]) }))
+        .filter(({ i }) => row.values[i] > 0);
   return (
     <div className="grid min-w-44 gap-1.5 border border-border bg-popover px-3 py-2.5 text-xs text-popover-foreground">
       <div className="font-medium">
         {title ? title(row) : `${row.label}: ${row.end}`}
       </div>
-      {items.map(({ s, i }) => (
+      {items.map(({ s, color, text }) => (
         <div key={s.key} className="flex items-center justify-between gap-4">
           <span className="flex items-center gap-1.5 text-muted-foreground">
-            <span
-              className="size-2 shrink-0 rounded-full"
-              style={{ background: row.colors?.[i] ?? colorValue(s.color) }}
-            />
+            <span className="size-2 shrink-0 rounded-full" style={{ background: color }} />
             {s.label}
           </span>
-          <span className="font-mono text-foreground">
-            {row.detail?.[i] ?? row.values[i]}
-          </span>
+          <span className="font-mono text-foreground">{text}</span>
         </div>
       ))}
     </div>
@@ -291,13 +291,11 @@ export function HBarChart({
       )}
       <DataTable
         caption={caption}
-        head={["", "Total", ...(stacked ? series.map((s) => s.label) : [])]}
+        head={["", "Total", ...(rows.some((r) => r.breakdown) ? CATEGORY_SERIES.map((s) => s.label) : stacked ? series.map((s) => s.label) : [])]}
         rows={rows.map((r) => [
           r.label,
           r.end,
-          ...(stacked
-            ? series.map((_, i) => r.detail?.[i] ?? String(r.values[i]))
-            : []),
+          ...(r.breakdown ? r.breakdown.map(String) : stacked ? series.map((_, i) => r.detail?.[i] ?? String(r.values[i])) : []),
         ])}
       />
     </div>
@@ -342,12 +340,15 @@ function DataTable({
   );
 }
 
-/** The nine directions as chart series, always in the same fixed order. */
+/** The nine directions in their fixed order, with their colours: the breakdown in tooltips and data tables. */
 const CATEGORY_SERIES: HBarSeries[] = CATEGORIES.map((c) => ({
   key: c,
   label: CATEGORY_META[c].short,
-  color: categoryChartColor(c),
+  color: categoryColor(c),
 }));
+
+/** "All directions" bars are one brand colour: emerald (--brand-lg, 3.77:1 on white; #34d399 in dark). */
+const BRAND_BAR = "var(--brand-lg)";
 
 type RankItem = {
   label: string;
@@ -357,59 +358,38 @@ type RankItem = {
 };
 
 /**
- * Ranking of skills or tools: share of postings that ask for each one. With `stacked`, each bar is
- * split by the postings' primary direction; otherwise one colour (a single direction's).
+ * Ranking of skills or tools: share of postings that ask for each one. One bar colour: a single
+ * direction's colour, or the brand emerald for "All directions" (`byDirection`), where hovering a
+ * bar shows how its postings split across the directions.
  */
 export function RankingChart({
   data,
   color,
   caption,
-  stacked = false,
+  byDirection = false,
 }: {
   data: RankItem[];
   color?: ChartColor;
   caption: string;
-  stacked?: boolean;
+  byDirection?: boolean;
 }) {
-  if (stacked) {
-    return (
-      <HBarChart
-        caption={caption}
-        series={CATEGORY_SERIES}
-        rows={data.map((d) => ({
-          label: d.label,
-          // Each segment is that direction's slice of the bar's share, so the segments add up to the total.
-          values: CATEGORIES.map((c) =>
-            d.count ? ((d.byCategory?.[c] ?? 0) / d.count) * d.share : 0,
-          ),
-          end: `${d.share}%`,
-          detail: CATEGORIES.map((c) => `${d.byCategory?.[c] ?? 0}`),
-        }))}
-        tooltipTitle={(r) => `${r.label}: ${r.end} of postings, by direction`}
-      />
-    );
-  }
   return (
     <HBarChart
       caption={caption}
-      series={[
-        {
-          key: "share",
-          label: "Share of postings",
-          color: color ?? "var(--foreground)",
-        },
-      ]}
+      series={[{ key: "share", label: "Share of postings", color: color ?? BRAND_BAR }]}
       rows={data.map((d) => ({
         label: d.label,
         values: [d.share],
         end: `${d.share}%`,
         detail: [`${d.share}% (${d.count} postings)`],
+        breakdown: byDirection ? CATEGORIES.map((c) => d.byCategory?.[c] ?? 0) : undefined,
       }))}
+      tooltipTitle={byDirection ? (r) => `${r.label}: ${r.end} of postings, by direction` : undefined}
     />
   );
 }
 
-/** Jobs per direction in each direction's chart tone: full = within reach, paler = the rest. Rows link to the direction. */
+/** Jobs per direction in each direction's colour: full = within reach, paler = the rest. Rows link to the direction. */
 export function CategoryHiringChart({
   data,
 }: {
@@ -426,8 +406,8 @@ export function CategoryHiringChart({
       {/* Two-tone sample swatch: the legend shows the same full-plus-pale split as the bars. */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span aria-hidden className="flex h-2.5 w-10 gap-px">
-          <span className="w-1/2 bg-cat-other-chart" />
-          <span className="w-1/2 bg-cat-other-chart/45" />
+          <span className="w-1/2 bg-cat-other" />
+          <span className="w-1/2 bg-cat-other/45" />
         </span>
         <span>
           <span className="font-medium text-foreground">Full</span> = within
@@ -486,29 +466,29 @@ function WrapTick({
 }
 
 /**
- * Vertical distribution, e.g. seniority or years of experience. With `stacked`, the columns split
- * by direction; otherwise one colour. The total sits on top in the mono font.
+ * Vertical distribution, e.g. seniority or years of experience. One column colour: a single
+ * direction's, or the brand emerald with a per-direction breakdown in the tooltip (`byDirection`).
+ * The total sits on top in the mono font.
  */
 export function DistributionChart({
   data,
   color,
   label,
   caption,
-  stacked = false,
+  byDirection = false,
 }: {
   data: { label: string; count: number; byCategory?: Breakdown }[];
   color?: ChartColor;
   label: string;
   caption: string;
-  stacked?: boolean;
+  byDirection?: boolean;
 }) {
-  const series: HBarSeries[] = stacked
-    ? CATEGORY_SERIES
-    : [{ key: "count", label, color: color ?? "var(--foreground)" }];
+  const series: HBarSeries[] = [{ key: "count", label, color: color ?? BRAND_BAR }];
   const rows: HBarRow[] = data.map((d) => ({
     label: d.label,
-    values: stacked ? CATEGORIES.map((c) => d.byCategory?.[c] ?? 0) : [d.count],
+    values: [d.count],
     end: String(d.count),
+    breakdown: byDirection ? CATEGORIES.map((c) => d.byCategory?.[c] ?? 0) : undefined,
   }));
   const chartData = rows.map((r, idx) => ({
     idx,
@@ -555,7 +535,6 @@ export function DistributionChart({
               fill={`var(--color-${s.key})`}
               radius={0}
               isAnimationActive={false}
-              {...(stacked ? SEGMENT_GAP : {})}
             />
           ))}
           <Bar
@@ -575,12 +554,8 @@ export function DistributionChart({
       </ChartContainer>
       <DataTable
         caption={caption}
-        head={["", "Total", ...(stacked ? series.map((s) => s.label) : [])]}
-        rows={rows.map((r) => [
-          r.label,
-          r.end,
-          ...(stacked ? r.values.map(String) : []),
-        ])}
+        head={["", "Total", ...(byDirection ? CATEGORY_SERIES.map((s) => s.label) : [])]}
+        rows={rows.map((r) => [r.label, r.end, ...(r.breakdown ? r.breakdown.map(String) : [])])}
       />
     </div>
   );

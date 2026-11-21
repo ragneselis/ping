@@ -6,7 +6,6 @@ import { Band } from "@/components/blueprint";
 import { JobFilters, JobListHeader } from "@/components/job-filters";
 import { JobRow } from "@/components/job-row";
 import { Readout, type ReadoutItem } from "@/components/readout";
-import { DispersingRules } from "@/components/rules";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
@@ -167,8 +166,6 @@ export default async function JobsPage({
       <Band aria-label="Jobs" last inner="grid gap-8 pb-16">
         {shown.length ? (
           <div>
-            {/* The dispersing lines again, as the divider into the list. */}
-            <DispersingRules className="mb-2" />
             <Suspense>
               <JobListHeader sort={filters.sort} />
             </Suspense>

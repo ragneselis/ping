@@ -1,15 +1,15 @@
 import { CATEGORY_META, categoryVars } from "@/lib/categories";
-import { CATEGORIES, type Category } from "@/lib/types";
+import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /*
  * Shared category styles. Every category colour on the site comes through here:
- * the element gets `--cat`, `--cat-strong` and `--cat-text` from categoryVars() and these classes read them.
- * Colour is used only for the dot, the label on a job row, row highlights, chart fills and per-direction blocks.
+ * the element gets `--cat` and `--cat-text` from categoryVars() and these classes read them.
+ * Colour is used only for the dot, the direction label on a job row, single-direction charts and the hiring chart.
  */
 export const categoryClass = {
-  /** Small dot in the strong tone (thin marks need 3:1 on white). */
-  dot: "bg-(--cat-strong)",
+  /** Small dot in the category colour. */
+  dot: "bg-(--cat)",
   /** Contrast-safe label text (AA on the surface). */
   text: "text-(--cat-text)",
 } as const;
@@ -25,20 +25,5 @@ export function CategoryLabel({ category, className }: { category: Category; cla
       <CategoryDot category={category} />
       {CATEGORY_META[category].short}
     </span>
-  );
-}
-
-/** One shared key for charts stacked by direction: dot plus short name, in the fixed category order. */
-export function CategoryLegend({ className }: { className?: string }) {
-  return (
-    <ul className={cn("flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-muted-foreground", className)} aria-label="Colour key for the charts">
-      {CATEGORIES.map((c) => (
-        <li key={c} className="flex items-center gap-1.5">
-          {/* Legend dots match the bars, so they use the chart tone. */}
-          <span aria-hidden style={categoryVars(c)} className="inline-block size-2 shrink-0 rounded-full bg-(--cat-chart)" />
-          {CATEGORY_META[c].short}
-        </li>
-      ))}
-    </ul>
   );
 }

@@ -54,48 +54,28 @@
   --destructive: #b4271a;
   --destructive-foreground: #ffffff;
 
-  /* Category colours, three per direction, all on the pastel's own hue:
-     --cat-<name>         the pastel: large fills only (row highlights, the top rule of direction blocks)
-     --cat-<name>-chart   L ~0.77 C 0.10: chart bars, stacked segments and their legend dots (>= 2:1 on white)
-     --cat-<name>-strong  L 0.60 C 0.13: dots and anything thin (>= 3.5:1 on white)
-     --cat-<name>-text    AA on white (>= 5.9:1) and on its pastel (>= 4.6:1)
-     Industrial's chart, strong and text tones sit at hue 85 so they read gold, not olive. */
-  --cat-brand: #f3cdc6;
-  --cat-brand-chart: oklch(0.78 0.1 30);
-  --cat-brand-strong: oklch(0.6 0.13 30);
-  --cat-brand-text: oklch(0.48 0.12 30);
-  --cat-industrial: #f2e6a6;
-  --cat-industrial-chart: oklch(0.77 0.13 85);
-  --cat-industrial-strong: oklch(0.6 0.13 85);
-  --cat-industrial-text: oklch(0.5 0.12 85);
-  --cat-game: #f4ccdd; /* raspberry: moved off green so it never reads as the brand */
-  --cat-game-chart: oklch(0.78 0.1 351);
-  --cat-game-strong: oklch(0.6 0.13 351);
-  --cat-game-text: oklch(0.49 0.12 351);
-  --cat-research: #b3e4e6; /* nudged from sea toward cyan, clear of the emerald */
-  --cat-research-chart: oklch(0.76 0.1 200);
-  --cat-research-strong: oklch(0.6 0.13 200);
-  --cat-research-text: oklch(0.45 0.12 200);
-  --cat-product: #c4dcf2;
-  --cat-product-chart: oklch(0.77 0.1 246);
-  --cat-product-strong: oklch(0.6 0.13 246);
-  --cat-product-text: oklch(0.47 0.12 246);
-  --cat-engineering: #d2d4f2;
-  --cat-engineering-chart: oklch(0.775 0.1 283);
-  --cat-engineering-strong: oklch(0.6 0.13 283);
-  --cat-engineering-text: oklch(0.48 0.12 283);
-  --cat-ai: #e4d0f0;
-  --cat-ai-chart: oklch(0.78 0.1 313);
-  --cat-ai-strong: oklch(0.6 0.13 313);
-  --cat-ai-text: oklch(0.49 0.12 313);
-  --cat-customer: #f8d3b9;
-  --cat-customer-chart: oklch(0.78 0.1 57);
-  --cat-customer-strong: oklch(0.6 0.13 57);
-  --cat-customer-text: oklch(0.49 0.12 57);
-  --cat-other: #e8e6e0;
-  --cat-other-chart: oklch(0.75 0.012 90);
-  --cat-other-strong: oklch(0.6 0.01 90);
-  --cat-other-text: oklch(0.48 0.005 90);
+  /* Category colours from Tailwind's palette, the same family as GrönLoop's emerald and amber,
+     avoiding green, emerald and teal so nothing competes with the brand.
+     --cat-<name>       shade 500: dots, the hiring chart, single-direction charts
+     --cat-<name>-text  shade 700: the direction label (5.05:1 to 10.3:1 on white) */
+  --cat-product: var(--color-blue-500);
+  --cat-product-text: var(--color-blue-700);
+  --cat-engineering: var(--color-indigo-500);
+  --cat-engineering-text: var(--color-indigo-700);
+  --cat-ai: var(--color-violet-500);
+  --cat-ai-text: var(--color-violet-700);
+  --cat-brand: var(--color-rose-500);
+  --cat-brand-text: var(--color-rose-700);
+  --cat-research: var(--color-sky-500);
+  --cat-research-text: var(--color-sky-700);
+  --cat-customer: var(--color-orange-500);
+  --cat-customer-text: var(--color-orange-700);
+  --cat-game: var(--color-fuchsia-500);
+  --cat-game-text: var(--color-fuchsia-700);
+  --cat-industrial: var(--color-amber-500);
+  --cat-industrial-text: var(--color-amber-700);
+  --cat-other: var(--color-slate-500);
+  --cat-other-text: var(--color-slate-700);
 
   /* Blueprint frame in the navy rule tokens: guide lines on the column edges and between sections,
      navy hatching in the gutters (GrönLoop's diagonal hatch stroke). */
@@ -138,43 +118,25 @@
   --brand-foreground: #04302a; /* 7.5:1 on the emerald fill */
   --brand-tint: color-mix(in oklch, #34d399, #0a1320 84%);
 
-  /* Dark: fills and dots share one clean tone (L 0.72 C 0.09); chart bars L 0.70 C 0.10 (>= 6.3:1 on the surface); text at L 0.82 (>= 9.8:1). */
-  --cat-brand: oklch(0.72 0.09 30);
-  --cat-brand-chart: oklch(0.7 0.1 30);
-  --cat-brand-strong: var(--cat-brand);
-  --cat-brand-text: oklch(0.82 0.09 30);
-  --cat-industrial: oklch(0.72 0.09 85);
-  --cat-industrial-chart: oklch(0.7 0.12 85);
-  --cat-industrial-strong: var(--cat-industrial);
-  --cat-industrial-text: oklch(0.82 0.09 85);
-  --cat-game: oklch(0.72 0.09 351);
-  --cat-game-chart: oklch(0.7 0.1 351);
-  --cat-game-strong: var(--cat-game);
-  --cat-game-text: oklch(0.82 0.09 351);
-  --cat-research: oklch(0.72 0.09 200);
-  --cat-research-chart: oklch(0.7 0.1 200);
-  --cat-research-strong: var(--cat-research);
-  --cat-research-text: oklch(0.82 0.09 200);
-  --cat-product: oklch(0.72 0.09 246);
-  --cat-product-chart: oklch(0.7 0.1 246);
-  --cat-product-strong: var(--cat-product);
-  --cat-product-text: oklch(0.82 0.09 246);
-  --cat-engineering: oklch(0.72 0.09 283);
-  --cat-engineering-chart: oklch(0.7 0.1 283);
-  --cat-engineering-strong: var(--cat-engineering);
-  --cat-engineering-text: oklch(0.82 0.09 283);
-  --cat-ai: oklch(0.72 0.09 313);
-  --cat-ai-chart: oklch(0.7 0.1 313);
-  --cat-ai-strong: var(--cat-ai);
-  --cat-ai-text: oklch(0.82 0.09 313);
-  --cat-customer: oklch(0.72 0.09 57);
-  --cat-customer-chart: oklch(0.7 0.1 57);
-  --cat-customer-strong: var(--cat-customer);
-  --cat-customer-text: oklch(0.82 0.09 57);
-  --cat-other: oklch(0.72 0.01 90);
-  --cat-other-chart: oklch(0.7 0.012 90);
-  --cat-other-strong: var(--cat-other);
-  --cat-other-text: oklch(0.82 0.01 90);
+  /* Dark: graphics on shade 400 (6:1 or more on the page), text on shade 300 (7.7:1 or more on every dark surface). */
+  --cat-product: var(--color-blue-400);
+  --cat-product-text: var(--color-blue-300);
+  --cat-engineering: var(--color-indigo-400);
+  --cat-engineering-text: var(--color-indigo-300);
+  --cat-ai: var(--color-violet-400);
+  --cat-ai-text: var(--color-violet-300);
+  --cat-brand: var(--color-rose-400);
+  --cat-brand-text: var(--color-rose-300);
+  --cat-research: var(--color-sky-400);
+  --cat-research-text: var(--color-sky-300);
+  --cat-customer: var(--color-orange-400);
+  --cat-customer-text: var(--color-orange-300);
+  --cat-game: var(--color-fuchsia-400);
+  --cat-game-text: var(--color-fuchsia-300);
+  --cat-industrial: var(--color-amber-400);
+  --cat-industrial-text: var(--color-amber-300);
+  --cat-other: var(--color-slate-400);
+  --cat-other-text: var(--color-slate-300);
 
   --frame-hatch: #ffffff0d;
 }
@@ -229,40 +191,22 @@
   --color-ground: var(--ground);
 
   --color-cat-brand: var(--cat-brand);
-  --color-cat-brand-chart: var(--cat-brand-chart);
-  --color-cat-brand-strong: var(--cat-brand-strong);
   --color-cat-brand-text: var(--cat-brand-text);
   --color-cat-industrial: var(--cat-industrial);
-  --color-cat-industrial-chart: var(--cat-industrial-chart);
-  --color-cat-industrial-strong: var(--cat-industrial-strong);
   --color-cat-industrial-text: var(--cat-industrial-text);
   --color-cat-game: var(--cat-game);
-  --color-cat-game-chart: var(--cat-game-chart);
-  --color-cat-game-strong: var(--cat-game-strong);
   --color-cat-game-text: var(--cat-game-text);
   --color-cat-research: var(--cat-research);
-  --color-cat-research-chart: var(--cat-research-chart);
-  --color-cat-research-strong: var(--cat-research-strong);
   --color-cat-research-text: var(--cat-research-text);
   --color-cat-product: var(--cat-product);
-  --color-cat-product-chart: var(--cat-product-chart);
-  --color-cat-product-strong: var(--cat-product-strong);
   --color-cat-product-text: var(--cat-product-text);
   --color-cat-engineering: var(--cat-engineering);
-  --color-cat-engineering-chart: var(--cat-engineering-chart);
-  --color-cat-engineering-strong: var(--cat-engineering-strong);
   --color-cat-engineering-text: var(--cat-engineering-text);
   --color-cat-ai: var(--cat-ai);
-  --color-cat-ai-chart: var(--cat-ai-chart);
-  --color-cat-ai-strong: var(--cat-ai-strong);
   --color-cat-ai-text: var(--cat-ai-text);
   --color-cat-customer: var(--cat-customer);
-  --color-cat-customer-chart: var(--cat-customer-chart);
-  --color-cat-customer-strong: var(--cat-customer-strong);
   --color-cat-customer-text: var(--cat-customer-text);
   --color-cat-other: var(--cat-other);
-  --color-cat-other-chart: var(--cat-other-chart);
-  --color-cat-other-strong: var(--cat-other-strong);
   --color-cat-other-text: var(--cat-other-text);
 
   --font-sans: var(--font-sans);

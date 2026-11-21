@@ -7,7 +7,7 @@ import {
   RankingChart,
 } from "@/components/insight-charts";
 import { Band } from "@/components/blueprint";
-import { CategoryDot, CategoryLegend } from "@/components/category";
+import { CategoryDot } from "@/components/category";
 import { TabContent, tabClassName } from "@/components/filter-controls";
 import { TabRow } from "@/components/tab-row";
 import {
@@ -28,9 +28,7 @@ import {
 } from "@/components/ui/card";
 import {
   CATEGORY_META,
-  categoryChartColor,
-  categoryStrongColor,
-  categoryVars,
+  categoryColor,
   REACH_DEFINITION,
 } from "@/lib/categories";
 import { CATEGORY_LABEL, type Category } from "@/lib/types";
@@ -73,9 +71,9 @@ export default async function InsightsPage({
   const i = insightFor(scope, 10);
   const comparison = categoryComparison(jobs);
   const early = !!category && isEarlySignal(scope.length);
-  // "All directions": bars stacked by direction (vivid category colours). One direction: its own colour.
-  const color = category ? categoryChartColor(category) : undefined;
-  const stacked = !category;
+  // "All directions": one brand-emerald bar each, split by direction in the tooltip. One direction: its own colour.
+  const color = category ? categoryColor(category) : undefined;
+  const byDirection = !category;
   const filterHref = (extra: string) =>
     `/?${category ? `category=${category}&` : ""}${extra}`.replace(/[?&]$/, "");
   const pct = (n: number) =>
@@ -228,14 +226,11 @@ export default async function InsightsPage({
           </Card>
         ) : (
           <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
-            {stacked && (
-              <div className="grid gap-2 lg:col-span-2 xl:col-span-3 4xl:col-span-4">
-                <p className="text-sm text-muted-foreground">
-                  Bars are split by each posting&rsquo;s main direction. Hover
-                  or tap a bar for the breakdown.
-                </p>
-                <CategoryLegend />
-              </div>
+            {byDirection && (
+              <p className="text-sm text-muted-foreground lg:col-span-2 xl:col-span-3 4xl:col-span-4">
+                Every direction together. Hover or tap a bar to see how it
+                splits by direction.
+              </p>
             )}
             <Card>
               <CardHeader>
@@ -248,7 +243,7 @@ export default async function InsightsPage({
                 <RankingChart
                   data={i.skills}
                   color={color}
-                  stacked={stacked}
+                  byDirection={byDirection}
                   caption="Most requested skills, share of postings"
                 />
               </CardContent>
@@ -264,7 +259,7 @@ export default async function InsightsPage({
                 <RankingChart
                   data={i.tools}
                   color={color}
-                  stacked={stacked}
+                  byDirection={byDirection}
                   caption="Most requested tools, share of postings"
                 />
               </CardContent>
@@ -281,7 +276,7 @@ export default async function InsightsPage({
                 <DistributionChart
                   data={i.seniority}
                   color={color}
-                  stacked={stacked}
+                  byDirection={byDirection}
                   label="Postings"
                   caption="Postings per seniority level"
                 />
@@ -301,7 +296,7 @@ export default async function InsightsPage({
                 <DistributionChart
                   data={i.years}
                   color={color}
-                  stacked={stacked}
+                  byDirection={byDirection}
                   label="Postings"
                   caption="Postings by minimum years of experience asked"
                 />
@@ -336,20 +331,19 @@ export default async function InsightsPage({
                 label: CATEGORY_META[c.category].short,
                 reach: c.withinReach,
                 rest: c.postings - c.withinReach,
-                color: categoryChartColor(c.category),
+                color: categoryColor(c.category),
                 href: `/insights?category=${c.category}`,
               }))}
             />
           </CardContent>
         </Card>
-        {/* Per-direction blocks: a hairline grid, each block topped with its direction's colour.
+        {/* Per-direction blocks: a hairline grid; colour sits in each block's dot.
             Subgrid rows (name, blurb, numbers, requirements) keep blocks in the same row aligned. */}
         <ul className="grid gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3">
           {comparison.map((c) => (
             <li
               key={c.category}
-              style={categoryVars(c.category)}
-              className="row-span-4 grid grid-rows-subgrid border-t-4 border-(--cat)"
+              className="row-span-4 grid grid-rows-subgrid border-t border-hairline-strong"
             >
               <Link
                 href={`/insights?category=${c.category}`}
