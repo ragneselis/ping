@@ -7,7 +7,8 @@ import { FRAME_COLUMN } from "@/components/blueprint";
 import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
 import { LogoMark } from "@/components/logo";
 import { openSubscribe, SubscribeDialog } from "@/components/subscribe-dialog";
-import { HEADER_ICON_BUTTON, SoundToggle } from "@/components/sound";
+import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
+import { SoundToggle } from "@/components/sound";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeMenu } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -57,10 +58,10 @@ function ChannelButton({ name, icon: Icon }: (typeof SOON_CHANNELS)[number]) {
       <TooltipTrigger
         render={
           // The modal plays its own open sound, so no click on top.
-          <button type="button" aria-label={`${name}: coming soon`} data-sound="none" onClick={() => openSubscribe("channels")} className={HEADER_ICON_BUTTON} />
+          <button type="button" aria-label={`${name}: coming soon`} data-sound="none" onClick={() => openSubscribe("channels")} className={ICON_BUTTON} />
         }
       >
-        <Icon className="size-4 sm:size-3.5" />
+        <Icon className={ICON_SIZE.glyph} />
       </TooltipTrigger>
       <TooltipContent>{name}: coming soon</TooltipContent>
     </Tooltip>

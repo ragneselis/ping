@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
 import { openSubscribe } from "@/components/subscribe-dialog";
-import { HEADER_ICON_BUTTON } from "@/components/sound";
+import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { sound } from "@/lib/sound";
 
@@ -68,11 +68,11 @@ export function ThemeMenu() {
             <Menu.Trigger
               aria-label={`Colour theme: ${choice === null ? "Light" : current.label}`}
               data-sound="none"
-              className={HEADER_ICON_BUTTON}
+              className={ICON_BUTTON}
             />
           }
         >
-          <Current aria-hidden className="size-5 sm:size-4" strokeWidth={1.75} />
+          <Current aria-hidden className={ICON_SIZE.lucide} strokeWidth={1.75} />
         </TooltipTrigger>
         <TooltipContent>Colour theme</TooltipContent>
       </Tooltip>

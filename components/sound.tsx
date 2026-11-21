@@ -1,6 +1,7 @@
 "use client";
 
 import { Volume2, VolumeX } from "lucide-react";
+import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { useEffect, useSyncExternalStore } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { isSoundOn, setSoundOn, sound, subscribeSound } from "@/lib/sound";
@@ -139,17 +140,13 @@ export function SoundToggle({ className }: { className?: string }) {
               // Turning sound on confirms itself with one ping; turning it off stays silent.
               if (!on) sound.click("sound");
             }}
-            className={cn(HEADER_ICON_BUTTON, className)}
+            className={cn(ICON_BUTTON, className)}
           />
         }
       >
-        <Icon aria-hidden className="size-5 sm:size-4" strokeWidth={1.75} />
+        <Icon aria-hidden className={ICON_SIZE.lucide} strokeWidth={1.75} />
       </TooltipTrigger>
       <TooltipContent>{on ? "Sound on" : "Sound off"}</TooltipContent>
     </Tooltip>
   );
 }
-
-/** The header's square icon buttons (sound, theme): hairline border, 44px on phones, 32px from sm. */
-export const HEADER_ICON_BUTTON =
-  "flex size-11 shrink-0 items-center justify-center border border-hairline-strong text-foreground transition-colors hover:border-brand-lg hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-expanded:border-brand-lg aria-expanded:bg-brand-tint sm:size-8";
