@@ -1,0 +1,47 @@
+name: Checks
+
+# Every push to main and every pull request: build, then the alignment guard (tests/alignment.spec.ts).
+# It fails when an icon next to text is more than 0.75px off its first line's cap height, or when words
+# in a baseline-row are more than 0.6px apart, on Jobs, Discover, Market insights and /stats at 1440px
+# and 375px, light and dark (docs/DEVELOPMENT.md, Alignment).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      # /stats is behind a password: this run makes a throwaway one for its own server. The page reads the
+      # production database (read only); the check's browser identifies as headless, so no visit is counted.
+      - name: Alignment check
+        run: |
+          export STATS_PASSWORD="$(openssl rand -hex 16)"
+          npm run check:align
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

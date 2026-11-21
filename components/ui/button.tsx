@@ -5,12 +5,13 @@ import { cn } from "cn"
 
 /*
  * Baseline: the label is what a button offers to a baseline-row (globals.css), even when an icon comes
- * first. The items align on the baseline, icons sit centred (self-center) so they never lend the button
- * their bottom edge as a baseline, and the single line is centred in the button's height (flex-wrap plus
- * content-center; buttons are shrink-0 and nowrap, so nothing actually wraps).
+ * first. The label aligns on the baseline; icons are icon slots (the icon rule in globals.css), centred
+ * on the label's capitals and never lending the button their bottom edge as a baseline. The single line
+ * is centred in the button's height (flex-wrap plus content-center; buttons are shrink-0 and nowrap, so
+ * nothing actually wraps).
  */
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 flex-wrap content-center items-baseline justify-center [&>svg]:self-center rounded-lg border border-transparent bg-clip-padding font-mono text-[12px] font-medium tracking-[0.12em] whitespace-nowrap uppercase transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 flex-wrap content-center items-baseline justify-center [&>svg]:icon-slot rounded-lg border border-transparent bg-clip-padding font-mono text-[12px] font-medium tracking-[0.12em] whitespace-nowrap uppercase transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {

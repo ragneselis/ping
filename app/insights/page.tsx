@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -30,6 +29,7 @@ import {
   REACH_DEFINITION,
 } from "@/lib/categories";
 import { CATEGORY_LABEL, type Category } from "@/lib/types";
+import { IconText } from "@/components/icon-text";
 import {
   categoryComparison,
   formatUpdated,
@@ -132,17 +132,14 @@ export default async function InsightsPage({
         <div className="grid gap-3">
           <div className="baseline-row flex-wrap justify-between gap-3">
             <div className="baseline-row flex-wrap gap-3">
-              <h2
+              <IconText
+                as="h2"
                 id="asks-heading"
-                className="scroll-mt-24 baseline-row gap-3"
+                className="scroll-mt-24 gap-3"
+                icon={category && <CategoryDot category={category} className="size-3" />}
               >
-                {category && (
-                  <span aria-hidden className="cap-icon flex shrink-0" style={{ "--icon-size": "12px" } as CSSProperties}>
-                    <CategoryDot category={category} className="size-3" />
-                  </span>
-                )}
                 {category ? CATEGORY_LABEL[category] : "All directions"}
-              </h2>
+              </IconText>
               {early && <EarlySignalBadge />}
             </div>
             {category && (

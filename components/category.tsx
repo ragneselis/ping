@@ -1,6 +1,7 @@
 import { CATEGORY_META, categoryVars } from "@/lib/categories";
 import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { IconText } from "@/components/icon-text";
 
 /*
  * Shared category styles. Every category colour on the site comes through here:
@@ -18,15 +19,11 @@ export function CategoryDot({ category, className }: { category: Category; class
   return <span aria-hidden style={categoryVars(category)} className={cn("inline-block size-2 shrink-0 rounded-full", categoryClass.dot, className)} />;
 }
 
-/** Dot plus the direction's short name in its text colour, as on a job row. */
+/** Dot plus the direction's short name in its text colour, as on a job row (IconText: the dot on the capitals). */
 export function CategoryLabel({ category, className }: { category: Category; className?: string }) {
   return (
-    // On the text baseline beside other text (the baseline rule, globals.css); the dot centred on the capitals.
-    <span style={categoryVars(category)} className={cn("inline-flex items-baseline gap-2 text-sm font-medium", categoryClass.text, className)}>
-      <span aria-hidden className="cap-icon flex shrink-0 [--icon-size:8px]">
-        <CategoryDot category={category} />
-      </span>
+    <IconText inline style={categoryVars(category)} className={cn("text-sm font-medium", categoryClass.text, className)} icon={<CategoryDot category={category} />}>
       {CATEGORY_META[category].short}
-    </span>
+    </IconText>
   );
 }

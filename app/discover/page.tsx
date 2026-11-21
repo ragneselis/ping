@@ -89,7 +89,6 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
               <div className={cn("hidden border-b border-border-strong lg:block", ROW_BLEED)}>
                 <div className={cn(COMPANY_GRID, "grid items-baseline py-2.5")}>
                   <DataLabel>Company</DataLabel>
-                  <DataLabel>Directions</DataLabel>
                   <DataLabel>Design roles</DataLabel>
                   <span />
                 </div>

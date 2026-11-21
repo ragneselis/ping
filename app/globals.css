@@ -310,14 +310,6 @@
   h1,
   h2 {
     font-stretch: 87.5%;
-    /* Martian Mono's capitals are 0.8em tall: cap-icon centres icons on them (see cap-icon). */
-    --cap-half: 0.4em;
-  }
-  /* Geist text inside a heading goes back to Geist's cap height. */
-  .font-sans,
-  .font-mono,
-  .label-mono {
-    --cap-half: 0.355em;
   }
   h1,
   h2 {
@@ -410,12 +402,46 @@
   align-items: baseline;
 }
 
-/* The small mono label: 11px, wide tracking, uppercase. Beside other text it sits in a baseline-row. */
-/* An icon beside text (components/icon-label.tsx): with the row aligned on the baseline, move the icon
-   down so its centre sits halfway up the capitals. --cap-half is half the cap height of the text's font:
-   0.355em for Geist and Geist Mono (the default), 0.4em for Martian Mono (set on headings below). */
-@utility cap-icon {
-  translate: 0 calc(var(--icon-size) / 2 - var(--cap-half, 0.355em));
+/* ---------------------------------------------------------------------------
+   Icon next to text: the one rule (components/icon-text.tsx, <IconText>).
+   An icon, dot or small glyph beside text is centred on the cap height of the text's FIRST line,
+   whether the text is one line or wraps, at every size in the type scale, in every font.
+
+   How: the icon's bottom edge is put on the text's baseline by the browser itself (baseline
+   alignment: a box without text offers its bottom edge as its baseline, and a wrapping text offers its
+   first line's), then moved by translate: calc(50% - 0.5cap), that is down by half its own height and
+   up by half the text's cap height. Its centre lands exactly halfway up the capitals.
+   Why not a formula from line height and font metrics: browsers snap the text baseline to whole
+   pixels depending on line height and font, so such a formula drifts by up to 0.8px (measured on
+   Martian Mono at 18px); the baseline the browser renders is exact. 1cap comes from the text's own
+   font (Geist 0.71em, Martian Mono 0.8em), 50% from the icon's own height: no pixel numbers, no sizes.
+
+   icon-text         the row (flex), aligned on the baseline. It offers the text's baseline to a
+                     baseline-row around it, so it lines up like plain text.
+   icon-text-inline  the same, inline-flex, inside running text.
+   icon-slot         the icon (or a wrapper of icons, or a button's or badge's svg).
+   icon-hang         an icon in the text flow before the text, hanging into the gap (the fresh tile
+                     before a job title); the caller sets the margins that keep the text in place.
+   The icon takes the font size from the row: set the text style on the row.
+   Text next to text (a count beside a label) is the baseline-row rule above, unchanged.
+   --------------------------------------------------------------------------- */
+@utility icon-text {
+  display: flex;
+  align-items: baseline;
+}
+@utility icon-text-inline {
+  display: inline-flex;
+  align-items: baseline;
+}
+@utility icon-slot {
+  flex: none;
+  align-self: baseline;
+  translate: 0 calc(50% - 0.5cap);
+}
+@utility icon-hang {
+  display: inline-block;
+  vertical-align: baseline;
+  translate: 0 calc(50% - 0.5cap);
 }
 
 @utility label-mono {

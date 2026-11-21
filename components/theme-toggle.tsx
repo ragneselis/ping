@@ -9,6 +9,7 @@ import { openSubscribe } from "@/components/subscribe-dialog";
 import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { OWN_CLICK_SOUND, sound } from "@/lib/sound";
+import { IconText } from "@/components/icon-text";
 
 const OPTIONS = [
   { value: "light", label: "Light", icon: Sun },
@@ -95,13 +96,20 @@ export function ThemeMenu() {
                   value={o.value}
                   closeOnClick
                   {...OWN_CLICK_SOUND}
-                  className="flex min-h-11 items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint sm:min-h-9"
+                  className="flex min-h-11 items-center px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint sm:min-h-9"
                 >
-                  <o.icon aria-hidden className="size-4" strokeWidth={1.75} />
-                  <span className="flex-1">{o.label}</span>
-                  <Menu.RadioItemIndicator>
-                    <Check aria-hidden className="size-4 text-brand-sm" strokeWidth={2} />
-                  </Menu.RadioItemIndicator>
+                  <IconText
+                    className="flex-1 gap-3"
+                    textClassName="flex-1"
+                    icon={<o.icon className="size-4" strokeWidth={1.75} />}
+                    iconEnd={
+                      <Menu.RadioItemIndicator>
+                        <Check className="size-4 text-brand-sm" strokeWidth={2} />
+                      </Menu.RadioItemIndicator>
+                    }
+                  >
+                    {o.label}
+                  </IconText>
                 </Menu.RadioItem>
               ))}
             </Menu.RadioGroup>
@@ -116,11 +124,12 @@ export function ThemeMenu() {
                       label={c.name}
                       {...OWN_CLICK_SOUND}
                       onClick={() => openSubscribe("channels")}
-                      className="flex min-h-11 items-center gap-3 px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint"
+                      className="flex min-h-11 items-center px-3 font-medium outline-none select-none data-highlighted:bg-brand-tint"
                     >
-                      <c.icon className="size-4" />
-                      <span className="flex-1">{c.name}</span>
-                      <span className="sr-only">: coming soon</span>
+                      <IconText className="flex-1 gap-3" icon={<c.icon className="size-4" />}>
+                        {c.name}
+                        <span className="sr-only">: coming soon</span>
+                      </IconText>
                     </Menu.Item>
                   ))}
                 </Menu.Group>

@@ -2,7 +2,7 @@ import { SIGNAL_ICON } from "@/components/signal";
 import { CountUp } from "@/components/count-up";
 import { DispersingRules } from "@/components/rules";
 import { FreshTile } from "@/components/tiles";
-import { IconLabel } from "@/components/icon-label";
+import { IconText } from "@/components/icon-text";
 import { FilterLink } from "@/components/filter-link";
 import { cn } from "@/lib/utils";
 
@@ -59,9 +59,8 @@ export function Readout({
             const body = (
               <>
                 {it.mark ? (
-                  <IconLabel
+                  <IconText
                     className="label-mono order-2 leading-snug text-muted-foreground"
-                    iconSize={it.mark === "new" ? 8 : 14}
                     icon={
                       it.mark === "new" ? (
                         <FreshTile />
@@ -71,7 +70,7 @@ export function Readout({
                     }
                   >
                     <span data-label>{it.label}</span>
-                  </IconLabel>
+                  </IconText>
                 ) : (
                   <span className="label-mono order-2 leading-snug text-muted-foreground">
                     <span data-label>{it.label}</span>

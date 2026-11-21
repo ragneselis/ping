@@ -13,6 +13,7 @@ import { isStatsAuthorized } from "@/lib/server/stats-auth";
 import { describePrefs } from "@/lib/server/templates";
 import { EMPTY_PREFS } from "@/lib/subscription";
 import { LogoutButton } from "./logout-button";
+import { IconText } from "@/components/icon-text";
 
 export const dynamic = "force-dynamic";
 
@@ -74,10 +75,9 @@ export default async function StatsPage() {
         </div>
         {warnings.length > 0 ? (
           <div role="alert" className="grid gap-1 border border-destructive/40 bg-destructive/10 p-4 text-sm">
-            <p className="flex items-center gap-2 font-semibold text-destructive">
-              <AlertTriangle aria-hidden className="size-4 shrink-0" strokeWidth={2} />
+            <IconText as="p" className="font-semibold text-destructive" icon={<AlertTriangle className="size-4" strokeWidth={2} />}>
               Needs a look
-            </p>
+            </IconText>
             <ul className="grid gap-1 pl-6">
               {warnings.map((w) => (
                 <li key={w}>{w}</li>
@@ -85,10 +85,9 @@ export default async function StatsPage() {
             </ul>
           </div>
         ) : (
-          <p className="flex items-center gap-2 text-sm text-brand-sm">
-            <CheckCircle2 aria-hidden className="size-4 shrink-0" strokeWidth={1.75} />
+          <IconText as="p" className="text-sm text-brand-sm" icon={<CheckCircle2 className="size-4" strokeWidth={1.75} />}>
             Pipeline healthy: last refresh {when(p.lastRun)}.
-          </p>
+          </IconText>
         )}
       </Band>
 

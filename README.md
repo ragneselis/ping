@@ -23,6 +23,7 @@ npm install
 npm run dev        # the site, at http://localhost:3000, using the data in data/
 npm run fetch      # refresh postings from every source
 npm run extract    # classify new postings (needs ANTHROPIC_API_KEY)
+npm run check:align  # icon and baseline alignment check (Playwright, uses your Chrome)
 ```
 
 Put environment variables in `.env.local` (git-ignored). Never commit them.

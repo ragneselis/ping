@@ -1,5 +1,5 @@
 import { GraduationCap, Globe2 } from "lucide-react";
-import { IconLabel } from "@/components/icon-label";
+import { IconText } from "@/components/icon-text";
 import { cn } from "@/lib/utils";
 
 /*
@@ -13,13 +13,12 @@ export const SIGNAL_LABEL = { estonia: "Open to Estonia", reach: "Within reach" 
 export function SignalTag({ kind, label, className }: { kind: "estonia" | "reach"; label?: string; className?: string }) {
   const Icon = SIGNAL_ICON[kind];
   return (
-    <IconLabel
-      iconSize={14}
+    <IconText
       icon={<Icon className="size-3.5" strokeWidth={1.75} />}
       className={cn("gap-1.5 font-medium whitespace-nowrap text-brand-sm", className)}
     >
       {label ?? SIGNAL_LABEL[kind]}
-    </IconLabel>
+    </IconText>
   );
 }
 

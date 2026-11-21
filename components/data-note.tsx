@@ -1,6 +1,7 @@
 import { CalendarClock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { freshness } from "@/lib/format";
+import { IconText } from "@/components/icon-text";
 
 /**
  * The hero's data note, the same sentence on every page: how many postings the numbers come
@@ -10,11 +11,9 @@ import { freshness } from "@/lib/format";
  */
 export function DataNote({ postings, lastRun, nextRun, className }: { postings: number; lastRun: string | null; nextRun: string | null; className?: string }) {
   return (
-    <p className={cn("flex max-w-prose items-start gap-2 text-sm text-pretty text-muted-foreground", className)}>
-      <CalendarClock aria-hidden className="mt-0.5 size-3.5 shrink-0" strokeWidth={1.75} />
-      <span>
-        Based on {postings.toLocaleString("en-GB")} current postings. {freshness(lastRun, nextRun)}
-      </span>
-    </p>
+    // The icon sits on the first line's capitals even when the sentence wraps (IconText).
+    <IconText as="p" className={cn("max-w-prose gap-2 text-sm text-pretty text-muted-foreground", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
+      Based on {postings.toLocaleString("en-GB")} current postings. {freshness(lastRun, nextRun)}
+    </IconText>
   );
 }

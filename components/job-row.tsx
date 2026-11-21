@@ -7,6 +7,7 @@ import { FreshTile } from "@/components/tiles";
 import { CATEGORY_META, REMOTE_LABEL } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 import type { JobCard as Job } from "@/lib/view";
+import { IconText } from "@/components/icon-text";
 
 /** Columns of the jobs table from lg up: direction, role, location, level, signals, posted, arrow. Shared by the header row. */
 export const JOB_GRID =
@@ -82,9 +83,9 @@ export function JobRow({
         </div>
 
         <div className="grid min-w-0 gap-0.5 pr-8 lg:pr-0">
-          <h3 className="relative leading-snug font-semibold text-pretty">
+          <h3 className="leading-snug font-semibold text-pretty">
             {/* Hangs in the gap before the title, so titles stay aligned down the column. */}
-            {isNew && <FreshTile className="absolute top-[0.5em] -left-3.5" />}
+            {isNew && <FreshTile className="icon-hang -ml-3.5 mr-1.5" />}
             <a
               data-main
               data-job-id={job.id}
@@ -149,13 +150,14 @@ export function JobRow({
 function SimilarJobs({ job, similar }: { job: Job; similar: Job[] }) {
   return (
     <details data-expander="" className="group/similar relative z-10 mt-2 w-fit max-lg:order-last">
-      <summary {...OWN_CLICK_SOUND} className="flex min-h-11 w-fit list-none items-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden">
-        <ChevronDown
-          aria-hidden
-          className="size-4 transition-transform group-open/similar:rotate-180"
-        />
+      <IconText
+        as="summary"
+        {...OWN_CLICK_SOUND}
+        className="min-h-11 w-fit list-none flex-wrap content-center gap-1.5 text-sm font-medium text-brand-sm select-none hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-0 [&::-webkit-details-marker]:hidden"
+        icon={<ChevronDown className="size-4 transition-transform group-open/similar:rotate-180" />}
+      >
         +{similar.length} similar from {job.company}
-      </summary>
+      </IconText>
       <ul className="mt-2 grid gap-2 border-l border-border pl-3">
         {similar.map((s) => (
           <li key={s.id} className="text-sm">

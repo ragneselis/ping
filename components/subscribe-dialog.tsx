@@ -14,6 +14,7 @@ import { OWN_CLICK_SOUND, sound } from "@/lib/sound";
 import { DIGEST_CAP, EMPTY_PREFS, type Frequency, isEmail, type Prefs, prefsFromQuery } from "@/lib/subscription";
 import { CATEGORIES, type Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { IconText } from "@/components/icon-text";
 
 /*
  * "Get new jobs": the email subscription modal.
@@ -67,8 +68,14 @@ function DirectionCheckbox({ category, checked, onChange }: { category: Category
   return (
     <label
       data-sound="click"
-      className="group flex min-h-11 cursor-pointer items-center gap-3 border-b border-hairline text-sm select-none sm:min-h-9"
+      className="group flex min-h-11 cursor-pointer items-center border-b border-hairline text-sm select-none sm:min-h-9"
     >
+      {/* The box is a glyph next to the text: IconText centres it on the label's capitals. Its slot holds a
+          real checkbox, so it stays visible to assistive tech. */}
+      <IconText
+        className="gap-3"
+        iconsHidden={false}
+        icon={
       <span className="relative flex size-4 shrink-0">
         <input
           type="checkbox"
@@ -78,14 +85,16 @@ function DirectionCheckbox({ category, checked, onChange }: { category: Category
         />
         <Check aria-hidden strokeWidth={3} className="pointer-events-none absolute inset-0.5 size-3 text-primary-foreground opacity-0 peer-checked:opacity-100" />
       </span>
-      {category === "all" ? (
-        <span className="font-medium">All directions</span>
-      ) : (
-        <span className="flex items-center gap-2">
-          <CategoryDot category={category} />
-          {CATEGORY_META[category].short}
-        </span>
-      )}
+        }
+      >
+        {category === "all" ? (
+          <span className="font-medium">All directions</span>
+        ) : (
+          <IconText inline icon={<CategoryDot category={category} />}>
+            {CATEGORY_META[category].short}
+          </IconText>
+        )}
+      </IconText>
     </label>
   );
 }
@@ -126,8 +135,14 @@ function ChannelPicker({ emailRef }: { emailRef?: Ref<HTMLInputElement> }) {
               aria-describedby={c.soon ? `${id}-${c.value}-soon` : undefined}
               className="sr-only"
             />
-            <c.icon aria-hidden className={c.soon ? "size-3.5" : "size-4"} strokeWidth={1.75} />
-            <span>{c.label}</span>
+            <IconText
+              className="flex-1 gap-2.5"
+              textClassName="flex-1"
+              icon={<c.icon className={c.soon ? "size-3.5" : "size-4"} strokeWidth={1.75} />}
+              iconEnd={!c.soon && <Check strokeWidth={2.25} className="size-4 text-brand-sm" />}
+            >
+              {c.label}
+            </IconText>
             {c.soon ? (
               // Sits on the card's top edge, so the card keeps one line at every width.
               <span
@@ -136,9 +151,7 @@ function ChannelPicker({ emailRef }: { emailRef?: Ref<HTMLInputElement> }) {
               >
                 Coming soon
               </span>
-            ) : (
-              <Check aria-hidden strokeWidth={2.25} className="ml-auto size-4 text-brand-sm" />
-            )}
+            ) : null}
           </label>
         ))}
       </div>

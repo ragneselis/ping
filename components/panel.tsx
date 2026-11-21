@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { IconText } from "@/components/icon-text";
 
 /*
  * Ping's one panel. Every card-like block on the site uses it: the chart panels and the
@@ -20,7 +21,6 @@ export function Panel({
   title,
   titleAs: Title = "h3",
   lead,
-  leadSize = 10,
   count,
   description,
   footer,
@@ -36,8 +36,6 @@ export function Panel({
   titleAs?: "h2" | "h3" | "p";
   /** A small mark before the title, e.g. a category dot. */
   lead?: ReactNode;
-  /** The lead's rendered size in px, so it can sit on the title's capitals (size-2.5 = 10). */
-  leadSize?: number;
   /** A figure set at the far end of the header. */
   count?: ReactNode;
   description?: ReactNode;
@@ -58,26 +56,21 @@ export function Panel({
   const header =
     title || count !== undefined ? (
       <div className="baseline-row justify-between gap-4">
-        <Title
+        <IconText
+          as={Title}
           className={cn(
-            /* On the text baseline, so the count at the far end sits on the title's line; the dot
-               and the arrow are centred on the capitals by `cap-icon` (the icon rule). */
-            "baseline-row min-w-0 gap-2 font-heading text-title font-semibold tracking-tight",
+            /* On the text baseline, so the count at the far end sits on the title's line; the lead dot
+               and the arrow are centred on the title's capitals (IconText, the icon rule). */
+            "min-w-0 gap-2 font-heading text-title font-semibold tracking-tight",
             linked && "underline-offset-4 decoration-1 group-hover/panel:underline group-focus-visible/panel:underline",
           )}
+          icon={lead}
+          iconEnd={
+            linked && <ArrowUpRight className="size-4 opacity-0 transition-opacity group-hover/panel:opacity-100 group-focus-visible/panel:opacity-100" />
+          }
         >
-          {lead && (
-            <span aria-hidden className="cap-icon flex shrink-0" style={{ "--icon-size": `${leadSize}px` } as CSSProperties}>
-              {lead}
-            </span>
-          )}
-          <span className="min-w-0">{title}</span>
-          {linked && (
-            <span aria-hidden className="cap-icon flex shrink-0" style={{ "--icon-size": "16px" } as CSSProperties}>
-              <ArrowUpRight className="size-4 opacity-0 transition-opacity group-hover/panel:opacity-100 group-focus-visible/panel:opacity-100" />
-            </span>
-          )}
-        </Title>
+          {title}
+        </IconText>
         {count !== undefined && <span className="shrink-0 font-mono text-2xl leading-none tabular-nums">{count}</span>}
       </div>
     ) : null;
