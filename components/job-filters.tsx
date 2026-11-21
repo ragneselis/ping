@@ -1,29 +1,30 @@
 "use client";
 
-import { X } from "lucide-react";
-import { ChipContent, chipClassName, toggleClassName } from "@/components/category";
+import { ArrowDown, X } from "lucide-react";
 import { ChipScroller } from "@/components/chip-scroller";
+import { DataLabel, Segmented, TAB_LIST, TabContent, tabClassName } from "@/components/filter-controls";
+import { JOB_GRID, ROW_BLEED } from "@/components/job-row";
 import { useQueryState } from "@/components/use-query-state";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { categoryVars } from "@/lib/categories";
 import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
+/** Level options, in order. Several can be selected; none selected means all levels. */
+const LEVEL_ITEMS = [
+  { value: "reach", label: "Within reach" },
+  { value: "mid", label: "Mid" },
+  { value: "senior", label: "Senior" },
+  { value: "any", label: "Any" },
+];
+const ESTONIA_ITEMS = [
+  { value: "any", label: "Anywhere" },
+  { value: "1", label: "Open to Estonia" },
+];
 const REMOTE_ITEMS = [
-  { value: "any", label: "Any work setup" },
+  { value: "any", label: "Any" },
   { value: "remote", label: "Remote" },
   { value: "hybrid", label: "Hybrid" },
   { value: "onsite", label: "On-site" },
-];
-
-/** Level options, in order. Several can be selected; none selected means all levels. */
-const LEVEL_ITEMS = [
-  { value: "reach", label: "Within reach (0 to 2 yrs)" },
-  { value: "mid", label: "Mid-level" },
-  { value: "senior", label: "Senior and above" },
 ];
 
 const readLevels = (params: URLSearchParams) => {
@@ -38,10 +39,12 @@ export function JobFilters({ categories, total }: { categories: { value: Categor
 
   const category = params.get("category") ?? "";
   const remote = params.get("remote") ?? "any";
+  const estonia = params.get("estonia") === "1" ? "1" : "any";
   const levels = readLevels(params);
   const active = !!(category || params.get("estonia") || levels.size || params.get("remote") || params.get("sort"));
 
-  const toggleLevel = (value: string) => {
+  const selectLevel = (value: string) => {
+    if (value === "any") return update({ level: null, reach: null, sort: null });
     const next = new Set(levels);
     if (next.has(value)) next.delete(value);
     else next.add(value);
@@ -51,117 +54,73 @@ export function JobFilters({ categories, total }: { categories: { value: Categor
   };
 
   return (
-    <div className={cn("grid gap-4 transition-opacity", pending && "opacity-60")} aria-busy={pending}>
+    <div className={cn("grid gap-5 transition-opacity", pending && "opacity-60")} aria-busy={pending}>
       <ChipScroller activeKey={category}>
-        <div className="flex w-max gap-2 md:w-auto md:flex-wrap" role="group" aria-label="Category">
-          <CategoryChip label="All directions" count={total} active={!category} onClick={() => set("category", null)} />
+        <div className={TAB_LIST} role="group" aria-label="Direction">
+          <button type="button" aria-pressed={!category} className={tabClassName(!category)} onClick={() => set("category", null)}>
+            <TabContent label="All directions" count={total} />
+          </button>
           {categories.map((c) => (
-            <CategoryChip
-              key={c.value}
-              category={c.value}
-              label={c.label}
-              count={c.count}
-              active={category === c.value}
-              onClick={() => set("category", c.value)}
-            />
+            <button key={c.value} type="button" aria-pressed={category === c.value} className={tabClassName(category === c.value)} onClick={() => set("category", c.value)}>
+              <TabContent label={c.label} count={c.count} category={c.value} />
+            </button>
           ))}
         </div>
       </ChipScroller>
-      <div className="cut-corner grid gap-3 rounded-lg border border-border bg-card px-3 py-3 [--cut-line:var(--border)]">
-        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Level">
-          <span className="mr-1 text-sm font-medium text-muted-foreground">Level</span>
-          {LEVEL_ITEMS.map((l) => (
-            <button
-              key={l.value}
-              type="button"
-              aria-pressed={levels.has(l.value)}
-              className={toggleClassName(levels.has(l.value))}
-              onClick={() => toggleLevel(l.value)}
-            >
-              {l.label}
-            </button>
-          ))}
-          <button
-            type="button"
-            aria-pressed={levels.size === 0}
-            className={toggleClassName(levels.size === 0)}
-            onClick={() => update({ level: null, reach: null, sort: null })}
-          >
-            Any level
-          </button>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
-          {/* The label is padded to a 44px hit area; tapping the text toggles the switch. */}
-          <div className="flex items-center gap-2">
-            <Switch id="estonia" checked={params.get("estonia") === "1"} onCheckedChange={(v) => set("estonia", v ? "1" : null)} />
-            <Label htmlFor="estonia" className="min-h-11 pr-1">
-              Open to Estonia
-            </Label>
-          </div>
-          <Select items={REMOTE_ITEMS} value={remote} onValueChange={(v) => set("remote", v && v !== "any" ? String(v) : null)}>
-            <SelectTrigger className="min-h-11 min-w-40 sm:min-h-8" aria-label="Work setup">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {REMOTE_ITEMS.map((i) => (
-                <SelectItem key={i.value} value={i.value}>
-                  {i.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {active && (
-            <Button variant="ghost" size="sm" className="ml-auto min-h-11 sm:min-h-7" onClick={() => go("")}>
-              <X data-icon="inline-start" />
-              Clear filters
-            </Button>
-          )}
-        </div>
+      <div className="grid gap-4 sm:flex sm:flex-wrap sm:items-end sm:gap-x-8">
+        <Segmented label="Level" items={LEVEL_ITEMS} isActive={(v) => (v === "any" ? levels.size === 0 : levels.has(v))} onSelect={selectLevel} />
+        <Segmented label="Location" items={ESTONIA_ITEMS} isActive={(v) => v === estonia} onSelect={(v) => set("estonia", v === "1" ? "1" : null)} />
+        <Segmented label="Work setup" items={REMOTE_ITEMS} isActive={(v) => v === remote} onSelect={(v) => set("remote", v === "any" ? null : v)} />
+        {active && (
+          <Button variant="ghost" size="sm" className="min-h-11 sm:ml-auto sm:min-h-8" onClick={() => go("")}>
+            <X data-icon="inline-start" />
+            Clear filters
+          </Button>
+        )}
       </div>
     </div>
   );
 }
 
-const SORT_ITEMS = [
-  { value: "reach", label: "Within reach first" },
-  { value: "newest", label: "Newest first" },
-];
-
-/** Sort order, next to the result count. `value` is the effective sort (from the URL, or the default for the levels). */
-export function SortSelect({ value }: { value: "reach" | "newest" }) {
+/**
+ * The list's header row: small mono column labels. Level and Posted are the sort controls,
+ * as in a table: sorting by level puts roles within reach first, sorting by posted puts the newest first.
+ * On phones the columns collapse, so only the two sort controls remain.
+ */
+export function JobListHeader({ sort }: { sort: "reach" | "newest" }) {
   const { set, pending } = useQueryState();
-  return (
-    <Select items={SORT_ITEMS} value={value} onValueChange={(v) => set("sort", v ? String(v) : null)}>
-      <SelectTrigger className={cn("min-h-11 min-w-44 sm:min-h-8", pending && "opacity-60")} aria-label="Sort jobs">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {SORT_ITEMS.map((i) => (
-          <SelectItem key={i.value} value={i.value}>
-            {i.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
-
-function CategoryChip({
-  label,
-  count,
-  active,
-  onClick,
-  category,
-}: {
-  label: string;
-  count: number;
-  active: boolean;
-  onClick: () => void;
-  category?: Category;
-}) {
-  return (
-    <button type="button" onClick={onClick} aria-pressed={active} style={category ? categoryVars(category) : undefined} className={chipClassName(active, category)}>
-      <ChipContent label={label} count={count} active={active} category={category} />
+  const sortButton = (value: "reach" | "newest", label: string, hint: string, className?: string) => (
+    <button
+      type="button"
+      aria-pressed={sort === value}
+      aria-label={`Sort by ${hint}`}
+      onClick={() => set("sort", value)}
+      className={cn(
+        "-mx-1 flex min-h-11 items-center gap-1 px-1 font-mono text-[0.7rem] tracking-wider uppercase transition-colors focus-visible:outline-2 focus-visible:outline-ring lg:min-h-0",
+        sort === value ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+        className,
+      )}
+    >
+      {label}
+      <ArrowDown aria-hidden className={cn("size-3", sort !== value && "opacity-0")} />
     </button>
+  );
+  return (
+    <div className={cn("border-b border-foreground transition-opacity", ROW_BLEED, pending && "opacity-60")}>
+      <div className="flex items-center gap-4 lg:hidden">
+        <DataLabel>Sort</DataLabel>
+        {sortButton("reach", "Within reach first", "level, within reach first")}
+        {sortButton("newest", "Newest", "date posted, newest first")}
+      </div>
+      <div className={cn(JOB_GRID, "hidden py-2.5 lg:grid")}>
+        <DataLabel>Direction</DataLabel>
+        <DataLabel>Role</DataLabel>
+        <DataLabel>Location</DataLabel>
+        {sortButton("reach", "Level", "level, within reach first")}
+        <DataLabel>Signals</DataLabel>
+        {sortButton("newest", "Posted", "date posted, newest first")}
+        <span />
+      </div>
+    </div>
   );
 }

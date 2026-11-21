@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Horizontally scrolling chip row on narrow screens (wraps from md up). Keeps the active chip
+ * Horizontally scrolling tab row when the tabs do not fit. Keeps the active tab
  * (aria-pressed or aria-current) in view, so a selected filter is never hidden off-screen.
  */
 export function ChipScroller({ children, className, activeKey, ...rest }: { children: ReactNode; className?: string; activeKey?: string; "aria-label"?: string; as?: "div" | "nav" }) {
@@ -37,8 +37,8 @@ export function ChipScroller({ children, className, activeKey, ...rest }: { chil
       ref={ref}
       aria-label={rest["aria-label"]}
       className={cn(
-        "relative -mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0",
-        more && "mask-[linear-gradient(to_right,black_80%,transparent)] md:mask-none",
+        "relative -mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:px-0",
+        more && "mask-[linear-gradient(to_right,black_85%,transparent)]",
         className,
       )}
     >

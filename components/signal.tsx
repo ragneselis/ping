@@ -1,29 +1,40 @@
 import { GraduationCap, Globe2 } from "lucide-react";
-import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /*
  * Signals: the facts a graduate decides on (open to Estonia, within reach).
- * Quiet by design: a small mint icon followed by plain text, so a card has one loud thing
- * (its category tag) and the signal still reads at a glance. Both signals share this one style;
- * the icon uses --signal (mint in dark, a deeper green in light), the label stays --foreground.
+ * Quiet by design: a small Lucide icon and plain text, both in the foreground colour. No fill, no colour.
  */
+export const SIGNAL_ICON = { estonia: Globe2, reach: GraduationCap } as const;
+export const SIGNAL_LABEL = { estonia: "Open to Estonia", reach: "Within reach" } as const;
+
 export function SignalTag({ kind, className }: { kind: "estonia" | "reach"; className?: string }) {
-  const Icon = kind === "estonia" ? Globe2 : GraduationCap;
+  const Icon = SIGNAL_ICON[kind];
   return (
-    <span className={cn("flex items-center gap-1.5 font-normal text-foreground", className)}>
-      <Icon aria-hidden className="size-3.5 shrink-0 text-signal" />
-      {kind === "estonia" ? "Open to Estonia" : "Within reach"}
+    <span className={cn("flex items-center gap-1.5 whitespace-nowrap text-foreground", className)}>
+      <Icon aria-hidden className="size-3.5 shrink-0" strokeWidth={1.75} />
+      {SIGNAL_LABEL[kind]}
     </span>
   );
 }
 
-/** Seniority as a quiet mono readout, e.g. "JUNIOR" or "LEVEL NOT STATED". */
+/** Ping's signature: a pink dot. Pulses softly unless the reader prefers reduced motion. */
+export function PulseDot({ once = false, className }: { once?: boolean; className?: string }) {
+  return <span aria-hidden className={cn("pulse-dot", once ? "pulse-once" : "pulse-soft", className)} />;
+}
+
+/** Seniority as a quiet mono readout, e.g. "JUNIOR" or "NOT STATED". */
 export function LevelTag({ level, className }: { level: string; className?: string }) {
   return <span className={cn("font-mono text-xs tracking-wide text-muted-foreground uppercase", className)}>{level}</span>;
 }
 
-/** One extracted requirement (skill or tool). */
-export function RequirementChip({ children }: { children: ReactNode }) {
-  return <li className="rounded-sm bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground">{children}</li>;
+/** Requirements as plain muted text separated by commas. */
+export function RequirementList({ items, className }: { items: string[]; className?: string }) {
+  if (!items.length) return null;
+  return (
+    <p className={cn("text-sm text-muted-foreground", className)}>
+      <span className="sr-only">Asks for: </span>
+      {items.join(", ")}
+    </p>
+  );
 }

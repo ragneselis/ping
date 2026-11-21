@@ -16,11 +16,9 @@ const NAV = [
 
 export function Wordmark() {
   return (
-    <Link href="/" className="group flex items-center gap-2 font-heading text-xl font-bold tracking-tight" aria-label="Ping home">
-      <span className="relative flex size-3">
-        <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60 motion-reduce:animate-none" />
-        <span className="relative inline-flex size-3 rounded-full bg-primary" />
-      </span>
+    <Link href="/" className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight" aria-label="Ping home">
+      {/* Ping's signature: the pink dot breathes once on load. */}
+      <span aria-hidden className="pulse-dot pulse-once size-2.5" />
       Ping
     </Link>
   );
@@ -36,7 +34,7 @@ export function SubscribeButton({ compact = false }: { compact?: boolean }) {
           {!compact && (
             <>
               Get new jobs
-              <span className="rounded-sm bg-muted px-1 font-mono text-[0.7rem] text-muted-foreground uppercase">soon</span>
+              <span className="border-l pl-2 font-mono text-[0.7rem] text-muted-foreground uppercase">soon</span>
             </>
           )}
         </Button>
@@ -64,7 +62,7 @@ export function SiteHeader() {
               className={cn(
                 "relative flex h-11 items-center px-2.5 text-sm font-medium transition-colors hover:text-foreground sm:px-3",
                 active(n.href)
-                  ? "text-foreground after:absolute after:inset-x-2.5 after:bottom-2 after:h-0.5 after:rounded-full after:bg-primary sm:after:inset-x-3"
+                  ? "text-foreground after:absolute after:inset-x-2.5 after:bottom-2 after:h-px after:bg-foreground sm:after:inset-x-3"
                   : "text-muted-foreground",
               )}
             >

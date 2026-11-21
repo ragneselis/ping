@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Chakra_Petch, Fira_Code, Geist } from "next/font/google";
+import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { Band } from "@/components/blueprint";
 import { SiteHeader } from "@/components/site-header";
@@ -7,9 +7,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const chakra = Chakra_Petch({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-chakra-petch" });
-const fira = Fira_Code({ subsets: ["latin"], variable: "--font-fira-code" });
+const bricolage = Bricolage_Grotesque({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-bricolage" });
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
   title: { default: "Jobs | Ping", template: "%s | Ping" },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB" className={`${chakra.variable} ${fira.variable} ${geist.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <TooltipProvider>

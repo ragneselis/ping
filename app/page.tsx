@@ -3,14 +3,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
-import { JobCard } from "@/components/job-card";
-import { JobFilters, SortSelect } from "@/components/job-filters";
+import { JobFilters, JobListHeader } from "@/components/job-filters";
+import { JobRow } from "@/components/job-row";
 import { Readout, type ReadoutItem } from "@/components/readout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
 import { CATEGORIES } from "@/lib/types";
-import { applyFilters, getDataset, parseFilters } from "@/lib/view";
+import { applyFilters, getDataset, isNewPosting, parseFilters } from "@/lib/view";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: { absolute: "Jobs | Ping" } };
@@ -36,10 +35,13 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   const estonia = cards.filter((c) => c.openToEstonia).length;
   const reach = cards.filter((c) => c.withinReach).length;
   const both = cards.filter((c) => c.openToEstonia && c.withinReach).length;
+  const now = Date.now();
+  const fresh = cards.filter((c) => isNewPosting(c.postedAt, now)).length;
   const readout: ReadoutItem[] = [
-    { value: cards.length.toLocaleString("en-GB"), label: "design jobs live", href: "/" },
-    { value: estonia.toLocaleString("en-GB"), label: "open to Estonia", href: "/?estonia=1", signal: true },
-    { value: reach.toLocaleString("en-GB"), label: "within reach", href: "/?level=reach", signal: true },
+    { value: cards.length.toLocaleString("en-GB"), label: "Design jobs live", href: "/" },
+    { value: fresh.toLocaleString("en-GB"), label: "New today", href: "/?sort=newest", mark: "new" },
+    { value: estonia.toLocaleString("en-GB"), label: "Open to Estonia", href: "/?estonia=1", mark: "estonia" },
+    { value: reach.toLocaleString("en-GB"), label: "Within reach", href: "/?level=reach", mark: "reach" },
   ];
 
   const nextParams = new URLSearchParams();
@@ -48,88 +50,80 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
 
   return (
     <>
-      <Band aria-label="Introduction" inner="grid gap-8 py-8 sm:py-12">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,65ch)_minmax(0,28rem)] lg:items-end lg:justify-between">
-        <div className="grid gap-4">
-          <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">Design jobs, minus the doomscrolling.</h1>
-          <p className="max-w-prose text-lg text-pretty text-muted-foreground">
-            Every current design role we can find, sorted into nine directions.
-            <span className="hidden sm:inline"> The market is tough, not closed: here is where the doors are actually open.</span>
-          </p>
-        </div>
-        {/* The real shortcut for an EKA graduate. Hidden on phones, where the readout links do the same job. */}
-        <Card className="hidden lg:flex">
-          <CardContent className="grid gap-3">
-            <p className="font-semibold">Start here</p>
-            <p className="text-sm text-muted-foreground">
-              <span className="font-mono font-semibold text-foreground">{both}</span> jobs are open to someone in Estonia and within reach for a
-              graduate.
+      <Band aria-label="Introduction" inner="grid gap-10 pt-10 pb-8 sm:pt-16 lg:pt-20">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
+          <div className="grid gap-5">
+            <h1 className="max-w-[14ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.95] text-balance sm:text-6xl xl:text-7xl">Design jobs, minus the doomscrolling.</h1>
+            <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
+              Every current design role we can find, sorted into nine directions.
+              <span className="hidden sm:inline"> The market is tough, not closed: here is where the doors are actually open.</span>
+            </p>
+          </div>
+          {/* The real shortcut for an EKA graduate. Hidden on phones, where the readout links do the same job. */}
+          <div className="hidden gap-4 border-t border-foreground pt-4 lg:grid">
+            <p className="font-heading text-lg font-semibold tracking-tight">Start here</p>
+            <p className="text-muted-foreground">
+              <span className="font-mono text-foreground">{both}</span> jobs are open to someone in Estonia and within reach for a graduate.
             </p>
             <Button className="w-fit" nativeButton={false} render={<Link href="/?estonia=1&level=reach" />}>
               Show me those
               <ArrowRight data-icon="inline-end" />
             </Button>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </div>
 
-      <Readout items={readout} note={`${REACH_DEFINITION} Updated ${updated}.`} />
+        <Readout items={readout} note={`${REACH_DEFINITION} Updated ${updated}.`} />
       </Band>
 
-      <Band aria-labelledby="jobs-heading" inner="grid gap-6 py-8">
-        <div className="flex flex-wrap items-end justify-between gap-2">
-          <h2 id="jobs-heading" className="text-2xl font-bold tracking-tight">
+      <Band aria-labelledby="jobs-heading" inner="grid gap-6 py-8 sm:py-10">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <h2 id="jobs-heading" className="text-3xl sm:text-4xl">
             Find your direction
           </h2>
-          <div className="flex flex-wrap items-center gap-3">
-            <p className="text-sm text-muted-foreground">
-              <span className="font-mono font-semibold text-foreground">{results.length.toLocaleString("en-GB")}</span> jobs match
-            </p>
-            <Suspense>
-              <SortSelect value={filters.sort} />
-            </Suspense>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            <span className="font-mono text-foreground">{results.length.toLocaleString("en-GB")}</span> jobs match
+          </p>
         </div>
 
         <Suspense>
           <JobFilters categories={categoryCounts} total={withoutCategory.length} />
         </Suspense>
 
-        {filters.category && (
-          <p className="-mt-2 max-w-prose text-sm text-muted-foreground">{CATEGORY_META[filters.category].blurb}</p>
-        )}
-
+        {filters.category && <p className="max-w-prose text-sm text-muted-foreground">{CATEGORY_META[filters.category].blurb}</p>}
       </Band>
 
-      <Band aria-label="Jobs" last inner="grid gap-6 py-8 pb-16">
+      <Band aria-label="Jobs" last inner="grid gap-8 pt-4 pb-16">
         {shown.length ? (
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4">
-            {shown.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
+          <div>
+            <Suspense>
+              <JobListHeader sort={filters.sort} />
+            </Suspense>
+            <ul aria-label="Jobs">
+              {shown.map((job) => (
+                <JobRow key={job.id} job={job} isNew={isNewPosting(job.postedAt, now)} />
+              ))}
+            </ul>
           </div>
         ) : (
-          <Card>
-            <CardContent className="grid justify-items-start gap-2 py-6">
-              <p className="text-lg font-semibold">Nothing here right now.</p>
-              <p className="text-muted-foreground">
-                That combination is quiet today. Try switching off a filter, or check back soon: new jobs arrive all the time.
-              </p>
-              <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
-                Show all jobs
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="grid max-w-prose justify-items-start gap-3 border-t border-foreground py-6">
+            <p className="font-heading text-xl font-semibold tracking-tight">Nothing here right now.</p>
+            <p className="text-muted-foreground">
+              That combination is quiet today. Try switching off a filter, or check back soon: new jobs arrive all the time.
+            </p>
+            <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
+              Show all jobs
+            </Button>
+          </div>
         )}
 
         {shown.length < results.length && (
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-wrap items-center gap-4">
             <Button variant="outline" size="lg" nativeButton={false} render={<Link href={`/?${nextParams.toString()}`} scroll={false} />}>
               <ArrowDown data-icon="inline-start" />
               Load more
             </Button>
-            <p className="font-mono text-xs text-muted-foreground">
-              Showing {shown.length} of {results.length}
+            <p className="text-sm text-muted-foreground">
+              Showing <span className="font-mono text-foreground">{shown.length}</span> of <span className="font-mono text-foreground">{results.length}</span>
             </p>
           </div>
         )}

@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CategoryHiringChart, DistributionChart, RankingChart } from "@/components/insight-charts";
 import { Band } from "@/components/blueprint";
-import { CategoryDot, CategoryLegend, ChipContent, chipClassName } from "@/components/category";
+import { CategoryDot, CategoryLegend } from "@/components/category";
 import { ChipScroller } from "@/components/chip-scroller";
+import { TAB_LIST, TabContent, tabClassName } from "@/components/filter-controls";
 import { CountList, EARLY_SIGNAL_LINE, EarlySignalBadge } from "@/components/early-signal";
 import { Readout, type ReadoutItem } from "@/components/readout";
-import { RequirementChip } from "@/components/signal";
+import { RequirementList } from "@/components/signal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CATEGORY_META, categoryColor, categoryVars, REACH_DEFINITION } from "@/lib/categories";
@@ -40,30 +41,30 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
 
   // Early-signal directions show counts ("1 of 2"), never percentages or a confident median.
   const readout: ReadoutItem[] = [
-    { value: i.postings.toLocaleString("en-GB"), label: "current postings", href: filterHref("") || "/" },
+    { value: i.postings.toLocaleString("en-GB"), label: "Current postings", href: filterHref("") || "/" },
     early
-      ? { value: `${i.withinReach} of ${i.postings}`, label: "within reach", href: filterHref("level=reach"), signal: true }
-      : { value: pct(i.withinReach), label: `within reach (${i.withinReach.toLocaleString("en-GB")})`, href: filterHref("level=reach"), signal: true },
+      ? { value: `${i.withinReach} of ${i.postings}`, label: "Within reach", href: filterHref("level=reach"), mark: "reach" }
+      : { value: pct(i.withinReach), label: `Within reach (${i.withinReach.toLocaleString("en-GB")})`, href: filterHref("level=reach"), mark: "reach" },
     early
-      ? { value: `${i.openToEstonia} of ${i.postings}`, label: "open to Estonia", href: filterHref("estonia=1"), signal: true }
-      : { value: i.openToEstonia.toLocaleString("en-GB"), label: "open to Estonia", href: filterHref("estonia=1"), signal: true },
+      ? { value: `${i.openToEstonia} of ${i.postings}`, label: "Open to Estonia", href: filterHref("estonia=1"), mark: "estonia" }
+      : { value: i.openToEstonia.toLocaleString("en-GB"), label: "Open to Estonia", href: filterHref("estonia=1"), mark: "estonia" },
     {
       value: i.medianYears === null ? "n/a" : `${i.medianYears} yrs`,
-      label: early ? `years asked, from ${i.statedYears} posting${i.statedYears === 1 ? "" : "s"}` : "typical experience asked",
+      label: early ? `Years asked, from ${i.statedYears} posting${i.statedYears === 1 ? "" : "s"}` : "Typical experience asked",
       muted: early,
     },
   ];
 
   return (
     <>
-      <Band aria-label="Introduction" inner="grid gap-4 py-8 sm:py-12">
-        <h1 className="text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl">What the market is asking for</h1>
-        <p className="max-w-prose text-lg text-pretty text-muted-foreground">
+      <Band aria-label="Introduction" inner="grid gap-5 pt-10 pb-10 sm:pt-16 lg:pt-20">
+        <h1 className="max-w-[16ch] text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.95] text-balance sm:text-6xl xl:text-7xl">What the market is asking for</h1>
+        <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
           We read the requirements in every posting and counted them up. No guesswork, no hype: this is what employers actually write down, so you
           can spend your portfolio time where it counts.
         </p>
-        <p className="flex items-start gap-2 font-mono text-xs text-muted-foreground">
-          <CalendarClock aria-hidden className="mt-px size-3.5 shrink-0" />
+        <p className="flex max-w-prose items-start gap-2 text-sm text-muted-foreground">
+          <CalendarClock aria-hidden className="mt-0.5 size-3.5 shrink-0" strokeWidth={1.75} />
           <span>
             Based on {jobs.length.toLocaleString("en-GB")} current postings from {boards} job boards and {companyFeeds} company career pages. Last
             updated {fmtDate(updatedAt)}.
@@ -76,7 +77,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
         <div className="grid gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-3">
-              <h2 id="asks-heading" className="flex items-center gap-3 text-2xl font-bold tracking-tight">
+              <h2 id="asks-heading" className="flex items-center gap-3 text-3xl sm:text-4xl">
                 {category && <CategoryDot category={category} className="size-3" />}
                 {category ? CATEGORY_LABEL[category] : "All directions"}
               </h2>
@@ -92,7 +93,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
           <p className="max-w-prose text-muted-foreground">{category ? CATEGORY_META[category].blurb : "Every design role we track, all nine directions together."}</p>
           {early && <p className="font-medium">{EARLY_SIGNAL_LINE}</p>}
           <ChipScroller as="nav" aria-label="Direction" activeKey={category}>
-            <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
+            <div className={TAB_LIST}>
               <DirectionLink href="/insights" active={!category} label="All directions" />
               {comparison.map((c) => (
                 <DirectionLink
@@ -118,10 +119,10 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
             {stacked && (
-              <div className="grid gap-1.5 lg:col-span-2 xl:col-span-3">
-                <p className="text-xs text-muted-foreground">Bars are split by each posting&rsquo;s main direction. Hover or tap a bar for the breakdown.</p>
+              <div className="grid gap-2 lg:col-span-2 xl:col-span-3 4xl:col-span-4">
+                <p className="text-sm text-muted-foreground">Bars are split by each posting&rsquo;s main direction. Hover or tap a bar for the breakdown.</p>
                 <CategoryLegend />
               </div>
             )}
@@ -152,7 +153,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
                 <DistributionChart data={i.seniority} color={color} stacked={stacked} label="Postings" caption="Postings per seniority level" />
               </CardContent>
             </Card>
-            <Card className="xl:col-span-3">
+            <Card className="xl:col-span-3 4xl:col-span-1">
               <CardHeader>
                 <CardTitle>Years of experience asked</CardTitle>
                 <CardDescription>
@@ -171,7 +172,7 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
       {/* ---------- Direction comparison ---------- */}
       <Band aria-labelledby="compare-heading" last inner="grid gap-6 py-8 pb-16 sm:py-10">
         <div className="grid gap-2">
-          <h2 id="compare-heading" className="text-2xl font-bold tracking-tight">
+          <h2 id="compare-heading" className="text-3xl sm:text-4xl">
             Which directions are hiring
           </h2>
           <p className="max-w-prose text-muted-foreground">
@@ -192,47 +193,50 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
             />
           </CardContent>
         </Card>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Per-direction blocks: a hairline grid, each block topped with its direction's colour.
+            Subgrid rows (name, blurb, numbers, requirements) keep blocks in the same row aligned. */}
+        <ul className="grid gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3">
           {comparison.map((c) => (
-            <Link key={c.category} href={`/insights?category=${c.category}`} className="group row-span-3 grid grid-rows-subgrid focus-visible:outline-none">
-              {/* Subgrid rows (name and blurb, numbers, chips) keep cards in the same row aligned. */}
-              <Card className="row-span-3 grid grid-rows-subgrid gap-3 transition-colors group-hover:[--cut-line:var(--color-primary)] group-focus-visible:[--cut-line:var(--color-ring)]">
-                <CardHeader className="content-start">
-                  <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
-                    <span className="flex items-center gap-2">
-                      <CategoryDot category={c.category} className="size-2.5" />
-                      {CATEGORY_META[c.category].short}
-                    </span>
-                    <span className="font-mono text-sm text-muted-foreground">{c.postings}</span>
-                  </CardTitle>
-                  <CardDescription>{CATEGORY_META[c.category].blurb}</CardDescription>
+            <li key={c.category} style={categoryVars(c.category)} className="row-span-4 grid grid-rows-subgrid border-t-2 border-(--cat)">
+              <Link
+                href={`/insights?category=${c.category}`}
+                className="group row-span-4 grid grid-rows-subgrid gap-y-3 border-b border-border py-5 transition-colors hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
+              >
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="flex items-center gap-2 font-heading text-lg font-semibold tracking-tight underline-offset-4 group-hover:underline">
+                    <CategoryDot category={c.category} className="size-2.5" />
+                    {CATEGORY_META[c.category].short}
+                  </span>
+                  <span className="font-mono text-2xl tabular-nums">{c.postings}</span>
+                </span>
+                <span className="grid content-start justify-items-start gap-2">
+                  <span className="max-w-prose text-sm text-muted-foreground">{CATEGORY_META[c.category].blurb}</span>
                   {c.earlySignal && (
-                    <div className="grid justify-items-start gap-1.5 pt-1">
+                    <>
                       <EarlySignalBadge />
-                      <p className="text-sm font-medium">{EARLY_SIGNAL_LINE}</p>
+                      <span className="text-sm font-medium">{EARLY_SIGNAL_LINE}</span>
+                    </>
+                  )}
+                </span>
+                <dl className="grid grid-cols-3 content-start gap-3 border-t border-border pt-3">
+                  {(
+                    [
+                      ["Within reach", c.withinReach],
+                      ["Open to Estonia", c.openToEstonia],
+                      ["Median years", c.medianYears ?? "n/a"],
+                    ] as const
+                  ).map(([label, value]) => (
+                    <div key={label} className="grid gap-0.5">
+                      <dt className="text-xs text-muted-foreground">{label}</dt>
+                      <dd className="font-mono text-base tabular-nums">{value}</dd>
                     </div>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <p className="font-mono text-xs text-muted-foreground">
-                    <span className="text-foreground">{c.withinReach}</span> within reach,{" "}
-                    <span className="text-foreground">{c.openToEstonia}</span> open to Estonia,{" "}
-                    <span className="text-foreground">{c.medianYears ?? "n/a"}</span> yrs median
-                  </p>
-                </CardContent>
-                <CardContent>
-                  {c.topSkills.length > 0 && (
-                    <ul className="flex flex-wrap gap-1.5" aria-label="Top requirements">
-                      {[...c.topSkills.slice(0, 2), ...c.topTools.slice(0, 2)].map((s) => (
-                        <RequirementChip key={s}>{s}</RequirementChip>
-                      ))}
-                    </ul>
-                  )}
-                </CardContent>
-              </Card>
-            </Link>
+                  ))}
+                </dl>
+                <RequirementList items={[...c.topSkills.slice(0, 2), ...c.topTools.slice(0, 2)]} />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </Band>
     </>
   );
@@ -240,15 +244,8 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
 
 function DirectionLink({ href, active, label, category }: { href: string; active: boolean; label: string; category?: Category }) {
   return (
-    <Link
-      href={href}
-      scroll={false}
-      aria-current={active ? "page" : undefined}
-      style={category ? categoryVars(category) : undefined}
-      className={chipClassName(active, category)}
-    >
-      <ChipContent label={label} active={active} category={category} />
+    <Link href={href} scroll={false} aria-current={active ? "page" : undefined} className={tabClassName(active)}>
+      <TabContent label={label} category={category} />
     </Link>
   );
 }
-

@@ -25,7 +25,7 @@ function useChoice() {
 export function ThemeSwitch({ className }: { className?: string }) {
   const { choice, setTheme } = useChoice();
   return (
-    <div role="radiogroup" aria-label="Colour theme" className={cn("flex items-center rounded-md border border-border p-0.5", className)}>
+    <div role="radiogroup" aria-label="Colour theme" className={cn("flex items-center border border-border", className)}>
       {OPTIONS.map((o) => {
         const active = choice === o.value;
         return (
@@ -39,13 +39,13 @@ export function ThemeSwitch({ className }: { className?: string }) {
                   aria-label={`${o.label} theme`}
                   onClick={() => setTheme(o.value)}
                   className={cn(
-                    "flex size-8 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                    "flex size-8 items-center justify-center border-l border-border text-muted-foreground transition-colors first:border-l-0 hover:text-foreground focus-visible:relative focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
                     active && "bg-foreground text-background hover:text-background",
                   )}
                 />
               }
             >
-              <o.icon aria-hidden className="size-4" />
+              <o.icon aria-hidden className="size-4" strokeWidth={1.75} />
             </TooltipTrigger>
             <TooltipContent>{o.label}</TooltipContent>
           </Tooltip>
@@ -91,7 +91,7 @@ export function ThemeMenu() {
                   active && "bg-foreground text-background hover:bg-foreground",
                 )}
               >
-                <o.icon aria-hidden className="size-4" />
+                <o.icon aria-hidden className="size-4" strokeWidth={1.75} />
                 {o.label}
               </button>
             );

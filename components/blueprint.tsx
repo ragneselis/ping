@@ -4,14 +4,13 @@ import { cn } from "@/lib/utils";
 /**
  * Blueprint frame. Every page is a stack of bands:
  * - each band is full viewport width with a 1px --frame-line rule underneath (the horizontal bands),
- * - inside it, the content column (max-w-frame: the --container-frame token, 1536px, with at least
- *   32px of hatched gutter each side from md and 48px from lg) has 1px --frame-line sides (the vertical frame) and an
- *   opaque --background, so the body's diagonal hatching only shows in the gutters outside the frame.
+ * - inside it, the content column runs the full width minus the --gutter token (16px phones, 32px tablets,
+ *   48px from 1024px, 64px from 1920px). It has 1px --frame-line sides (the vertical frame) and an opaque
+ *   --background, so the body's diagonal hatching only shows in the gutters.
+ * No max width: Ping is a dashboard. Text blocks cap themselves at max-w-prose instead.
  * Columns of consecutive bands line up, so the vertical lines run the full page height.
- * On phones the column fills the width: the bands stay, the side lines and gutters drop away.
  */
-export const FRAME_COLUMN =
-  "mx-auto w-full max-w-frame bg-background px-4 sm:px-6 md:w-[calc(100%-4rem)] md:border-x md:border-frame-line lg:w-[calc(100%-6rem)] lg:px-8";
+export const FRAME_COLUMN = "mx-(--gutter) border-x border-frame-line bg-background px-4 md:px-6 lg:px-8";
 
 export function Band<T extends ElementType = "section">({
   as,

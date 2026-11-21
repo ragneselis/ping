@@ -5,180 +5,123 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ---------------------------------------------------------------------------
-   Ping theme: the single source of truth for colours, radius and shadows.
-   Copied exactly as provided. Do not add one-off colours or styles.
+   Ping design tokens: calm, editorial, a well-set database.
+   Warm neutrals, hairlines, square corners, no shadows. Colour only where it
+   means something: category colours for categories, pink for Ping's pulse.
    --------------------------------------------------------------------------- */
 
 :root {
-  --background: oklch(0.9816 0.0017 247.8390);
-  --foreground: oklch(0.1649 0.0352 281.8285);
-  --card: oklch(1.0000 0 0);
-  --card-foreground: oklch(0.1649 0.0352 281.8285);
-  --popover: oklch(1.0000 0 0);
-  --popover-foreground: oklch(0.1649 0.0352 281.8285);
-  /* Tailwind pink, same family as the category colours. Navy text on it: 5.40:1 (white would be 3.58:1). */
-  --primary: var(--color-pink-500);
-  /* Navy on pink: 5.6:1 (white was 3.45:1). */
-  --primary-foreground: oklch(0.1649 0.0352 281.8285);
-  --secondary: oklch(0.9595 0.0200 286.0164);
-  --secondary-foreground: oklch(0.1649 0.0352 281.8285);
-  --muted: oklch(0.9595 0.0200 286.0164);
-  /* Softer than --foreground so secondary text has hierarchy. WCAG AA: 5.26:1 on --background, 5.55:1 on --card, 4.91:1 on --muted. */
-  --muted-foreground: oklch(0.5200 0.0350 281.0000);
-  --accent: oklch(0.8903 0.1739 171.2690);
-  --accent-foreground: oklch(0.1649 0.0352 281.8285);
-  /* Decision signals (open to Estonia, within reach): Tailwind emerald. --signal for icons and readout
-     dots (600 light / 400 dark), --signal-text for text (700 light / 300 dark). */
-  --signal: var(--color-emerald-600);
-  --signal-text: var(--color-emerald-700);
-  --destructive: oklch(0.6535 0.2348 34.0370);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --border: oklch(0.9205 0.0086 225.0878);
-  --input: oklch(0.9205 0.0086 225.0878);
-  --ring: var(--primary);
-  --chart-1: oklch(0.6726 0.2904 341.4084);
-  --chart-2: oklch(0.5488 0.2944 299.0954);
-  --chart-3: oklch(0.8442 0.1457 209.2851);
-  --chart-4: oklch(0.8903 0.1739 171.2690);
-  --chart-5: oklch(0.9168 0.1915 101.4070);
-  --sidebar: oklch(0.9595 0.0200 286.0164);
-  --sidebar-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-accent: oklch(0.8903 0.1739 171.2690);
-  --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-border: oklch(0.9205 0.0086 225.0878);
-  --sidebar-ring: var(--primary);
-  /* Category colours from Tailwind's palette, so they share one lightness and chroma family.
-     --cat-<name>      shade 600 (light) / 400 (dark): dots, chart bars, fills, tag tint
-     --cat-<name>-text shade 700 (light) / 300 (dark): category tag text. Where 700 failed AA on its
-                       15% tint (orange, teal, lime) the text token is one shade darker, 800.
-     Industrial is yellow: 500 for graphics in light (600 turns mustard), 800 for its text. */
-  --cat-product: var(--color-sky-600);
-  --cat-product-text: var(--color-sky-700);
-  --cat-engineering: var(--color-indigo-600);
-  --cat-engineering-text: var(--color-indigo-700);
-  --cat-ai: var(--color-violet-600);
-  --cat-ai-text: var(--color-violet-700);
-  --cat-brand: var(--color-orange-600);
-  --cat-brand-text: var(--color-orange-800);
-  --cat-research: var(--color-teal-600);
-  --cat-research-text: var(--color-teal-800);
-  --cat-customer: var(--color-red-600);
-  --cat-customer-text: var(--color-red-700);
-  --cat-game: var(--color-lime-600);
-  --cat-game-text: var(--color-lime-800);
-  --cat-industrial: var(--color-yellow-500);
-  --cat-industrial-text: var(--color-yellow-800);
-  --cat-other: var(--color-slate-600);
-  --cat-other-text: var(--color-slate-700);
-  /* Blueprint frame: hairlines around the content column and between sections; hatching in the gutters. */
-  --frame-line: oklch(0.9450 0.0100 270);
-  --frame-hatch: color-mix(in oklab, var(--frame-line) 70%, transparent);
-  --font-sans: Chakra Petch, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: Fira Code, monospace;
-  --radius: 0.25rem;
-  /* Size of the chamfered corner on cards and readouts (see the cut-corner utility). */
-  --cut: 10px;
-  --shadow-x: 0px;
-  --shadow-y: 4px;
-  --shadow-blur: 8px;
-  --shadow-spread: -2px;
-  --shadow-opacity: 0.1;
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-2xs: 0px 4px 8px -2px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0px 4px 8px -2px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
-  --shadow: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 2px 4px -3px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 4px 6px -3px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 8px 10px -3px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0px 4px 8px -2px hsl(0 0% 0% / 0.25);
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+  /* Warm neutrals */
+  --background: oklch(0.975 0.006 80);
+  --foreground: oklch(0.2 0.01 60);
+  --card: oklch(0.995 0.002 80);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --muted: oklch(0.95 0.006 80);
+  --muted-foreground: oklch(0.5 0.012 60); /* 5.6:1 on --background */
+  --border: oklch(0.88 0.008 75);
+  --input: var(--border);
+  --ring: oklch(0.2 0.01 60 / 40%);
+
+  /* Actions: primary is solid foreground, secondary is outline */
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--foreground);
+  --accent: var(--muted);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.55 0.19 28);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Ping's signature: the pulse. Logo dot and "new today" only. */
+  --pulse: var(--color-pink-500);
+
+  /* Category colours, one rule: same lightness and chroma, only the hue changes
+     (80-120 skipped, it turns olive). Graphics L 0.62 C 0.12; text L 0.45 C 0.12.
+     Text passes AA (>= 5.2:1) on its 15% tint and on the surfaces. */
+  --cat-brand: oklch(0.62 0.12 25);
+  --cat-brand-text: oklch(0.45 0.12 25);
+  --cat-industrial: oklch(0.62 0.12 55);
+  --cat-industrial-text: oklch(0.45 0.12 55);
+  --cat-game: oklch(0.62 0.12 145);
+  --cat-game-text: oklch(0.45 0.12 145);
+  --cat-research: oklch(0.62 0.12 175);
+  --cat-research-text: oklch(0.45 0.12 175);
+  --cat-product: oklch(0.62 0.12 215);
+  --cat-product-text: oklch(0.45 0.12 215);
+  --cat-engineering: oklch(0.62 0.12 255);
+  --cat-engineering-text: oklch(0.45 0.12 255);
+  --cat-ai: oklch(0.62 0.12 295);
+  --cat-ai-text: oklch(0.45 0.12 295);
+  --cat-customer: oklch(0.62 0.12 335);
+  --cat-customer-text: oklch(0.45 0.12 335);
+  --cat-other: oklch(0.62 0.015 70);
+  --cat-other-text: oklch(0.45 0.015 70);
+
+  /* Blueprint frame: hairlines on the column edges and between sections, hatching in the gutters */
+  --frame-line: oklch(0.9 0.008 75);
+  --frame-hatch: color-mix(in oklab, var(--frame-line) 80%, transparent);
+
+  --font-sans: var(--font-geist), Geist, ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+
+  /* Square corners everywhere; inputs may use 2px. */
+  --radius: 0px;
+
+  /* Side gutters outside the frame: 16px phones, 32px tablets, 48px from 1024px, 64px from 1920px */
+  --gutter: 16px;
 }
 
 .dark {
-  --background: oklch(0.1649 0.0352 281.8285);
-  --foreground: oklch(0.9513 0.0074 260.7315);
-  --card: oklch(0.2542 0.0611 281.1423);
-  --card-foreground: oklch(0.9513 0.0074 260.7315);
-  --popover: oklch(0.2542 0.0611 281.1423);
-  --popover-foreground: oklch(0.9513 0.0074 260.7315);
-  /* Tailwind pink 400 on dark. Navy text on it: 7.01:1. */
-  --primary: var(--color-pink-400);
-  /* Navy on pink: 5.6:1 (white was 3.45:1). */
-  --primary-foreground: oklch(0.1649 0.0352 281.8285);
-  --secondary: oklch(0.2542 0.0611 281.1423);
-  --secondary-foreground: oklch(0.9513 0.0074 260.7315);
-  --muted: oklch(0.2123 0.0522 280.9917);
-  /* Raised from 0.6245 so secondary text passes AA: 4.72:1 on --card, 5.70:1 on --background. */
-  --muted-foreground: oklch(0.6400 0.0500 278.1046);
-  --accent: oklch(0.8903 0.1739 171.2690);
-  --accent-foreground: oklch(0.1649 0.0352 281.8285);
-  /* Dark theme: the mint itself (12:1 on --card). */
-  --signal: var(--color-emerald-400);
-  --signal-text: var(--color-emerald-300);
-  --destructive: oklch(0.6535 0.2348 34.0370);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --border: oklch(0.3279 0.0832 280.7890);
-  --input: oklch(0.3279 0.0832 280.7890);
-  --ring: var(--primary);
-  --chart-1: oklch(0.6726 0.2904 341.4084);
-  --chart-2: oklch(0.5488 0.2944 299.0954);
-  --chart-3: oklch(0.8442 0.1457 209.2851);
-  --chart-4: oklch(0.8903 0.1739 171.2690);
-  --chart-5: oklch(0.9168 0.1915 101.4070);
-  --sidebar: oklch(0.1649 0.0352 281.8285);
-  --sidebar-foreground: oklch(0.9513 0.0074 260.7315);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-accent: oklch(0.8903 0.1739 171.2690);
-  --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-border: oklch(0.3279 0.0832 280.7890);
-  --sidebar-ring: var(--primary);
-  /* Category colours (dark theme): Tailwind 400 for graphics, 300 for tag text. */
-  --cat-product: var(--color-sky-400);
-  --cat-product-text: var(--color-sky-300);
-  --cat-engineering: var(--color-indigo-400);
-  --cat-engineering-text: var(--color-indigo-300);
-  --cat-ai: var(--color-violet-400);
-  --cat-ai-text: var(--color-violet-300);
-  --cat-brand: var(--color-orange-400);
-  --cat-brand-text: var(--color-orange-300);
-  --cat-research: var(--color-teal-400);
-  --cat-research-text: var(--color-teal-300);
-  --cat-customer: var(--color-red-400);
-  --cat-customer-text: var(--color-red-300);
-  --cat-game: var(--color-lime-400);
-  --cat-game-text: var(--color-lime-300);
-  --cat-industrial: var(--color-yellow-400);
-  --cat-industrial-text: var(--color-yellow-300);
-  --cat-other: var(--color-slate-400);
-  --cat-other-text: var(--color-slate-300);
-  --frame-line: oklch(0.2700 0.0500 281);
-  --frame-hatch: color-mix(in oklab, var(--frame-line) 75%, transparent);
-  --font-sans: Chakra Petch, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: Fira Code, monospace;
-  --radius: 0.25rem;
-  /* Size of the chamfered corner on cards and readouts (see the cut-corner utility). */
-  --cut: 10px;
-  --shadow-x: 0px;
-  --shadow-y: 4px;
-  --shadow-blur: 8px;
-  --shadow-spread: -2px;
-  --shadow-opacity: 0.1;
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-2xs: 0px 4px 8px -2px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0px 4px 8px -2px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
-  --shadow: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 2px 4px -3px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 4px 6px -3px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 8px 10px -3px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0px 4px 8px -2px hsl(0 0% 0% / 0.25);
+  --background: oklch(0.19 0.006 70);
+  --foreground: oklch(0.94 0.008 80);
+  --card: oklch(0.225 0.006 70);
+  --muted: oklch(0.25 0.006 70);
+  --muted-foreground: oklch(0.7 0.01 70); /* 6.4:1 on --background */
+  --border: oklch(0.32 0.008 70);
+  --ring: oklch(0.94 0.008 80 / 40%);
+
+  --pulse: var(--color-pink-400);
+
+  /* Same rule on dark: graphics L 0.74 C 0.11; text L 0.85 C 0.11 (>= 7.6:1). */
+  --cat-brand: oklch(0.74 0.11 25);
+  --cat-brand-text: oklch(0.85 0.11 25);
+  --cat-industrial: oklch(0.74 0.11 55);
+  --cat-industrial-text: oklch(0.85 0.11 55);
+  --cat-game: oklch(0.74 0.11 145);
+  --cat-game-text: oklch(0.85 0.11 145);
+  --cat-research: oklch(0.74 0.11 175);
+  --cat-research-text: oklch(0.85 0.11 175);
+  --cat-product: oklch(0.74 0.11 215);
+  --cat-product-text: oklch(0.85 0.11 215);
+  --cat-engineering: oklch(0.74 0.11 255);
+  --cat-engineering-text: oklch(0.85 0.11 255);
+  --cat-ai: oklch(0.74 0.11 295);
+  --cat-ai-text: oklch(0.85 0.11 295);
+  --cat-customer: oklch(0.74 0.11 335);
+  --cat-customer-text: oklch(0.85 0.11 335);
+  --cat-other: oklch(0.74 0.015 70);
+  --cat-other-text: oklch(0.85 0.015 70);
+
+  --frame-line: oklch(0.27 0.006 70);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 32px;
+  }
+}
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 48px;
+  }
+}
+@media (min-width: 120rem) {
+  :root {
+    --gutter: 64px;
+  }
 }
 
 @theme inline {
@@ -196,143 +139,121 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-signal: var(--signal);
-  --color-signal-text: var(--signal-text);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --color-pulse: var(--pulse);
+  --color-frame-line: var(--frame-line);
 
+  --color-cat-brand: var(--cat-brand);
+  --color-cat-brand-text: var(--cat-brand-text);
+  --color-cat-industrial: var(--cat-industrial);
+  --color-cat-industrial-text: var(--cat-industrial-text);
+  --color-cat-game: var(--cat-game);
+  --color-cat-game-text: var(--cat-game-text);
+  --color-cat-research: var(--cat-research);
+  --color-cat-research-text: var(--cat-research-text);
   --color-cat-product: var(--cat-product);
   --color-cat-product-text: var(--cat-product-text);
   --color-cat-engineering: var(--cat-engineering);
   --color-cat-engineering-text: var(--cat-engineering-text);
   --color-cat-ai: var(--cat-ai);
   --color-cat-ai-text: var(--cat-ai-text);
-  --color-cat-brand: var(--cat-brand);
-  --color-cat-brand-text: var(--cat-brand-text);
-  --color-cat-research: var(--cat-research);
-  --color-cat-research-text: var(--cat-research-text);
   --color-cat-customer: var(--cat-customer);
   --color-cat-customer-text: var(--cat-customer-text);
-  --color-cat-game: var(--cat-game);
-  --color-cat-game-text: var(--cat-game-text);
-  --color-cat-industrial: var(--cat-industrial);
-  --color-cat-industrial-text: var(--cat-industrial-text);
   --color-cat-other: var(--cat-other);
   --color-cat-other-text: var(--cat-other-text);
-  --color-frame-line: var(--frame-line);
 
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 2px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
 
-  --shadow-2xs: var(--shadow-2xs);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-sm: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
+  /* No shadows: depth comes from hairlines. */
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
 }
 
-/* Layout tokens: the blueprint frame's maximum width and the widest grid breakpoint. */
+/* Breakpoint for very wide screens (1920px): 4 chart columns, 64px gutters. */
 @theme {
-  --container-frame: 96rem;
-  --breakpoint-3xl: 112.5rem;
+  --breakpoint-4xl: 120rem;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Font roles. next/font serves the files under generated names, exposed on <html>.
-   --font-sans    Geist: body, UI, filters, cards and card titles
-   --font-heading Chakra Petch: the Ping wordmark and page headings (h1, h2) only
-   --font-mono    Fira Code: numbers, counts, levels and data labels
-   --------------------------------------------------------------------------- */
-:root,
-.dark {
-  --font-sans: var(--font-geist), Geist, ui-sans-serif, sans-serif, system-ui;
-  --font-heading: var(--font-chakra-petch), Chakra Petch, ui-sans-serif, sans-serif, system-ui;
-  --font-mono: var(--font-fira-code), Fira Code, monospace;
-}
-
-@layer base {
   html {
     @apply font-sans;
+    scrollbar-color: var(--border) transparent;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Fine 45-degree hatching; the frame column covers it, so it only shows in the gutters. */
+    background-image: repeating-linear-gradient(45deg, var(--frame-hatch) 0 1px, transparent 1px 9px);
   }
   h1,
   h2 {
     font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--foreground) 18%, transparent);
+    color: var(--foreground);
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Ping surface details: blueprint gutters, themed browser bits.
-   The frame lines themselves live in components/blueprint.tsx.
+   The pulse: Ping's only motion and only pink.
+   - pulse-once: the logo dot breathes once on page load.
+   - pulse-soft: "new today" dots breathe slowly.
+   Both are still under prefers-reduced-motion.
    --------------------------------------------------------------------------- */
-@layer base {
-  /* Fine 45-degree hatching fills the page; the content column covers it with --background,
-     so the hatching only shows in the gutters either side of the frame. */
-  body {
-    background-image: repeating-linear-gradient(45deg, var(--frame-hatch) 0 1px, transparent 1px 9px);
+@keyframes ping-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--pulse) 55%, transparent);
   }
-  ::selection {
-    background: color-mix(in oklab, var(--primary) 35%, transparent);
-    color: var(--foreground);
+  70% {
+    box-shadow: 0 0 0 7px color-mix(in oklab, var(--pulse) 0%, transparent);
   }
-  html {
-    scrollbar-color: var(--border) transparent;
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--pulse) 0%, transparent);
   }
 }
 
-/* Chamfered top-right corner with a hairline diagonal, for cards and readouts.
-   The element needs a 1px border; the ::after draws the cut edge in --border. */
-@utility cut-corner {
-  position: relative;
-  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: var(--cut);
-    height: var(--cut);
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom left,
-      transparent calc(50% - 0.6px),
-      var(--cut-line, var(--border)) calc(50% - 0.6px),
-      var(--cut-line, var(--border)) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    );
+@utility pulse-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--pulse);
+}
+
+@utility pulse-once {
+  animation: ping-pulse 1.6s ease-out 0.3s 1 both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility pulse-soft {
+  animation: ping-pulse 2.6s ease-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
