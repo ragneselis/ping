@@ -1,27 +1,19 @@
 import { Coffee } from "lucide-react";
 import { Band } from "@/components/blueprint";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { getDataset } from "@/lib/view";
 
 /** Ko-fi page, the same "Buy me a coffee" link as in the Jon project (src/components/account-menu.tsx). */
 const COFFEE_URL = "https://ko-fi.com/ragneselis";
 const AUTHOR_URL = "https://ragne.me";
 
 /**
- * Site footer. Left: who Ping is for, and a quiet line on where the jobs come from (counts from
- * the dataset). Right: the credit with a link, and a coffee link as an icon with a tooltip,
+ * Site footer. Left: who Ping is for. Right: the credit with a link, and a coffee link as an icon with a tooltip,
  * a 44px tap target on phones.
  */
 export function SiteFooter() {
-  const { boards, companyFeeds } = getDataset();
   return (
     <Band as="footer" last inner="flex flex-col gap-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-      <div className="grid gap-1">
-        <p>Ping is made for design students at the Estonian Academy of Arts.</p>
-        <p className="text-xs">
-          Jobs from {boards} job boards and {companyFeeds} company career pages.
-        </p>
-      </div>
+      <p>Ping is made for design students at the Estonian Academy of Arts.</p>
       <div className="flex items-center gap-1">
         <p>
           Built and maintained by{" "}
