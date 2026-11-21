@@ -16,13 +16,22 @@ export function tabClassName(active: boolean) {
   );
 }
 
+/**
+ * A tab's dot, label and count. The tab box centres this row in its 44px; inside it the label and the
+ * smaller mono count share one text baseline (`baseline-row`) and the dot is centred on the capitals
+ * (`cap-icon`), the same rules as Segmented, Panel, Badge and CategoryLabel.
+ */
 export function TabContent({ label, count, category }: { label: string; count?: number; category?: Category }) {
   return (
-    <>
-      {category && <CategoryDot category={category} />}
+    <span className="baseline-row gap-2">
+      {category && (
+        <span aria-hidden className="cap-icon flex shrink-0 [--icon-size:8px]">
+          <CategoryDot category={category} />
+        </span>
+      )}
       {label}
       {count !== undefined && <span className="font-mono text-xs text-muted-foreground tabular-nums">{count.toLocaleString("en-GB")}</span>}
-    </>
+    </span>
   );
 }
 

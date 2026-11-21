@@ -262,7 +262,7 @@ export default async function JobsPage({
         </ResultsFade>
 
         {shownGroups.length < groups.length && (
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="baseline-row flex-wrap gap-4">
             <Button
               variant="outline"
               size="lg"

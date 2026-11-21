@@ -107,7 +107,7 @@ export function JobRow({
           />
           {similar.length > 0 && <SimilarJobs job={job} similar={similar} />}
           {/* Phones: one line of meta under the company. */}
-          <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground lg:hidden">
+          <div className="mt-1.5 baseline-row flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground lg:hidden">
             <CategoryLabel category={job.primary} className="text-xs" />
             <span>{location}</span>
             <span>{setup}</span>

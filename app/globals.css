@@ -308,6 +308,14 @@
   h1,
   h2 {
     font-stretch: 87.5%;
+    /* Martian Mono's capitals are 0.8em tall: cap-icon centres icons on them (see cap-icon). */
+    --cap-half: 0.4em;
+  }
+  /* Geist text inside a heading goes back to Geist's cap height. */
+  .font-sans,
+  .font-mono,
+  .label-mono {
+    --cap-half: 0.355em;
   }
   h1,
   h2 {
@@ -402,9 +410,10 @@
 
 /* The small mono label: 11px, wide tracking, uppercase. Beside other text it sits in a baseline-row. */
 /* An icon beside text (components/icon-label.tsx): with the row aligned on the baseline, move the icon
-   down so its centre sits halfway up the capitals. 0.355em is half the cap height of Geist and Geist Mono. */
+   down so its centre sits halfway up the capitals. --cap-half is half the cap height of the text's font:
+   0.355em for Geist and Geist Mono (the default), 0.4em for Martian Mono (set on headings below). */
 @utility cap-icon {
-  translate: 0 calc(var(--icon-size) / 2 - 0.355em);
+  translate: 0 calc(var(--icon-size) / 2 - var(--cap-half, 0.355em));
 }
 
 @utility label-mono {
