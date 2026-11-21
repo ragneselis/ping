@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ping.ragne.me"),
-  // The Jobs page is just "Ping"; other pages are "Page name | Ping".
+  // Pages are "Page name | Ping"; the Jobs page sets its own ("Ping | Design jobs for EKA").
   title: { default: "Ping", template: "%s | Ping" },
   description: SHARE_DESCRIPTION,
   ...shareMetadata("Ping"),
