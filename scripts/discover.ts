@@ -3,7 +3,8 @@
  * and are not on data/companies.json yet. Each candidate's careers page goes through the same
  * detector as hand checks (lib/sources/detect.ts). A board the real fetcher can read is added as readable;
  * a careers page with no readable board is added as careers link only (Discover links to it). Both are
- * marked "discovery", in Estonia, with a one-line description from the model. Runs on Mondays before the daily refresh (.github/workflows/weekly-discovery.yml).
+ * marked "discovery", with a one-line description from the model; on Discover (inEstonia) only with evidence
+ * that they have people in Estonia. Runs on Mondays before the daily refresh (.github/workflows/weekly-discovery.yml).
  *
  *   npm run discover                # find, check and add (at most MAX_ADDS), record the run
  *   npm run discover -- --dry-run   # find and check, print what would be added, write nothing
@@ -160,7 +161,9 @@ async function main() {
       careersUrl,
       ...(d.ok ? { ats: d.board.ats, slug: d.board.slug, ...(d.board.eu ? { eu: true } : {}) } : { careersLinkOnly: true }),
       basedInEstonia: d.ok ? c.hqEstonia && rolesInEstonia : c.hqEstonia,
-      inEstonia: true,
+      // On Discover only with evidence: a readable board with a role located in Estonia, or (careers link
+      // only, nothing to read) the model's word that it is headquartered there.
+      inEstonia: d.ok ? rolesInEstonia : c.hqEstonia,
       ...(description ? { description } : {}),
       addedAt: today,
       addedBy: "discovery",

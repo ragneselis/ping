@@ -2006,8 +2006,8 @@
     "careersUrl": "https://canonical.com/careers",
     "ats": "greenhouse",
     "slug": "canonical",
-    "inEstonia": true,
-    "description": "Ubuntu and open-source software company with UX and design teams in Tallinn and Tartu",
+    "inEstonia": false,
+    "description": "Ubuntu and open-source software",
     "basedInEstonia": false,
     "addedAt": "2026-11-21",
     "addedBy": "discovery"
@@ -2018,7 +2018,7 @@
     "ats": "workable",
     "slug": "creditstar",
     "inEstonia": true,
-    "description": "Consumer lending and fintech group headquartered in Tallinn",
+    "description": "Consumer lending and fintech group",
     "basedInEstonia": true,
     "addedAt": "2026-11-21",
     "addedBy": "discovery"
@@ -2029,7 +2029,7 @@
     "ats": "teamtailor",
     "slug": "plummygames",
     "inEstonia": true,
-    "description": "Mobile game developer based in Tallinn with a live-service portfolio",
+    "description": "Mobile game developer",
     "basedInEstonia": true,
     "addedAt": "2026-11-21",
     "addedBy": "discovery"
@@ -2040,7 +2040,7 @@
     "ats": "ashby",
     "slug": "moss",
     "inEstonia": true,
-    "description": "Spend management and corporate card platform with a Tallinn product team",
+    "description": "Spend management and corporate cards for businesses",
     "basedInEstonia": false,
     "addedAt": "2026-11-21",
     "addedBy": "discovery"
@@ -2050,8 +2050,8 @@
     "careersUrl": "https://www.tradenation.com/careers",
     "ats": "workable",
     "slug": "trade-nation",
-    "inEstonia": true,
-    "description": "Online trading platform provider with a remote product design team in Estonia",
+    "inEstonia": false,
+    "description": "Online trading platform",
     "basedInEstonia": false,
     "addedAt": "2026-11-21",
     "addedBy": "discovery"
