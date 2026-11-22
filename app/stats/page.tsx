@@ -231,7 +231,7 @@ export default async function StatsPage() {
         </div>
       </Section>
 
-      <Section id="pipeline" title="Pipeline" intro="The daily refresh (GitHub Actions, 04:00 UTC) and the digest step after it.">
+      <Section id="pipeline" title="Pipeline" intro="The daily refresh (GitHub Actions at 03:47 UTC, backups at 04:41 UTC and a Vercel cron at 05:20 UTC) and the digest step after it.">
         <div className={GRID}>
           <Panel title="Last run">
             <dl className="grid gap-3 text-sm sm:grid-cols-[10rem_minmax(0,1fr)]">
@@ -284,6 +284,38 @@ export default async function StatsPage() {
                 </ul>
               </div>
             )}
+          </Panel>
+          <Panel
+            className="min-w-0"
+            bodyClassName="min-w-0"
+            title="Runs, last 14 days"
+            description="Which trigger started each day's refresh. Late: started by a backup, or over 30 minutes after the 03:47 UTC schedule. Missed: no run at all."
+          >
+            <div className="-mx-4 overflow-x-auto md:mx-0">
+              <table className="w-full min-w-[26rem] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-hairline-strong">
+                    {["Day", "Started by", "Started", "Result"].map((h) => (
+                      <th key={h} scope="col" className="label-mono px-4 py-2.5 font-normal text-muted-foreground md:first:pl-0">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...p.runs].reverse().map((r) => (
+                    <tr key={r.day} className="border-b border-hairline last:border-b-0">
+                      <td className="px-4 py-2.5 font-mono tabular-nums md:pl-0">{WEEK.format(new Date(`${r.day}T12:00:00Z`))}</td>
+                      <td className="px-4 py-2.5">{r.trigger ?? "None"}</td>
+                      <td className="px-4 py-2.5 font-mono tabular-nums">{r.started ? when(r.started) : ""}</td>
+                      <td className={r.status === "missed" ? "px-4 py-2.5 font-medium text-destructive" : r.status === "late" ? "px-4 py-2.5 font-medium" : "px-4 py-2.5 text-muted-foreground"}>
+                        {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Panel>
           <Panel title="Digests, last 14 days">
             {p.digests.some((d) => d.sent || d.failed) ? (

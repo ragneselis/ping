@@ -47,7 +47,15 @@ export function loadCompanies(): Company[] {
 
 /** When the daily refresh last finished and when the next one is due (written by scripts/stamp.ts). */
 export function loadRun() {
-  return read<{ lastRun: string; nextRun: string; schedule: string; failedSources: string[] } | null>("run.json", null);
+  return read<{
+    lastRun: string;
+    lastStatus?: "success";
+    trigger?: import("./schedule").Trigger;
+    nextRun: string;
+    schedule: string;
+    failedSources: string[];
+    history?: import("./schedule").RunRecord[];
+  } | null>("run.json", null);
 }
 
 export interface ExtractionStore {

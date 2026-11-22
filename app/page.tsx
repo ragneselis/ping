@@ -50,7 +50,7 @@ export default async function JobsPage({
   searchParams: Promise<Search>;
 }) {
   const sp = await searchParams;
-  const { cards, updatedAt, lastRun, nextRun } = getDataset();
+  const { cards, updatedAt, lastRun } = getDataset();
   const updated = formatUpdated(updatedAt);
   const filters = parseFilters(sp);
   const page = Math.max(
@@ -130,7 +130,7 @@ export default async function JobsPage({
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
               {REACH_DEFINITION}
             </p>
-            <DataNote postings={cards.length} lastRun={lastRun} nextRun={nextRun} />
+            <DataNote lastRun={lastRun} />
           </div>
           {/* The real shortcut for an EKA graduate, on every screen size. */}
           <Panel

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Band } from "@/components/blueprint";
 import { CompanyFilters } from "@/components/company-filters";
 import { COMPANY_GRID, CompanyRow } from "@/components/company-row";
+import { DataNote } from "@/components/data-note";
 import { DataLabel } from "@/components/filter-controls";
 import { FilterLink, RESULTS_ID, ResultsTarget } from "@/components/filter-link";
 import { ROW_BLEED } from "@/components/job-row";
@@ -36,7 +37,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
   const sp = await searchParams;
   const { category } = parseFilters(sp);
   const { rows, byDirection, total } = companyDirectory({ category });
-  const { cards } = getDataset();
+  const { cards, lastRun } = getDataset();
   const directions = directionOrder(cards.map((c) => c.primary)).map((c) => ({ value: c, label: CATEGORY_META[c].short, count: byDirection[c] }));
   const hiring = rows.filter((r) => r.roles > 0).length;
   // Paged like Jobs: 50 rows, then "Load more" (the page stays in the URL, so a shared link holds it).
@@ -56,6 +57,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
           Places in Estonia that hire designers. Some are hiring now, some are worth watching, all worth an open application.
         </p>
+        <DataNote lastRun={lastRun} />
       </Band>
 
       <Band aria-labelledby={RESULTS_ID} inner="grid gap-6 py-8 sm:py-10">

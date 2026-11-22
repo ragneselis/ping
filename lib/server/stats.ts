@@ -10,6 +10,7 @@ import { companyName, getDataset } from "@/lib/view";
 import { sql } from "./db";
 import { loadSeen } from "./digest";
 import { readCounts, statsEnv, tallinnDay, type CountRow } from "./usage";
+import { LATE_AFTER_MINUTES, RUN_UTC, TRIGGER_LABEL, tallinnDay as runDay, type RunRecord } from "@/lib/schedule";
 
 export const STALE_HOURS = 30;
 const REPO = "ragneselis/ping";
@@ -212,6 +213,31 @@ export async function readStats() {
     failedSources: run?.failedSources ?? sources?.sources.filter((s) => !s.ok).map((s) => s.source) ?? [],
     costUsd: modelRuns.reduce((n, r) => n + r.costUsd, 0),
     classified: modelRuns.filter((r) => r.note?.startsWith("classification")).reduce((n, r) => n + r.postings, 0),
+    // One row per Tallinn day: the run that day (the first, if several), which trigger started it, and
+    // whether it was on time, late (a backup or late start) or missed. Days before run history was kept
+    // (run.json's history began 2026-11-22) say "not recorded".
+    runs: (() => {
+      const history: RunRecord[] = run?.history ?? (run?.lastRun ? [{ at: run.lastRun, trigger: run.trigger ?? "manual" }] : []);
+      const first = history[0]?.at ?? null;
+      return days14.map((day) => {
+        const r = history.find((h) => runDay(new Date(h.startedAt ?? h.at)) === day) ?? null;
+        const due = new Date(`${day}T${String(RUN_UTC.hour).padStart(2, "0")}:${String(RUN_UTC.minute).padStart(2, "0")}:00Z`);
+        const pastDue = Date.now() > due.getTime() + LATE_AFTER_MINUTES * 60_000;
+        const started = r ? new Date(r.startedAt ?? r.at) : null;
+        const status = r
+          ? r.trigger === "schedule" && started!.getTime() <= due.getTime() + LATE_AFTER_MINUTES * 60_000
+            ? "on time"
+            : r.trigger === "manual"
+              ? "manual"
+              : "late"
+          : !first || day < runDay(new Date(first))
+            ? "not recorded"
+            : pastDue
+              ? "missed"
+              : "not due yet";
+        return { day, trigger: r ? TRIGGER_LABEL[r.trigger] : null, started: started?.toISOString() ?? null, status };
+      });
+    })(),
     digests: days14.map((day) => ({
       day,
       sent: sum(rows.filter((r) => r.day === day), "digest:sent"),

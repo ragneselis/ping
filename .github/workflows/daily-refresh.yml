@@ -1,11 +1,23 @@
 name: Daily refresh
 
-# Every day at 04:00 UTC (06:00 in Tallinn in winter, 07:00 in summer), and by hand.
-# Keep the hour in step with RUN_HOUR_UTC in scripts/stamp.ts.
+# Every day, with backups, because GitHub delays scheduled workflows at busy times and can skip them
+# (lib/schedule.ts holds the times; keep them in step):
+#   03:47 UTC  the schedule, off the hour to avoid GitHub's peak (05:47 in Tallinn in winter)
+#   04:41 UTC  a backup schedule
+#   05:20 UTC  Vercel cron, /api/cron/refresh dispatches this workflow (trigger: vercel-cron)
+#   by hand    Actions, "Daily refresh", Run workflow (trigger: manual)
+# Every trigger but manual first checks data/run.json and stops when today's run (Tallinn date) already
+# succeeded. The concurrency group never runs two at once: a later trigger waits, then finds today done.
 on:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "47 3 * * *"
+    - cron: "41 4 * * *"
   workflow_dispatch:
+    inputs:
+      trigger:
+        description: "Who started the run (manual, or vercel-cron from /api/cron/refresh)"
+        required: false
+        default: manual
 
 permissions:
   contents: write
@@ -18,24 +30,51 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    env:
+      # schedule (03:47), backup (04:41), vercel-cron or manual: recorded in data/run.json for /stats.
+      RUN_TRIGGER: ${{ github.event_name == 'schedule' && (github.event.schedule == '47 3 * * *' && 'schedule' || 'backup') || inputs.trigger || 'manual' }}
     steps:
       - uses: actions/checkout@v5
 
+      # Backups and the Vercel cron do nothing when today's run already succeeded (data/run.json, Tallinn
+      # date). A manual run always goes ahead.
+      - name: Already done today?
+        id: guard
+        run: |
+          echo "RUN_STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+          done=$(node -e '
+            const r = JSON.parse(require("fs").readFileSync("data/run.json", "utf8"));
+            const day = (d) => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Tallinn" }).format(d);
+            // run.json is only written by a successful run, so a lastRun today means today is done.
+            console.log((r.lastStatus ?? "success") === "success" && r.lastRun && day(new Date(r.lastRun)) === day(new Date()) ? "yes" : "no");
+          ')
+          if [ "$RUN_TRIGGER" != "manual" ] && [ "$done" = "yes" ]; then
+            echo "Today's run already succeeded; $RUN_TRIGGER has nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Running (trigger: $RUN_TRIGGER, today done: $done)."
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-node@v5
+        if: steps.guard.outputs.skip != 'true'
         with:
           node-version: 22
           cache: npm
 
       - run: npm ci
+        if: steps.guard.outputs.skip != 'true'
 
       # Fetch every source and deduplicate. A failed source keeps its postings from the last good run
       # and is listed in the log; a run that loses everything (or over half) exits without writing,
       # so the job fails here and the site keeps the previous data. Postings no longer listed drop out.
       - name: Fetch
+        if: steps.guard.outputs.skip != 'true'
         run: npm run fetch
 
       # Classify and extract requirements for new postings only: both steps are cached by posting id.
       - name: Classify and extract
+        if: steps.guard.outputs.skip != 'true'
         run: npm run extract
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -43,21 +82,24 @@ jobs:
       # Record this run and the next scheduled one (data/run.json) for the page's data note, and when
       # each posting was first seen (data/seen.json) for the email digest.
       - name: Stamp
+        if: steps.guard.outputs.skip != 'true'
         run: npm run stamp
 
-      # Commit only when the postings, classifications or requirements changed. The push deploys on Vercel.
+      # Commit data/ (run.json changes every run). The push deploys on Vercel.
       # Commits are authored as the repository owner: on Vercel's Hobby plan a private repository only
       # deploys commits by its owner.
       - name: Commit and push
+        if: steps.guard.outputs.skip != 'true'
         run: |
-          if git diff --quiet -- data/jobs.json data/classifications.json data/extractions.json; then
-            echo "No new or removed postings. Nothing to commit."
+          # data/run.json changes on every run, so every run commits: the backups and /stats read it.
+          if git diff --quiet -- data/; then
+            echo "Nothing changed. Nothing to commit."
             exit 0
           fi
           git config user.name "ragneselis"
           git config user.email "90755249+ragneselis@users.noreply.github.com"
           git add data/
-          git commit -m "Daily data refresh $(date -u +%Y-%m-%d)"
+          git commit -m "Daily data refresh $(date -u +%Y-%m-%d) ($RUN_TRIGGER)"
           git push
 
       # Email the digest to confirmed subscribers who are due (daily ones every day, weekly ones on
@@ -65,7 +107,7 @@ jobs:
       # and logs a warning on any sending problem, and continue-on-error covers anything else.
       # EMAIL_FROM is a repository variable, set once mail.ragne.me is verified in Resend.
       - name: Send digest
-        if: success()
+        if: success() && steps.guard.outputs.skip != 'true'
         continue-on-error: true
         timeout-minutes: 10
         run: npm run digest

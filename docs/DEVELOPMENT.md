@@ -83,7 +83,7 @@ Ping is a small, curious scout (the pixel block mascot). Every morning he goes o
 - Encouraging toward students, never patronising.
 - "Ping misses you" (the background tab title) is the reference for the tone.
 
-Examples in use: the closing band ("Ping goes out again tomorrow. See you then."), the data note ("Ping went out at 06:00 this morning and found 1,278 roles. Back tomorrow at 06:00.", `scoutNote` in `lib/format.ts`), the empty states ("Nothing here yet" / "Ping will keep sniffing around."), Discover's quiet companies ("Quiet right now. Worth watching."), the digest subject ("Ping found 5 new design jobs for you, 2 within reach"), the 404 ("Ping looked everywhere") and the error page ("Ping tripped over something").
+Examples in use: the closing band ("Ping goes out again tomorrow. See you then."), the data note ("Ping's last trip: 22 Nov at 05:52. Next one every day at 05:47.", `tripNote` in `lib/format.ts`: absolute and in Tallinn time, never "this morning" or "yesterday", formatted on the client from the stored run time, on Jobs, Discover and Market insights), the empty states ("Nothing here yet" / "Ping will keep sniffing around."), Discover's quiet companies ("Quiet right now. Worth watching."), the digest subject ("Ping found 5 new design jobs for you, 2 within reach"), the 404 ("Ping looked everywhere") and the error page ("Ping tripped over something").
 
 ## Alignment
 
@@ -129,12 +129,19 @@ Motion is short and purposeful, set through tokens in `app/globals.css` (`--ease
 
 ## Daily refresh and deploy
 
-`.github/workflows/daily-refresh.yml` runs every day at 04:00 UTC (06:00 in Tallinn in winter, 07:00 in summer) and can be started by hand (Actions, "Daily refresh", Run workflow):
+`.github/workflows/daily-refresh.yml` runs once a day. GitHub delays scheduled workflows at busy times and can skip them (in November 2026 the 04:00 UTC schedule never started a single run), so it has three triggers (times in `lib/schedule.ts`, kept in step with the workflow and `vercel.json`):
+
+- **schedule**, 03:47 UTC (05:47 in Tallinn in winter, 06:47 in summer), off the hour to avoid GitHub's peak;
+- **backup**, a second schedule at 04:41 UTC;
+- **Vercel cron**, 05:20 UTC: Vercel calls `/api/cron/refresh` (only with `Authorization: Bearer $CRON_SECRET`, which Vercel sends), which reads `data/run.json` from main and, unless today's run succeeded or one is running or queued, starts the workflow through the GitHub API (`workflow_dispatch`, input `trigger: vercel-cron`) with `GITHUB_DISPATCH_TOKEN` (a Vercel env var);
+- **manual**: Actions, "Daily refresh", Run workflow.
+
+The workflow's first step checks `data/run.json`: a backup or the Vercel cron stops when today's run (Tallinn date) already succeeded; a manual run always goes ahead. The concurrency group never runs two at once (a later trigger waits, then finds today done). Each run records which trigger started it and when, and /stats ("Runs, last 14 days") shows on-time, late (a backup, or over 30 minutes after 03:47 UTC), missed and manual runs.
 
 1. `npm run fetch`: every source, deduplicated. Postings no longer listed drop out. A source that fails keeps its postings from the last good run and is named in the log; a run that loses every source, or more than half the postings, exits without writing, so the site keeps the previous data.
 2. `npm run extract`: classification and requirements for new postings only (both cached by posting id). `ANTHROPIC_API_KEY` comes from the repository's Actions secret.
-3. `npm run stamp`: writes `data/run.json` (last run, next scheduled run, failed sources), which the data note shows in Tallinn time, and `data/seen.json` (when each posting was first seen), which the email digest uses.
-4. Commits `data/` to main only when postings, classifications or requirements changed. That push deploys on Vercel.
+3. `npm run stamp`: writes `data/run.json` (last run, its trigger and start, the next scheduled run, failed sources and two months of run history), which the data note shows in Tallinn time, and `data/seen.json` (when each posting was first seen), which the email digest uses.
+4. Commits `data/` to main (run.json changes on every run, so every run commits and deploys; the backups read it).
 5. `npm run digest`: emails confirmed subscribers who are due. It can never fail the refresh (it exits 0 with a warning, and the step has `continue-on-error`).
 
 Locally, `npm run refresh` runs the same three steps. The site is on Vercel (production branch main) and reads `data/*.json` at request time (`outputFileTracingIncludes` in `next.config.mjs`), so no local files are needed to build or run it.
