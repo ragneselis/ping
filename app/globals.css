@@ -93,6 +93,9 @@
   /* The closing band: deep emerald with white ink, the same in both themes (13:1 for the text). */
   --band: #064e3b;
   --band-foreground: #ffffff;
+  /* The headline accent (components/accent.tsx) on the band: the dark theme's readout green, 5.06:1 on
+     --band. Everywhere else the accent is --brand-lg, the readout numbers' green. */
+  --brand-on-band: #34d399;
 
   /* Pixel mascots: the square tile each one sits on. */
   --mascot-tile-block: #d1fae5; /* emerald-100 */
@@ -230,6 +233,7 @@
   --color-brand-pale: var(--brand-pale);
   --color-band: var(--band);
   --color-band-foreground: var(--band-foreground);
+  --color-heading-accent: var(--heading-accent, var(--brand-lg));
   --color-hairline: var(--hairline);
   --color-hairline-strong: var(--hairline-strong);
   --color-guide: var(--guide);
@@ -284,7 +288,7 @@
 
   /* Heading scale. One step per role, used everywhere through these tokens (text-h1, text-h2,
      text-title) and set on h1 and h2 by default:
-     - h1, page headlines: 48px on desktop, so "Every current design role sorted into nine
+     - h1, page headlines: 48px on desktop, so "Every current design role sorted into 9
        directions" fits on two lines next to "Start here" at 1440px; scales with the viewport on
        phones (8.2vw, 26px at 320px) and wraps balanced.
      - h2, section headings: 32px, a clear step below h1.

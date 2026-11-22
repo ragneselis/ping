@@ -2,7 +2,7 @@
 
 Design jobs for students at the Estonian Academy of Arts (EKA), updated daily. Live at [ping.ragne.me](https://ping.ragne.me).
 
-Ping collects current design roles from job boards and company career pages, sorts each one into one of nine directions (product, design engineering, AI and behaviour, brand and visual, research and service, customer-facing, game, industrial, other paths) and marks what a graduate can realistically apply for ("within reach") and what is open to someone in Estonia. Discover is a map of the companies in Estonia that hire designers, with their current roles and careers pages, and Market insights counts the skills, tools and experience the postings ask for. Anyone can get new matching jobs by email.
+Ping collects current design roles from job boards and company career pages, sorts each one into one of 9 directions (product, design engineering, AI and behaviour, brand and visual, research and service, customer-facing, game, industrial, other paths) and marks what a graduate can realistically apply for ("within reach") and what is open to someone in Estonia. Discover is a map of the companies in Estonia that hire designers, with their current roles and careers pages, and Market insights counts the skills, tools and experience the postings ask for. Anyone can get new matching jobs by email.
 
 ## How the data works
 

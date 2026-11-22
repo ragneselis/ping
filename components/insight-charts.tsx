@@ -382,7 +382,7 @@ function DataTable({
   );
 }
 
-/** The nine directions in their fixed order, with their colours: the breakdown in tooltips and data tables. */
+/** The 9 directions in their fixed order, with their colours: the breakdown in tooltips and data tables. */
 const CATEGORY_SERIES: HBarSeries[] = CATEGORIES.map((c) => ({
   key: c,
   label: CATEGORY_META[c].short,

@@ -6,6 +6,7 @@ import {
   DistributionChart,
   RankingChart,
 } from "@/components/insight-charts";
+import { Accent } from "@/components/accent";
 import { Band } from "@/components/blueprint";
 import { CategoryDot } from "@/components/category";
 import { TabContent, tabClassName } from "@/components/filter-controls";
@@ -27,6 +28,7 @@ import {
   CATEGORY_META,
   categoryColor,
   REACH_DEFINITION,
+  DIRECTION_COUNT,
 } from "@/lib/categories";
 import { CATEGORY_LABEL, type Category } from "@/lib/types";
 import { IconText } from "@/components/icon-text";
@@ -119,7 +121,9 @@ export default async function InsightsPage({
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
-        <h1 className="max-w-[28ch]">What today&rsquo;s design roles ask for</h1>
+        <h1 className="max-w-[28ch]">
+          What today&rsquo;s design roles <Accent>ask for</Accent>
+        </h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-muted-foreground">
           Ping counted the skills, tools and experience every current posting
           asks for, by direction.
@@ -157,7 +161,7 @@ export default async function InsightsPage({
           <p className="max-w-prose text-muted-foreground">
             {category
               ? CATEGORY_META[category].blurb
-              : "Every design role on Ping, all nine directions together."}
+              : `Every design role on Ping, all ${DIRECTION_COUNT} directions together.`}
           </p>
           {early && (
             <p className="text-sm text-muted-foreground">{EARLY_SIGNAL_LINE}</p>

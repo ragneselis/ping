@@ -18,7 +18,8 @@ import { RestoreView } from "@/components/view-memory";
 import { VIEW_RESTORE_SCRIPT } from "@/lib/view-memory";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
-import { CATEGORY_META, REACH_DEFINITION } from "@/lib/categories";
+import { Accent } from "@/components/accent";
+import { CATEGORY_META, DIRECTION_COUNT, REACH_DEFINITION } from "@/lib/categories";
 import {
   applyFilters,
   companyName,
@@ -125,7 +126,7 @@ export default async function JobsPage({
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
           <div className="grid gap-5">
             <h1 className="max-w-[28ch]">
-              Every design role Ping found, in nine directions
+              Every design role Ping found, in <Accent>{DIRECTION_COUNT} directions</Accent>
             </h1>
             <p className="max-w-prose text-lg leading-relaxed text-muted-foreground">
               {REACH_DEFINITION}

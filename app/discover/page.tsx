@@ -13,6 +13,7 @@ import { Panel } from "@/components/panel";
 import { ResultsFade } from "@/components/results-fade";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
+import { Accent } from "@/components/accent";
 import { CATEGORY_META } from "@/lib/categories";
 import { shareMetadata } from "@/lib/share";
 import { cn } from "@/lib/utils";
@@ -53,7 +54,9 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
     <>
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="discover" />
-        <h1 className="max-w-[28ch]">Places Ping keeps an eye on</h1>
+        <h1 className="max-w-[28ch]">
+          Places Ping <Accent>keeps an eye on</Accent>
+        </h1>
         <p className="max-w-[60ch] text-lg leading-relaxed text-muted-foreground">
           Places in Estonia that hire designers. Some are hiring now, some are worth watching, all worth an open application.
         </p>
