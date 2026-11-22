@@ -1,7 +1,7 @@
 "use client";
 
 import { Volume2, VolumeX } from "lucide-react";
-import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
+import { ButtonIcon, ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { useEffect, useSyncExternalStore } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { isSoundOn, isTouchDevice, OWN_CLICK_SOUND, setSoundOn, sound, subscribeSound, subscribeTouch } from "@/lib/sound";
@@ -161,7 +161,7 @@ export function SoundToggle({ className }: { className?: string }) {
           />
         }
       >
-        <Icon aria-hidden className={ICON_SIZE.lucide} strokeWidth={1.75} />
+        <ButtonIcon icon={Icon} className={ICON_SIZE.lucide} strokeWidth={1.75} />
       </TooltipTrigger>
       <TooltipContent>{on ? "Sound on" : "Sound off"}</TooltipContent>
     </Tooltip>

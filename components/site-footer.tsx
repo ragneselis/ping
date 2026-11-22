@@ -2,7 +2,7 @@ import { Coffee } from "lucide-react";
 import Link from "next/link";
 import { GithubIcon } from "@/components/brand-icons";
 import { Band } from "@/components/blueprint";
-import { ICON_SIZE, IconLink } from "@/components/icon-button";
+import { ButtonIcon, ICON_SIZE, IconLink } from "@/components/icon-button";
 
 /** Ko-fi page, the same "Buy me a coffee" link as in the Jon project (src/components/account-menu.tsx). */
 const COFFEE_URL = "https://ko-fi.com/ragneselis";
@@ -37,7 +37,7 @@ export function SiteFooter() {
       </p>
       <div className="flex items-center gap-2">
         <IconLink href={COFFEE_URL} label="Buy me a coffee (opens in a new tab)" tooltip="Buy me a coffee">
-          <Coffee aria-hidden className={ICON_SIZE.lucide} strokeWidth={1.75} />
+          <ButtonIcon icon={Coffee} className={ICON_SIZE.lucide} strokeWidth={1.75} />
         </IconLink>
         <IconLink href={REPO_URL} label="Source code on GitHub (opens in a new tab)" tooltip="Source code on GitHub">
           <GithubIcon className={ICON_SIZE.glyph} />

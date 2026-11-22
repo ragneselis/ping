@@ -8,7 +8,7 @@ import { FRAME_COLUMN } from "@/components/blueprint";
 import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
 import { LogoMark } from "@/components/logo";
 import { openSubscribe, SubscribeDialog } from "@/components/subscribe-dialog";
-import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
+import { ButtonIcon, ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { SoundToggle } from "@/components/sound";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeMenu } from "@/components/theme-toggle";
@@ -41,7 +41,7 @@ export function SubscribeButton() {
     <SubscribeDialog
       trigger={
         <Button size="sm" iconOnlyBelow="sm">
-          <BellRing data-icon="inline-start" strokeWidth={1.75} />
+          <ButtonIcon icon={BellRing} data-icon="inline-start" strokeWidth={1.75} />
           <ButtonLabel>Get new jobs</ButtonLabel>
         </Button>
       }

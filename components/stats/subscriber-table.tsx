@@ -4,7 +4,7 @@ import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ICON_BUTTON } from "@/components/icon-button";
+import { ButtonIcon, ICON_BUTTON } from "@/components/icon-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -82,7 +82,7 @@ export function SubscriberTable({ rows }: { rows: SubscriberListRow[] }) {
                       <TooltipTrigger
                         render={<button type="button" aria-label={`Delete ${r.email}`} onClick={() => setAsking(r.id)} className={cn(ICON_BUTTON, "ml-auto")} />}
                       >
-                        <Trash2 aria-hidden className="size-4" strokeWidth={1.75} />
+                        <ButtonIcon icon={Trash2} className="size-4" strokeWidth={1.75} />
                       </TooltipTrigger>
                       <TooltipContent>Delete subscriber</TooltipContent>
                     </Tooltip>

@@ -130,7 +130,7 @@ export default async function JobsPage({
             <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
               {REACH_DEFINITION}
             </p>
-            <DataNote lastRun={lastRun} />
+            <DataNote lastRun={lastRun} roles={cards.length} />
           </div>
           {/* The real shortcut for an EKA graduate, on every screen size. */}
           <Panel

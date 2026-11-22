@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { DiscordIcon, SlackIcon } from "@/components/brand-icons";
 import { openSubscribe } from "@/components/subscribe-dialog";
-import { ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
+import { ButtonIcon, ICON_BUTTON, ICON_SIZE } from "@/components/icon-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { OWN_CLICK_SOUND, sound } from "@/lib/sound";
 import { IconText } from "@/components/icon-text";
@@ -73,7 +73,7 @@ export function ThemeMenu() {
             />
           }
         >
-          <Current aria-hidden className={ICON_SIZE.lucide} strokeWidth={1.75} />
+          <ButtonIcon icon={Current} className={ICON_SIZE.lucide} strokeWidth={1.75} />
         </TooltipTrigger>
         <TooltipContent>Colour theme</TooltipContent>
       </Tooltip>

@@ -57,7 +57,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
         <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
           Places in Estonia that hire designers. Some are hiring now, some are worth watching, all worth an open application.
         </p>
-        <DataNote lastRun={lastRun} />
+        <DataNote lastRun={lastRun} roles={cards.length} />
       </Band>
 
       <Band aria-labelledby={RESULTS_ID} inner="grid gap-6 py-8 sm:py-10">

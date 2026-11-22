@@ -47,7 +47,9 @@ const buttonVariants = cva(
        */
       iconOnlyBelow: {
         none: "",
-        sm: "max-sm:size-11 max-sm:gap-0 max-sm:p-0 max-sm:has-data-[icon=inline-start]:pl-0 max-sm:has-data-[icon=inline-end]:pr-0 max-sm:[&_svg]:size-5! max-sm:[&_[data-slot=button-label]]:sr-only",
+        // No label to share a baseline with, so the icon is centred on both axes (not the IconText shift),
+        // plus its optical offset from ButtonIcon (components/icon-button.tsx).
+        sm: "max-sm:size-11 max-sm:gap-0 max-sm:p-0 max-sm:items-center max-sm:has-data-[icon=inline-start]:pl-0 max-sm:has-data-[icon=inline-end]:pr-0 max-sm:[&_svg]:size-5! max-sm:[&>svg]:self-center max-sm:[&>svg]:[translate:var(--icon-optical,0_0)] max-sm:[&_[data-slot=button-label]]:sr-only",
       },
     },
     defaultVariants: {

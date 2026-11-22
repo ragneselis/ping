@@ -1,4 +1,4 @@
-import { runTimeTallinn, TZ } from "./schedule";
+import { TZ } from "./schedule";
 
 /** The one date format on both pages: "20 November 2026". Safe to import anywhere (no server-only code). */
 export const formatUpdated = (iso: string | null) =>
@@ -7,13 +7,17 @@ export const formatUpdated = (iso: string | null) =>
 const clock = (d: Date) => new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false }).format(d);
 
 /**
- * The data note: "Ping's last trip: 22 Nov at 05:52. Next one every day at 05:47." Absolute, in Tallinn
- * time, from the last successful run; never relative wording, so it cannot go stale on an open page.
+ * The data note: "Ping last went out on 22 November at 08:36 and found 1,281 roles. Next trip every
+ * morning at 06:00." The first sentence is the last successful run, absolute and in Tallinn time; the
+ * second is fixed (the schedule's cron minute and its backups are not the reader's business). Never
+ * relative wording, so it cannot go stale on an open page.
  */
-export function tripNote(lastRun: string | null, now = new Date()): string {
-  const next = `Next one every day at ${runTimeTallinn(now)}.`;
-  if (!lastRun) return `Ping's last trip is not recorded yet. ${next}`;
+export const NEXT_TRIP = "Next trip every morning at 06:00.";
+
+export function tripNote(lastRun: string | null, roles: number): string {
+  const found = `${roles.toLocaleString("en-GB")} ${roles === 1 ? "role" : "roles"}`;
+  if (!lastRun) return `Ping is tracking ${found}. ${NEXT_TRIP}`;
   const last = new Date(lastRun);
-  const day = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, day: "numeric", month: "short" }).format(last);
-  return `Ping's last trip: ${day} at ${clock(last)}. ${next}`;
+  const day = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, day: "numeric", month: "long" }).format(last);
+  return `Ping last went out on ${day} at ${clock(last)} and found ${found}. ${NEXT_TRIP}`;
 }

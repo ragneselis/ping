@@ -113,6 +113,46 @@ async function measure(page: Page): Promise<Report> {
       // Hanging icons, measured against the text element they hang from.
       for (const el of document.querySelectorAll(".icon-hang")) check(el, firstText(el.parentElement), describe(el));
 
+      // Icon-only buttons and links (no visible text: header icons, the bell on phones, footer icons):
+      // the icon's drawn shape (its paths' bounding box, not the 24 x 24 viewBox) must sit on the
+      // button's centre. Text that is only clipped away (a hidden label) does not count as visible.
+      const visibleText = (el: Element) => {
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        let t: Node | null;
+        while ((t = walker.nextNode())) {
+          if (!t.textContent!.trim()) continue;
+          let hidden = false;
+          for (let a: Element | null = t.parentElement; a && a !== el.parentElement; a = a.parentElement) {
+            const ar = a.getBoundingClientRect();
+            if (a.matches(".sr-only, svg") || ar.width <= 1 || ar.height <= 1) hidden = true;
+          }
+          if (!hidden) return true;
+        }
+        return false;
+      };
+      for (const el of document.querySelectorAll("button, a[href]")) {
+        const svg = el.querySelector("svg");
+        if (!svg || !shown(el) || el.closest("[data-mascot-intro]") || visibleText(el)) continue;
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        for (const g of svg.querySelectorAll<SVGGraphicsElement>("path, circle, rect, line, polyline, polygon, ellipse")) {
+          const b = g.getBBox();
+          const m = g.getScreenCTM();
+          if (!m || (!b.width && !b.height)) continue;
+          for (const [x, y] of [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]]) {
+            const px = m.a * x + m.c * y + m.e, py = m.b * x + m.d * y + m.f;
+            x0 = Math.min(x0, px); x1 = Math.max(x1, px); y0 = Math.min(y0, py); y1 = Math.max(y1, py);
+          }
+        }
+        if (!isFinite(x0)) continue;
+        const r = el.getBoundingClientRect();
+        const dx = (x0 + x1) / 2 - (r.left + r.width / 2);
+        const dy = (y0 + y1) / 2 - (r.top + r.height / 2);
+        const label = `icon-only "${(el.getAttribute("aria-label") ?? svg.getAttribute("class") ?? "").slice(0, 30)}"`;
+        icons++;
+        offsets.push({ label, off: Math.round(Math.max(Math.abs(dx), Math.abs(dy)) * 100) / 100 });
+        if (Math.abs(dx) > ICON_TOLERANCE || Math.abs(dy) > ICON_TOLERANCE) failures.push(`icon-only button off centre by (${dx.toFixed(2)}, ${dy.toFixed(2)})px: ${label}`);
+      }
+
       // Baseline rows: words that share a visual line share one baseline.
       for (const row of document.querySelectorAll("[class*='baseline-row']")) {
         const cs = getComputedStyle(row);

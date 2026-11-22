@@ -124,7 +124,7 @@ export default async function InsightsPage({
           Ping counted the skills, tools and experience every current posting
           asks for, by direction.
         </p>
-        <DataNote lastRun={lastRun} />
+        <DataNote lastRun={lastRun} roles={jobs.length} />
       </Band>
 
       {/* ---------- One direction (or all) ---------- */}
