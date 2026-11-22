@@ -1,6 +1,8 @@
 {
-  "lastRun": "2026-11-21T20:32:08.469Z",
-  "nextRun": "2026-11-22T04:00:00.000Z",
+  "lastRun": "2026-11-22T06:36:41.382Z",
+  "nextRun": "2026-11-23T04:00:00.000Z",
   "schedule": "daily at 04:00 UTC",
-  "failedSources": []
+  "failedSources": [
+    "Telia board"
+  ]
 }
