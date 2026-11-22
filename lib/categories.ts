@@ -47,4 +47,6 @@ export const categoryTextColor = (c: Category) => `var(${CATEGORY_TOKEN[c]}-text
 export const categoryVars = (c: Category) => ({ "--cat": categoryColor(c), "--cat-text": categoryTextColor(c) }) as React.CSSProperties;
 
 /** One-line definition shown wherever "within reach" appears (the rule lives in lib/view.ts isWithinReach). */
-export const REACH_DEFINITION = "Within reach: internships, junior roles and roles asking for 0 to 2 years of experience.";
+/** The years a role may ask for and still be within reach, as written everywhere on the site and in emails. */
+export const REACH_YEARS = "0-2 years";
+export const REACH_DEFINITION = `Within reach: internships, junior roles and roles asking for ${REACH_YEARS} of experience.`;

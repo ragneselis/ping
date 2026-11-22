@@ -2,7 +2,7 @@
  * Server-side view layer for the interface: loads the data once per change on disk,
  * turns postings into light job cards, applies URL filters and computes market insights.
  */
-import { CATEGORY_META } from "@/lib/categories";
+import { CATEGORY_META, REACH_YEARS } from "@/lib/categories";
 import { statSync } from "node:fs";
 import path from "node:path";
 import { loadClassifiedJobs, loadCompanies, loadSources, tally, tallyKey, loadRun } from "./data";
@@ -21,7 +21,7 @@ export const isEarlySignal = (postings: number) => postings < EARLY_SIGNAL_THRES
  * Can a graduate realistically apply?
  * - The title states a level: only intern or junior count.
  * - Otherwise the posting's level: intern or junior count.
- * - Otherwise the years asked decide: 0 to 2 years yes, more no.
+ * - Otherwise the years asked decide: 0-2 years yes, more no.
  * - Nothing stated anywhere (no level, no years): yes.
  */
 export function isWithinReach(j: ClassifiedJob): boolean {
@@ -105,12 +105,12 @@ export function levelBucket(j: ClassifiedJob): Level {
 
 /**
  * Level text on a card. When the level is only the model's guess and the posting asks for
- * 0 to 2 years (so it is within reach), the years are the honest label, not "Mid".
+ * 0-2 years (so it is within reach), the years are the honest label, not "Mid".
  */
 function cardLevel(j: ClassifiedJob): string {
   const e = j.extraction;
   const guessed = j.titleSeniority === "unspecified" && !["intern", "junior", "unspecified"].includes(j.seniority);
-  if (guessed && isWithinReach(j) && typeof e?.yearsMin === "number" && e.yearsMin <= 2) return "0 to 2 yrs";
+  if (guessed && isWithinReach(j) && typeof e?.yearsMin === "number" && e.yearsMin <= 2) return REACH_YEARS;
   return LEVEL_LABEL[j.seniority] ?? j.seniority;
 }
 
