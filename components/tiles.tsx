@@ -112,7 +112,7 @@ const ARRANGEMENTS: Record<"jobs" | "discover" | "insights", Cell[]> = {
   ],
 };
 
-const MASCOT: Record<keyof typeof ARRANGEMENTS, MascotName> = { jobs: "block", discover: "block", insights: "student" };
+const MASCOT: Record<keyof typeof ARRANGEMENTS, MascotName> = { jobs: "block", discover: "scout", insights: "student" };
 
 /**
  * The hero's tile band: a fixed-height spacer whose height matches the mascot (64px on phones,

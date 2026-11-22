@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BLOCK, MASCOT_PALETTE as PALETTE, STUDENT } from "@/lib/mascots";
+import { BLOCK, MASCOT_PALETTE as PALETTE, SCOUT, STUDENT } from "@/lib/mascots";
 import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
@@ -17,9 +17,11 @@ import { cn } from "@/lib/utils";
  * whole-pixel offset of the sprite inside its tile. Nothing is ever eased or scaled between pixels, so
  * every frame is as crisp as the still. Under prefers-reduced-motion the mascot simply stands still.
  *   entrance  block: drops in, stretches as it falls, squashes on landing. student: pops up from below.
- *   idle      both blink (eyes closed for one frame) at irregular intervals.
+ *             scout: rises with the binoculars up, then lowers them.
+ *   idle      all three blink (eyes closed for one frame) at irregular intervals.
  *   hover/tap block: waves an arm and hops. student: looks left and right, a pixel "ping" above the
- *             head. At most once every 600ms, with the mascot chirp.
+ *             head. scout: raises the binoculars, the lenses glint, the same "ping" above the hat.
+ *             At most once every 600ms, with the mascot chirp.
  * Decorative only: aria-hidden, never covering text.
  */
 
@@ -43,6 +45,28 @@ const FRAMES = {
       8: "k.kgggkkkggggk..",
     }),
   },
+  scout: {
+    base: SCOUT,
+    blink: withRows(SCOUT, { 6: "...kkkwwwwkkk..." }),
+    // Binoculars up to the eyes (the chest goes back to plain shirt); lenses in the light green.
+    look: withRows(SCOUT, {
+      5: "...kkk.ww.kkk...",
+      6: "..kklkkwwkklkk..",
+      7: "...kkk.ww.kkk...",
+      12: "..kggggggggggk..",
+      13: "..kggggggggggk..",
+      14: "..kggggggggggk..",
+    }),
+    // The same, lenses catching the light (signal green).
+    glint: withRows(SCOUT, {
+      5: "...kkk.ww.kkk...",
+      6: "..kkrkkwwkkrkk..",
+      7: "...kkk.ww.kkk...",
+      12: "..kggggggggggk..",
+      13: "..kggggggggggk..",
+      14: "..kggggggggggk..",
+    }),
+  },
   student: {
     base: STUDENT,
     blink: withRows(STUDENT, { 7: "...kkkkwwkkkk..." }),
@@ -58,7 +82,24 @@ const PING = [RING([7, 8]), RING([5, 10]), RING([5, 10, 3, 12]), RING([3, 12]), 
 type Frame = { rows: readonly string[]; dy?: number; fx?: [number, number][] };
 type Step = Frame & { ms: number };
 
-const SEQUENCES: Record<"block" | "student", { intro: Step[]; play: Step[] }> = {
+const SEQUENCES: Record<"block" | "student" | "scout", { intro: Step[]; play: Step[] }> = {
+  scout: {
+    intro: [
+      { rows: FRAMES.scout.look, dy: 16, ms: 60 },
+      { rows: FRAMES.scout.look, dy: 9, ms: 70 },
+      { rows: FRAMES.scout.look, dy: 3, ms: 70 },
+      { rows: FRAMES.scout.look, dy: 0, ms: 260 },
+      { rows: FRAMES.scout.glint, dy: 0, ms: 120 },
+      { rows: FRAMES.scout.base, dy: 0, ms: 0 },
+    ],
+    play: [
+      { rows: FRAMES.scout.look, fx: PING[0], ms: 90 },
+      { rows: FRAMES.scout.glint, fx: PING[1], ms: 90 },
+      { rows: FRAMES.scout.look, fx: PING[2], ms: 90 },
+      { rows: FRAMES.scout.glint, fx: PING[3], ms: 120 },
+      { rows: FRAMES.scout.base, fx: PING[4], ms: 0 },
+    ],
+  },
   block: {
     intro: [
       { rows: FRAMES.block.stretch, dy: -16, ms: 40 },
@@ -97,7 +138,7 @@ const SEQUENCES: Record<"block" | "student", { intro: Step[]; play: Step[] }> = 
   },
 };
 
-const ART = { block: BLOCK, student: STUDENT } as const;
+const ART = { block: BLOCK, student: STUDENT, scout: SCOUT } as const;
 export type MascotName = keyof typeof ART;
 
 const prefersReduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;

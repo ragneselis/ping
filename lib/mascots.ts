@@ -33,6 +33,29 @@ export const BLOCK = [
   "................",
 ];
 
+/**
+ * Mascot A, the scout (Discover): a ranger hat with a brim, binoculars held at the chest, the same
+ * outline, palette and flat mouth as the block and the student.
+ */
+export const SCOUT = [
+  "................",
+  "......kkkk......",
+  ".....kddddk.....",
+  "....kdlddddk....",
+  "..kkkkkkkkkkkk..",
+  "...kwwwwwwwwk...",
+  "...kwkwwwwkwk...",
+  "...kwwwwwwwwk...",
+  "...kwwwkkwwwk...",
+  "....kwwwwwwk....",
+  "...kkkkkkkkkk...",
+  "..kggggggggggk..",
+  "..kgkkkggkkkgk..",
+  "..kgklkggklkgk..",
+  "..kgkkkggkkkgk..",
+  "..kggggggggggk..",
+];
+
 export const STUDENT = [
   "................",
   "................",

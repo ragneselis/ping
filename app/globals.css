@@ -97,6 +97,7 @@
   /* Pixel mascots: the square tile each one sits on. */
   --mascot-tile-block: #d1fae5; /* emerald-100 */
   --mascot-tile-student: #a7f3d0; /* emerald-200 */
+  --mascot-tile-scout: #d1fae5; /* emerald-100 */
 
   /* Blueprint frame in the rule tokens: guide lines on the column edges and between sections,
      fine hatching in the gutters (GrönLoop's diagonal hatch stroke). */
@@ -176,6 +177,7 @@
   --px-5: #064e3b; /* emerald-900 */
   --mascot-tile-block: #064e3b; /* dark emerald; the pixel colours stay the same */
   --mascot-tile-student: #064e3b;
+  --mascot-tile-scout: #064e3b;
 }
 
 @media (min-width: 48rem) {
