@@ -312,6 +312,14 @@
   h1,
   h2 {
     font-stretch: 87.5%;
+    /* Half of Martian Mono's cap height, for icon-slot where the cap unit is missing. */
+    --cap-half: 0.4em;
+  }
+  /* Geist text inside a heading goes back to Geist's half cap height. */
+  .font-sans,
+  .font-mono,
+  .label-mono {
+    --cap-half: 0.355em;
   }
   h1,
   h2 {
@@ -435,15 +443,26 @@
   display: inline-flex;
   align-items: baseline;
 }
+/* Engines without the cap unit (iOS Safari before 17.2, Chrome before 118) drop a translate that uses it,
+   which leaves the icon's bottom on the baseline: about 2px low beside 14px text. For them the shift uses
+   the text font's half cap height as a token instead (--cap-half: Geist and Geist Mono 0.355em, Martian
+   Mono 0.4em, measured; set on headings below). Where 1cap works it wins, exactly. The alignment check
+   runs a case that forces this fallback, in Chromium and WebKit. */
 @utility icon-slot {
   flex: none;
   align-self: baseline;
-  translate: 0 calc(50% - 0.5cap);
+  translate: 0 calc(50% - var(--cap-half, 0.355em));
+  @supports (height: 1cap) {
+    translate: 0 calc(50% - 0.5cap);
+  }
 }
 @utility icon-hang {
   display: inline-block;
   vertical-align: baseline;
-  translate: 0 calc(50% - 0.5cap);
+  translate: 0 calc(50% - var(--cap-half, 0.355em));
+  @supports (height: 1cap) {
+    translate: 0 calc(50% - 0.5cap);
+  }
 }
 
 @utility label-mono {

@@ -16,12 +16,15 @@ const BASELINE_TOLERANCE = 0.6;
 
 const PAGES = ["/", "/discover", "/insights", ...(process.env.STATS_PASSWORD ? ["/stats"] : [])];
 const SIZES = [
-  { name: "1440", width: 1440, height: 900, isMobile: false },
-  { name: "375", width: 375, height: 812, isMobile: true },
+  { name: "1440", width: 1440, height: 900, isMobile: false, deviceScaleFactor: 1 },
+  { name: "375", width: 375, height: 812, isMobile: true, deviceScaleFactor: 2 },
+  // iPhone 15: 393 x 852 CSS pixels at 3x, as Safari on the phone renders it (baseline rounding differs by scale).
+  { name: "iphone15", width: 393, height: 852, isMobile: true, deviceScaleFactor: 3 },
 ];
 const THEMES = ["light", "dark"] as const;
 
 interface Report {
+  offsets: { label: string; off: number }[];
   icons: number;
   rows: number;
   wrapped: number;
@@ -37,6 +40,7 @@ async function measure(page: Page): Promise<Report> {
       let icons = 0;
       let rows = 0;
       let wrapped = 0;
+      const offsets: { label: string; off: number }[] = [];
 
       const shown = (el: Element) => {
         const r = el.getBoundingClientRect();
@@ -93,6 +97,7 @@ async function measure(page: Page): Promise<Report> {
         if (Math.max(line.lines, linesIn(container ?? null)) > 1) wrapped++;
         const r = mark.getBoundingClientRect();
         const off = r.top + r.height / 2 - line.capMid;
+        offsets.push({ label, off: Math.round(off * 100) / 100 });
         if (Math.abs(off) > ICON_TOLERANCE) failures.push(`icon ${off.toFixed(2)}px off the cap height: ${label}`);
       };
 
@@ -132,7 +137,7 @@ async function measure(page: Page): Promise<Report> {
           if (spread > BASELINE_TOLERANCE) failures.push(`baseline ${spread.toFixed(2)}px apart: ${describe(row)} [${l.map((e) => e.text).join(" | ")}]`);
         }
       }
-      return { icons, rows, wrapped, failures: [...new Set(failures)] };
+      return { icons, rows, wrapped, failures: [...new Set(failures)], offsets };
     },
     { ICON_TOLERANCE, BASELINE_TOLERANCE },
   );
@@ -162,18 +167,42 @@ async function open(page: Page, path: string, theme: (typeof THEMES)[number]) {
 }
 
 for (const size of SIZES) {
-  test.describe(`${size.name}px`, () => {
-    test.use({ viewport: { width: size.width, height: size.height }, isMobile: size.isMobile, hasTouch: size.isMobile });
+  test.describe(`${size.name}`, () => {
+    test.use({ viewport: { width: size.width, height: size.height }, isMobile: size.isMobile, hasTouch: size.isMobile, deviceScaleFactor: size.deviceScaleFactor });
     for (const theme of THEMES) {
       for (const path of PAGES) {
         test(`${path} ${theme}`, async ({ page }) => {
           await open(page, path, theme);
           const r = await measure(page);
-          console.log(`${path} ${size.name}px ${theme}: ${r.icons} icons, ${r.rows} baseline rows, ${r.wrapped} wrapped`);
+          console.log(`${path} ${size.name} ${theme}: ${r.icons} icons, ${r.rows} baseline rows, ${r.wrapped} wrapped`);
+          // ALIGN_REPORT=1: every distinct pairing's worst offset, for comparing engines.
+          if (process.env.ALIGN_REPORT) {
+            const worst = new Map<string, number>();
+            for (const { label, off } of r.offsets) {
+              const key = (label.match(/"([^"]{0,30})/)?.[1] ?? label).trim() || label.slice(0, 30);
+              if (Math.abs(off) > Math.abs(worst.get(key) ?? 0)) worst.set(key, off);
+              else if (!worst.has(key)) worst.set(key, off);
+            }
+            console.log(`REPORT ${test.info().project.name} ${path} ${size.name} ${theme} ${JSON.stringify(Object.fromEntries(worst))}`);
+          }
           expect(r.icons, "found icons to measure").toBeGreaterThan(0);
           expect(r.failures, r.failures.join("\n")).toEqual([]);
         });
       }
+
+      // Engines without the cap unit (older iOS Safari): the same rule's fallback (--cap-half), forced here
+      // by replacing the cap-unit declaration, must hold within the same tolerance.
+      test(`no cap unit fallback ${theme}`, async ({ page }) => {
+        await open(page, "/insights", theme);
+        await page.addStyleTag({ content: ".icon-slot, .icon-hang { translate: 0 calc(50% - var(--cap-half, 0.355em)) !important; }" });
+        await page.evaluate(() => {
+          const note = document.querySelector<HTMLElement>("[data-note]");
+          if (note) note.style.maxWidth = "12rem";
+        });
+        const r = await measure(page);
+        expect(r.icons, "found icons to measure").toBeGreaterThan(0);
+        expect(r.failures, r.failures.join("\n")).toEqual([]);
+      });
 
       // Wrapping: the data note narrowed so its sentence runs over several lines; the icon stays on line one.
       test(`wrapped data note ${theme}`, async ({ page }) => {
