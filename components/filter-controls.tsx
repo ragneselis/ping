@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from "react";
+import { useId, type ComponentProps, type ReactNode } from "react";
 import { CategoryDot } from "@/components/category";
 import type { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -40,6 +40,15 @@ export function DataLabel({ children, className, ...rest }: { children: ReactNod
       {children}
     </span>
   );
+}
+
+/**
+ * A row of filter controls (Segmented, a count, a button). The one breakpoint rule for them: on phones
+ * a full-width column, each control on its own line with its label above it; from sm one baseline row
+ * that wraps. Callers set only the sm gap between controls.
+ */
+export function FilterRow({ className, ...props }: ComponentProps<"div">) {
+  return <div className={cn("grid w-full gap-4 sm:baseline-row sm:w-auto sm:flex-wrap", className)} {...props} />;
 }
 
 export interface SegmentItem {

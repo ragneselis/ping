@@ -4,6 +4,7 @@ import { ArrowDown, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   DataLabel,
+  FilterRow,
   Segmented,
   TabContent,
   tabClassName,
@@ -126,7 +127,7 @@ export function JobFilters({
           </button>
         ))}
       </TabRow>
-      <div className="grid gap-4 sm:baseline-row sm:flex-wrap sm:gap-x-8">
+      <FilterRow className="sm:gap-x-8">
         <Segmented
           label="Level"
           items={LEVEL_ITEMS}
@@ -157,7 +158,7 @@ export function JobFilters({
             Reset
           </Button>
         )}
-      </div>
+      </FilterRow>
     </div>
   );
 }

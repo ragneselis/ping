@@ -19,6 +19,7 @@ import { VIEW_RESTORE_SCRIPT } from "@/lib/view-memory";
 import { HeroTiles } from "@/components/tiles";
 import { Button } from "@/components/ui/button";
 import { Accent } from "@/components/accent";
+import { FilterRow } from "@/components/filter-controls";
 import { CATEGORY_META, DIRECTION_COUNT, REACH_DEFINITION } from "@/lib/categories";
 import {
   applyFilters,
@@ -167,7 +168,7 @@ export default async function JobsPage({
             <ResultsTarget />
             <RestoreView />
           </Suspense>
-          <div className="baseline-row flex-wrap gap-x-5 gap-y-2">
+          <FilterRow className="sm:gap-x-5 sm:gap-y-2">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-foreground">
                 {results.length.toLocaleString("en-GB")}
@@ -177,7 +178,7 @@ export default async function JobsPage({
             <Suspense fallback={<SortControlFallback sort={filters.sort} />}>
               <SortControl sort={filters.sort} />
             </Suspense>
-          </div>
+          </FilterRow>
         </div>
 
         <Suspense>
