@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Martian_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Quantico } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { ClosingBand } from "@/components/closing-band";
@@ -13,8 +13,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SHARE_DESCRIPTION, shareMetadata } from "@/lib/share";
 import "./globals.css";
 
-// Display face: variable weight plus the width axis, so headings can run condensed (see globals.css).
-const martian = Martian_Mono({ subsets: ["latin", "latin-ext"], weight: "variable", axes: ["wdth"], variable: "--font-martian" });
+// Display face (--font-heading in globals.css): Quantico, 400 and 700; headings and numbers are 700.
+const quantico = Quantico({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-quantico" });
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB" className={`${martian.variable} ${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${quantico.variable} ${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <TooltipProvider>

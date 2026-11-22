@@ -26,7 +26,7 @@ export function Wordmark() {
   return (
     // Ping's mark: the block mascot's face, 8 x 8 pixels at 2px (phones) or 3px per pixel, on the
     // wordmark's capitals (IconText).
-    <IconText as={Link} href="/" className="shrink-0 gap-2 font-heading text-lg font-semibold tracking-tight sm:text-xl" aria-label="Ping home" icon={<LogoMark className="size-4 sm:size-6" />}>
+    <IconText as={Link} href="/" className="shrink-0 gap-2 font-heading text-lg sm:text-xl" aria-label="Ping home" icon={<LogoMark className="size-4 sm:size-6" />}>
       Ping
     </IconText>
   );

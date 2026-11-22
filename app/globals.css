@@ -105,9 +105,14 @@
   --frame-hatch: #1010140f;
 
   --font-sans: var(--font-geist), Geist, ui-sans-serif, system-ui, sans-serif;
-  /* Martian Mono for headings, panel titles, the wordmark and the big readout numbers: a monospaced
-     display face that sits with the pixel art. Run condensed and tight (see the base layer). */
-  --font-heading: var(--font-martian), "Martian Mono", ui-monospace, monospace;
+  /* Quantico for headings, panel titles, the wordmark and the big readout numbers: a squared display
+     face that sits with the pixel art. Always 700; its spacing is the heading tokens below. */
+  --font-heading: var(--font-quantico), "Quantico", ui-sans-serif, system-ui, sans-serif;
+  /* Heading spacing, for every display line set in --font-heading (h1, h2, panel titles, readout
+     numbers, the wordmark): Quantico wants only a touch of negative tracking, and 1.1 leading keeps
+     large headings one compact block with room for descenders. */
+  --heading-tracking: -0.01em;
+  --heading-leading: 1.1;
   --font-heading-text: var(--font-heading);
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
 
@@ -285,9 +290,9 @@
      - h2, section headings: 32px, a clear step below h1.
      - title, panel titles: 18px. */
   --text-h1: clamp(1.625rem, 8.2vw, 3rem);
-  --text-h1--line-height: 1.02;
+  --text-h1--line-height: var(--heading-leading);
   --text-h2: clamp(1.5rem, 5.5vw, 2rem);
-  --text-h2--line-height: 1.1;
+  --text-h2--line-height: var(--heading-leading);
   --text-title: 1.125rem;
   --text-title--line-height: 1.3;
 }
@@ -326,15 +331,15 @@
     /* Fine 45-degree hatching on the ground; the white frame column covers it, so it only shows in the gutters. */
     background-image: repeating-linear-gradient(45deg, var(--frame-hatch) 0 1px, transparent 1px 9px);
   }
-  /* GrönLoop heading metrics: the hero at -0.02em, section headings at -0.012em. */
-  /* Martian Mono's letterforms are wide: everything set in it runs at 87.5% width,
-     and the large headings close up their tracking so they read as one block. */
+  /* Everything in the display face: weight 700 and the heading tracking, from the tokens, so no
+     element sets its own. */
   .font-heading,
   h1,
   h2 {
-    font-stretch: 87.5%;
-    /* Half of Martian Mono's cap height, for icon-slot where the cap unit is missing. */
-    --cap-half: 0.4em;
+    font-weight: 700;
+    letter-spacing: var(--heading-tracking);
+    /* Half of Quantico's cap height, for icon-slot where the cap unit is missing. */
+    --cap-half: 0.35em;
   }
   /* Geist text inside a heading goes back to Geist's half cap height. */
   .font-sans,
@@ -345,13 +350,10 @@
   h1,
   h2 {
     font-family: var(--font-heading);
-    font-weight: 600;
-    letter-spacing: -0.03em;
   }
   h1 {
     font-size: var(--text-h1);
     line-height: var(--text-h1--line-height);
-    letter-spacing: -0.04em;
   }
   h2 {
     font-size: var(--text-h2);
@@ -443,8 +445,8 @@
    up by half the text's cap height. Its centre lands exactly halfway up the capitals.
    Why not a formula from line height and font metrics: browsers snap the text baseline to whole
    pixels depending on line height and font, so such a formula drifts by up to 0.8px (measured on
-   Martian Mono at 18px); the baseline the browser renders is exact. 1cap comes from the text's own
-   font (Geist 0.71em, Martian Mono 0.8em), 50% from the icon's own height: no pixel numbers, no sizes.
+   the heading face at 18px); the baseline the browser renders is exact. 1cap comes from the text's own
+   font (Geist 0.71em, Quantico 0.70em), 50% from the icon's own height: no pixel numbers, no sizes.
 
    icon-text         the row (flex), aligned on the baseline. It offers the text's baseline to a
                      baseline-row around it, so it lines up like plain text.
@@ -465,8 +467,8 @@
 }
 /* Engines without the cap unit (iOS Safari before 17.2, Chrome before 118) drop a translate that uses it,
    which leaves the icon's bottom on the baseline: about 2px low beside 14px text. For them the shift uses
-   the text font's half cap height as a token instead (--cap-half: Geist and Geist Mono 0.355em, Martian
-   Mono 0.4em, measured; set on headings below). Where 1cap works it wins, exactly. The alignment check
+   the text font's half cap height as a token instead (--cap-half: Geist and Geist Mono 0.355em,
+   Quantico 0.35em, measured; set on headings below). Where 1cap works it wins, exactly. The alignment check
    runs a case that forces this fallback, in Chromium and WebKit. */
 @utility icon-slot {
   flex: none;

@@ -78,7 +78,7 @@ export function Readout({
                 )}
                 <span
                   className={cn(
-                    "order-1 font-heading text-4xl leading-none font-semibold tracking-tight tabular-nums sm:text-5xl",
+                    "order-1 font-heading text-4xl leading-none tabular-nums sm:text-5xl",
                     it.muted
                       ? "text-muted-foreground"
                       : it.good

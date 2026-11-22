@@ -299,7 +299,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
             <span className="flex size-10 items-center justify-center bg-brand-tint text-brand-sm">
               <MailCheck aria-hidden className="size-5" strokeWidth={1.75} />
             </span>
-            <DialogTitle className="font-heading text-xl font-semibold tracking-tight">
+            <DialogTitle className="font-heading text-xl">
               {status === "sent" ? "Check your inbox to confirm." : "Saved."}
             </DialogTitle>
             <DialogDescription className="text-base leading-relaxed">
@@ -319,7 +319,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
         ) : (
           <form onSubmit={submit} noValidate className="grid">
             <DialogHeader className="gap-2 border-b border-hairline p-6 pr-12 sm:px-8">
-              <DialogTitle className="font-heading text-xl font-semibold tracking-tight">{manage ? "Change what you get" : "Get new jobs by email"}</DialogTitle>
+              <DialogTitle className="font-heading text-xl">{manage ? "Change what you get" : "Get new jobs by email"}</DialogTitle>
               <DialogDescription className="text-sm leading-relaxed">
                 Only new jobs that match, at most {DIGEST_CAP} per email. Unsubscribe any time.
               </DialogDescription>

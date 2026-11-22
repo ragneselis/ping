@@ -363,7 +363,7 @@ export function Snake({ className }: { className?: string }) {
     const showMessage = (title: string, sub?: string) => {
       messageEl.replaceChildren();
       const t = document.createElement("span");
-      t.className = "font-heading text-title font-semibold tracking-tight";
+      t.className = "font-heading text-title";
       t.textContent = title;
       messageEl.append(t);
       if (sub) {

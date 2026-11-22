@@ -206,7 +206,7 @@ export default async function StatsPage() {
               ].map(([label, value]) => (
                 <div key={label as string} className="grid gap-1">
                   <dt className="label-mono text-muted-foreground">{label}</dt>
-                  <dd className="font-heading text-3xl leading-none font-semibold tabular-nums">{n(value as number)}</dd>
+                  <dd className="font-heading text-3xl leading-none tabular-nums">{n(value as number)}</dd>
                 </div>
               ))}
             </dl>
@@ -220,11 +220,11 @@ export default async function StatsPage() {
             <dl className="grid grid-cols-2 gap-x-6 gap-y-4">
               <div className="grid gap-1">
                 <dt className="label-mono text-muted-foreground">Games, 30 days</dt>
-                <dd className="font-heading text-3xl leading-none font-semibold tabular-nums">{n(usage.snake.games)}</dd>
+                <dd className="font-heading text-3xl leading-none tabular-nums">{n(usage.snake.games)}</dd>
               </div>
               <div className="grid gap-1">
                 <dt className="label-mono text-muted-foreground">Best score</dt>
-                <dd className="font-heading text-3xl leading-none font-semibold tabular-nums">{n(usage.snake.best)}</dd>
+                <dd className="font-heading text-3xl leading-none tabular-nums">{n(usage.snake.best)}</dd>
               </div>
             </dl>
           </Panel>

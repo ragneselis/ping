@@ -361,7 +361,7 @@ export default async function InsightsPage({
                     {/* Emerald only when there is good news; a zero stays in text colour. */}
                     <dd
                       className={cn(
-                        "order-1 font-heading text-4xl leading-none font-semibold tracking-tight tabular-nums",
+                        "order-1 font-heading text-4xl leading-none tabular-nums",
                         c.withinReach > 0 ? "text-brand-lg" : "text-foreground",
                       )}
                     >

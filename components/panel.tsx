@@ -61,7 +61,7 @@ export function Panel({
           className={cn(
             /* On the text baseline, so the count at the far end sits on the title's line; the lead dot
                and the arrow are centred on the title's capitals (IconText, the icon rule). */
-            "min-w-0 gap-2 font-heading text-title font-semibold tracking-tight",
+            "min-w-0 gap-2 font-heading text-title",
             linked && "underline-offset-4 decoration-1 group-hover/panel:underline group-focus-visible/panel:underline",
           )}
           icon={lead}

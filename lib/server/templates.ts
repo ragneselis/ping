@@ -1,6 +1,6 @@
 /**
  * Ping's emails, HTML and plain text. Built for email clients: tables, inline styles, system fonts
- * (Martian Mono and Geist cannot load in most inboxes, so a monospace stack carries the headings and
+ * (Quantico and Geist cannot load in most inboxes, so a monospace stack carries the headings and
  * labels, a system sans the body). White background, near-black text, emerald accent, and the Ping
  * mark: the block mascot's face from the site's wordmark, drawn as table cells (no image to block).
  */
