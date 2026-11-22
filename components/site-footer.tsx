@@ -25,7 +25,7 @@ export function SiteFooter() {
       last
       inner="grid gap-4 py-6 text-sm text-muted-foreground md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-8"
     >
-      <p className="text-pretty">
+      <p>
         Ping scouts design jobs for students at the{" "}
         <a href={EKA_URL} target="_blank" rel="noopener noreferrer" className={TEXT_LINK}>
           Estonian Academy of Arts

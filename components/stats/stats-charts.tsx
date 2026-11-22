@@ -95,11 +95,11 @@ export function RankList({ rows }: { rows: { label: string; n: number; url?: str
         <li key={`${r.label}-${i}`} className="grid gap-1.5 border-b border-hairline py-2.5 last:border-b-0">
           <div className="flex items-baseline justify-between gap-4 text-sm">
             {r.url ? (
-              <a href={r.url} target="_blank" rel="noopener noreferrer" className="min-w-0 text-pretty underline-offset-4 hover:text-brand-sm hover:underline">
+              <a href={r.url} target="_blank" rel="noopener noreferrer" className="min-w-0 underline-offset-4 hover:text-brand-sm hover:underline">
                 {r.label}
               </a>
             ) : (
-              <span className="min-w-0 text-pretty">{r.label}</span>
+              <span className="min-w-0">{r.label}</span>
             )}
             <span className="shrink-0 font-mono tabular-nums">{r.n.toLocaleString("en-GB")}</span>
           </div>

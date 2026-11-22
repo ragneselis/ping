@@ -300,6 +300,27 @@
     @apply font-sans;
     scrollbar-color: var(--border) transparent;
   }
+  /* Line breaks, once for the whole site (text-wrap-style is inherited). Running text (paragraphs,
+     list items, descriptions, notes, small text in spans) is "pretty": no single word left alone on a
+     last line. Headings, display text (the heading face, e.g. "Start here"; the small uppercase
+     label-mono labels), the short data note and other one- or two-line text marked data-short-text
+     (Discover's company descriptions) are "balanced": their lines even out, so no short tail like
+     "at 06:00." either. Balance evens line lengths, so a long last word (e.g. "Apprenticeship") can
+     still end a two-line title; that is not an orphan.
+     Never fix a break by hand with <br>, &nbsp; or a per-element text-pretty / text-balance class. */
+  body {
+    text-wrap-style: pretty;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-heading,
+  .label-mono,
+  [data-note],
+  [data-short-text] {
+    text-wrap-style: balance;
+  }
   body {
     @apply bg-ground text-foreground;
     /* Fine 45-degree hatching on the ground; the white frame column covers it, so it only shows in the gutters. */
@@ -326,7 +347,6 @@
     font-family: var(--font-heading);
     font-weight: 600;
     letter-spacing: -0.03em;
-    text-wrap: balance;
   }
   h1 {
     font-size: var(--text-h1);

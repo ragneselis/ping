@@ -54,7 +54,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="discover" />
         <h1 className="max-w-[28ch]">Places Ping keeps an eye on</h1>
-        <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
+        <p className="max-w-[60ch] text-lg leading-relaxed text-muted-foreground">
           Places in Estonia that hire designers. Some are hiring now, some are worth watching, all worth an open application.
         </p>
         <DataNote lastRun={lastRun} roles={cards.length} />

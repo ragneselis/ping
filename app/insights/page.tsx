@@ -120,7 +120,7 @@ export default async function InsightsPage({
       <Band aria-label="Introduction" inner="grid gap-5 pb-10">
         <HeroTiles variant="insights" />
         <h1 className="max-w-[28ch]">What today&rsquo;s design roles ask for</h1>
-        <p className="max-w-[60ch] text-lg leading-relaxed text-pretty text-muted-foreground">
+        <p className="max-w-[60ch] text-lg leading-relaxed text-muted-foreground">
           Ping counted the skills, tools and experience every current posting
           asks for, by direction.
         </p>

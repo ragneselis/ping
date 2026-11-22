@@ -38,7 +38,7 @@ export default async function SubscriptionPage({ params }: { params: Promise<{ s
   return (
     <Band aria-labelledby="state-heading" inner="grid gap-5 py-16 sm:py-24">
       <h1 id="state-heading">{s.title}</h1>
-      <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">{s.body}</p>
+      <p className="max-w-prose text-lg leading-relaxed text-muted-foreground">{s.body}</p>
       <p className="max-w-prose text-sm text-muted-foreground">{s.note}</p>
       <div className="pt-2">
         <Button nativeButton={false} render={<Link href="/" />}>

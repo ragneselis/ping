@@ -302,7 +302,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
             <DialogTitle className="font-heading text-xl font-semibold tracking-tight">
               {status === "sent" ? "Check your inbox to confirm." : "Saved."}
             </DialogTitle>
-            <DialogDescription className="text-base leading-relaxed text-pretty">
+            <DialogDescription className="text-base leading-relaxed">
               {status === "sent" ? (
                 <>
                   Ping sent a confirmation link to <span className="font-medium text-foreground">{email.trim()}</span>. Nothing else arrives until you click
@@ -320,7 +320,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
           <form onSubmit={submit} noValidate className="grid">
             <DialogHeader className="gap-2 border-b border-hairline p-6 pr-12 sm:px-8">
               <DialogTitle className="font-heading text-xl font-semibold tracking-tight">{manage ? "Change what you get" : "Get new jobs by email"}</DialogTitle>
-              <DialogDescription className="text-sm leading-relaxed text-pretty">
+              <DialogDescription className="text-sm leading-relaxed">
                 Only new jobs that match, at most {DIGEST_CAP} per email. Unsubscribe any time.
               </DialogDescription>
             </DialogHeader>

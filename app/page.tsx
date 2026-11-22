@@ -127,7 +127,7 @@ export default async function JobsPage({
             <h1 className="max-w-[28ch]">
               Every design role Ping found, in nine directions
             </h1>
-            <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
+            <p className="max-w-prose text-lg leading-relaxed text-muted-foreground">
               {REACH_DEFINITION}
             </p>
             <DataNote lastRun={lastRun} roles={cards.length} />

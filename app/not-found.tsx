@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <Band aria-labelledby="not-found-heading" inner="grid gap-5 py-16 sm:py-24">
       <h1 id="not-found-heading">Ping looked everywhere</h1>
-      <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
+      <p className="max-w-prose text-lg leading-relaxed text-muted-foreground">
         This page isn&rsquo;t here. The link may be old, or the address may have a typo.
       </p>
       <div className="pt-2">

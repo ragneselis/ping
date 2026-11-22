@@ -89,7 +89,7 @@ export function Readout({
                   <CountUp value={it.value} />
                 </span>
                 {it.hint && (
-                  <span className="order-3 -mt-1 text-sm text-pretty text-muted-foreground">
+                  <span className="order-3 -mt-1 text-sm text-muted-foreground">
                     {it.hint}
                   </span>
                 )}
@@ -130,7 +130,7 @@ export function Readout({
         {rules && <DispersingRules />}
       </div>
       {note && (
-        <p className="max-w-prose text-sm text-pretty text-muted-foreground">{note}</p>
+        <p className="max-w-prose text-sm text-muted-foreground">{note}</p>
       )}
     </div>
   );

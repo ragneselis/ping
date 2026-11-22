@@ -83,7 +83,7 @@ export function JobRow({
         </div>
 
         <div className="grid min-w-0 gap-0.5 pr-8 lg:pr-0">
-          <h3 className="leading-snug font-semibold text-pretty">
+          <h3 className="leading-snug font-semibold">
             {/* Hangs in the gap before the title, so titles stay aligned down the column. */}
             {isNew && <FreshTile className="icon-hang -ml-3.5 mr-1.5" />}
             <a

@@ -13,7 +13,7 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
       <h2 className="m-0">
         <DataLabel>{label}</DataLabel>
       </h2>
-      <div className="grid max-w-prose gap-3 text-base leading-relaxed text-pretty">{children}</div>
+      <div className="grid max-w-prose gap-3 text-base leading-relaxed">{children}</div>
     </section>
   );
 }
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
     <Band aria-labelledby="privacy-heading" inner="grid gap-10 py-12 sm:py-16">
       <div className="grid gap-4">
         <h1 id="privacy-heading">Privacy</h1>
-        <p className="max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
+        <p className="max-w-prose text-lg leading-relaxed text-muted-foreground">
           Ping is curious about jobs, not about you. No account needed: the only personal data kept is for the job emails, and only if you sign up for them.
         </p>
       </div>

@@ -24,7 +24,11 @@ export function CompanyRow({ row, jobsQuery }: { row: Row; jobsQuery: string }) 
       <div className={cn("grid gap-1.5 lg:items-baseline", COMPANY_GRID)}>
         <div className="grid min-w-0 gap-0.5">
           <h3 className="leading-snug font-semibold">{row.name}</h3>
-          {row.description && <p className="text-sm text-muted-foreground">{row.description}</p>}
+          {row.description && (
+            <p data-short-text="" className="text-sm text-muted-foreground">
+              {row.description}
+            </p>
+          )}
         </div>
 
         {row.roles > 0 ? (

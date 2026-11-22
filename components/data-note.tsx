@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export function DataNote({ lastRun, roles, className }: { lastRun: string | null; roles: number; className?: string }) {
   return (
     // The icon sits on the first line's capitals even when the sentence wraps (IconText).
-    <IconText as="p" data-note="" className={cn("max-w-prose gap-2 text-sm text-pretty text-muted-foreground", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
+    <IconText as="p" data-note="" className={cn("max-w-prose gap-2 text-sm text-muted-foreground", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
       {/* Server and client format the same stored moment in the same time zone; only a page rendered
           across a summer-time switch could differ, so the client's text wins without a warning. */}
       <span suppressHydrationWarning>{tripNote(lastRun, roles)}</span>

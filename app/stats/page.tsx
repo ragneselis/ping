@@ -41,7 +41,7 @@ function Section({ id, title, intro, children }: { id: string; title: string; in
     <Band aria-labelledby={id} inner="grid grid-cols-[minmax(0,1fr)] gap-6 py-8 sm:py-10">
       <div className="grid gap-2">
         <h2 id={id}>{title}</h2>
-        {intro && <p className="max-w-prose text-sm text-pretty text-muted-foreground">{intro}</p>}
+        {intro && <p className="max-w-prose text-sm text-muted-foreground">{intro}</p>}
       </div>
       {children}
     </Band>
