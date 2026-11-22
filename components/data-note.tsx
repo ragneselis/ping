@@ -1,24 +1,41 @@
 "use client";
 
 import { CalendarClock } from "lucide-react";
+import { useEffect, useState } from "react";
 import { IconText } from "@/components/icon-text";
-import { tripNote } from "@/lib/format";
+import { lastTrip, nextTrip } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 /**
- * The hero's data note, the same fixed sentence on Jobs, Discover and Market insights, in Ping's voice:
- * "Ping last went out on 22 November at 08:36 and found 1,281 roles. Next trip every morning at 06:00."
- * No relative words ("this morning", "yesterday"), so it is never wrong however late a run is or how
- * long a page stays open. The date comes from the last successful run (data/run.json), formatted here on
- * the client, always in Europe/Tallinn; the second sentence is fixed.
+ * The hero's data note on Jobs, Discover and Market insights, in Ping's voice:
+ * "Ping last went out on 22 November at 08:36 and found 1,281 roles. Next trip tomorrow at 06:00."
+ * The first sentence is the last successful run (data/run.json), absolute, in Europe/Tallinn. The second
+ * comes from the browser's clock in Tallinn time only (nextTrip in lib/format.ts): "today" before 06:00,
+ * "tomorrow" from 06:00. It is computed again when the page regains focus or becomes visible, so a tab
+ * left open overnight reads right.
  */
 export function DataNote({ lastRun, roles, className }: { lastRun: string | null; roles: number; className?: string }) {
+  // null until mounted: the server's clock decides the first paint, then the browser's takes over.
+  const [next, setNext] = useState<string | null>(null);
+  useEffect(() => {
+    const update = () => setNext(nextTrip());
+    update();
+    const onVisible = () => document.visibilityState === "visible" && update();
+    window.addEventListener("focus", update);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.removeEventListener("focus", update);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, []);
   return (
     // The icon sits on the first line's capitals even when the sentence wraps (IconText).
-    <IconText as="p" data-note="" className={cn("max-w-prose gap-2 text-sm text-muted-foreground", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
-      {/* Server and client format the same stored moment in the same time zone; only a page rendered
-          across a summer-time switch could differ, so the client's text wins without a warning. */}
-      <span suppressHydrationWarning>{tripNote(lastRun, roles)}</span>
+    <IconText as="p" data-note="" className={cn("max-w-prose gap-2 text-sm text-muted-foreground lg:max-w-none", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
+      {/* The server's clock paints first; once mounted, the key changes and React replaces the text with
+          the browser's (hydration keeps server text, so an unchanged render would never correct it). */}
+      <span key={next === null ? "server" : "client"} suppressHydrationWarning>
+        {lastTrip(lastRun, roles)} {next ?? nextTrip()}
+      </span>
     </IconText>
   );
 }
