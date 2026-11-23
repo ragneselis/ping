@@ -1,32 +1,32 @@
 {
-  "fetchedAt": "2026-11-22T06:36:21.734Z",
-  "totalInScope": 1832,
-  "duplicatesRemoved": 225,
-  "unique": 1607,
+  "fetchedAt": "2026-11-23T05:58:10.457Z",
+  "totalInScope": 1817,
+  "duplicatesRemoved": 222,
+  "unique": 1595,
   "sources": [
     {
       "source": "Remote OK",
       "sourceType": "board",
       "ok": true,
-      "fetched": 333,
-      "candidates": 51,
-      "inScope": 51
+      "fetched": 284,
+      "candidates": 39,
+      "inScope": 39
     },
     {
       "source": "We Work Remotely",
       "sourceType": "board",
       "ok": true,
-      "fetched": 75,
-      "candidates": 23,
-      "inScope": 23
+      "fetched": 81,
+      "candidates": 24,
+      "inScope": 24
     },
     {
       "source": "Himalayas",
       "sourceType": "board",
       "ok": true,
-      "fetched": 1429,
-      "candidates": 1320,
-      "inScope": 1320,
+      "fetched": 1430,
+      "candidates": 1322,
+      "inScope": 1322,
       "notes": "search queries: designer, product designer, ux designer, ui designer, design lead, design engineer, ux researcher, service designer, brand designer, graphic designer, visual designer, motion designer, art director, creative director, illustrator, industrial designer, game designer, level designer, technical artist"
     },
     {
@@ -41,9 +41,9 @@
       "source": "Arbeitnow",
       "sourceType": "board",
       "ok": true,
-      "fetched": 2321,
-      "candidates": 86,
-      "inScope": 69,
+      "fetched": 2328,
+      "candidates": 74,
+      "inScope": 61,
       "notes": "first 8 pages of the general feed (no server-side search)"
     },
     {
@@ -59,10 +59,10 @@
       "source": "Greenhouse",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 3952,
-      "candidates": 284,
+      "fetched": 3948,
+      "candidates": 283,
       "inScope": 157,
-      "notes": "all open roles per company: Figma 147, Airbnb 202, Stripe 777, Discord 29, Dropbox 47, Pinterest 174, GitLab 246, Duolingo 54, Asana 111, Miro 13, Wise 18, Veriff 9, Intercom 120, Monzo 59, N26 23, Typeform 6, Vercel 86, Oura 96, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 181, Testlio 19, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 10, Remedy 12, Solita 63, Truecaller 34, Trustpilot 35, Boku 11, Whalar 10, Yousician 0, Cambridge Consultants 84, On 141, Map Project Office 3, Landor 58, Interbrand 17, IDEO 8, AKQA 46, DEPT 202, Helsing 175, Canonical 318"
+      "notes": "all open roles per company: Figma 147, Airbnb 203, Stripe 777, Discord 29, Dropbox 47, Pinterest 174, GitLab 246, Duolingo 54, Asana 111, Miro 13, Wise 18, Veriff 9, Intercom 120, Monzo 53, N26 23, Typeform 6, Vercel 86, Oura 96, Smartly.io 72, RELEX 34, Housemarque 4, Mentimeter 14, Cognite 64, Wolt 179, Testlio 21, Nortal 23, Bondora 11, Inbank 13, Wrike 69, LHV UK 4, Supermetrics 10, Remedy 12, Solita 63, Truecaller 34, Trustpilot 35, Boku 11, Whalar 10, Yousician 0, Cambridge Consultants 84, On 141, Map Project Office 3, Landor 58, Interbrand 17, IDEO 8, AKQA 47, DEPT 202, Helsing 175, Canonical 318"
     },
     {
       "source": "Lever",
@@ -77,19 +77,19 @@
       "source": "Ashby",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 1558,
-      "candidates": 72,
-      "inScope": 54,
-      "notes": "all open roles per company: Notion 170, Linear 32, Ramp 187, ElevenLabs 121, Supabase 80, Glia 29, Webflow 31, Restream 9, Supercell 27, Lovable 78, Legora 341, Hostinger 42, Surfshark 32, Zego 29, Katana 1, Gelato 3, Creem 3, Reaktor 12, Hoxhunt 12, Epidemic Sound 28, Trustly 39, Pleo 33, Too Good To Go 63, Corti 4, Eneba 33, Vesoma 30, Sereact 48, Tonies 9, Moss 32"
+      "fetched": 1563,
+      "candidates": 73,
+      "inScope": 55,
+      "notes": "all open roles per company: Notion 170, Linear 32, Ramp 187, ElevenLabs 122, Supabase 80, Glia 29, Webflow 31, Restream 9, Supercell 27, Lovable 78, Legora 344, Hostinger 42, Surfshark 32, Zego 29, Katana 1, Gelato 3, Creem 3, Reaktor 12, Hoxhunt 12, Epidemic Sound 28, Trustly 39, Pleo 33, Too Good To Go 63, Corti 4, Eneba 34, Vesoma 30, Sereact 48, Tonies 9, Moss 32"
     },
     {
       "source": "Teamtailor",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 952,
-      "candidates": 79,
-      "inScope": 69,
-      "notes": "all open roles per company: Adcash 2, Swedbank 57, Printful 29, Embark Studios 16, Oda 3, Schibsted 38, Lunar 26, Starship 3, Lightyear 2, Monese 1, Comodule 2, Montonio 1, Scoro 5, Fractory 7, Mintos 9, Luminor 65, Bob W 7, Futurice 11, Vincit 4, Siili 6, Qvik 2, Holvi 1, Kry 51, Tibber 13, Storytel 2, Hemnet 5, Anyfin 14, Detectify 3, Quinyx 10, Bannerflow 8, Vipps 7, reMarkable 20, Templafy 3, Pactum 0, Outfunnel 0, Swappie 0, Vivino 0, Above 2, Nofence 6, Justera Group 100, Kurppa Hosk 10, Bold Scandinavia 4, Teenage Engineering 2, Eleiko 4, Marshall Group 16, Huawei Sweden 30, Flokk 8, Voi 80, X Shore 14, Knightec Group 100, Narbutas 20, Milrem Robotics 4, Frankenburg Technologies 16, Genelec 1, Rokoko 1, Kempower 0, Inventas 0, Huawei R&D UK 53, Huawei Italia 15, Koto 29, Thorgate 0, Plummy Games 4"
+      "fetched": 926,
+      "candidates": 80,
+      "inScope": 70,
+      "notes": "all open roles per company: Adcash 2, Swedbank 50, Printful 29, Embark Studios 16, Oda 2, Schibsted 35, Lunar 26, Starship 3, Lightyear 2, Monese 1, Comodule 2, Montonio 1, Scoro 5, Fractory 7, Mintos 9, Luminor 55, Bob W 7, Futurice 10, Vincit 2, Siili 6, Qvik 2, Holvi 1, Kry 49, Tibber 13, Storytel 2, Hemnet 5, Anyfin 14, Detectify 3, Quinyx 10, Bannerflow 8, Vipps 7, reMarkable 20, Templafy 3, Pactum 0, Outfunnel 0, Swappie 0, Vivino 0, Above 2, Nofence 6, Justera Group 100, Kurppa Hosk 10, Bold Scandinavia 4, Teenage Engineering 2, Eleiko 4, Marshall Group 16, Huawei Sweden 30, Flokk 8, Voi 80, X Shore 14, Knightec Group 100, Narbutas 20, Milrem Robotics 4, Frankenburg Technologies 16, Genelec 1, Rokoko 1, Kempower 0, Inventas 0, Huawei R&D UK 53, Huawei Italia 15, Koto 29, Thorgate 0, Plummy Games 4"
     },
     {
       "source": "Workable",
@@ -113,19 +113,19 @@
       "source": "SmartRecruiters",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 61,
+      "fetched": 62,
       "candidates": 5,
       "inScope": 5,
-      "notes": "all open roles per company: Proekspert 2, Salomon 59"
+      "notes": "all open roles per company: Proekspert 2, Salomon 60"
     },
     {
       "source": "Personio",
       "sourceType": "ats",
       "ok": true,
-      "fetched": 44,
+      "fetched": 46,
       "candidates": 9,
       "inScope": 3,
-      "notes": "all open roles per company: Salv 2, Aivan 3, TwentyFour Industries 16, Phoenix Design 13, Fairphone 9, Cell Labs 0, eAgronom 1"
+      "notes": "all open roles per company: Salv 2, Aivan 3, TwentyFour Industries 16, Phoenix Design 13, Fairphone 11, Cell Labs 0, eAgronom 1"
     },
     {
       "source": "Workday",

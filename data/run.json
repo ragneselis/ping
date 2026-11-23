@@ -1,8 +1,17 @@
 {
-  "lastRun": "2026-11-22T06:36:41.382Z",
-  "nextRun": "2026-11-23T04:00:00.000Z",
-  "schedule": "daily at 04:00 UTC",
+  "lastRun": "2026-11-23T05:58:28.051Z",
+  "lastStatus": "success",
+  "trigger": "vercel-cron",
+  "nextRun": "2026-11-24T03:47:00.000Z",
+  "schedule": "daily, cron \"47 3 * * *\" (UTC), with backups",
   "failedSources": [
     "Telia board"
+  ],
+  "history": [
+    {
+      "at": "2026-11-23T05:58:28.051Z",
+      "startedAt": "2026-11-23T05:53:42Z",
+      "trigger": "vercel-cron"
+    }
   ]
 }
