@@ -2055,5 +2055,25 @@
     "basedInEstonia": false,
     "addedAt": "2026-11-21",
     "addedBy": "discovery"
+  },
+  {
+    "name": "LHV Pank",
+    "careersUrl": "https://www.lhv.ee/en/careers",
+    "careersLinkOnly": true,
+    "inEstonia": true,
+    "description": "Estonian bank offering current accounts, savings, loans and investment services.",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-23",
+    "addedBy": "discovery"
+  },
+  {
+    "name": "Aderize",
+    "careersUrl": "https://www.aderize.com/careers",
+    "careersLinkOnly": true,
+    "inEstonia": true,
+    "description": "Ad tech company building a platform for running digital advertising campaigns.",
+    "basedInEstonia": true,
+    "addedAt": "2026-11-23",
+    "addedBy": "discovery"
   }
 ]

@@ -78,6 +78,70 @@
           "reason": "gambling, betting or iGaming: Ping does not list them"
         }
       ]
+    },
+    {
+      "at": "2026-11-23T11:49:48.165Z",
+      "model": "claude-haiku-5-5",
+      "searches": 2,
+      "usage": {
+        "input": 25690,
+        "output": 4893,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "costUsd": 0.025,
+      "added": [
+        {
+          "name": "LHV Pank",
+          "ats": "careers link only",
+          "slug": "",
+          "roles": 0,
+          "careersUrl": "https://www.lhv.ee/en/careers",
+          "reason": "no supported job system found on the careers page"
+        },
+        {
+          "name": "Aderize",
+          "ats": "careers link only",
+          "slug": "",
+          "roles": 0,
+          "careersUrl": "https://www.aderize.com/careers",
+          "reason": "no supported job system found on the careers page"
+        }
+      ],
+      "skipped": [
+        {
+          "name": "Tele2 Eesti",
+          "reason": "careers page could not be loaded (HTTP 404 for https://www.tele2.ee/karjaar)"
+        },
+        {
+          "name": "Coinmetro",
+          "reason": "careers page could not be loaded (HTTP 404 for https://www.coinmetro.com/careers)"
+        },
+        {
+          "name": "Mad Head Games",
+          "reason": "careers page could not be loaded (HTTP 404 for https://www.madheadgames.com/careers)"
+        },
+        {
+          "name": "Ready Player Me",
+          "reason": "careers page could not be loaded (fetch failed)"
+        },
+        {
+          "name": "Evolution",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        },
+        {
+          "name": "Relax Gaming",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        },
+        {
+          "name": "Gamesys Estonia",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        },
+        {
+          "name": "Games Global",
+          "reason": "gambling, betting or iGaming: Ping does not list them"
+        }
+      ]
     }
   ]
 }
