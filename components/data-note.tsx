@@ -29,8 +29,9 @@ export function DataNote({ lastRun, roles, className }: { lastRun: string | null
     };
   }, []);
   return (
-    // The icon sits on the first line's capitals even when the sentence wraps (IconText).
-    <IconText as="p" data-note="" className={cn("max-w-prose gap-2 text-sm text-muted-foreground lg:max-w-none", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
+    // The icon sits on the first line's capitals even when the sentence wraps (IconText). On phones 13px
+    // and a 4px icon gap keep the note to two lines at 375px; from sm the usual 14px and 8px.
+    <IconText as="p" data-note="" className={cn("max-w-prose gap-1 text-[0.8125rem] text-muted-foreground sm:gap-2 sm:text-sm lg:max-w-none", className)} icon={<CalendarClock className="size-3.5" strokeWidth={1.75} />}>
       {/* The server's clock paints first; once mounted, the key changes and React replaces the text with
           the browser's (hydration keeps server text, so an unchanged render would never correct it). */}
       <span key={next === null ? "server" : "client"} suppressHydrationWarning>
