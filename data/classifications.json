@@ -28735,6 +28735,998 @@
     "cacheRead": 1906,
     "cacheWrite": 0
    }
+  },
+  "himalayas:https://himalayas.app/companies/capintel/jobs/senior-product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/capintel/jobs/senior-product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Owns a fintech product area, prototyping and shipping UX for advisor tools",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:12.158Z",
+   "usage": {
+    "input": 1855,
+    "output": 57,
+    "cacheRead": 0,
+    "cacheWrite": 1906
+   }
+  },
+  "himalayas:https://himalayas.app/companies/nuvemrx/jobs/principal-product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/nuvemrx/jobs/principal-product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": "research-service",
+   "reason": "Owns design system and journey research for healthcare pharmacy SaaS products; hands-on product design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:13.350Z",
+   "usage": {
+    "input": 3013,
+    "output": 66,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:n26:8355849": {
+   "id": "greenhouse:n26:8355849",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing Wealth product experiences (savings, funds, orders, portfolio) for a banking app, hands-on UI and interaction design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:13.430Z",
+   "usage": {
+    "input": 2062,
+    "output": 74,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "teamtailor:justergroupab.teamtailor.com:cab80a2f-fd28-4231-b2c3-31e14bc7a13d": {
+   "id": "teamtailor:justergroupab.teamtailor.com:cab80a2f-fd28-4231-b2c3-31e14bc7a13d",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing responsive digital banking interfaces, user flows and prototypes for product teams",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:13.540Z",
+   "usage": {
+    "input": 1177,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/logistics-management-institute/jobs/senior-product-designer-multimedia-designer": {
+   "id": "himalayas:https://himalayas.app/companies/logistics-management-institute/jobs/senior-product-designer-multimedia-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing user-facing government training software; wireframes, prototypes, and UX testing for Army digital product",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:13.991Z",
+   "usage": {
+    "input": 1193,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:werkstudentin-in-der-redaktion-von-design-perspectives-frankfurt-am-main-133616": {
+   "id": "arbeitnow:werkstudentin-in-der-redaktion-von-design-perspectives-frankfurt-am-main-133616",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Editorial and content support for a magazine: image research, newsletter, CMS entry, some social visuals",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:14.197Z",
+   "usage": {
+    "input": 956,
+    "output": 246,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/quadmark/jobs/design-lead": {
+   "id": "himalayas:https://himalayas.app/companies/quadmark/jobs/design-lead",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Hands-on creative direction and visual design for client digital and learning experiences, plus team leadership",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:14.228Z",
+   "usage": {
+    "input": 2094,
+    "output": 283,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-motion-vfx-designer-gn-berlin-15036": {
+   "id": "arbeitnow:senior-motion-vfx-designer-gn-berlin-15036",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Creating video ads and social formats with compositing for an influencer agency's brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:14.585Z",
+   "usage": {
+    "input": 2477,
+    "output": 59,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:brand-designer-paris-187042": {
+   "id": "arbeitnow:brand-designer-paris-187042",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Owns brand visual identity system, campaigns, packaging, and merch for an energy company",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:14.701Z",
+   "usage": {
+    "input": 1006,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:product-designer-contract-paris-209160": {
+   "id": "arbeitnow:product-designer-contract-paris-209160",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": "ai-behaviour",
+   "reason": "Designing conversational AI shopping experiences for consumers, prototyped and shipped in product",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.034Z",
+   "usage": {
+    "input": 1083,
+    "output": 70,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:junior-art-directorin-cologne-270530": {
+   "id": "arbeitnow:junior-art-directorin-cologne-270530",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Retail POS, ads and social campaign layouts and print-ready files for brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.312Z",
+   "usage": {
+    "input": 1619,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:ux-designer-london-468383": {
+   "id": "arbeitnow:ux-designer-london-468383",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing B2B SaaS security dashboard features end to end, from research to handover",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.330Z",
+   "usage": {
+    "input": 2175,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:ux-researcher-london-324145": {
+   "id": "arbeitnow:ux-researcher-london-324145",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "Planning and running UX research for a B2B security product, plus analytics",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.631Z",
+   "usage": {
+    "input": 2208,
+    "output": 133,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/qwoted/jobs/social-media-designer-data-analysis-visual-storytelling": {
+   "id": "himalayas:https://himalayas.app/companies/qwoted/jobs/social-media-designer-data-analysis-visual-storytelling",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Designing data charts and social graphics for earned media pickup from platform data",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.690Z",
+   "usage": {
+    "input": 983,
+    "output": 435,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:cdi-designer-junior-jersey-h-f-paris-hq-ile-de-france-54456": {
+   "id": "arbeitnow:cdi-designer-junior-jersey-h-f-paris-hq-ile-de-france-54456",
+   "isDesignRole": true,
+   "primary": "other",
+   "secondary": null,
+   "reason": "Creating fashion collection jersey and flou designs, boards, visuals, technical drawings, prototypes",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.788Z",
+   "usage": {
+    "input": 1233,
+    "output": 67,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/jumpseat/jobs/senior-art-director-brand-designer-argentina": {
+   "id": "himalayas:https://himalayas.app/companies/jumpseat/jobs/senior-art-director-brand-designer-argentina",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Brand identities, key visuals and campaign concepts for B2B clients; core is visual brand craft",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:15.845Z",
+   "usage": {
+    "input": 1839,
+    "output": 67,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:director-of-product-design-berlin-119558": {
+   "id": "arbeitnow:director-of-product-design-berlin-119558",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Owns mobile-first B2C product experiences end to end, hands-on UI/UX and design team leadership",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.185Z",
+   "usage": {
+    "input": 1849,
+    "output": 177,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:landor:8411267": {
+   "id": "greenhouse:landor:8411267",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Financial and quantitative modelling linking brand strategy to revenue and ROI; not hands-on design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.561Z",
+   "usage": {
+    "input": 1171,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-product-designer-saas-munchen-389684": {
+   "id": "arbeitnow:senior-product-designer-saas-munchen-389684",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing and specifying a B2B SaaS procurement platform, with discovery and product ownership",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.621Z",
+   "usage": {
+    "input": 1778,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:creative-lead-gn-berlin-213759": {
+   "id": "arbeitnow:creative-lead-gn-berlin-213759",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Leads a social and influencer campaign concept team for brand marketing content",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.630Z",
+   "usage": {
+    "input": 2661,
+    "output": 449,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:werkstudentin-motion-design-mainz-oder-berlin-90843": {
+   "id": "arbeitnow:werkstudentin-motion-design-mainz-oder-berlin-90843",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Social media content production: motion graphics, infographics, reels, video cutting for social platforms and brand",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.655Z",
+   "usage": {
+    "input": 1437,
+    "output": 66,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:dept:8413654": {
+   "id": "greenhouse:dept:8413654",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Brand strategy and creative briefs for marketing clients; strategy, not hands-on design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.802Z",
+   "usage": {
+    "input": 2766,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:asana:8350054": {
+   "id": "greenhouse:asana:8350054",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "Senior UX research for mobile product and 0→1 developer product, informing product decisions",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.831Z",
+   "usage": {
+    "input": 2079,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:art-director-all-genders-berlin-475311": {
+   "id": "arbeitnow:art-director-all-genders-berlin-475311",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Art director leading visual look, CRM campaigns, digital products and design team",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.841Z",
+   "usage": {
+    "input": 2729,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:dept:8414118": {
+   "id": "greenhouse:dept:8414118",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Brand and creative strategy briefs for marketing clients; strategy, not hands-on design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:16.889Z",
+   "usage": {
+    "input": 2766,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/upstars/jobs/team-lead-product-design-service": {
+   "id": "himalayas:https://himalayas.app/companies/upstars/jobs/team-lead-product-design-service",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Leads product design team for iGaming B2B services, owning design strategy and system",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:17.388Z",
+   "usage": {
+    "input": 2019,
+    "output": 55,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-researcher-human-rights-and-artificial-intelligence-berlin-berlin-88580": {
+   "id": "arbeitnow:senior-researcher-human-rights-and-artificial-intelligence-berlin-berlin-88580",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Human rights research and investigations into AI harms, writing reports and advocacy; not designing anything.",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:17.456Z",
+   "usage": {
+    "input": 3005,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:quantitative-researcher-short-term-power-markets-munich-338700": {
+   "id": "arbeitnow:quantitative-researcher-short-term-power-markets-munich-338700",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Quantitative trading strategy and forecasting for battery flexibility in power markets; not design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:17.500Z",
+   "usage": {
+    "input": 1179,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "greenhouse:dept:8413802": {
+   "id": "greenhouse:dept:8413802",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Hands-on UX/UI design of client digital experiences, interfaces and journeys for brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:17.862Z",
+   "usage": {
+    "input": 1668,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-brand-ambassador-lookfantastic-store-375-hours-bristol-355655": {
+   "id": "arbeitnow:senior-brand-ambassador-lookfantastic-store-375-hours-bristol-355655",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Retail store leadership, sales targets and customer service in a beauty shop",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:17.878Z",
+   "usage": {
+    "input": 1802,
+    "output": 54,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:werkstudentin-grafikdesign-berlin-19344": {
+   "id": "arbeitnow:werkstudentin-grafikdesign-berlin-19344",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": "industrial",
+   "reason": "Creating packaging, campaign visuals and brand templates for a supplement brand, which is graphic design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:17.912Z",
+   "usage": {
+    "input": 1136,
+    "output": 74,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "teamtailor:schibsted.teamtailor.com:040a657c-8e99-4503-b329-0a6d9f8ced71": {
+   "id": "teamtailor:schibsted.teamtailor.com:040a657c-8e99-4503-b329-0a6d9f8ced71",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Creative designer making digital display ads, animations and interactive campaigns for brands",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:18.004Z",
+   "usage": {
+    "input": 2028,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/solv-energy/jobs/design-engineer-ii-civil": {
+   "id": "himalayas:https://himalayas.app/companies/solv-energy/jobs/design-engineer-ii-civil",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Civil engineering design and drafting for solar, storage and substation infrastructure; not design-of-products work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:18.150Z",
+   "usage": {
+    "input": 2001,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:graduate-quantitative-researcher-2028-expression-of-interest-amsterdam-428978": {
+   "id": "arbeitnow:graduate-quantitative-researcher-2028-expression-of-interest-amsterdam-428978",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Quantitative research building trading models and ML signals for markets, not design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:18.538Z",
+   "usage": {
+    "input": 1807,
+    "output": 53,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:quantitative-researcher-2027-graduates-amsterdam-298035": {
+   "id": "arbeitnow:quantitative-researcher-2027-graduates-amsterdam-298035",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Quantitative trading research: statistical models and backtests for market signals, not design work.",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:18.565Z",
+   "usage": {
+    "input": 1588,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/clipt/jobs/smart-nonsense-video-editor-animator": {
+   "id": "himalayas:https://himalayas.app/companies/clipt/jobs/smart-nonsense-video-editor-animator",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Edits and animates short funny explainer videos for social media audiences; motion content for entertainment brand",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:18.946Z",
+   "usage": {
+    "input": 548,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/fygaro/jobs/graphic-designer-remote": {
+   "id": "himalayas:https://himalayas.app/companies/fygaro/jobs/graphic-designer-remote",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Graphic design of brand and marketing visuals, illustration and typography for eCommerce company",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.096Z",
+   "usage": {
+    "input": 541,
+    "output": 64,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/harman-international/jobs/intern-product-design": {
+   "id": "himalayas:https://himalayas.app/companies/harman-international/jobs/intern-product-design",
+   "isDesignRole": true,
+   "primary": "research-service",
+   "secondary": null,
+   "reason": "User and competitive research for a music product team, with usability testing support",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.162Z",
+   "usage": {
+    "input": 3174,
+    "output": 348,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/federato/jobs/principal-product-designer-8500379454": {
+   "id": "himalayas:https://himalayas.app/companies/federato/jobs/principal-product-designer-8500379454",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing user experiences and UI for a commercial underwriting SaaS platform",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.247Z",
+   "usage": {
+    "input": 1035,
+    "output": 58,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/goodwipes/jobs/senior-graphic-designer": {
+   "id": "himalayas:https://himalayas.app/companies/goodwipes/jobs/senior-graphic-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Creating brand graphics, social, packaging and digital assets for a personal care CPG brand",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.270Z",
+   "usage": {
+    "input": 2214,
+    "output": 66,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:webmaster-partner-fur-webdesign-und-digitale-losungen-aarau-323254": {
+   "id": "arbeitnow:webmaster-partner-fur-webdesign-und-digitale-losungen-aarau-323254",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Franchise-style webmaster partnership selling websites and marketing to SMEs; mostly sales and consulting, not hands-on design",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.513Z",
+   "usage": {
+    "input": 4239,
+    "output": 74,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/doola/jobs/product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/doola/jobs/product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing web dashboard UX and features for a fintech SaaS platform",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.601Z",
+   "usage": {
+    "input": 1143,
+    "output": 56,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:marketing-generalist-brand-events-partnerships-munich-225995": {
+   "id": "arbeitnow:marketing-generalist-brand-events-partnerships-munich-225995",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Marketing generalist running campaigns, copy, events and PR; design is secondary to marketing",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:19.718Z",
+   "usage": {
+    "input": 1905,
+    "output": 375,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/noct/jobs/graphic-designer-contract": {
+   "id": "himalayas:https://himalayas.app/companies/noct/jobs/graphic-designer-contract",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Visual graphic design for brands, packaging, and illustration; clearly a design role",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:20.111Z",
+   "usage": {
+    "input": 707,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/d2b/jobs/senior-graphic-designer-must-have-fmcg-food-packaging-exp-remote": {
+   "id": "himalayas:https://himalayas.app/companies/d2b/jobs/senior-graphic-designer-must-have-fmcg-food-packaging-exp-remote",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": "industrial",
+   "reason": "Designing packaging, labels, presentations and marketing assets for FMCG brands sold to retailers",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:20.122Z",
+   "usage": {
+    "input": 1051,
+    "output": 71,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/qa-engineer-2d-creative-applications-remote-contract": {
+   "id": "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/qa-engineer-2d-creative-applications-remote-contract",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Manual QA testing of creative software for bugs, not designing anything",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:20.534Z",
+   "usage": {
+    "input": 633,
+    "output": 52,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/nebius/jobs/devrel-communications-designer": {
+   "id": "himalayas:https://himalayas.app/companies/nebius/jobs/devrel-communications-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Visual design for developer-facing brand, events, swag, web and technical content; brand identity focus",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:20.601Z",
+   "usage": {
+    "input": 1941,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/streamline-studios/jobs/concept-artist": {
+   "id": "himalayas:https://himalayas.app/companies/streamline-studios/jobs/concept-artist",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Concept art for video game characters, environments, creatures for gaming projects",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:20.611Z",
+   "usage": {
+    "input": 987,
+    "output": 55,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/digital-career-institute/jobs/senior-creative-designer-mit-fokus-performance-ai-m-w-d-2934140365": {
+   "id": "himalayas:https://himalayas.app/companies/digital-career-institute/jobs/senior-creative-designer-mit-fokus-performance-ai-m-w-d-2934140365",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Designing performance ad creatives and AI-assisted visuals and videos for marketing campaigns",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.135Z",
+   "usage": {
+    "input": 1003,
+    "output": 179,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/remote-va/jobs/2d-pattern-designer": {
+   "id": "himalayas:https://himalayas.app/companies/remote-va/jobs/2d-pattern-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Creating surface patterns, prints and artwork for home décor and packaging products",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.224Z",
+   "usage": {
+    "input": 695,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/gameloft/jobs/lead-ui-artist-freelance": {
+   "id": "himalayas:https://himalayas.app/companies/gameloft/jobs/lead-ui-artist-freelance",
+   "isDesignRole": true,
+   "primary": "game",
+   "secondary": null,
+   "reason": "Creating UI assets and menu designs for multiplatform video games",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.233Z",
+   "usage": {
+    "input": 1192,
+    "output": 51,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "teamtailor:schibsted.teamtailor.com:54f0caa8-8c22-49c8-8179-3916da60d910": {
+   "id": "teamtailor:schibsted.teamtailor.com:54f0caa8-8c22-49c8-8179-3916da60d910",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Builds digital ad creatives (HTML5, video, animation) for brands; in-house ad production",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.297Z",
+   "usage": {
+    "input": 1219,
+    "output": 66,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/arora-media-llc/jobs/graphic-designer": {
+   "id": "himalayas:https://himalayas.app/companies/arora-media-llc/jobs/graphic-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Designs paid social ad creatives and landing assets for performance marketing campaigns",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.642Z",
+   "usage": {
+    "input": 1122,
+    "output": 63,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/skio/jobs/product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/skio/jobs/product-designer",
+   "isDesignRole": true,
+   "primary": "product",
+   "secondary": null,
+   "reason": "Designing wireframes, prototypes and UI for a B2B SaaS subscription product",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.762Z",
+   "usage": {
+    "input": 950,
+    "output": 61,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/rethinkfirst/jobs/marketing-design-specialist": {
+   "id": "himalayas:https://himalayas.app/companies/rethinkfirst/jobs/marketing-design-specialist",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": "product",
+   "reason": "Hands-on execution of brand and campaign visuals across marketing, ads, web and sales collateral",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:21.836Z",
+   "usage": {
+    "input": 2333,
+    "output": 69,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/treering/jobs/senior-marketing-designer-ii": {
+   "id": "himalayas:https://himalayas.app/companies/treering/jobs/senior-marketing-designer-ii",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Multidisciplinary marketing design for brand campaigns, motion, web, print and merch; core is brand and visual craft.",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:22.212Z",
+   "usage": {
+    "input": 1684,
+    "output": 75,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/lead-brand-designer-9681556199": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/lead-brand-designer-9681556199",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Brand identity, brand materials and visual system work for marketing and product surfaces",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:22.267Z",
+   "usage": {
+    "input": 1174,
+    "output": 62,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/nachhilfeunterricht/jobs/graphic-designer-to-teach-m-f-d-remote": {
+   "id": "himalayas:https://himalayas.app/companies/nachhilfeunterricht/jobs/graphic-designer-to-teach-m-f-d-remote",
+   "isDesignRole": false,
+   "primary": null,
+   "secondary": null,
+   "reason": "Private online tutoring in design software and skills, not hands-on design work",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:22.403Z",
+   "usage": {
+    "input": 506,
+    "output": 547,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/jerry/jobs/head-of-creative": {
+   "id": "himalayas:https://himalayas.app/companies/jerry/jobs/head-of-creative",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Leads hands-on performance video ad concepting, editing and production for car insurance app marketing",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:22.458Z",
+   "usage": {
+    "input": 3110,
+    "output": 252,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "lemanoosh:https://lemanoosh.com/jobs/industrial-designer-176/": {
+   "id": "lemanoosh:https://lemanoosh.com/jobs/industrial-designer-176/",
+   "isDesignRole": true,
+   "primary": "industrial",
+   "secondary": null,
+   "reason": "Designing consumer pizza oven products end-to-end from concept to manufacture",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:23.106Z",
+   "usage": {
+    "input": 1530,
+    "output": 60,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "lemanoosh:https://lemanoosh.com/jobs/praktikum-im-product-und-industrial-design-fur-heiz-und-klimatechnik/": {
+   "id": "lemanoosh:https://lemanoosh.com/jobs/praktikum-im-product-und-industrial-design-fur-heiz-und-klimatechnik/",
+   "isDesignRole": true,
+   "primary": "industrial",
+   "secondary": "brand-visual",
+   "reason": "Designing physical heating and climate products, brand design elements and industrial design styleguides",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:23.508Z",
+   "usage": {
+    "input": 1466,
+    "output": 65,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/crisis-prevention-institute/jobs/senior-digital-designer": {
+   "id": "himalayas:https://himalayas.app/companies/crisis-prevention-institute/jobs/senior-digital-designer",
+   "isDesignRole": true,
+   "primary": "brand-visual",
+   "secondary": null,
+   "reason": "Hands-on campaign, social, web, presentation and video design for a brand",
+   "version": 4,
+   "model": "claude-haiku-5-5",
+   "classifiedAt": "2026-11-25T13:35:24.699Z",
+   "usage": {
+    "input": 2242,
+    "output": 231,
+    "cacheRead": 1906,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -28890,6 +29882,20 @@
     "cacheWrite": 1906
    },
    "costUsd": 0.0084,
+   "note": "classification v4"
+  },
+  {
+   "at": "2026-11-25T13:35:24.699Z",
+   "model": "claude-haiku-5-5",
+   "postings": 62,
+   "failed": 0,
+   "usage": {
+    "input": 104786,
+    "output": 6771,
+    "cacheRead": 116266,
+    "cacheWrite": 1906
+   },
+   "costUsd": 0.0153,
    "note": "classification v4"
   }
  ]
