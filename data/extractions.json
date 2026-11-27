@@ -78671,6 +78671,1574 @@
     "cacheRead": 1179,
     "cacheWrite": 0
    }
+  },
+  "arbeitnow:staff-product-designer-motion-london-139342": {
+   "id": "arbeitnow:staff-product-designer-motion-london-139342",
+   "skills": [
+    "Motion design",
+    "Visual design",
+    "Design systems",
+    "Art direction",
+    "Prototyping",
+    "Storytelling",
+    "Mentoring",
+    "Front-end coding",
+    "Interaction design",
+    "Design leadership"
+   ],
+   "tools": [
+    "After Effects",
+    "Lottie",
+    "Rive"
+   ],
+   "experienceLevel": "staff/principal",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Proven systems-level motion experience",
+    "Build-first prototyping mindset",
+    "Shipped code-ready motion",
+    "Scaling motion frameworks",
+    "Ambiguity navigation",
+    "Initiative building structures",
+    "Emerging technology openness"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:15.673Z",
+   "usage": {
+    "input": 1924,
+    "output": 210,
+    "cacheRead": 0,
+    "cacheWrite": 1179
+   }
+  },
+  "arbeitnow:staff-product-designer-retail-london-11444": {
+   "id": "arbeitnow:staff-product-designer-retail-london-11444",
+   "skills": [
+    "Strategic design leadership",
+    "Design sprints",
+    "Product vision",
+    "Product roadmap ownership",
+    "Stakeholder management",
+    "Mentoring",
+    "Design critique",
+    "Accessibility",
+    "Design systems",
+    "Greenfield product development",
+    "Systems thinking",
+    "Design for AI"
+   ],
+   "tools": [],
+   "experienceLevel": "staff/principal",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Hybrid work London",
+    "Three-sided marketplace experience",
+    "Technical systems fluency",
+    "Cross-functional communication",
+    "Launch to scale experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:16.956Z",
+   "usage": {
+    "input": 1781,
+    "output": 192,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/legion-health/jobs/growth-designer-paid-creative-brand-web-ux-remote-part-time-backed-by-y-c-8579927894": {
+   "id": "himalayas:https://himalayas.app/companies/legion-health/jobs/growth-designer-paid-creative-brand-web-ux-remote-part-time-backed-by-y-c-8579927894",
+   "skills": [
+    "Paid creative strategy",
+    "Visual design",
+    "Brand identity",
+    "Typography",
+    "Interaction design",
+    "Prototyping",
+    "Growth experimentation",
+    "Design systems",
+    "Information architecture",
+    "Storytelling",
+    "Motion design",
+    "Landing page design"
+   ],
+   "tools": [
+    "Figma",
+    "Framer",
+    "Webflow",
+    "Figma AI",
+    "Meta Ads",
+    "TikTok Ads"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Strong portfolio required",
+    "Pacific Time overlap",
+    "Remote independent contractor",
+    "AI-native design tools",
+    "Health care experience helpful",
+    "Direct-response creative helpful",
+    "Creator or UGC briefs helpful"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:17.183Z",
+   "usage": {
+    "input": 2452,
+    "output": 239,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:3d-concept-visualization-artist-freelance-working-student-dubendorf-492490": {
+   "id": "arbeitnow:3d-concept-visualization-artist-freelance-working-student-dubendorf-492490",
+   "skills": [
+    "Photorealistic rendering",
+    "Concept rendering",
+    "3D modelling",
+    "Texturing",
+    "Lighting",
+    "Scene setup",
+    "Post-production",
+    "Visual design",
+    "Sketching",
+    "AI workflows"
+   ],
+   "tools": [
+    "Blender",
+    "Cinema 4D",
+    "Rhino",
+    "Unreal Engine",
+    "KeyShot",
+    "Vizcom",
+    "ComfyUI"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Strong portfolio required",
+    "Image editing skills",
+    "Basic 3D animation a plus",
+    "Aerospace aesthetics sense",
+    "Flexible on short notice",
+    "Freelance or working student"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:17.279Z",
+   "usage": {
+    "input": 1035,
+    "output": 227,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:senior-product-designer-berlin-50865": {
+   "id": "arbeitnow:senior-product-designer-berlin-50865",
+   "skills": [
+    "Product experience design",
+    "Interaction design",
+    "Visual design",
+    "Design systems",
+    "Usability testing",
+    "User research",
+    "A/B testing",
+    "Prototyping",
+    "Mentoring",
+    "Stakeholder management",
+    "Information architecture",
+    "Front-end coding"
+   ],
+   "tools": [
+    "Figma",
+    "Claude Code",
+    "Claude Design",
+    "Storybook",
+    "React",
+    "Figma AI"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio showing product impact",
+    "B2B or data-heavy product experience",
+    "Hands-on AI tool use",
+    "Design process coaching",
+    "German preferred",
+    "Agriculture or sustainability experience preferred",
+    "Multi-language product experience preferred",
+    "Berlin office presence preferred"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:17.685Z",
+   "usage": {
+    "input": 1928,
+    "output": 248,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/eduneo/jobs/motion-designer-senior-direction-artistique-et-narration-h-f-freelance": {
+   "id": "himalayas:https://himalayas.app/companies/eduneo/jobs/motion-designer-senior-direction-artistique-et-narration-h-f-freelance",
+   "skills": [
+    "Art direction",
+    "Storytelling",
+    "Motion design",
+    "Storyboarding",
+    "Illustration",
+    "Composition",
+    "Typography",
+    "Mentoring",
+    "Teaching content creation",
+    "Portfolio presentation",
+    "Project estimation",
+    "Moodboarding"
+   ],
+   "tools": [
+    "Photoshop",
+    "Illustrator"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "French"
+   ],
+   "other": [
+    "Portfolio required",
+    "Freelance contract",
+    "Fully remote",
+    "Available quickly",
+    "Own screen and voice recording",
+    "Openness to AI tools",
+    "Video explainer experience preferred"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:17.696Z",
+   "usage": {
+    "input": 1649,
+    "output": 203,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:3d-game-artist-core-puzzle-unit-paris-212488": {
+   "id": "arbeitnow:3d-game-artist-core-puzzle-unit-paris-212488",
+   "skills": [
+    "3d modelling",
+    "Ui design",
+    "Visual design",
+    "Iconography",
+    "Accessibility",
+    "Ui style bible",
+    "Component libraries",
+    "Animation",
+    "Level design",
+    "Experimentation"
+   ],
+   "tools": [
+    "Unity"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "A/B testing experience",
+    "Liveops experience",
+    "Mobile game trend awareness",
+    "Remote cross-functional collaboration",
+    "AI-first mindset",
+    "Mobile performance optimisation"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:17.826Z",
+   "usage": {
+    "input": 1108,
+    "output": 181,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:service-designer-consultant-senior-consultant-deutschlandweit-munich-227914": {
+   "id": "arbeitnow:service-designer-consultant-senior-consultant-deutschlandweit-munich-227914",
+   "skills": [
+    "Service design",
+    "Customer journey mapping",
+    "Service blueprinting",
+    "Co-creation",
+    "Service prototyping",
+    "Design research",
+    "Stakeholder management",
+    "Workshop facilitation",
+    "Insight synthesis",
+    "Persona development",
+    "Stakeholder mapping",
+    "CX strategy",
+    "Data-informed design",
+    "AI product design"
+   ],
+   "tools": [
+    "Miro",
+    "Mural",
+    "Figma",
+    "FigJam",
+    "Claude Code"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 3,
+   "yearsMax": 8,
+   "education": "Degree in Service Design, Interaction/UX Design, Design Management, Business, Psychology or related field",
+   "languages": [
+    "German",
+    "English"
+   ],
+   "other": [
+    "Consultant or Senior Consultant level",
+    "Consulting experience preferred",
+    "Client-facing stakeholder work",
+    "Digital transformation experience",
+    "Omnichannel service experience",
+    "CX metrics familiarity (NPS, CSAT, CES)",
+    "Design Thinking or SDN certification preferred",
+    "Travel availability across Germany"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:18.077Z",
+   "usage": {
+    "input": 2943,
+    "output": 321,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:junior-art-directorin-cologne-324220": {
+   "id": "arbeitnow:junior-art-directorin-cologne-324220",
+   "skills": [
+    "Visual design",
+    "Typography",
+    "Layout",
+    "Prepress",
+    "Campaign development",
+    "Brand identity",
+    "Motion design",
+    "UI/UX design"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "InDesign",
+    "Photoshop",
+    "Illustrator",
+    "Acrobat",
+    "Figma",
+    "After Effects"
+   ],
+   "experienceLevel": "junior",
+   "yearsMin": 1,
+   "yearsMax": 3,
+   "education": "Degree or vocational training in communication design or similar",
+   "languages": [
+    "German",
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Agency experience",
+    "AI image and video tools",
+    "Based in or willing to relocate to Cologne",
+    "Hands-on mentality",
+    "Multi-project management"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:18.202Z",
+   "usage": {
+    "input": 1625,
+    "output": 217,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/pavago/jobs/social-content-designer-1658522285": {
+   "id": "himalayas:https://himalayas.app/companies/pavago/jobs/social-content-designer-1658522285",
+   "skills": [
+    "Social content design",
+    "Carousel design",
+    "Visual design",
+    "Typography",
+    "Layout and composition",
+    "Visual hierarchy",
+    "Brand consistency",
+    "Asset organization",
+    "Feedback incorporation"
+   ],
+   "tools": [
+    "Figma",
+    "Adobe Illustrator",
+    "Adobe Photoshop"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Instagram and LinkedIn experience",
+    "Fractional remote role",
+    "Spark Hire video interview",
+    "Professional design experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:18.908Z",
+   "usage": {
+    "input": 1946,
+    "output": 191,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/ilogos-game-studios/jobs/casual-ui-ux-artist": {
+   "id": "himalayas:https://himalayas.app/companies/ilogos-game-studios/jobs/casual-ui-ux-artist",
+   "skills": [
+    "Game UI design",
+    "UX design",
+    "Visual design",
+    "Icon design",
+    "Mobile UX",
+    "Wireframing",
+    "Responsive layout",
+    "AI-assisted art",
+    "Style consistency",
+    "Monetization UI",
+    "Ui animation",
+    "Visual hierarchy",
+    "Character customization UI",
+    "Asset handoff"
+   ],
+   "tools": [
+    "Figma",
+    "Adobe Photoshop",
+    "Unity"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 3,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Mobile F2P portfolio required",
+    "Generative AI tools experience",
+    "Production-ready AI workflows",
+    "Cartoon-style UI art",
+    "Unity asset integration",
+    "Casual or midcore portfolio"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:18.920Z",
+   "usage": {
+    "input": 1804,
+    "output": 234,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:head-of-design-zurich-488979": {
+   "id": "arbeitnow:head-of-design-zurich-488979",
+   "skills": [
+    "Design leadership",
+    "Team leadership",
+    "Design vision",
+    "Design systems",
+    "User research",
+    "Interaction design",
+    "Industrial design",
+    "Human-machine interaction",
+    "Stakeholder management",
+    "Field research",
+    "Prototyping",
+    "Usability testing",
+    "AI product design"
+   ],
+   "tools": [],
+   "experienceLevel": "lead/manager",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "3D or spatial interaction experience",
+    "Complex B2B product experience",
+    "Robotics or digital twin background",
+    "Hands-on design practice building",
+    "Travel to customer sites required",
+    "Zurich or Barcelona based"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:19.186Z",
+   "usage": {
+    "input": 1522,
+    "output": 204,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:product-designer-london-gb-197467": {
+   "id": "arbeitnow:product-designer-london-gb-197467",
+   "skills": [
+    "Customer journey mapping",
+    "Ux optimisation",
+    "Ux design",
+    "User research",
+    "Usability testing",
+    "Design systems",
+    "Prototyping",
+    "Stakeholder collaboration",
+    "Responsive web design",
+    "Critical thinking",
+    "Customer-centric design",
+    "Attention to detail"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Experience with developers",
+    "AI tooling experience",
+    "Self-starter autonomy",
+    "Confident communicator",
+    "Customer interviews experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:19.241Z",
+   "usage": {
+    "input": 2024,
+    "output": 197,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/specialized-education-services-inc-3/jobs/product-designer": {
+   "id": "himalayas:https://himalayas.app/companies/specialized-education-services-inc-3/jobs/product-designer",
+   "skills": [
+    "Product design",
+    "Problem framing",
+    "Interaction design",
+    "Prototyping",
+    "Design systems",
+    "User research",
+    "Usability testing",
+    "Information architecture",
+    "Accessibility",
+    "Responsive design",
+    "Product thinking",
+    "Cross-functional collaboration"
+   ],
+   "tools": [
+    "Figma",
+    "Claude",
+    "Maze",
+    "UserTesting",
+    "Lookback",
+    "Dovetail",
+    "Adobe Creative Suite"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Claude skills experience",
+    "Design system governance experience",
+    "Comfort coding prototypes",
+    "Remote US based",
+    "Small fast-moving team experience",
+    "WCAG knowledge",
+    "Edtech experience preferred"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:19.525Z",
+   "usage": {
+    "input": 1934,
+    "output": 244,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/agility-robotics/jobs/brand-designer-iii": {
+   "id": "himalayas:https://himalayas.app/companies/agility-robotics/jobs/brand-designer-iii",
+   "skills": [
+    "Brand identity",
+    "Visual design",
+    "Layout",
+    "Typography",
+    "Systems-based design",
+    "Project management",
+    "Cross-functional collaboration",
+    "Design QA",
+    "Motion design",
+    "Illustration",
+    "Design systems",
+    "Print production"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Illustrator",
+    "Photoshop",
+    "InDesign",
+    "Figma"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 4,
+   "yearsMax": 6,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Large-format print experience",
+    "Robotics or hardware interest",
+    "Work authorisation US",
+    "Vendor management",
+    "Low-ego collaborative attitude"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:19.615Z",
+   "usage": {
+    "input": 2159,
+    "output": 211,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:staff-product-designer-b2c-zurich-221000": {
+   "id": "arbeitnow:staff-product-designer-b2c-zurich-221000",
+   "skills": [
+    "Product design",
+    "Design strategy",
+    "Stakeholder management",
+    "Mentoring",
+    "Experimentation",
+    "Mobile-first design",
+    "Prototyping",
+    "Visual design",
+    "Critique",
+    "Cross-team design leadership",
+    "AI product design",
+    "Information architecture"
+   ],
+   "tools": [
+    "Figma",
+    "Claude",
+    "Figma Make"
+   ],
+   "experienceLevel": "staff/principal",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Extensive complex product portfolio",
+    "Owning design across teams",
+    "Executive presentation experience",
+    "Concrete AI efficiency examples",
+    "Ambiguous problem leadership"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:19.672Z",
+   "usage": {
+    "input": 1528,
+    "output": 208,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/codekeeper/jobs/digital-product-designer-8878960039": {
+   "id": "himalayas:https://himalayas.app/companies/codekeeper/jobs/digital-product-designer-8878960039",
+   "skills": [
+    "Visual design",
+    "Interaction design",
+    "Prototyping",
+    "User research",
+    "Design systems",
+    "Typography",
+    "Wireframing",
+    "Mockups",
+    "Design guidelines documentation",
+    "Stakeholder communication",
+    "User journey mapping",
+    "Presentation"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Proficient English copywriting",
+    "Color theory knowledge",
+    "Mac access",
+    "Fast-paced environment comfort",
+    "Analysis of user journeys",
+    "Symbol library experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:20.032Z",
+   "usage": {
+    "input": 1015,
+    "output": 194,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:praktikum-mediengestalter-grafikdesigner-ludwigshafen-125118": {
+   "id": "arbeitnow:praktikum-mediengestalter-grafikdesigner-ludwigshafen-125118",
+   "skills": [
+    "Visual design",
+    "Brand identity",
+    "Storytelling",
+    "Copywriting",
+    "Photography",
+    "Recruiting marketing",
+    "Social media design"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Photoshop",
+    "InDesign",
+    "Illustrator"
+   ],
+   "experienceLevel": "intern",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": "Completed Mediengestalter Digital/Printmedien training or comparable qualification",
+   "languages": [
+    "German"
+   ],
+   "other": [
+    "Multi-year marketing content experience",
+    "Recruiting campaign experience preferred",
+    "Independent structured working style"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:20.525Z",
+   "usage": {
+    "input": 1115,
+    "output": 192,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:remote-founding-product-designer-471103": {
+   "id": "arbeitnow:remote-founding-product-designer-471103",
+   "skills": [
+    "Interaction design",
+    "Prototyping",
+    "User research",
+    "Product thinking",
+    "Visual design",
+    "Design systems",
+    "Stakeholder management",
+    "Front-end coding",
+    "Usability testing",
+    "Mentoring"
+   ],
+   "tools": [
+    "Figma",
+    "Cursor",
+    "Claude Code"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "German",
+    "English"
+   ],
+   "other": [
+    "Portfolio with B2B or AI case studies",
+    "Shipped complex software for experts",
+    "Comfortable with ambiguity",
+    "Works directly with customers",
+    "Prototype in code or AI tools",
+    "Bonus CAD or 3D experience",
+    "Bonus PLM or industrial software experience",
+    "Full-time, EU remote CET preferred"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:20.527Z",
+   "usage": {
+    "input": 1115,
+    "output": 243,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:werkstudent-mediengestalter-grafikdesigner-ludwigshafen-338363": {
+   "id": "arbeitnow:werkstudent-mediengestalter-grafikdesigner-ludwigshafen-338363",
+   "skills": [
+    "Visual design",
+    "Brand identity",
+    "Storytelling",
+    "Photography",
+    "Copywriting",
+    "Recruiting marketing",
+    "Social media design"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Photoshop",
+    "InDesign",
+    "Illustrator"
+   ],
+   "experienceLevel": "junior",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": "Completed Mediengestalter Digital/Printmedien or equivalent",
+   "languages": [
+    "German"
+   ],
+   "other": [
+    "Werkstudent role alongside studies",
+    "Multi-year experience preferred",
+    "Recruiting campaign experience desirable",
+    "Structured independent work",
+    "Corporate design implementation"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:20.581Z",
+   "usage": {
+    "input": 1200,
+    "output": 209,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/colablosangeles/jobs/senior-ui-ux-designer-3189716164": {
+   "id": "himalayas:https://himalayas.app/companies/colablosangeles/jobs/senior-ui-ux-designer-3189716164",
+   "skills": [
+    "User research",
+    "Prototyping",
+    "Responsive design",
+    "Design systems",
+    "Wireframing",
+    "Conversion optimisation",
+    "UX principles",
+    "User journey mapping",
+    "Competitor analysis",
+    "Stakeholder management"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 4,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Digital marketing agency experience",
+    "US-based client experience",
+    "Remote India",
+    "Client feedback handling"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:20.932Z",
+   "usage": {
+    "input": 477,
+    "output": 168,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "arbeitnow:creative-technologist-freiburg-122472": {
+   "id": "arbeitnow:creative-technologist-freiburg-122472",
+   "skills": [
+    "Generative media production",
+    "Visual exploration",
+    "Prototyping",
+    "Customer enablement",
+    "Demo creation",
+    "Technical feasibility assessment",
+    "Creative direction",
+    "Generative AI expertise",
+    "Portfolio craft",
+    "Storytelling"
+   ],
+   "tools": [
+    "ComfyUI",
+    "AI Toolkit",
+    "FLUX",
+    "Python"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": 3,
+   "yearsMax": null,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Brand or agency background",
+    "Film or VFX background",
+    "Creative AI community presence",
+    "Based in Freiburg or SF",
+    "Office attendance 2 days weekly",
+    "Viral content experience",
+    "Sales or GTM support experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:21.218Z",
+   "usage": {
+    "input": 1311,
+    "output": 235,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/multiplayer-studio/jobs/senior-designer-visual-design": {
+   "id": "himalayas:https://himalayas.app/companies/multiplayer-studio/jobs/senior-designer-visual-design",
+   "skills": [
+    "Visual design",
+    "Brand identity",
+    "Typography",
+    "Storytelling",
+    "Presentation design",
+    "Layout",
+    "Visual systems",
+    "Case study design",
+    "Social media design",
+    "Rapid prototyping",
+    "Stakeholder management",
+    "Digital product design"
+   ],
+   "tools": [
+    "AI tools"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Digital product track record",
+    "Remote, Canada",
+    "Toronto time overlap 3 hours",
+    "Full-time industry experience"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:21.392Z",
+   "usage": {
+    "input": 887,
+    "output": 181,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/jonas-software/jobs/ai-ux-designer": {
+   "id": "himalayas:https://himalayas.app/companies/jonas-software/jobs/ai-ux-designer",
+   "skills": [
+    "Interaction design",
+    "Information architecture",
+    "Workflow research",
+    "User research",
+    "Design systems",
+    "Dashboard design",
+    "Prototyping",
+    "Stakeholder management",
+    "Data-informed design",
+    "Product thinking"
+   ],
+   "tools": [
+    "Figma"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Enterprise software experience",
+    "Workflow management experience highly desirable",
+    "Learns unfamiliar domains quickly",
+    "Hands-on AI use in design",
+    "Portfolio required",
+    "Remote US"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:21.440Z",
+   "usage": {
+    "input": 1158,
+    "output": 187,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/deploja-ab/jobs/ux-ui-designer": {
+   "id": "himalayas:https://himalayas.app/companies/deploja-ab/jobs/ux-ui-designer",
+   "skills": [
+    "Ux research",
+    "Information architecture",
+    "Interaction design",
+    "User research",
+    "Design systems",
+    "Usability testing",
+    "Accessibility",
+    "Stakeholder management",
+    "Prototyping",
+    "Journey mapping",
+    "Service design",
+    "Localisation",
+    "Workshop facilitation",
+    "AI product design"
+   ],
+   "tools": [
+    "Figma",
+    "Optimizely",
+    "Microsoft Clarity",
+    "Hotjar",
+    "Google Analytics 4",
+    "Optimizely Web Experimentation",
+    "Stark",
+    "axe",
+    "WAVE",
+    "FigJam",
+    "Azure DevOps",
+    "Jira"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 5,
+   "yearsMax": 7,
+   "education": null,
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio from problem definition to implementation",
+    "Public-facing website experience",
+    "Multi-country website experience",
+    "WCAG understanding",
+    "Responsive design understanding",
+    "SEO fundamentals",
+    "Pragmatic use of AI",
+    "Presenting in international settings"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:21.574Z",
+   "usage": {
+    "input": 795,
+    "output": 300,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/r-ga-careers-page/jobs/visual-designer": {
+   "id": "himalayas:https://himalayas.app/companies/r-ga-careers-page/jobs/visual-designer",
+   "skills": [
+    "Visual design",
+    "Brand identity",
+    "Design systems",
+    "Motion design",
+    "Storytelling",
+    "Iconography",
+    "Layout design",
+    "Art direction",
+    "User interface design",
+    "Data visualization"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Figma",
+    "Keynote",
+    "After Effects"
+   ],
+   "experienceLevel": "mid",
+   "yearsMin": 3,
+   "yearsMax": null,
+   "education": "Bachelor's degree in Graphic Design or equivalent education and experience",
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Agency experience required",
+    "Portfolio required",
+    "Youth culture awareness",
+    "Presentation skills",
+    "Strong attention to detail",
+    "Campaign and systems work",
+    "Remote work Argentina"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:22.059Z",
+   "usage": {
+    "input": 1233,
+    "output": 221,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "wwr:https://weworkremotely.com/remote-jobs/silverback-strategies-senior-motion-graphic-designer-remote": {
+   "id": "wwr:https://weworkremotely.com/remote-jobs/silverback-strategies-senior-motion-graphic-designer-remote",
+   "skills": [
+    "Visual design",
+    "Motion design",
+    "Video editing",
+    "Layout design",
+    "Paid social advertising",
+    "Storyboarding",
+    "Brand identity",
+    "Design for compliance",
+    "Typography"
+   ],
+   "tools": [
+    "Figma",
+    "After Effects",
+    "Adobe Creative Suite",
+    "Photoshop",
+    "Premiere Pro",
+    "Illustrator"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Paid social experience",
+    "Regulated industry experience",
+    "Brand guideline adherence",
+    "Matrixed stakeholder management",
+    "Platform specs knowledge",
+    "Remote, US only"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:22.102Z",
+   "usage": {
+    "input": 2867,
+    "output": 215,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/rts-management-inc/jobs/merchandise-designer": {
+   "id": "himalayas:https://himalayas.app/companies/rts-management-inc/jobs/merchandise-designer",
+   "skills": [
+    "Illustration",
+    "Graphic design",
+    "Typography",
+    "Composition",
+    "Merchandise design",
+    "Product thinking",
+    "Production file preparation",
+    "Apparel decoration methods",
+    "Pattern design",
+    "Iconography",
+    "Concept development",
+    "Color theory"
+   ],
+   "tools": [
+    "Adobe Illustrator",
+    "Adobe Photoshop"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Strong professional portfolio required",
+    "Screen-to-production understanding",
+    "Multi-project deadline management",
+    "Remote US candidate"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:22.317Z",
+   "usage": {
+    "input": 1797,
+    "output": 193,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/cisco/jobs/lead-product-designer-ai-and-platform-experience-3500042868": {
+   "id": "himalayas:https://himalayas.app/companies/cisco/jobs/lead-product-designer-ai-and-platform-experience-3500042868",
+   "skills": [
+    "Interaction design",
+    "Information architecture",
+    "Visual design",
+    "Prototyping",
+    "Design systems",
+    "Product thinking",
+    "Storytelling",
+    "Systems thinking",
+    "Stakeholder management",
+    "AI product design",
+    "Generative UI",
+    "Mentoring"
+   ],
+   "tools": [
+    "AI-assisted design tools"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 8,
+   "yearsMax": null,
+   "education": "Bachelor's degree (or Master's with 6+ years, or PhD with 3+ years)",
+   "languages": [],
+   "other": [
+    "Enterprise platform experience",
+    "Shipped AI-powered product experience",
+    "Portfolio required",
+    "Cross-functional collaboration",
+    "Cross-product platform experience",
+    "AI-native product startup experience",
+    "Accessibility awareness"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:22.430Z",
+   "usage": {
+    "input": 2709,
+    "output": 243,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/mars-men/jobs/art-director": {
+   "id": "himalayas:https://himalayas.app/companies/mars-men/jobs/art-director",
+   "skills": [
+    "Motion design",
+    "Paid social ad design",
+    "Storyboarding",
+    "Typography",
+    "Layout",
+    "Visual storytelling",
+    "Motion systems",
+    "Animation",
+    "Creative direction",
+    "Mentoring"
+   ],
+   "tools": [
+    "After Effects",
+    "Illustrator",
+    "Photoshop",
+    "Figma",
+    "Premiere",
+    "Cinema 4D",
+    "Blender"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Strong portfolio required",
+    "DTC ad portfolio",
+    "Performance marketing mindset",
+    "Men's health or supplements familiarity",
+    "AI tools familiarity",
+    "Remote US candidates"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:22.537Z",
+   "usage": {
+    "input": 1143,
+    "output": 218,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/bjak/jobs/senior-motion-designer": {
+   "id": "himalayas:https://himalayas.app/companies/bjak/jobs/senior-motion-designer",
+   "skills": [
+    "Motion design",
+    "Storytelling",
+    "Creative direction",
+    "Mentoring",
+    "Visual composition",
+    "Project management",
+    "Art direction",
+    "Stakeholder communication",
+    "Design systems",
+    "Animation",
+    "Visual effects",
+    "3D animation"
+   ],
+   "tools": [
+    "Adobe After Effects",
+    "Illustrator",
+    "Photoshop",
+    "Premiere Pro",
+    "Cinema 4D",
+    "Blender"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 5,
+   "yearsMax": null,
+   "education": "Diploma or Bachelor's in Motion Graphics, Animation, Multimedia Design, or related field",
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio or showreel required",
+    "Based in Philippines",
+    "Strong English communication",
+    "Leads creative team"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:23.014Z",
+   "usage": {
+    "input": 1401,
+    "output": 238,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/empleo-joven-powered-by-aurorajobs/jobs/graphic-designer-intern-remote-internship": {
+   "id": "himalayas:https://himalayas.app/companies/empleo-joven-powered-by-aurorajobs/jobs/graphic-designer-intern-remote-internship",
+   "skills": [
+    "Graphic design",
+    "Visual design",
+    "Brand identity",
+    "Illustration",
+    "Layout design",
+    "Creative thinking",
+    "Collaboration"
+   ],
+   "tools": [
+    "Adobe Creative Suite",
+    "Photoshop",
+    "Illustrator",
+    "InDesign"
+   ],
+   "experienceLevel": "intern",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": "Graphic design, Fine arts or related field (students or recent graduates)",
+   "languages": [
+    "Spanish"
+   ],
+   "other": [
+    "Portfolio required",
+    "Remote internship",
+    "Extracurricular internship"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:23.387Z",
+   "usage": {
+    "input": 549,
+    "output": 178,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "himalayas:https://himalayas.app/companies/dfbooking-recruitment-services/jobs/senior-ux-designer-ecommerce-experience": {
+   "id": "himalayas:https://himalayas.app/companies/dfbooking-recruitment-services/jobs/senior-ux-designer-ecommerce-experience",
+   "skills": [
+    "User research",
+    "Usability testing",
+    "Prototyping",
+    "Responsive design",
+    "Accessibility",
+    "Storytelling",
+    "Data-informed design",
+    "Interaction design",
+    "Information architecture",
+    "Competitive analysis"
+   ],
+   "tools": [
+    "Figma",
+    "HTML/CSS"
+   ],
+   "experienceLevel": "senior",
+   "yearsMin": 4,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "eCommerce UX experience 3+ years",
+    "Portfolio required",
+    "Web and mobile portfolio",
+    "A/B testing experience",
+    "SEO knowledge a plus",
+    "Remote or hybrid"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:23.444Z",
+   "usage": {
+    "input": 1252,
+    "output": 194,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "lemanoosh:https://lemanoosh.com/jobs/2027-28-industrial-design-cmf-transportation-design-interns/": {
+   "id": "lemanoosh:https://lemanoosh.com/jobs/2027-28-industrial-design-cmf-transportation-design-interns/",
+   "skills": [
+    "Visual design",
+    "Sketching",
+    "3D modelling",
+    "Motion design",
+    "Material knowledge",
+    "Colour and finish",
+    "Creative thinking"
+   ],
+   "tools": [
+    "Photoshop",
+    "Illustrator",
+    "InDesign",
+    "Alias",
+    "Blender",
+    "AI design tools"
+   ],
+   "experienceLevel": "intern",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Portfolio required",
+    "Self-motivated",
+    "Interest in transport design",
+    "Interest in rail and aviation",
+    "CAD experience required",
+    "AI-enabled design workflow familiarity",
+    "Year-long placement"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:23.538Z",
+   "usage": {
+    "input": 1186,
+    "output": 196,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "lemanoosh:https://lemanoosh.com/jobs/product-designer-m-w-d-footwear/": {
+   "id": "lemanoosh:https://lemanoosh.com/jobs/product-designer-m-w-d-footwear/",
+   "skills": [
+    "Product design",
+    "Footwear design",
+    "Form and proportion sense",
+    "Materials knowledge",
+    "Shoe construction",
+    "Fit and fit testing",
+    "Manufacturing knowledge",
+    "Prototyping",
+    "Presentation skills",
+    "Sketching"
+   ],
+   "tools": [
+    "SolidWorks",
+    "Adobe Creative Suite"
+   ],
+   "experienceLevel": "unspecified",
+   "yearsMin": null,
+   "yearsMax": null,
+   "education": "Completed degree in industrial or product design or comparable training",
+   "languages": [
+    "English"
+   ],
+   "other": [
+    "Portfolio required",
+    "Bike, sport or outdoor industry background preferred",
+    "Footwear experience preferred",
+    "Five days a week on-site in Waldershof"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:23.847Z",
+   "usage": {
+    "input": 1444,
+    "output": 221,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
+  },
+  "remoteok:1138146": {
+   "id": "remoteok:1138146",
+   "skills": [
+    "Brand identity",
+    "Design systems",
+    "Visual design",
+    "Mentoring",
+    "Stakeholder management",
+    "Motion design",
+    "Web design",
+    "Email design",
+    "Video production",
+    "Social media design",
+    "Event design",
+    "Quality standards"
+   ],
+   "tools": [],
+   "experienceLevel": "lead/manager",
+   "yearsMin": 8,
+   "yearsMax": null,
+   "education": null,
+   "languages": [],
+   "other": [
+    "Luxury brand portfolio required",
+    "Web brand and motion portfolio",
+    "Team leadership experience",
+    "Vendor and freelancer management",
+    "US work authorisation",
+    "Remote, US only",
+    "Use of AI tools",
+    "Influence senior stakeholders"
+   ],
+   "model": "claude-haiku-5-5",
+   "extractedAt": "2026-11-27T05:58:24.521Z",
+   "usage": {
+    "input": 2001,
+    "output": 202,
+    "cacheRead": 1179,
+    "cacheWrite": 0
+   }
   }
  },
  "runs": [
@@ -78868,6 +80436,19 @@
     "cacheWrite": 1179
    },
    "costUsd": 0.0116
+  },
+  {
+   "at": "2026-11-27T05:58:24.521Z",
+   "model": "claude-haiku-5-5",
+   "postings": 36,
+   "failed": 0,
+   "usage": {
+    "input": 56017,
+    "output": 7755,
+    "cacheRead": 41265,
+    "cacheWrite": 1179
+   },
+   "costUsd": 0.01
   }
  ]
 }
