@@ -1,6 +1,6 @@
 # Ping
 
-Design jobs for students at the Estonian Academy of Arts (EKA), updated daily. Live at [ping.ragne.me](https://ping.ragne.me).
+Design jobs for students at the Estonian Academy of Arts (EKA), updated every Monday and Thursday. Live at [ping.ragne.me](https://ping.ragne.me).
 
 Ping collects current design roles from job boards and company career pages, sorts each one into one of 9 directions (product, design engineering, AI and behaviour, brand and visual, research and service, customer-facing, game, industrial, other paths) and marks what a graduate can realistically apply for ("within reach") and what is open to someone in Estonia. Discover is a map of the companies in Estonia that hire designers, with their current roles and careers pages, and Market insights counts the skills, tools and experience the postings ask for. Anyone can get new matching jobs by email.
 
@@ -8,7 +8,7 @@ Ping collects current design roles from job boards and company career pages, sor
 
 1. **Sources** (`npm run fetch`): public job board APIs and feeds (Remote OK, We Work Remotely, Himalayas, Remotive, Arbeitnow, Lemanoosh) and the public job boards and careers sites of the companies in `data/companies.json` (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio, Workday, Teamdash and a few companies' own sites), including companies based in Estonia, whose postings always count as open to Estonia. Gambling, betting and iGaming companies are not listed. Postings are normalised to one shape, kept to remote roles anywhere plus on-site and hybrid roles in Europe, and deduplicated.
 2. **Classification** (`npm run extract`): a small language model decides for each new posting whether it is design work, picks its direction, and extracts what it asks for (skills, tools, level, years). Results are cached by posting id, so each run only pays for new postings.
-3. **Daily refresh**: a GitHub Actions workflow (`.github/workflows/daily-refresh.yml`) runs every day at 03:47 UTC, with a backup schedule an hour later and a Vercel cron after that in case GitHub delays or skips it: fetch, classify, stamp the run time, commit the data to `main` (which redeploys the site on Vercel), then send the email digest to subscribers who are due.
+3. **Refresh**: a GitHub Actions workflow (`.github/workflows/refresh.yml`) runs every Monday and Thursday at 03:47 UTC, with a backup schedule an hour later and a Vercel cron after that on the same days, in case GitHub delays or skips it: fetch, classify, stamp the run time, commit the data to `main` (which redeploys the site on Vercel), then send the email digest to subscribers who are due.
 
 4. **Weekly discovery**: on Mondays (`.github/workflows/weekly-discovery.yml`) a small language model with web search looks for companies in Estonia that hire designers; the ones whose job board Ping can read are added to the list (`npm run discover -- --dry-run` shows what it would add). `npm run detect -- <careers url>` checks one company by hand.
 

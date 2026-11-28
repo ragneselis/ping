@@ -2,7 +2,7 @@
 
 Every company Ping knows is in one list, `data/companies.json` (schema `CompanySchema` in `lib/company.ts`; see "Companies and discovery" in [DEVELOPMENT.md](DEVELOPMENT.md)). Each entry is one of two kinds:
 
-- **Readable**: Ping reads its jobs every morning, from one of the eight public job boards (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio) or one of the readers in `lib/sources/readers.ts` (Workday, Teamdash, or a site's own careers page).
+- **Readable**: Ping reads its jobs every Monday and Thursday, from one of the eight public job boards (Greenhouse, Lever, Ashby, Teamtailor, Workable, Recruitee, SmartRecruiters, Personio) or one of the readers in `lib/sources/readers.ts` (Workday, Teamdash, or a site's own careers page).
 - **Careers link only** (`careersLinkOnly: true`): Ping cannot read its jobs, so Discover shows the company with a link to its careers page.
 
 Companies with designers in Estonia (`inEstonia: true`: headquartered there, or a real team in Tallinn or Tartu) are listed on Discover, each with a one-line `description`.

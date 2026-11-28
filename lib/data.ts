@@ -45,7 +45,7 @@ export function loadCompanies(): Company[] {
   return CompanySchema.array().parse(read<unknown[]>("companies.json", []));
 }
 
-/** When the daily refresh last finished and when the next one is due (written by scripts/stamp.ts). */
+/** When the refresh last finished and when the next one is due (written by scripts/stamp.ts). */
 export function loadRun() {
   return read<{
     lastRun: string;

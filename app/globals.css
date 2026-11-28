@@ -404,8 +404,8 @@
 }
 
 /* ---------------------------------------------------------------------------
-   The fresh tile: a tiny emerald tile before jobs posted in the last 24 hours
-   and on the "New today" readout: a soft square pulse that stays still under
+   The fresh tile: a tiny emerald tile before jobs the latest run found
+   and on the "New this trip" readout: a soft square pulse that stays still under
    prefers-reduced-motion.
    --------------------------------------------------------------------------- */
 @keyframes tile-pulse {

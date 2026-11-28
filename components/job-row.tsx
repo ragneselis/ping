@@ -95,7 +95,7 @@ export function JobRow({
               rel="noopener noreferrer"
               className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
             >
-              {isNew && <span className="sr-only">New today: </span>}
+              {isNew && <span className="sr-only">New this trip: </span>}
               {job.title}
               <span className="sr-only">
                 , {job.company} (opens the original posting)

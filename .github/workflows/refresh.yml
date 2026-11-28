@@ -1,17 +1,18 @@
-name: Daily refresh
+name: Refresh
 
-# Every day, with backups, because GitHub delays scheduled workflows at busy times and can skip them
-# (lib/schedule.ts holds the times; keep them in step):
+# Twice a week, Monday and Thursday, with backups on the same days, because GitHub delays scheduled
+# workflows at busy times and can skip them (lib/schedule.ts holds the days and times; keep them in step):
 #   03:47 UTC  the schedule, off the hour to avoid GitHub's peak (05:47 in Tallinn in winter)
 #   04:41 UTC  a backup schedule
 #   05:20 UTC  Vercel cron, /api/cron/refresh dispatches this workflow (trigger: vercel-cron)
-#   by hand    Actions, "Daily refresh", Run workflow (trigger: manual)
+#   by hand    Actions, "Refresh", Run workflow (trigger: manual), any day
 # Every trigger but manual first checks data/run.json and stops when today's run (Tallinn date) already
 # succeeded. The concurrency group never runs two at once: a later trigger waits, then finds today done.
+# Weekly discovery (weekly-discovery.yml) runs on Mondays at 03:00 UTC, before the Monday run.
 on:
   schedule:
-    - cron: "47 3 * * *"
-    - cron: "41 4 * * *"
+    - cron: "47 3 * * 1,4"
+    - cron: "41 4 * * 1,4"
   workflow_dispatch:
     inputs:
       trigger:
@@ -23,7 +24,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-refresh
+  group: refresh
   cancel-in-progress: false
 
 jobs:
@@ -32,7 +33,7 @@ jobs:
     timeout-minutes: 40
     env:
       # schedule (03:47), backup (04:41), vercel-cron or manual: recorded in data/run.json for /stats.
-      RUN_TRIGGER: ${{ github.event_name == 'schedule' && (github.event.schedule == '47 3 * * *' && 'schedule' || 'backup') || inputs.trigger || 'manual' }}
+      RUN_TRIGGER: ${{ github.event_name == 'schedule' && (github.event.schedule == '47 3 * * 1,4' && 'schedule' || 'backup') || inputs.trigger || 'manual' }}
     steps:
       - uses: actions/checkout@v5
 
@@ -99,11 +100,11 @@ jobs:
           git config user.name "ragneselis"
           git config user.email "90755249+ragneselis@users.noreply.github.com"
           git add data/
-          git commit -m "Daily data refresh $(date -u +%Y-%m-%d) ($RUN_TRIGGER)"
+          git commit -m "Data refresh $(date -u +%Y-%m-%d) ($RUN_TRIGGER)"
           git push
 
-      # Email the digest to confirmed subscribers who are due (daily ones every day, weekly ones on
-      # Monday). It runs after the data is committed and can never fail the refresh: the script exits 0
+      # Email the digest to confirmed subscribers who are due (twice-a-week ones after every run, weekly
+      # ones on Monday). It runs after the data is committed and can never fail the refresh: the script exits 0
       # and logs a warning on any sending problem, and continue-on-error covers anything else.
       # EMAIL_FROM is a repository variable, set once mail.ragne.me is verified in Resend.
       - name: Send digest

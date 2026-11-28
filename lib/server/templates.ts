@@ -7,7 +7,7 @@
 import { CATEGORY_META } from "@/lib/categories";
 import { LOGO_COLORS, LOGO_ROWS } from "@/lib/logo";
 import { REMOTE_LABEL } from "@/lib/categories";
-import { DIGEST_CAP, type Frequency, type Prefs, prefsToQuery } from "@/lib/subscription";
+import { DIGEST_CAP, FREQUENCY_LABEL, type Frequency, type Prefs, prefsToQuery, toFrequency } from "@/lib/subscription";
 import type { Category } from "@/lib/types";
 import { directionsPhrase, type Digest, type DigestJob } from "./digest";
 import { links, SITE_URL } from "./email";
@@ -53,7 +53,7 @@ export function describePrefs(p: Prefs, f: Frequency) {
   if (p.levels.length && p.levels.length < 3) parts.push(p.levels.map((l) => LEVEL_NAME[l]).join(" or "));
   if (p.estonia) parts.push("open to Estonia");
   if (p.remote) parts.push(REMOTE_LABEL[p.remote].toLowerCase());
-  return `${f === "daily" ? "Daily" : "Weekly"}, ${parts.join(", ")}.`;
+  return `${FREQUENCY_LABEL[toFrequency(f)]}, ${parts.join(", ")}.`;
 }
 
 function layout({ preheader, body, footer }: { preheader: string; body: string; footer: string }) {

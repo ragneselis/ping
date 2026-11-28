@@ -29,10 +29,11 @@ import {
   formatUpdated,
   getDataset,
   groupSimilar,
-  isNewPosting,
+  tripFinds,
   parseFilters,
 } from "@/lib/view";
 import { REMOTE_LABEL } from "@/lib/categories";
+import { loadSeen } from "@/lib/server/digest";
 import { shareMetadata } from "@/lib/share";
 import type { Metadata } from "next";
 
@@ -82,8 +83,9 @@ export default async function JobsPage({
   const estonia = cards.filter((c) => c.openToEstonia).length;
   const reach = cards.filter((c) => c.withinReach).length;
   const both = cards.filter((c) => c.openToEstonia && c.withinReach).length;
-  const now = Date.now();
-  const fresh = cards.filter((c) => isNewPosting(c.postedAt, now)).length;
+  // Found in the latest run (first seen at its stamp), not posted in the last day: runs are days apart.
+  const found = tripFinds(loadSeen(), lastRun);
+  const fresh = cards.filter((c) => found.has(c.id)).length;
   const readout: ReadoutItem[] = [
     {
       value: cards.length.toLocaleString("en-GB"),
@@ -92,7 +94,7 @@ export default async function JobsPage({
     },
     {
       value: fresh.toLocaleString("en-GB"),
-      label: "New today",
+      label: "New this trip",
       good: fresh > 0,
       href: "/?sort=newest",
       mark: "new",
@@ -150,7 +152,7 @@ export default async function JobsPage({
           >
             <p className="text-base text-muted-foreground">
               <span className="font-mono text-foreground">{both}</span> of
-              today&rsquo;s finds are open to someone in Estonia and within reach for a graduate.
+              the current finds are open to someone in Estonia and within reach for a graduate.
             </p>
           </Panel>
         </div>
@@ -212,7 +214,7 @@ export default async function JobsPage({
                     job={lead}
                     similar={similar}
                     reveal={n < 12 ? n : undefined}
-                    isNew={isNewPosting(lead.postedAt, now)}
+                    isNew={found.has(lead.id)}
                   />
                 ))}
               </ul>

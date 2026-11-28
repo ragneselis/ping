@@ -11,11 +11,11 @@ export interface ReadoutItem {
   label: string;
   /** Turns the item into a link, e.g. to the matching filter. */
   href?: string;
-  /** A signal icon (Estonia, within reach) or the fresh tile ("new today") before the label. */
+  /** A signal icon (Estonia, within reach) or the fresh tile ("new this trip") before the label. */
   mark?: "estonia" | "reach" | "new";
   /** Dims the value when it rests on too little data to trust. */
   muted?: boolean;
-  /** Good news (a within-reach or open-to-Estonia count, new today): set in emerald. Everything else is text colour. */
+  /** Good news (a within-reach or open-to-Estonia count, new this trip): set in emerald. Everything else is text colour. */
   good?: boolean;
   /** A short framing line under the label, e.g. "A wish list, not a wall." */
   hint?: string;

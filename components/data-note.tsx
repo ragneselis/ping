@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 
 /**
  * The hero's data note on Jobs, Discover and Market insights, in Ping's voice:
- * "Ping last went out on 22 November at 08:36 and found 1,281 roles. Next trip tomorrow at 06:00."
+ * "Ping last went out on 26 November at 06:58 and found 1,281 roles. Next trip Monday at 06:00."
  * The first sentence is the last successful run (data/run.json), absolute, in Europe/Tallinn. The second
- * comes from the browser's clock in Tallinn time only (nextTrip in lib/format.ts): "today" before 06:00,
- * "tomorrow" from 06:00. It is computed again when the page regains focus or becomes visible, so a tab
+ * comes from the browser's clock in Tallinn time only (nextTrip in lib/format.ts): the next Monday or
+ * Thursday at 06:00, a run day itself counting until 06:00. It is computed again when the page regains focus or becomes visible, so a tab
  * left open overnight reads right.
  */
 export function DataNote({ lastRun, roles, className }: { lastRun: string | null; roles: number; className?: string }) {

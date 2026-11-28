@@ -10,9 +10,8 @@ import { companyName, getDataset } from "@/lib/view";
 import { sql } from "./db";
 import { loadSeen } from "./digest";
 import { readCounts, statsEnv, tallinnDay, type CountRow } from "./usage";
-import { LATE_AFTER_MINUTES, RUN_UTC, TRIGGER_LABEL, tallinnDay as runDay, type RunRecord } from "@/lib/schedule";
+import { LATE_AFTER_MINUTES, MISSED_AFTER_HOURS, TRIGGER_LABEL, dueOn, isRunDay, lastRunDue, tallinnDay as runDay, type RunRecord } from "@/lib/schedule";
 
-export const STALE_HOURS = 30;
 const REPO = "ragneselis/ping";
 
 const dayOffset = (days: number) => tallinnDay(new Date(Date.now() - days * 86_400_000));
@@ -78,10 +77,10 @@ interface WorkflowRun {
   url: string;
 }
 
-/** The latest runs of the daily workflow, from GitHub's public API (the repository is public). Cached 5 minutes. */
+/** The latest runs of the refresh workflow, from GitHub's public API (the repository is public). Cached 5 minutes. */
 async function latestRuns(): Promise<WorkflowRun[] | null> {
   try {
-    const res = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/daily-refresh.yml/runs?per_page=5`, {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/refresh.yml/runs?per_page=5`, {
       headers: { accept: "application/vnd.github+json", "user-agent": "ping-stats" },
       next: { revalidate: 300 },
       signal: AbortSignal.timeout(4000),
@@ -127,7 +126,7 @@ export async function readStats() {
   const subs = {
     confirmed: subscribers.filter((s) => s.confirmed).length,
     waiting: subscribers.filter((s) => !s.confirmed).length,
-    daily: subscribers.filter((s) => s.confirmed && s.frequency === "daily").length,
+    twice: subscribers.filter((s) => s.confirmed && s.frequency !== "weekly").length,
     weekly: subscribers.filter((s) => s.confirmed && s.frequency === "weekly").length,
     weeks: weeks.map((week) => ({
       week,
@@ -203,7 +202,12 @@ export async function readStats() {
     lastRun,
     nextRun: run?.nextRun ?? null,
     ageHours,
-    stale: ageHours > STALE_HOURS,
+    // Stale: the latest Monday or Thursday run is more than MISSED_AFTER_HOURS overdue (days without a
+    // scheduled run never count).
+    overdue: (() => {
+      const due = lastRunDue(new Date(Date.now() - MISSED_AFTER_HOURS * 3_600_000));
+      return !lastRun || new Date(lastRun) < due ? due.toISOString() : null;
+    })(),
     failed: lastFinished?.conclusion === "failure",
     workflow: latest,
     lastFinished,
@@ -213,23 +217,30 @@ export async function readStats() {
     failedSources: run?.failedSources ?? sources?.sources.filter((s) => !s.ok).map((s) => s.source) ?? [],
     costUsd: modelRuns.reduce((n, r) => n + r.costUsd, 0),
     classified: modelRuns.filter((r) => r.note?.startsWith("classification")).reduce((n, r) => n + r.postings, 0),
-    // One row per Tallinn day: the run that day (the first, if several), which trigger started it, and
-    // whether it was on time, late (a backup or late start) or missed. Days before run history was kept
-    // (run.json's history began 2026-11-22) say "not recorded".
+    // One row per run day (Monday and Thursday) and per other day that had a run (manual): the run that
+    // day (the first, if several), which trigger started it, and whether it was on time, late (a backup or
+    // late start) or missed. Days without a scheduled run are left out unless something ran, so they
+    // never show as missed. Days before run history was kept (run.json's history began 2026-11-22) say
+    // "not recorded".
     runs: (() => {
       const history: RunRecord[] = run?.history ?? (run?.lastRun ? [{ at: run.lastRun, trigger: run.trigger ?? "manual" }] : []);
       const first = history[0]?.at ?? null;
-      return days14.map((day) => {
-        const r = history.find((h) => runDay(new Date(h.startedAt ?? h.at)) === day) ?? null;
-        const due = new Date(`${day}T${String(RUN_UTC.hour).padStart(2, "0")}:${String(RUN_UTC.minute).padStart(2, "0")}:00Z`);
-        const pastDue = Date.now() > due.getTime() + LATE_AFTER_MINUTES * 60_000;
+      const ranOn = (day: string) => history.find((h) => runDay(new Date(h.startedAt ?? h.at)) === day) ?? null;
+      return days14.filter((day) => isRunDay(day) || ranOn(day)).map((day) => {
+        const r = ranOn(day);
+        const due = dueOn(day);
+        const pastDue = Date.now() > due.getTime() + MISSED_AFTER_HOURS * 3_600_000;
         const started = r ? new Date(r.startedAt ?? r.at) : null;
+        // A run on a day without a scheduled one: "manual" when started by hand, else "extra" (the
+        // daily runs from before the Monday and Thursday rhythm).
         const status = r
-          ? r.trigger === "schedule" && started!.getTime() <= due.getTime() + LATE_AFTER_MINUTES * 60_000
-            ? "on time"
-            : r.trigger === "manual"
-              ? "manual"
-              : "late"
+          ? r.trigger === "manual"
+            ? "manual"
+            : !isRunDay(day)
+              ? "extra"
+              : r.trigger === "schedule" && started!.getTime() <= due.getTime() + LATE_AFTER_MINUTES * 60_000
+                ? "on time"
+                : "late"
           : !first || day < runDay(new Date(first))
             ? "not recorded"
             : pastDue

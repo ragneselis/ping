@@ -67,8 +67,14 @@ export interface JobCard {
 }
 
 /** Level buckets for the level filter. Every job is in exactly one. */
-/** Posted in the last 24 hours: gets the fresh tile. */
-export const isNewPosting = (iso: string | null, now = Date.now()) => !!iso && now - new Date(iso).getTime() < 86_400_000;
+/**
+ * The postings the latest run found: their first-seen time (data/seen.json, written by scripts/stamp.ts)
+ * is that run's stamp. They get the fresh tile and make up the "New this trip" count.
+ */
+export function tripFinds(seen: Record<string, string>, lastRun: string | null): Set<string> {
+  const stamp = lastRun?.replace(/\.\d{3}Z$/, "Z");
+  return new Set(stamp ? Object.keys(seen).filter((id) => seen[id] === stamp) : []);
+}
 
 export const LEVELS = ["reach", "mid", "senior"] as const;
 export type Level = (typeof LEVELS)[number];
@@ -162,7 +168,7 @@ interface Dataset {
   jobs: ClassifiedJob[];
   cards: JobCard[];
   updatedAt: string | null;
-  /** The last finished daily refresh and the next scheduled one (data/run.json), if recorded. */
+  /** The last finished refresh and the next scheduled one (data/run.json), if recorded. */
   lastRun: string | null;
   nextRun: string | null;
   boards: number;

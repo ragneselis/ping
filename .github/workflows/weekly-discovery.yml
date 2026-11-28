@@ -1,9 +1,9 @@
 name: Weekly discovery
 
-# Mondays at 03:00 UTC, an hour before the daily refresh (04:00), and by hand.
+# Mondays at 03:00 UTC, before the Monday refresh (03:47), and by hand.
 # Claude Haiku with web search looks for companies in Estonia that hire designers and are not on
 # data/companies.json yet; only companies whose job board Ping can actually read are added
-# (scripts/discover.ts, at most 5 a week). The daily refresh then reads their boards like any other.
+# (scripts/discover.ts, at most 5 a week). The next refresh then reads their boards like any other.
 on:
   schedule:
     - cron: "0 3 * * 1"
@@ -12,9 +12,9 @@ on:
 permissions:
   contents: write
 
-# Same group as the daily refresh, so the two never push at the same time.
+# Same group as the refresh, so the two never push at the same time.
 concurrency:
-  group: daily-refresh
+  group: refresh
   cancel-in-progress: false
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      # Authored as the repository owner, like the daily refresh, so Vercel deploys it.
+      # Authored as the repository owner, like the refresh, so Vercel deploys it.
       - name: Commit and push
         run: |
           if git diff --quiet -- data/companies.json data/discovery.json && [ -z "$(git status --porcelain data/discovery.json)" ]; then

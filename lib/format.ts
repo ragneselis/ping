@@ -1,4 +1,4 @@
-import { TZ } from "./schedule";
+import { RUN_DAYS, TZ } from "./schedule";
 
 /** The one date format on both pages: "20 November 2026". Safe to import anywhere (no server-only code). */
 export const formatUpdated = (iso: string | null) =>
@@ -10,14 +10,21 @@ const clock = (d: Date) => new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour
 export const TRIP_HOUR = 6;
 const TRIP_TIME = `${String(TRIP_HOUR).padStart(2, "0")}:00`;
 
+const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
 /**
  * The data note's second sentence, from the current Tallinn time only (never from data/run.json or
- * whether a run happened): before 06:00 "Next trip today at 06:00.", from 06:00 "Next trip tomorrow at
- * 06:00." The note recomputes it in the browser on load and when the page regains focus.
+ * whether a run happened): the next run day (RUN_DAYS, Monday and Thursday) at 06:00, counting a run
+ * day itself until 06:00. "Next trip Monday at 06:00." or "Next trip Thursday at 06:00." The note
+ * recomputes it in the browser on load and when the page regains focus.
  */
 export function nextTrip(now: Date = new Date()): string {
-  const hour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", hourCycle: "h23" }).format(now));
-  return `Next trip ${hour < TRIP_HOUR ? "today" : "tomorrow"} at ${TRIP_TIME}.`;
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, weekday: "long", hour: "2-digit", hourCycle: "h23" }).formatToParts(now);
+  const today = WEEKDAYS.indexOf(parts.find((p) => p.type === "weekday")!.value);
+  const hour = Number(parts.find((p) => p.type === "hour")!.value);
+  let ahead = hour < TRIP_HOUR ? 0 : 1;
+  while (!(RUN_DAYS as readonly number[]).includes((today + ahead) % 7)) ahead++;
+  return `Next trip ${WEEKDAYS[(today + ahead) % 7]} at ${TRIP_TIME}.`;
 }
 
 /**

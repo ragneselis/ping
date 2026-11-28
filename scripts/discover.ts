@@ -4,7 +4,7 @@
  * detector as hand checks (lib/sources/detect.ts). A board the real fetcher can read is added as readable;
  * a careers page with no readable board is added as careers link only (Discover links to it). Both are
  * marked "discovery", with a one-line description from the model; on Discover (inEstonia) only with evidence
- * that they have people in Estonia. Runs on Mondays before the daily refresh (.github/workflows/weekly-discovery.yml).
+ * that they have people in Estonia. Runs on Mondays before the Monday refresh (.github/workflows/weekly-discovery.yml).
  *
  *   npm run discover                # find, check and add (at most MAX_ADDS), record the run
  *   npm run discover -- --dry-run   # find and check, print what would be added, write nothing

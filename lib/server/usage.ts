@@ -4,7 +4,7 @@
  */
 import { sql } from "./db";
 
-/** "prod" on the live site and in the daily workflow; "dev" for local and preview runs. */
+/** "prod" on the live site and in the refresh workflow; "dev" for local and preview runs. */
 export const statsEnv = () => (process.env.VERCEL_ENV === "production" || process.env.GITHUB_ACTIONS === "true" ? "prod" : "dev");
 
 const TALLINN = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Tallinn", year: "numeric", month: "2-digit", day: "2-digit" });

@@ -1,6 +1,7 @@
 /**
- * Sends the job digest to confirmed subscribers who are due: daily subscribers on every run, weekly
- * ones on Monday (Tallinn time). Runs after the daily refresh in GitHub Actions.
+ * Sends the job digest to confirmed subscribers who are due: twice-a-week subscribers after every run
+ * (Monday and Thursday; a leftover "daily" counts the same), weekly ones on Monday (Tallinn time). Runs
+ * after the refresh in GitHub Actions.
  *
  *   npm run digest                          send to everyone due
  *   npm run digest -- --dry-run             show who would get what, send nothing
@@ -17,7 +18,7 @@ import { sql, type Subscriber } from "@/lib/server/db";
 import { emailConfigured, sendEmail } from "@/lib/server/email";
 import { digestEmail } from "@/lib/server/templates";
 import { add } from "@/lib/server/usage";
-import { EMPTY_PREFS } from "@/lib/subscription";
+import { EMPTY_PREFS, toFrequency } from "@/lib/subscription";
 
 const args = process.argv.slice(2);
 const flag = (name: string) => args.includes(name);
@@ -54,11 +55,11 @@ async function main() {
     due = (await db`
       select * from subscribers
       where confirmed = true
-        and (frequency = 'daily' or (frequency = 'weekly' and ${monday}))
+        and (frequency in ('twice', 'daily') or (frequency = 'weekly' and ${monday}))
         and (last_sent_at is null or last_sent_at < now() - interval '20 hours')
       order by id`) as Subscriber[];
   }
-  console.log(`${due.length} subscribers due (${monday ? "Monday: weekly and daily" : "daily only"}).`);
+  console.log(`${due.length} subscribers due (${monday ? "Monday: weekly and twice a week" : "twice a week only"}).`);
 
   let sent = 0;
   let empty = 0;
@@ -71,7 +72,7 @@ async function main() {
       empty++;
       continue;
     }
-    const mail = digestEmail(digest, prefs, s.frequency, s.token);
+    const mail = digestEmail(digest, prefs, toFrequency(s.frequency), s.token);
     if (dryRun) {
       console.log(`[dry run] #${s.id}: ${mail.subject}`);
       continue;

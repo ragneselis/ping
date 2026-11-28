@@ -8,8 +8,16 @@ import { CATEGORIES, type Category } from "./types";
 
 export const LEVEL_VALUES = ["reach", "mid", "senior"] as const;
 export const REMOTE_VALUES = ["remote", "hybrid", "onsite"] as const;
-export const FREQUENCIES = ["weekly", "daily"] as const;
+/**
+ * How often a subscriber hears from Ping: "weekly" after the Monday run, "twice" after every run
+ * (Monday and Thursday). Sign-ups from before the twice-a-week rhythm stored "daily"; they read as
+ * "twice" (toFrequency), and scripts/db-setup.ts moves the stored value.
+ */
+export const FREQUENCIES = ["weekly", "twice"] as const;
 export type Frequency = (typeof FREQUENCIES)[number];
+export const FREQUENCY_LABEL: Record<Frequency, string> = { weekly: "Weekly", twice: "Twice a week" };
+export const toFrequency = (v: unknown): Frequency => (v === "weekly" ? "weekly" : "twice");
+const FrequencySchema = z.preprocess((v) => (v === "daily" ? "twice" : v), z.enum(FREQUENCIES));
 
 /** At most this many jobs in one email; the rest are a link away. */
 export const DIGEST_CAP = 10;
@@ -35,12 +43,12 @@ export const isEmail = (s: string) => s.length <= 254 && EMAIL_PATTERN.test(s);
 export const SubscribeSchema = z.object({
   email: z.string().trim().toLowerCase().refine(isEmail, "Enter a valid email address."),
   prefs: PrefsSchema,
-  frequency: z.enum(FREQUENCIES),
+  frequency: FrequencySchema,
   /** Honeypot: a hidden field people never see. Anything in it marks the request as a bot. */
   website: z.string().optional(),
 });
 
-export const ManageSchema = z.object({ token: z.string().min(20).max(80), prefs: PrefsSchema, frequency: z.enum(FREQUENCIES) });
+export const ManageSchema = z.object({ token: z.string().min(20).max(80), prefs: PrefsSchema, frequency: FrequencySchema });
 
 /** Normalise a set of values to their canonical order, so stored preferences compare equal. */
 const ordered = <T extends string>(all: readonly T[], picked: readonly T[]) => all.filter((v) => picked.includes(v));

@@ -11,7 +11,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, Di
 import { CATEGORY_META } from "@/lib/categories";
 import { track } from "@/components/usage-beacon";
 import { OWN_CLICK_SOUND, sound } from "@/lib/sound";
-import { DIGEST_CAP, EMPTY_PREFS, type Frequency, isEmail, type Prefs, prefsFromQuery } from "@/lib/subscription";
+import { DIGEST_CAP, EMPTY_PREFS, type Frequency, isEmail, type Prefs, prefsFromQuery, toFrequency } from "@/lib/subscription";
 import { CATEGORIES, type Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { IconText } from "@/components/icon-text";
@@ -42,8 +42,8 @@ const REMOTE_ITEMS = [
   { value: "onsite", label: "On-site" },
 ];
 const FREQUENCY_ITEMS = [
-  { value: "weekly", label: "Weekly, on Monday" },
-  { value: "daily", label: "Daily" },
+  { value: "weekly", label: "Monday" },
+  { value: "twice", label: "Monday and Thursday" },
 ];
 
 type Mode = { kind: "signup" } | { kind: "manage"; token: string; email: string };
@@ -196,7 +196,7 @@ export function SubscribeDialog({ trigger }: { trigger: ReactElement }) {
         if (d.ok && d.prefs && d.email) {
           setMode({ kind: "manage", token, email: d.email });
           setPrefs({ ...EMPTY_PREFS, ...d.prefs });
-          setFrequency(d.frequency ?? "weekly");
+          setFrequency(d.frequency ? toFrequency(d.frequency) : "weekly");
         } else setError(d.error ?? "This link is not valid any more.");
         setStatus(d.ok ? "idle" : "error");
         setOpen(true);

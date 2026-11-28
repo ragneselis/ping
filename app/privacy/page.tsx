@@ -21,7 +21,7 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
 const STORED = [
   ["Email address", "where the job emails go"],
   ["Preferences", "directions, level, location and work setup you picked"],
-  ["Frequency", "weekly or daily"],
+  ["Frequency", "weekly or twice a week"],
   ["Confirmed or not", "nothing is sent until you confirm"],
   ["A random token", "the key in your change and unsubscribe links"],
   ["Two dates", "when you signed up and when the last email went out"],
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
       </Section>
 
       <Section label="Why">
-        <p>To send the emails you asked for: new design jobs that match your preferences, weekly or daily, at most 10 per email, and only when there is something new.</p>
+        <p>To send the emails you asked for: new design jobs that match your preferences, weekly or twice a week, at most 10 per email, and only when there is something new.</p>
         <p className="text-muted-foreground">
           To stop the sign-up form being used to flood someone&rsquo;s inbox, a scrambled (hashed) form of your IP address is kept for up to an hour. It is
           never linked to your email.

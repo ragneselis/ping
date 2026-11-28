@@ -5,7 +5,7 @@ import type { Metadata } from "next";
  * page shares under a longer title; other pages share as "Ping". The share image comes from
  * app/opengraph-image.tsx and app/twitter-image.tsx.
  */
-export const SHARE_DESCRIPTION = "Every morning Ping brings back new design jobs, sorted by direction and level.";
+export const SHARE_DESCRIPTION = "Every Monday and Thursday Ping brings back new design jobs, sorted by direction and level.";
 
 /** openGraph and twitter metadata with this share title (pages replace these objects whole, so build them here). */
 export function shareMetadata(title: string): Pick<Metadata, "openGraph" | "twitter"> {

@@ -28,12 +28,16 @@ export const SCHEMA = [
     id bigint generated always as identity primary key,
     email text not null unique,
     preferences jsonb not null,
-    frequency text not null check (frequency in ('weekly', 'daily')),
+    frequency text not null check (frequency in ('weekly', 'twice')),
     confirmed boolean not null default false,
     token text not null unique,
     created_at timestamptz not null default now(),
     last_sent_at timestamptz
   )`,
+  // Twice a week replaced daily (Monday and Thursday runs): move earlier sign-ups and the check.
+  `alter table subscribers drop constraint if exists subscribers_frequency_check`,
+  `update subscribers set frequency = 'twice' where frequency = 'daily'`,
+  `alter table subscribers add constraint subscribers_frequency_check check (frequency in ('weekly', 'twice'))`,
   // Anonymous usage stats (lib/usage.ts): one counter per field per Tallinn day, kept apart for
   // production ("prod") and local or preview runs ("dev"), so testing never moves the real numbers.
   `create table if not exists daily_counts (

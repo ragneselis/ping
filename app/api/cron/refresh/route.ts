@@ -1,22 +1,23 @@
 /**
- * GET /api/cron/refresh: the Vercel cron backup for the daily refresh (vercel.json, 05:20 UTC; see
- * lib/schedule.ts). GitHub can delay or skip scheduled workflows, so this starts the workflow itself
+ * GET /api/cron/refresh: the Vercel cron backup for the refresh (vercel.json, Monday and Thursday at
+ * 05:20 UTC; see lib/schedule.ts). GitHub can delay or skip scheduled workflows, so this starts the workflow itself
  * through the GitHub API (workflow_dispatch, trigger "vercel-cron") when today's run has not happened.
  *
  * 1. Only Vercel's cron may call it: Authorization "Bearer <CRON_SECRET>", which Vercel sends.
- * 2. Reads data/run.json from main on GitHub (fresher than this deployment): today's run (Tallinn date)
+ * 2. Not a run day (Monday or Thursday): nothing to do.
+ *    Reads data/run.json from main on GitHub (fresher than this deployment): today's run (Tallinn date)
  *    already succeeded, nothing to do.
  * 3. A run in progress or queued: nothing to do (the workflow's concurrency group would queue it anyway).
  * 4. Otherwise dispatches the workflow with GITHUB_DISPATCH_TOKEN (a token allowed to run Actions on
  *    this repository; a Vercel env var, never logged).
  */
 import { timingSafeEqual, createHash } from "node:crypto";
-import { tallinnDay } from "@/lib/schedule";
+import { isRunDay, tallinnDay } from "@/lib/schedule";
 
 export const dynamic = "force-dynamic";
 
 const REPO = "ragneselis/ping";
-const WORKFLOW = "daily-refresh.yml";
+const WORKFLOW = "refresh.yml";
 const digest = (t: string) => createHash("sha256").update(t).digest();
 
 function authorized(header: string | null): boolean {
@@ -39,7 +40,8 @@ export async function GET(request: Request) {
       signal: AbortSignal.timeout(10000),
     });
 
-  // 2. Today's run already succeeded?
+  // 2. Not a run day, or today's run already succeeded?
+  if (!isRunDay(tallinnDay(new Date()))) return json(200, { ok: true, status: "not a run day" });
   const raw = await fetch(`https://raw.githubusercontent.com/${REPO}/main/data/run.json?t=${Date.now()}`, { cache: "no-store", signal: AbortSignal.timeout(10000) });
   if (raw.ok) {
     const run = (await raw.json()) as { lastRun?: string; lastStatus?: string };

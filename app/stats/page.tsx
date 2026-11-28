@@ -11,7 +11,7 @@ import { SubscriberTable } from "@/components/stats/subscriber-table";
 import { readStats } from "@/lib/server/stats";
 import { isStatsAuthorized } from "@/lib/server/stats-auth";
 import { describePrefs } from "@/lib/server/templates";
-import { EMPTY_PREFS } from "@/lib/subscription";
+import { EMPTY_PREFS, FREQUENCY_LABEL, toFrequency } from "@/lib/subscription";
 import { LogoutButton } from "./logout-button";
 import { IconText } from "@/components/icon-text";
 
@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 
 const n = (v: number) => v.toLocaleString("en-GB");
 const TALLINN = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Tallinn", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+const WEEKDAY = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Tallinn", weekday: "long" });
 const TALLINN_DAY = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Tallinn", day: "numeric", month: "short", year: "numeric" });
 const when = (iso: string | null) => (iso ? TALLINN.format(new Date(iso)) : "never");
 const WEEK = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
@@ -56,8 +57,8 @@ export default async function StatsPage() {
   const { visitors: v, subs, usage, pipeline: p, discovery: d } = s;
 
   const warnings: string[] = [];
-  if (p.stale) warnings.push(`The last data refresh finished ${Number.isFinite(p.ageHours) ? `${Math.round(p.ageHours)} hours ago` : "at an unknown time"}, more than 30 hours ago.`);
-  if (p.failed) warnings.push("The last daily workflow run failed.");
+  if (p.overdue) warnings.push(`The ${WEEKDAY.format(new Date(p.overdue))} run has not finished: the last refresh was ${Number.isFinite(p.ageHours) ? `${Math.round(p.ageHours)} hours ago` : "at an unknown time"}.`);
+  if (p.failed) warnings.push("The last refresh workflow run failed.");
   const sentFails = p.digests.reduce((k, d) => k + d.failed, 0);
   if (sentFails) warnings.push(`${n(sentFails)} digest ${sentFails === 1 ? "email" : "emails"} failed to send in the last 14 days.`);
 
@@ -127,7 +128,7 @@ export default async function StatsPage() {
           items={[
             { value: n(subs.confirmed), label: "Confirmed", good: subs.confirmed > 0 },
             { value: n(subs.waiting), label: "Waiting to confirm" },
-            { value: n(subs.daily), label: "Daily" },
+            { value: n(subs.twice), label: "Twice a week" },
             { value: n(subs.weekly), label: "Weekly" },
           ]}
         />
@@ -169,8 +170,8 @@ export default async function StatsPage() {
             rows={subs.list.map((r) => ({
               id: r.id,
               email: r.email,
-              prefs: describePrefs({ ...EMPTY_PREFS, ...r.preferences }, r.frequency).replace(/^(Daily|Weekly), /, "").replace(/\.$/, ""),
-              frequency: r.frequency === "daily" ? "Daily" : "Weekly",
+              prefs: describePrefs({ ...EMPTY_PREFS, ...r.preferences }, r.frequency).replace(/^(Twice a week|Weekly), /, "").replace(/\.$/, ""),
+              frequency: FREQUENCY_LABEL[toFrequency(r.frequency)],
               status: r.confirmed ? "Confirmed" : "Waiting",
               signedUp: TALLINN_DAY.format(new Date(r.created_at)),
               lastSent: r.confirmed && r.last_sent_at ? TALLINN_DAY.format(new Date(r.last_sent_at)) : "None yet",
@@ -231,7 +232,7 @@ export default async function StatsPage() {
         </div>
       </Section>
 
-      <Section id="pipeline" title="Pipeline" intro="The daily refresh (GitHub Actions at 03:47 UTC, backups at 04:41 UTC and a Vercel cron at 05:20 UTC) and the digest step after it.">
+      <Section id="pipeline" title="Pipeline" intro="The refresh, Monday and Thursday (GitHub Actions at 03:47 UTC, backups at 04:41 UTC and a Vercel cron at 05:20 UTC), and the digest step after it.">
         <div className={GRID}>
           <Panel title="Last run">
             <dl className="grid gap-3 text-sm sm:grid-cols-[10rem_minmax(0,1fr)]">
@@ -289,7 +290,7 @@ export default async function StatsPage() {
             className="min-w-0"
             bodyClassName="min-w-0"
             title="Runs, last 14 days"
-            description="Which trigger started each day's refresh. Late: started by a backup, or over 30 minutes after the 03:47 UTC schedule. Missed: no run at all."
+            description="Run days (Monday and Thursday) and any other day with a run, and which trigger started it. Late: started by a backup, or over 30 minutes after the 03:47 UTC schedule. Missed: no run three hours after it."
           >
             <div className="-mx-4 overflow-x-auto md:mx-0">
               <table className="w-full min-w-[26rem] border-collapse text-left text-sm">
